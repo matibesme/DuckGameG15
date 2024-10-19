@@ -3,7 +3,7 @@
 
 Duck::Duck(float initialX, float initialY)
         : positionX(initialX), positionY(initialY), yVelocity(0),
-          isMovingRight(false), isMovingLeft(false), isJumping(false), isOnFloor(true), runPhase(-1), initialY(initialY) {}
+          isMovingRight(false), isMovingLeft(false), isJumping(false), isOnFloor(true), colSprite(-1), initialY(initialY) {}
 
 void Duck::update(bool moveRight, bool moveLeft, bool jump, unsigned int frameDelta) {
     isMovingRight = moveRight;
@@ -11,32 +11,40 @@ void Duck::update(bool moveRight, bool moveLeft, bool jump, unsigned int frameDe
 
     if (isMovingRight) {
         positionX += frameDelta * 0.2;
-        runPhase = (SDL_GetTicks() / 100) % 6;
+        colSprite = (SDL_GetTicks() / 100) % 6;
     } else if (isMovingLeft) {
         positionX -= frameDelta * 0.2;
-        runPhase = (SDL_GetTicks() / 100) % 6;
+        colSprite = (SDL_GetTicks() / 100) % 6;
+    } else if (jump) {
+        colSprite = 2;
     } else {
-        runPhase = 0;
+        colSprite = 0;
     }
 
     if (jump) {
-
         isJumping = true;
         isOnFloor = false;
         yVelocity = jumpVelocity;
     }
 
     if (isJumping) {
-        positionY += yVelocity;
-        yVelocity += gravity;
+        positionY += yVelocity * frameDelta * 1.1 ;
+        yVelocity += gravity * frameDelta * 1.1 ;
 
-        // Verificar si toca el suelo
         if (positionY >= initialY || positionY < initialY - 80) {
-            positionY = initialY;
             isJumping = false;
+            positionY = initialY;
             yVelocity = 0;
-            isOnFloor = true;
         }
+    }else if(!isJumping && !isOnFloor){
+        positionY += yVelocity * frameDelta * 1.1 ;
+        yVelocity += gravity * frameDelta * 1.1 ;
+
+        if (positionY >= initialY) {
+            positionY = initialY;
+            yVelocity = 0;
+        }
+
     }
 }
 
@@ -50,22 +58,23 @@ void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites) {
     int src_x = 0, src_y = 6;
 
     if (isMovingRight || isMovingLeft) {
-        src_x = 32 * runPhase;
+        src_x = 32 * colSprite;
     }
 
     if (isJumping) {
-        src_y = 100;
+        src_y = 40;
+        src_x = 32 * colSprite;
     } else if (isOnFloor) {
         src_y = 70;
     }
 
     int vcenter = renderer.GetOutputHeight() / 1.1;
-    SDL2pp::Rect destRect((int)positionX, (int)(vcenter - 50 - (initialY - positionY)), 50, 50);
+    Rect destRect((int)positionX, (int)(vcenter - 50 - (initialY - positionY)), 50, 50);
 
     if (isMovingLeft) {
-        renderer.Copy(sprites, SDL2pp::Rect(src_x, src_y, 32, 24), destRect, 0.0, SDL2pp::Point(0, 0), SDL_FLIP_HORIZONTAL);
+        renderer.Copy(sprites, Rect(src_x, src_y, 32, 24), destRect, 0.0, Point(0, 0), SDL_FLIP_HORIZONTAL);
     } else {
-        renderer.Copy(sprites, SDL2pp::Rect(src_x, src_y, 32, 24), destRect);
+        renderer.Copy(sprites, Rect(src_x, src_y, 32, 24), destRect);
     }
 }
 

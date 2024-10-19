@@ -10,6 +10,6 @@ Renderer& Graficos::GetRenderer() {
 }
 
 Texture Graficos::LoadTexture(const char* path) {
-    SDL2pp::Surface surface(IMG_Load(path));
-    return SDL2pp::Texture(renderer, surface);
+    Surface surface(IMG_Load(path));
+    return Texture(renderer, surface);
 }

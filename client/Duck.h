@@ -20,9 +20,9 @@ private:
     bool isMovingLeft;
     bool isJumping;         // Controla si el pato está saltando
     bool isOnFloor;         // Controla si el pato está en el suelo
-    int runPhase;
+    int colSprite;
     const float gravity = 0.5f;
-    const float jumpVelocity = -10.0f;  // Velocidad inicial del salto
+    const float jumpVelocity = -0.1f;  // Velocidad inicial del salto
     const float initialY;    // Mantiene la posición en Y inicial (suelo)
 };
 
