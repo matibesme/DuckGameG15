@@ -2,12 +2,14 @@
 #include <SDL_image.h>
 
 Duck::Duck(float initialX, float initialY)
-        : positionX(initialX), positionY(initialY), yVelocity(0),
-          isMovingRight(false), isMovingLeft(false), isJumping(false), isOnFloor(true), colSprite(-1), initialY(initialY) {}
+        : positionX(initialX), positionY(initialY),
+          isMovingRight(false), isMovingLeft(false), isJumping(false), isOnFloor(true), colSprite(-1), initialY(initialY), goDown(false) {}
 
-void Duck::update(bool moveRight, bool moveLeft, bool jump, unsigned int frameDelta) {
+void Duck::update(bool moveRight, bool moveLeft, bool jump, bool go_Down, unsigned int frameDelta) {
     isMovingRight = moveRight;
     isMovingLeft = moveLeft;
+    isJumping = jump;
+    goDown = go_Down;
 
     if (isMovingRight) {
         positionX += frameDelta * 0.2;
@@ -15,36 +17,28 @@ void Duck::update(bool moveRight, bool moveLeft, bool jump, unsigned int frameDe
     } else if (isMovingLeft) {
         positionX -= frameDelta * 0.2;
         colSprite = (SDL_GetTicks() / 100) % 6;
-    } else if (jump) {
-        colSprite = 2;
-    } else {
-        colSprite = 0;
+
     }
-
-    if (jump) {
-        isJumping = true;
-        isOnFloor = false;
-        yVelocity = jumpVelocity;
-    }
-
-    if (isJumping) {
-        positionY += yVelocity * frameDelta * 1.1 ;
-        yVelocity += gravity * frameDelta * 1.1 ;
-
-        if (positionY >= initialY || positionY < initialY - 80) {
-            isJumping = false;
-            positionY = initialY;
-            yVelocity = 0;
-        }
-    }else if(!isJumping && !isOnFloor){
-        positionY += yVelocity * frameDelta * 1.1 ;
-        yVelocity += gravity * frameDelta * 1.1 ;
+    if(goDown) {
+        positionY -= jumpVelocity * frameDelta * .33;
 
         if (positionY >= initialY) {
             positionY = initialY;
-            yVelocity = 0;
+            goDown = false;
+        }
+    } else if (isJumping) {
+        if (positionY >= initialY - 150) {
+            colSprite = 2;
+            isOnFloor = false;
+            positionY += jumpVelocity * frameDelta * 1;
+        }else{
+            isJumping = false;
+            goDown = true;
         }
 
+    }
+    else {
+        colSprite = 0;
     }
 }
 
@@ -84,4 +78,12 @@ void Duck::setOnFloor(bool onFloor) {
 
 float Duck::getPosition() const {
     return positionX;
+}
+
+bool Duck::is_Jumping() {
+    return isJumping && positionY < initialY - 150;
+}
+
+bool Duck::isGoDown() {
+    return goDown;
 }
