@@ -1,11 +1,19 @@
-#ifndef TALLER_TP_GRAFICOS_H
-#define TALLER_TP_GRAFICOS_H
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
 
+#include <SDL2pp/SDL2pp.hh>
+
+using namespace SDL2pp;
 
 class Graficos {
 public:
-    static void iniciar();
+    Graficos(const char* title, int width, int height);
+    Renderer& GetRenderer();
+    Texture LoadTexture(const char* path);
+
+private:
+    Window window;
+    Renderer renderer;
 };
 
-
-#endif //TALLER_TP_GRAFICOS_H
+#endif // GRAPHICS_H

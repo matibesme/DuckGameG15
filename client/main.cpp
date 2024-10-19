@@ -1,11 +1,11 @@
-#include "Graficos.h"
+#include "Game.h"
 
 #include <iostream>
 #include <exception>
 
 int main() try {
-    Graficos graficos;
-    graficos.iniciar();
+    Game game;
+    game.run();
 
 	return 0;
 } catch (std::exception& e) {
