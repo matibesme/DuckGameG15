@@ -11,7 +11,8 @@ Game::Game()
 
 void Game::run() {
     SDL_Event event;
-    bool isMovingRight = false, isMovingLeft = false, isOnFloor = false;
+
+    bool isMovingRight = false, isMovingLeft = false, isOnFloor = false, is_jumping = false;
 
     while (true) {
         unsigned int frameTicks = SDL_GetTicks();
@@ -35,6 +36,10 @@ void Game::run() {
                     case SDLK_s:
                         isOnFloor = true;
                         break;
+                    case SDLK_w:
+                        if(!is_jumping){
+                            is_jumping = true;
+                        }
                 }
             } else if (event.type == SDL_KEYUP) {
                 switch (event.key.keysym.sym) {
@@ -47,12 +52,15 @@ void Game::run() {
                     case SDLK_s:
                         isOnFloor = false;
                         break;
+                    case SDLK_w:
+                        is_jumping = false;
+                        break;
                 }
             }
         }
 
         duck.setOnFloor(isOnFloor);
-        duck.update(isMovingRight, isMovingLeft, frameDelta);
+        duck.update(isMovingRight, isMovingLeft, is_jumping, frameDelta);
 
         graficos.GetRenderer().Clear();
         duck.draw(graficos.GetRenderer(), duckTexture);
