@@ -64,7 +64,8 @@ if(TALLER_CLIENT)
     add_executable(taller_client
             client/graficos.cpp
             client/Game.cpp
-            client/Duck.cpp)
+            client/Duck.cpp
+            client/Background.cpp)
     add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
 
     # Make them depend on taller_common lib

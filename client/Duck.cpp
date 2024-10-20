@@ -87,3 +87,9 @@ bool Duck::isOnTop() const {
 bool Duck::isTouchingFloor() const {
     return positionY == initialY;
 }
+
+bool Duck::checkCollision(SDL2pp::Rect rect){
+    Rect rectDuck((int)positionX, (int)positionY, 50, 50);
+
+    return (SDL_HasIntersection(&rectDuck, &rect));
+}
