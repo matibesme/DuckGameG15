@@ -13,6 +13,7 @@ public:
     float getPosition() const;
     bool is_Jumping();
     bool isGoDown();
+    bool checkCollision(SDL2pp::Rect rect);
 
 private:
     float positionX;

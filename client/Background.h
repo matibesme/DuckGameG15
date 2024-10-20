@@ -7,9 +7,11 @@
 class Background{
 private:
     SDL2pp::Texture background;
+    SDL2pp::Texture platform;
 public:
     Background(Graficos& graficos);
     void draw(SDL2pp::Renderer& renderer);
+    SDL2pp::Rect rangeOfCollision(SDL2pp::Renderer& renderer);
 };
 
 #endif

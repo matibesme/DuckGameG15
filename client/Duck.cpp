@@ -35,7 +35,6 @@ void Duck::update(bool moveRight, bool moveLeft, bool jump, bool go_Down, unsign
             isJumping = false;
             goDown = true;
         }
-
     }
     else {
         colSprite = 0;
@@ -86,4 +85,10 @@ bool Duck::is_Jumping() {
 
 bool Duck::isGoDown() {
     return goDown;
+}
+
+bool Duck::checkCollision(SDL2pp::Rect rect){
+    Rect rectDuck((int)positionX, (int)positionY, 50, 50);
+
+    return (SDL_HasIntersection(&rectDuck, &rect));
 }
