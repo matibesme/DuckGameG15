@@ -36,7 +36,6 @@ void Game::run() {
                         isMovingLeft = true;
                         break;
                     case SDLK_s:
-                        if (!duck.is_Jumping())
                         isOnFloor = true;
                         break;
                     case SDLK_w:

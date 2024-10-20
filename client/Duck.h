@@ -11,10 +11,8 @@ public:
     void draw(Renderer& renderer, Texture& sprites);
     void setOnFloor(bool onFloor);
     float getPosition() const;
-    bool is_Jumping();
-    bool isGoDown();
-    bool checkCollision(SDL2pp::Rect rect);
     bool is_Jumping() const;
+    bool checkCollision(Rect rect);
     bool isTouchingFloor() const;
     bool isOnTop() const;
 
