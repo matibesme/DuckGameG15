@@ -7,12 +7,13 @@ using namespace SDL2pp;
 class Duck {
 public:
     Duck(float initialX, float initialY);
-    void update(bool moveRight, bool moveLeft, bool jump, bool go_Down, unsigned int frameDelta);
+    void update(bool moveRight, bool moveLeft, bool jump, unsigned int frameDelta);
     void draw(Renderer& renderer, Texture& sprites);
     void setOnFloor(bool onFloor);
     float getPosition() const;
-    bool is_Jumping();
-    bool isGoDown();
+    bool is_Jumping() const;
+    bool isTouchingFloor() const;
+    bool isOnTop() const;
 
 private:
     float positionX;
@@ -24,7 +25,8 @@ private:
     int colSprite;
     const float jumpVelocity = -1.0f;  // Velocidad inicial del salto
     const float initialY;    // Mantiene la posición en Y inicial (suelo)
-    bool goDown;
+    bool tocoTecho;
+
 };
 
 #endif // PLAYER_H

@@ -3,13 +3,12 @@
 
 Duck::Duck(float initialX, float initialY)
         : positionX(initialX), positionY(initialY),
-          isMovingRight(false), isMovingLeft(false), isJumping(false), isOnFloor(true), colSprite(-1), initialY(initialY), goDown(false) {}
+          isMovingRight(false), isMovingLeft(false), isJumping(false), isOnFloor(true), colSprite(-1), initialY(initialY), tocoTecho(false) {}
 
-void Duck::update(bool moveRight, bool moveLeft, bool jump, bool go_Down, unsigned int frameDelta) {
+void Duck::update(bool moveRight, bool moveLeft, bool jump, unsigned int frameDelta) {
     isMovingRight = moveRight;
     isMovingLeft = moveLeft;
     isJumping = jump;
-    goDown = go_Down;
 
     if (isMovingRight) {
         positionX += frameDelta * 0.2;
@@ -17,28 +16,24 @@ void Duck::update(bool moveRight, bool moveLeft, bool jump, bool go_Down, unsign
     } else if (isMovingLeft) {
         positionX -= frameDelta * 0.2;
         colSprite = (SDL_GetTicks() / 100) % 6;
-
     }
-    if(goDown) {
-        positionY -= jumpVelocity * frameDelta * .33;
 
+    if(isOnTop()){
+        tocoTecho = true;
+    }
+
+    if (isJumping && !tocoTecho) {
+        colSprite = 2;
+        isOnFloor = false;
+        positionY += jumpVelocity * frameDelta * 0.5; // sube el duck
+
+    } else {
+        isJumping = false; // Termina el salto
+        positionY -= jumpVelocity * frameDelta * 0.5; // Caída
         if (positionY >= initialY) {
-            positionY = initialY;
-            goDown = false;
+            positionY = initialY; // Asegurarse de que no atraviese el suelo
+            tocoTecho = false;
         }
-    } else if (isJumping) {
-        if (positionY >= initialY - 150) {
-            colSprite = 2;
-            isOnFloor = false;
-            positionY += jumpVelocity * frameDelta * 1;
-        }else{
-            isJumping = false;
-            goDown = true;
-        }
-
-    }
-    else {
-        colSprite = 0;
     }
 }
 
@@ -80,10 +75,15 @@ float Duck::getPosition() const {
     return positionX;
 }
 
-bool Duck::is_Jumping() {
-    return isJumping && positionY < initialY - 150;
+bool Duck::is_Jumping() const {
+    return isJumping;
 }
 
-bool Duck::isGoDown() {
-    return goDown;
+//esta en el top?
+bool Duck::isOnTop() const {
+    return positionY <= initialY - 150;
+}
+
+bool Duck::isTouchingFloor() const {
+    return positionY == initialY;
 }
