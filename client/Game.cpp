@@ -1,3 +1,4 @@
+#include "Background.h"
 #include "Game.h"
 #include <SDL2/SDL.h>
 #include <exception>
@@ -6,6 +7,7 @@
 Game::Game()
         : graficos("SDL2pp demo", 640, 480),
           duck(0.0, 0.0),
+          background(graficos),
           prevTicks(SDL_GetTicks()),
           duckTexture (graficos.LoadTexture(DATA_PATH "/duck.png")) {}
 
@@ -65,6 +67,7 @@ void Game::run() {
         duck.setOnFloor(isOnFloor);
         duck.update(isMovingRight, isMovingLeft, is_jumping, isGoDown, frameDelta);
         graficos.GetRenderer().Clear();
+        background.draw(graficos.GetRenderer());
         duck.draw(graficos.GetRenderer(), duckTexture);
         graficos.GetRenderer().Present();
 
