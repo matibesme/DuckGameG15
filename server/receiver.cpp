@@ -1,16 +1,23 @@
 #include "receiver.h"
 
-#include "../common_src/liberror.h"
+#include "../common/liberror.h"
 
 Receiver::Receiver(ProtocoloServer& protocolo, bool& dead_connection,
-                   BlockingQueue<CommandPickUp>& queue_comandos):
+                   BlockingQueue<CommandGame>& queue_comandos):
         protocolo(protocolo), dead_connection(dead_connection), queue_comandos(queue_comandos) {}
 
 void Receiver::run() {
     try {
+        while (!in_game){
+            if (protocolo.receiveCommandFromClients().type_of_action == ) {  //aca agrego comando de incio de juego
+                in_game = true;
+            }
+        }
+
+
         while (!dead_connection) {
 
-            CommandPickUp command = protocolo.receiveMessagesFromClients();
+            CommandGame command = protocolo.receiveCommandFromClients();
             queue_comandos.push(command);
         }
     } catch (const SocketClose& e) {

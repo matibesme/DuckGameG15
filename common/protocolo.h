@@ -3,8 +3,8 @@
 
 #include <arpa/inet.h>
 
-#include "../common_src/game_exception.h"
-#include "../common_src/socket.h"
+#include "../common/game_exception.h"
+#include "../common/socket.h"
 
 
 class Protocolo {

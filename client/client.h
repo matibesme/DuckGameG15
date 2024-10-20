@@ -5,8 +5,8 @@
 #include <string>
 #include <utility>
 
-#include "../common_src/decode_id_to_gun.h"
-#include "../common_src/game_exception.h"
+#include "../common/decode_id_to_gun.h"
+#include "../common/game_exception.h"
 
 #include "constant_definitons.h"
 #include "protocolo_cliente.h"

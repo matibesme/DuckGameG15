@@ -5,8 +5,7 @@
 
 const uint8_t FIRST_SEND_BYTE = 0x03;
 const uint8_t FIRST_RECIVE_BYTE = 0x06;
-const uint8_t NEW_BOX_BYTE = 0x05;
-const uint8_t PICKED_UP_BYTE = 0x04;
+
 #define WELCOME_MESSAGE "What is your name?"
 #define NEW_BOX_MESSAGE "A new box has appeared"
 #define PICKED_UP_MESSAGE " picked up a "
@@ -25,3 +24,18 @@ const uint8_t PICKED_UP_BYTE = 0x04;
 const uint8_t FULL_GAME_BYTE = 0x20;
 const uint8_t END_ROUND_BYTE = 0x21;
 const uint8_t VICTORY_BYTE = 0x22;
+
+const uint8_t MOVEMENT_ACTION = 0x03;
+
+const uint8_t RIGTH = 0x05;
+const uint8_t LEFT = 0x06;
+const uint8_t JUMP = 0x04;
+const uint8_t DOWN = 0x07;
+
+const uint8_t WEAPON_ACTION = 0x08;
+const uint8_t PICKUP = 0x09;
+const uint8_t LEAVE_GUN= 0x0A;
+const uint8_t SHOT = 0x0B;
+const uint8_t AIM_UP = 0x0C;
+
+

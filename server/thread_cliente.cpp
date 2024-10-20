@@ -1,8 +1,8 @@
 #include "thread_cliente.h"
 
-#include "../common_src/game_exception.h"
+#include "../common/game_exception.h"
 
-ThreadCliente::ThreadCliente(Socket peer, BlockingQueue<CommandPickUp>& queue_comandos, uint8_t id):
+ThreadCliente::ThreadCliente(Socket peer, BlockingQueue<CommandGame>& queue_comandos, uint8_t id):
 
         dead_connection(),
         queue_comandos(queue_comandos),
@@ -24,7 +24,7 @@ void ThreadCliente::run() {
 }
 
 
-void ThreadCliente::sendAction(const CommandReward& action) { queue_sender.push(action); }
+void ThreadCliente::sendAction(const CommandGame& action) { queue_sender.push(action); }
 
 uint8_t ThreadCliente::getId() { return id; }
 
@@ -33,7 +33,7 @@ bool ThreadCliente::isDead() { return dead_connection; }
 
 void ThreadCliente::setIsDead() { dead_connection = true; }
 
-BlockingQueue<CommandReward>& ThreadCliente::getQueueSender() { return queue_sender; }
+BlockingQueue<CommandGame>& ThreadCliente::getQueueSender() { return queue_sender; }
 
 
 void ThreadCliente::delete_client() {

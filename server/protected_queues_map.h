@@ -4,8 +4,8 @@
 #include <mutex>
 #include <string>
 
-#include "../common_src/blocking_queue.h"
-#include "../common_src/dto_definitions.h"
+#include "../common/blocking_queue.h"
+#include "../common/dto_definitions.h"
 
 
 class ProtectedQueuesMap {

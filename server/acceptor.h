@@ -1,10 +1,10 @@
 #include <list>
 #include <utility>
 
-#include "../common_src/blocking_queue.h"
-#include "../common_src/liberror.h"
-#include "../common_src/socket.h"
-#include "../common_src/thread.h"
+#include "../common/blocking_queue.h"
+#include "../common/liberror.h"
+#include "../common/socket.h"
+#include "../common/thread.h"
 
 #include "protected_queues_map.h"
 #include "thread_cliente.h"
@@ -14,16 +14,16 @@ class Acceptor: public Thread {
 
 private:
     Socket socket_servidor;
-    ProtectedQueuesMap& map_queues_sender;
+    LobbyPartidas& lobby_partidas;
     std::list<ThreadCliente> lista_clientes;
-    BlockingQueue<CommandPickUp>& queue_comandos;
+    BlockingQueue<CommandGame>& queue_comandos;
     bool& close;
     uint8_t cantidad_clientes;
 
 
 public:
-    Acceptor(const char* port, ProtectedQueuesMap& map_queues_sender,
-             BlockingQueue<CommandPickUp>& queue_comandos, bool& close);
+    Acceptor(const char* port, LobbyPartidas& lobby_partidas,
+             BlockingQueue<CommandGame>& queue_comandos, bool& close);  //saco el queue_Sender
     virtual void run() override;
     void accept_new_client();
     void deleteAClient(ThreadCliente& cliente);

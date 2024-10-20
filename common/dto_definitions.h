@@ -12,30 +12,43 @@ struct Element{
     uint8_t orientation;
 }
 
-struct PlayerStatus {
-    std::string player_name;
-    uint8_t victories;
-};
 
-struct CommandFullGame {
+struct CommandGame {
+    uint8_t type_of_action;
+
+    //full game scene
     uint8_t scene_id;
     uint8_t elements_quantity;
     std::vector<Element> elements;
-
-};
-
-struct CommandVictory {
+    //end of round scene
+    uint8_t players_quantity;
+    std::vector<PlayerStatus> players_status;
+    //CommandVictory
     std::string player_name;
 };
 
-struct CommandEndOfRound {
+struct CommandClient {
+    uint8_t type_of_action; 
+    // Movement
+    uint8_t type_of_movement;  
 
-    uint8_t players_quantity;
-    std::vector<PlayerStatus> players_status;
-};
+    //Weapons
+    uint8_t weapon_action;
+
+}
+
+struct GameAccess {
+    uint8_t action_type; // new game or join game
+    uint8_t game_id;
+
+    
+    
+}
+
 
 
 struct CommandClient {
     uint8_t type;
     uint8_t command;
+
 };

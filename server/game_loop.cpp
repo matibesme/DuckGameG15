@@ -1,7 +1,7 @@
 #include "game_loop.h"
 
 
-GameLoop::GameLoop(BlockingQueue<CommandPickUp>& queue_comandos, bool& end_game,
+GameLoop::GameLoop(BlockingQueue<CommandGame>& queue_comandos, bool& end_game,
                    ProtectedQueuesMap& queues_map):
         queue_comandos(queue_comandos),
         end_game(end_game),
@@ -45,7 +45,7 @@ void GameLoop::handleNewBox() {
 }
 
 void GameLoop::processCommands() {
-    CommandPickUp comando;
+    CommandGame comando;
     while (queue_comandos.try_pop(comando)) {
         uint8_t codigo = decodeCode(comando.box_id);
         if (!isBoxOccupied(codigo)) {

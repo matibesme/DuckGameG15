@@ -4,11 +4,11 @@
 #include <string>
 #include <utility>
 
-#include "../common_src/dto_definitions.h"
-#include "../common_src/game_exception.h"
-#include "../common_src/liberror.h"
-#include "../common_src/protocolo.h"
-#include "../common_src/socket.h"
+#include "../common/dto_definitions.h"
+#include "../common/game_exception.h"
+#include "../common/liberror.h"
+#include "../common/protocolo.h"
+#include "../common/socket.h"
 
 #include "constant_definitons.h"
 
@@ -16,7 +16,7 @@ class ProtocoloCliente {
     Socket socket;
     bool& dead_connection;
     Protocolo protocolo;
-
+    std::map<uint8_t, uint8_t> decode_type_of_action;
 
 public:
     ProtocoloCliente(const char* host, const char* port, bool& dead_connection);

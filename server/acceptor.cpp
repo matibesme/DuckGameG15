@@ -4,7 +4,7 @@
 
 
 Acceptor::Acceptor(const char* port, ProtectedQueuesMap& map_queues_sender,
-                   BlockingQueue<CommandPickUp>& queue_comandos, bool& close):
+                   BlockingQueue<CommandGame>& queue_comandos, bool& close):
         socket_servidor(port),
         map_queues_sender(map_queues_sender),
         lista_clientes(),
@@ -20,8 +20,8 @@ void Acceptor::accept_new_client() {
     ThreadCliente& cliente = lista_clientes.back();
     cliente.start();
     reapDead();
-
-    map_queues_sender.addClient(cantidad_clientes, cliente.getQueueSender());
+    
+    map_queues_sender.addClient(cantidad_clientes, cliente.getQueueSender());//
     cantidad_clientes++;
 }
 

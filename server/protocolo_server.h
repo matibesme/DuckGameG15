@@ -5,11 +5,11 @@
 #include <string>
 #include <utility>
 
-#include "../common_src/dto_definitions.h"
-#include "../common_src/game_exception.h"
-#include "../common_src/liberror.h"
-#include "../common_src/protocolo.h"
-#include "../common_src/socket.h"
+#include "../common/dto_definitions.h"
+#include "../common/game_exception.h"
+#include "../common/liberror.h"
+#include "../common/protocolo.h"
+#include "../common/socket.h"
 
 class ProtocoloServer {
     Socket socket_server;
@@ -18,10 +18,12 @@ class ProtocoloServer {
 
 public:
     ProtocoloServer(Socket socket, bool& dead_connection);
-
-    void sendFullGame(const CommandFullGame& command);
-    void sendVictory(const CommandVictory& command);
-    void sendEndOfRound(const CommandEndOfRound& command);
+    
+    void sendToClient(const CommandGame& command);
+    void sendFullGame(const CommandGame& command);
+    void sendVictory(const CommandGame& command);
+    void sendEndOfRound(const CommandGame& command);
+    void sendToClient(const CommandGame& command);
     CommandClient receiveCommandFromClients();
     void closeSocket();
     ~ProtocoloServer();

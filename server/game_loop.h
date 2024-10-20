@@ -7,11 +7,11 @@
 #include <thread>
 #include <vector>
 
-#include "../common_src/blocking_queue.h"
-#include "../common_src/decode_id_to_gun.h"
-#include "../common_src/dto_definitions.h"
-#include "../common_src/game_exception.h"
-#include "../common_src/thread.h"
+#include "../common/blocking_queue.h"
+#include "../common/decode_id_to_gun.h"
+#include "../common/dto_definitions.h"
+#include "../common/game_exception.h"
+#include "../common/thread.h"
 
 #include "constant_definitons.h"
 #include "protected_queues_map.h"
@@ -19,7 +19,7 @@
 class GameLoop: public Thread {
 
 private:
-    BlockingQueue<CommandPickUp>& queue_comandos;
+    BlockingQueue<CommandGame>& queue_comandos;
     bool& end_game;
 
     ProtectedQueuesMap& queues_map;
@@ -29,7 +29,7 @@ private:
     std::map<uint8_t, int> times_left_to_reappear;
 
 public:
-    GameLoop(BlockingQueue<CommandPickUp>& queue_comandos, bool& end_game,
+    GameLoop(BlockingQueue<CommandGame>& queue_comandos, bool& end_game,
              ProtectedQueuesMap& queues_map);
     virtual void run() override;
     void processCommands();
