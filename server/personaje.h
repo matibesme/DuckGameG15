@@ -2,6 +2,8 @@
 
 class Personaje{
     private:
+        uint8_t type;
+        uint8_t id;
         uint16_t x_pos;
         uint16_t y_pos;
         uint8_t orientation;
@@ -12,9 +14,12 @@ class Personaje{
         uint16_t getXPos();
         uint16_t getYPos();
         uint8_t getOrientation();
+        uint8_t getId();
         void setXPos(uint16_t x_pos);
         void setYPos(uint16_t y_pos);
         void setOrientation(uint8_t orientation);
+        void setId(uint8_t id);
+
         ~Personaje();
 
 }

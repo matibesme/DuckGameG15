@@ -54,7 +54,7 @@ CommandClient ProtocoloServer::receiveCommandFromClients() {
     try {
     
         uint8_t first_byte = protocolo.receiveByte(dead_connection);
-        uint8_t movement_id = protocolo.receiveByte(dead_connection);
+        uint8_t movement_id = protocolo.receiveByte(dead_connection);   
         
         
         return {movment_type, movement_id};
