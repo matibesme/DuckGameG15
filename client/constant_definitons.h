@@ -35,5 +35,6 @@ const uint8_t PICKUP = 0x09;
 const uint8_t LEAVE_GUN= 0x0A;
 const uint8_t SHOT = 0x0B;
 const uint8_t AIM_UP = 0x0C;
+#define TAMANIO_MAX = 100;
 
 

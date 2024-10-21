@@ -5,11 +5,9 @@
 #include "Graficos.h"
 #include "Background.h"
 #include "protocolo_cliente.h"
+#include "common/blocking_queue.h"
 
 class Game {
-public:
-    Game(ProtocoloCliente& protocol);
-    void run();
 
 private:
     Graficos graficos;
@@ -18,6 +16,13 @@ private:
     unsigned int prevTicks;
     SDL2pp::Texture duckTexture;
     ProtocoloCliente& protocol;
+    BlockingQueue<uint8_t>& queue_sender;
+    BlockingQueue<CommandGameShow>& queue_receiver;
+
+public:
+    Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver); 
+    void run();
+
 };
 
 #endif // GAME_H

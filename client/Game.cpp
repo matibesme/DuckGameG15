@@ -4,13 +4,15 @@
 #include <exception>
 #include <iostream>
 
-Game::Game(ProtocoloCliente& protocol)
+Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver)
         : graficos("SDL2pp demo", 640, 480),
           duck(0.0, 0.0),
           background(graficos),
           prevTicks(SDL_GetTicks()),
           duckTexture (graficos.LoadTexture(DATA_PATH "/duck.png")) ,
-            protocol(protocol) {}
+          protocol(protocol),
+          queue_sender(queue_sender),
+          queue_receiver(queue_receiver) {}
 
 void Game::run() {
     SDL_Event event;
