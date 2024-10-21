@@ -21,7 +21,8 @@ class ProtocoloCliente {
 public:
     ProtocoloCliente(const char* host, const char* port, bool& dead_connection);
 
-    void sendMessegeToServer(const CommandPickUp& command);
+    void sendGameAccessToServer(const GameAccess& game_access);
+    void sendInGameToServer(const uint8_t& command);
     CommandFullGame reciveFromServer();
     CommandFullGame reciveFullGameFromServer();
     CommandEndOfRound reciveEndOfRoundFromServer();

@@ -4,13 +4,13 @@
 #include "lobby_partidas.h"
 
 Receiver::Receiver(ProtocoloServer& protocolo, bool& dead_connection,
-                   BlockingQueue<CommandGame>& queue_comandos):
+                   BlockingQueue<uint8_t>& queue_comandos):
         protocolo(protocolo), dead_connection(dead_connection), queue_comandos(queue_comandos) {}
 
 void Receiver::run() {
     try {
         while (!dead_connection) {
-            CommandGame command = protocolo.receiveCommandFromClients();
+            uint8_t command = protocolo.receiveCommandFromClients();
             queue_comandos.push(command);
         }
     } catch (const SocketClose& e) {

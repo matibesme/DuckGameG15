@@ -11,7 +11,7 @@ constexpr uint8_t LEFT = 0x06;
 constexpr uint8_t JUMP = 0x04;
 constexpr uint8_t DOWN = 0x07;
 
-constexpr uint16_t MOVE_QUANTITY = 1;
+constexpr uint16_t MOVEMENT_QUANTITY= 1;
 
 
 constexpr uint8_t ORIENTATION_RIGTH = 0x00;
