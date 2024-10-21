@@ -24,10 +24,20 @@ void GameLoop::run() {
 
 
 void GameLoop::processCommands() {
-    CommandAccess comando;
+    uint8_t comando;
     while (queue_comandos.try_pop(comando)) {
-      
-        CommandReward command = {comando.player_name, codigo};
+        if (comando==RIGTH){
+            personaje.setXPos(1);
+        } else if (comando==LEFT){
+            personaje.setXPos(-1);
+        } else if (comando==JUMP){
+            personaje.setYPos(-1);
+        } else if (comando==DOWN){
+            personaje.setYPos(1);
+        } 
+
+
+        CommandGame command = {}
         queues_map.sendMessagesToQueues(command);
     }
 

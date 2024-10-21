@@ -10,7 +10,7 @@ struct Element{
     uint16_t x_pos;
     uint16_t y_pos;
     uint8_t orientation;
-}
+};
 
 
 struct CommandGame {
@@ -35,20 +35,12 @@ struct CommandClient {
     //Weapons
     uint8_t weapon_action;
 
-}
+};
 
 struct GameAccess {
     uint8_t action_type; // new game or join game
     uint8_t game_id;
-
-    
-    
-}
-
-
-
-struct CommandClient {
-    uint8_t type;
-    uint8_t command;
-
 };
+
+
+

@@ -18,11 +18,11 @@ uint8_t Personaje::getOrientation() {
 }
 
 void Personaje::setXPos(uint16_t x_pos) {
-    this->x_pos = x_pos;
+    this->x_pos += x_pos;
 }
 
 void Personaje::setYPos(uint16_t y_pos) {
-    this->y_pos = y_pos;
+    this->y_pos += y_pos;
 }
 
 void Personaje::setOrientation(uint8_t orientation) {

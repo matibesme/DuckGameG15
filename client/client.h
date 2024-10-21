@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 
-#include "../common/decode_id_to_gun.h"
+
 #include "../common/game_exception.h"
 
 #include "constant_definitons.h"
