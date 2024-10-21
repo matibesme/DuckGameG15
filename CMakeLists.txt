@@ -61,8 +61,7 @@ endif()
 # ---------------
 if(TALLER_CLIENT)
     # Cambiar el nombre del ejecutable si es necesario
-    add_executable(taller_client
-            client/c_sender.cpp)
+    add_executable(taller_client)
     find_package(SDL2_image REQUIRED)
     add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
 
