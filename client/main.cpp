@@ -1,5 +1,3 @@
-#include "common/foo.h"
-
 #include <iostream>
 #include <exception>
 
