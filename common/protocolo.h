@@ -17,7 +17,8 @@ public:
     void checkSocketClose(const bool& is_socket_close);
     void sendByte(uint8_t byte, bool& is_socket_close);
     void sendPlayerName(const std::string& player_name, bool& is_socket_close);
- 
+    void sendShort(uint16_t short_to_send, bool& is_socket_close);
+    uint16_t receiveShort(bool& is_socket_close);
     uint8_t receiveByte(bool& is_socket_close);
     std::string receivePlayerName(bool& is_socket_close);
 

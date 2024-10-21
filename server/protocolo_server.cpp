@@ -8,11 +8,11 @@ ProtocoloServer::ProtocoloServer(Socket socket, bool& dead_connection) :
 
 void ProtocoloServer::sendToClient(const CommandGame& command) {
     try {
-        if (command.type_of_action == 0x20) {
+        if (command.type_of_action == FULL_GAME_BYTE) {
             sendFullGame(command);
-        } else if (command.type_of_action == 0x21) {
+        } else if (command.type_of_action == END_ROUND_BYTE) {
             sendEndOfRound(command);
-        } else if (command.type_of_action == 0x22) {
+        } else if (command.type_of_action == VICTORY_BYTE) {
             sendVictory(command);
         }
     } catch (const SocketClose& e) {
@@ -52,11 +52,13 @@ void ProtocoloServer::sendEndOfRound(const CommandGame& command) {
 
 CommandClient ProtocoloServer::receiveCommandFromClients() {
     try {
+    
         uint8_t first_byte = protocolo.receiveByte(dead_connection);
-        if (first_byte == 0x09) {}
-        // aca me faltaria chequear si estoy recibiendo para setear nivel o movimiento
         uint8_t movement_id = protocolo.receiveByte(dead_connection);
+        
+        
         return {movment_type, movement_id};
+
     } catch (const LibError& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;

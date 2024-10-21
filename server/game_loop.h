@@ -23,10 +23,7 @@ private:
     bool& end_game;
 
     ProtectedQueuesMap& queues_map;
-    DecodeIdToGun decode_id_to_gun;
-    std::map<uint8_t, uint8_t> boxes_codes;
-    std::map<uint8_t, int> box_times;
-    std::map<uint8_t, int> times_left_to_reappear;
+
 
 public:
     GameLoop(BlockingQueue<CommandGame>& queue_comandos, bool& end_game,
@@ -34,10 +31,7 @@ public:
     virtual void run() override;
     void processCommands();
     void handleNewBox();
-    uint8_t decodeCode(const uint8_t& code);
-    bool isBoxOccupied(const uint8_t& box_id);
-    bool isNewBoxAppeared();
-    void setBoxOccupied(const uint8_t& box_id);
+
 
 
     virtual ~GameLoop();

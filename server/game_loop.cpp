@@ -5,20 +5,7 @@ GameLoop::GameLoop(BlockingQueue<CommandGame>& queue_comandos, bool& end_game,
                    ProtectedQueuesMap& queues_map):
         queue_comandos(queue_comandos),
         end_game(end_game),
-        queues_map(queues_map),
-        decode_id_to_gun(),
-        boxes_codes({{BAZOOKA_CODE, BAZOOKA},
-                     {CHAINSAW_CODE, CHAINSAW},
-                     {DEATH_RAY_CODE, DEATH_RAY},
-                     {SHOTGUN_CODE, SHOTGUN}}),
-        box_times({{BAZOOKA, TIME_BAZOOKA},
-                   {CHAINSAW, TIME_CHAINSAW},
-                   {DEATH_RAY, TIME_DEATH_RAY},
-                   {SHOTGUN, TIME_SHOTGUN}}),
-        times_left_to_reappear({{BAZOOKA, TIME_INICIAL},
-                                {CHAINSAW, TIME_INICIAL},
-                                {DEATH_RAY, TIME_INICIAL},
-                                {SHOTGUN, TIME_INICIAL}}) {}
+        queues_map(queues_map){}
 
 void GameLoop::run() {
     try {
@@ -58,25 +45,6 @@ void GameLoop::processCommands() {
     }
 }
 
-uint8_t GameLoop::decodeCode(const uint8_t& code) { return boxes_codes.at(code); }
 
-bool GameLoop::isBoxOccupied(const uint8_t& box_id) { return times_left_to_reappear[box_id] > 0; }
-
-bool GameLoop::isNewBoxAppeared() {
-    bool new_box_appeared = false;
-    for (auto it = times_left_to_reappear.begin(); it != times_left_to_reappear.end(); ++it) {
-        if (it->second > 0) {
-            it->second--;
-            if (it->second == 0) {
-                new_box_appeared = true;
-            }
-        }
-    }
-    return new_box_appeared;
-}
-
-void GameLoop::setBoxOccupied(const uint8_t& box_id) {
-    times_left_to_reappear[box_id] = box_times[box_id];
-}
 
 GameLoop::~GameLoop() {}

@@ -1,6 +1,7 @@
 #include "receiver.h"
 
 #include "../common/liberror.h"
+#include "lobby_partidas.h"
 
 Receiver::Receiver(ProtocoloServer& protocolo, bool& dead_connection,
                    BlockingQueue<CommandGame>& queue_comandos):
@@ -8,15 +9,7 @@ Receiver::Receiver(ProtocoloServer& protocolo, bool& dead_connection,
 
 void Receiver::run() {
     try {
-        while (!in_game){
-            if (protocolo.receiveCommandFromClients().type_of_action == ) {  //aca agrego comando de incio de juego
-                in_game = true;
-            }
-        }
-
-
         while (!dead_connection) {
-
             CommandGame command = protocolo.receiveCommandFromClients();
             queue_comandos.push(command);
         }
