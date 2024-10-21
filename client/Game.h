@@ -4,10 +4,11 @@
 #include "Duck.h"
 #include "Graficos.h"
 #include "Background.h"
+#include "protocolo_cliente.h"
 
 class Game {
 public:
-    Game();
+    Game(ProtocoloCliente& protocol);
     void run();
 
 private:
@@ -16,6 +17,7 @@ private:
     Background background;
     unsigned int prevTicks;
     SDL2pp::Texture duckTexture;
+    ProtocoloCliente& protocol;
 };
 
 #endif // GAME_H
