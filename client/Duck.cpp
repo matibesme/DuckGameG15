@@ -26,11 +26,12 @@ void Duck::update(bool moveRight, bool moveLeft, bool jump, unsigned int frameDe
     isMovingLeft = moveLeft;
     isJumping = jump;
 
-    if (isMovingRight) {
+    if (isMovingRight && false) {
         positionX += frameDelta * MOVE_SPEED;
         colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
     } else if (isMovingLeft) {
-        positionX -= frameDelta * MOVE_SPEED;
+        //positionX -= frameDelta * MOVE_SPEED;
+        positionX -= frameDelta * 0.2f;
         colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
     }
 
@@ -102,9 +103,11 @@ bool Duck::isTouchingFloor() const {
     return positionY == initialY;
 }
 
-void Duck::setPosicion(float x, float y) {
-    positionX = x;
-    positionY = y;
+void Duck::setPosicion(float x, [[maybe_unused]]float y) {
+    positionX = x ;
+    //positionY = y;
+    isMovingRight = true;
+    colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
 }
 
 bool Duck::checkCollision(SDL2pp::Rect rect) {

@@ -13,7 +13,6 @@ void Sender::run() {
     try {
         while (!dead_connection) {
             CommandGame command = queue_sender.pop();
-            
             protocolo.sendToClient(command);
         }
     } catch (const ClosedQueue& e) {

@@ -18,7 +18,7 @@ class Personaje{
         uint8_t getId();
         void setXPos(float x_pos, bool isRight);
         void setYPos(float y_pos, bool isJump);
-        void setOrientation(uint8_t orientation);
+        void setTypeOfMove(uint8_t orientation);
         void setId(uint8_t id);
 
         ~Personaje();

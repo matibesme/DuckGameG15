@@ -1,6 +1,7 @@
 #include "protocolo.h"
 
 #include <iostream>
+#include <cstring>
 
 Protocolo::Protocolo(Socket& socket_servidor): socket_servidor(socket_servidor) {}
 
@@ -53,17 +54,28 @@ std::string Protocolo::receivePlayerName(bool& is_socket_close) {
     return player_name;
 }
 
+
 void Protocolo::sendFloat(float float_to_send, bool& is_socket_close) {
-    uint32_t float_to_send_bg = htonl(*reinterpret_cast<uint32_t*>(&float_to_send));
-    socket_servidor.sendall(&float_to_send_bg, 4, &is_socket_close);
+    // Convertimos el float a una secuencia de bytes
+    uint32_t network_order;
+    memcpy(&network_order, &float_to_send, sizeof(float_to_send));
+
+    // Enviar los bytes a través del socket
+    socket_servidor.sendall(&network_order, sizeof(network_order), &is_socket_close);
+
+    // Verificar si el socket se cerró
     checkSocketClose(is_socket_close);
 }
 
 float Protocolo::receiveFloat(bool& is_socket_close) {
-    uint32_t float_received;
-    socket_servidor.recvall(&float_received, 4, &is_socket_close);
-    return *reinterpret_cast<float*>(&float_received);
-}
+    uint32_t network_order;
 
+    socket_servidor.recvall(&network_order, sizeof(network_order), &is_socket_close);
+
+    float float_received;
+    memcpy(&float_received, &network_order, sizeof(network_order));
+
+    return float_received;
+}
 
 Protocolo::~Protocolo() {}

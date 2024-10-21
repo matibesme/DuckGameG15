@@ -1,6 +1,6 @@
 #include "personaje.h"
 
-Personaje::Personaje(): x_pos(30), y_pos(30), orientation(0) {}
+Personaje::Personaje(): x_pos(0), y_pos(386), orientation(0) {}
 
 
 float Personaje::getXPos() {
@@ -31,7 +31,7 @@ void Personaje::setYPos(float y_pos, bool isJump) {
     }
 }
 
-void Personaje::setOrientation(uint8_t orientation) {
+void Personaje::setTypeOfMove(uint8_t orientation) {
     this->orientation = orientation;
 }
 

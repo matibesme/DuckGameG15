@@ -12,13 +12,11 @@ struct Element{
     float x_pos;
     float y_pos;
     uint8_t typeOfMove;
-    uint8_t orientationFliped;
 };
 
 
 struct CommandGame {
     uint8_t type_of_action;
-
     //full game scene
     uint8_t scene_id;
     uint8_t elements_quantity;

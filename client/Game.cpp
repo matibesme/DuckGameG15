@@ -32,7 +32,7 @@ void Game::run() {
                     case SDLK_q:
                         return;
                     case SDLK_d:
-                        isMovingRight = true;
+                        //isMovingRight = true;
                         queue_sender.push(RIGTH);
                         break;
                     case SDLK_a:
@@ -72,7 +72,7 @@ void Game::run() {
            }
         }
         duck.setOnFloor(isOnFloor);
-        //duck.update(isMovingRight, isMovingLeft, is_jumping, frameDelta);
+        duck.update(isMovingRight, isMovingLeft, is_jumping, frameDelta);
         graficos.GetRenderer().Clear();
         background.draw(graficos.GetRenderer());
         duck.draw(graficos.GetRenderer(), duckTexture);

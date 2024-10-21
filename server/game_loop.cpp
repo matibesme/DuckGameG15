@@ -29,10 +29,10 @@ void GameLoop::processCommands() {
     while (queue_comandos.try_pop(comando)) {
         if (comando==S_RIGTH){
             personaje.setXPos(MOVEMENT_QUANTITY,true);
-            personaje.setOrientation(ORIENTATION_RIGTH);
+            personaje.setTypeOfMove(ORIENTATION_RIGTH);
         } else if (comando==S_LEFT){
             personaje.setXPos(MOVEMENT_QUANTITY,false);
-            personaje.setOrientation(ORIENTATION_LEFT);
+            personaje.setTypeOfMove(ORIENTATION_LEFT);
         } else if (comando==S_JUMP){
             //personaje.setYPos(-1);
         } else if (comando==S_DOWN){
