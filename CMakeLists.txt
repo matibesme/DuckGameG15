@@ -60,10 +60,29 @@ endif()
 # Program section
 # ---------------
 if(TALLER_CLIENT)
-    # HEY!! TODO XXX: Change the name of the executable to the one you like!
+    # Cambiar el nombre del ejecutable si es necesario
     add_executable(taller_client)
+    find_package(SDL2_image REQUIRED)
 
-    # Make them depend on taller_common lib
+    # Incluir directorios 'client' y 'common' para los archivos de encabezado
+    include_directories(${CMAKE_SOURCE_DIR}/client)
+    include_directories(${CMAKE_SOURCE_DIR}/common)
+
+    # Incluir automáticamente todos los archivos .cpp y .h de las carpetas 'client' y 'common'
+    file(GLOB CLIENT_SOURCES
+            "${CMAKE_SOURCE_DIR}/client/*.cpp"
+            "${CMAKE_SOURCE_DIR}/client/*.h"
+    )
+
+    file(GLOB COMMON_SOURCES
+            "${CMAKE_SOURCE_DIR}/common/*.cpp"
+            "${CMAKE_SOURCE_DIR}/common/*.h"
+    )
+
+    # Agregar los archivos fuentes de 'client' y 'common' al ejecutable
+    target_sources(taller_client PRIVATE ${CLIENT_SOURCES} ${COMMON_SOURCES})
+
+    # Hacer que dependa de la biblioteca común y SDL2pp
     add_dependencies(taller_client taller_common SDL2pp::SDL2pp)
 
     # Añadir advertencias al proyecto
@@ -72,7 +91,7 @@ if(TALLER_CLIENT)
     # Incluir las cabeceras de la biblioteca libSDL2pp
     target_include_directories(taller_client PRIVATE ${libSDL2pp_SOURCE_DIR})
 
-    # Link the taller_common lib target
+    # Enlazar la biblioteca común y SDL2pp al ejecutable del cliente
     target_link_libraries(taller_client taller_common SDL2pp::SDL2pp SDL2_image::SDL2_image)
 endif()
 
