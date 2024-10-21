@@ -9,8 +9,8 @@
 struct Element{
     uint8_t element_type;
     uint8_t element_id;
-    uint16_t x_pos;
-    uint16_t y_pos;
+    float x_pos;
+    float y_pos;
     uint8_t orientation;
 };
 

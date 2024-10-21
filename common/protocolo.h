@@ -21,6 +21,8 @@ public:
     uint16_t receiveShort(bool& is_socket_close);
     uint8_t receiveByte(bool& is_socket_close);
     std::string receivePlayerName(bool& is_socket_close);
+    void sendFloat(float float_to_send, bool& is_socket_close);
+    float receiveFloat(bool& is_socket_close);
 
 
     ~Protocolo();

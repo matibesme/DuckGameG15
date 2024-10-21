@@ -30,8 +30,8 @@ void ProtocoloServer::sendFullGame(const CommandGame& command) {
     for (const Element& element : command.elements) {
         protocolo.sendByte(element.element_type, dead_connection);
         protocolo.sendByte(element.element_id, dead_connection);
-        protocolo.sendShort(element.x_pos, dead_connection);  // mando uint16 o uint8????
-        protocolo.sendShort(element.y_pos, dead_connection);  // mando uint16 o uint8????
+        protocolo.sendFloat(element.x_pos, dead_connection);
+        protocolo.sendFloat(element.y_pos, dead_connection);
         protocolo.sendByte(element.orientation, dead_connection);
     }
 }

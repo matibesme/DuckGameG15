@@ -52,8 +52,8 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
     for (int i = 0; i < elements_quantity; i++) {
         uint8_t element_type = protocolo.receiveByte(dead_connection);
         uint8_t element_id = protocolo.receiveByte(dead_connection);
-        uint16_t x_pos = protocolo.receiveShort(dead_connection);  
-        uint16_t y_pos = protocolo.receiveShort(dead_connection); 
+        float x_pos = protocolo.receiveFloat(dead_connection);
+        float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t orientation = protocolo.receiveByte(dead_connection);
         elements.push_back({element_type, element_id, x_pos, y_pos, orientation});
     }

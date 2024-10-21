@@ -53,5 +53,17 @@ std::string Protocolo::receivePlayerName(bool& is_socket_close) {
     return player_name;
 }
 
+void Protocolo::sendFloat(float float_to_send, bool& is_socket_close) {
+    uint32_t float_to_send_bg = htonl(*reinterpret_cast<uint32_t*>(&float_to_send));
+    socket_servidor.sendall(&float_to_send_bg, 4, &is_socket_close);
+    checkSocketClose(is_socket_close);
+}
+
+float Protocolo::receiveFloat(bool& is_socket_close) {
+    uint32_t float_received;
+    socket_servidor.recvall(&float_received, 4, &is_socket_close);
+    return *reinterpret_cast<float*>(&float_received);
+}
+
 
 Protocolo::~Protocolo() {}
