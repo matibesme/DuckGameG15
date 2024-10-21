@@ -27,20 +27,20 @@ void GameLoop::run() {
 void GameLoop::processCommands() {
     uint8_t comando;
     while (queue_comandos.try_pop(comando)) {
-        if (comando==RIGTH){
+        if (comando==S_RIGTH){
             personaje.setXPos(MOVEMENT_QUANTITY,true);
             personaje.setOrientation(ORIENTATION_RIGTH);
-        } else if (comando==LEFT){
+        } else if (comando==S_LEFT){
             personaje.setXPos(MOVEMENT_QUANTITY,false);
             personaje.setOrientation(ORIENTATION_LEFT);
-        } else if (comando==JUMP){
+        } else if (comando==S_JUMP){
             //personaje.setYPos(-1);
-        } else if (comando==DOWN){
+        } else if (comando==S_DOWN){
             //personaje.setYPos(1);
         } 
 
 
-        CommandGame command = {FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(), personaje.getOrientation()}}, 0,""};
+        CommandGame command = {S_FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(), personaje.getOrientation()}}, 0,""};
         queues_map.sendMessagesToQueues(command);
     }
 

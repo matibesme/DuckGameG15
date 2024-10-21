@@ -3,11 +3,11 @@
 Personaje::Personaje(): x_pos(30), y_pos(30), orientation(0) {}
 
 
-uint16_t Personaje::getXPos() {
+float Personaje::getXPos() {
     return x_pos;
 }
 
-uint16_t Personaje::getYPos() {
+float Personaje::getYPos() {
     return y_pos;
 }
 
@@ -15,7 +15,7 @@ uint8_t Personaje::getOrientation() {
     return orientation;
 }
 
-void Personaje::setXPos(uint16_t x_pos, bool isRight) {
+void Personaje::setXPos(float x_pos, bool isRight) {
     if (isRight) {
         this->x_pos += x_pos;
     } else {
@@ -23,7 +23,7 @@ void Personaje::setXPos(uint16_t x_pos, bool isRight) {
     }
 }
 
-void Personaje::setYPos(uint16_t y_pos, bool isJump) {
+void Personaje::setYPos(float y_pos, bool isJump) {
     if (isJump) {
         this->y_pos -= y_pos;
     } else {
