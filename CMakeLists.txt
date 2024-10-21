@@ -103,6 +103,8 @@ if(TALLER_SERVER)
 
     # Incluir el directorio 'server' para los archivos de encabezado (opcional)
     include_directories(${CMAKE_SOURCE_DIR}/server)
+    include_directories(${CMAKE_SOURCE_DIR}/common)
+
 
     # Incluir automáticamente todos los archivos .cpp y .h de la carpeta 'server'
     file(GLOB SERVER_SOURCES
@@ -110,8 +112,13 @@ if(TALLER_SERVER)
             "${CMAKE_SOURCE_DIR}/server/*.h"
     )
 
+    file(GLOB COMMON_SOURCES
+            "${CMAKE_SOURCE_DIR}/common/*.cpp"
+            "${CMAKE_SOURCE_DIR}/common/*.h"
+    )
+
     # Agregar los archivos fuentes al ejecutable
-    target_sources(taller_server PRIVATE ${SERVER_SOURCES})
+    target_sources(taller_server PRIVATE ${SERVER_SOURCES} ${COMMON_SOURCES})
 
     # Hacer que dependa de la biblioteca común
     add_dependencies(taller_server taller_common)
