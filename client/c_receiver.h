@@ -6,14 +6,14 @@
 #include "../common/socket.h"
 #include "../common/thread.h"
 
-#include "protocolo_server.h"
+#include "protocolo_cliente.h"
 
 
 class Receiver: public Thread {
 
 private:
-    BlockingQueue<CommandGameShow>& queue_receiver;
     ProtocoloCliente& protocolo;
+    BlockingQueue<CommandGameShow>& queue_receiver;
 
 public:
     Receiver(ProtocoloCliente& protocolo, BlockingQueue<CommandGameShow>& queue_receiver);

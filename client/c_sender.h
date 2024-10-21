@@ -6,7 +6,7 @@
 #include "../common/socket.h"
 #include "../common/thread.h"
 
-#include "protocolo_server.h"
+#include "protocolo_cliente.h"
 
 class Sender: public Thread {
 

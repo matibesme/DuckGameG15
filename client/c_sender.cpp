@@ -1,26 +1,22 @@
-#include "sender.h"
+#include "c_sender.h"
 
 #include <exception>
 #include <iostream>
 
 #include "../common/game_exception.h"
 
-Sender::Sender(){}
+Sender::Sender(ProtocoloCliente &protocolo, BlockingQueue<uint8_t> &queue_sender):
+        queue_sender(queue_sender), protocolo(protocolo) {}
 
 void Sender::run() {
-    while (_keep_talking) {
+    while (true) {
         try {
             uint8_t command = queue_sender.pop();
-            protocolo.send_command(command);
-        } catch (const GameException& e) {
-            std::cerr << "Error: " << e.what() << '\n';
-            dead_connection = true;
+            protocolo.sendInGameToServer(command);
         } catch (const std::exception& e) {
             std::cerr << "Error: " << e.what() << '\n';
-            dead_connection = true;
         } catch (...) {
             std::cerr << "Error desconocido.\n";
-            dead_connection = true;
         }
     }
 }

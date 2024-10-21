@@ -22,5 +22,4 @@ void Sender::run() {
     }
 }
 
-
 Sender::~Sender() = default;

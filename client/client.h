@@ -10,8 +10,8 @@
 #include "constant_definitons.h"
 #include "protocolo_cliente.h"
 #include "Game.h"
-#include "sender.h"
-#include "receiver.h"
+#include "c_sender.h"
+#include "c_receiver.h"
 
 class Client {
 private:

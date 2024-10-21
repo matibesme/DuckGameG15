@@ -8,7 +8,7 @@ ProtocoloServer::ProtocoloServer(Socket socket, bool& dead_connection) :
 
 void ProtocoloServer::sendToClient(const CommandGame& command) {
     try {
-        if (command.type_of_action == FULL_GAME_BYTE) {
+        if (command.type_of_action == S_FULL_GAME_BYTE) {
             sendFullGame(command);
         }/* else if (command.type_of_action == END_ROUND_BYTE) {
             sendEndOfRound(command);
@@ -54,7 +54,7 @@ uint8_t ProtocoloServer::receiveCommandFromClients() {
     try {
     
         uint8_t first_byte = protocolo.receiveByte(dead_connection);
-        if (first_byte == MOVEMENT_ACTION) {
+        if (first_byte == S_MOVEMENT_ACTION) {
             return protocolo.receiveByte(dead_connection);
         }
         
