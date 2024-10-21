@@ -63,6 +63,8 @@ if(TALLER_CLIENT)
     # Cambiar el nombre del ejecutable si es necesario
     add_executable(taller_client)
     find_package(SDL2_image REQUIRED)
+    add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
+
 
     # Incluir directorios 'client' y 'common' para los archivos de encabezado
     include_directories(${CMAKE_SOURCE_DIR}/client)

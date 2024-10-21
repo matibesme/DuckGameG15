@@ -10,7 +10,7 @@ struct Element{
     uint16_t x_pos;
     uint16_t y_pos;
     uint8_t orientation;
-}
+};
 
 
 struct CommandGame {
