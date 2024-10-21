@@ -15,8 +15,8 @@ class Personaje{
         uint16_t getYPos();
         uint8_t getOrientation();
         uint8_t getId();
-        void setXPos(uint16_t x_pos);
-        void setYPos(uint16_t y_pos);
+        void setXPos(uint16_t x_pos, bool isRight);
+        void setYPos(uint16_t y_pos, bool isJump);
         void setOrientation(uint8_t orientation);
         void setId(uint8_t id);
 

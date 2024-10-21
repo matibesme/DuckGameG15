@@ -17,12 +17,20 @@ uint8_t Personaje::getOrientation() {
     return orientation;
 }
 
-void Personaje::setXPos(uint16_t x_pos) {
-    this->x_pos += x_pos;
+void Personaje::setXPos(uint16_t x_pos, bool isRight) {
+    if (isRight) {
+        this->x_pos += x_pos;
+    } else {
+        this->x_pos -= x_pos;
+    }
 }
 
-void Personaje::setYPos(uint16_t y_pos) {
-    this->y_pos += y_pos;
+void Personaje::setYPos(uint16_t y_pos, bool isJump) {
+    if (isJump) {
+        this->y_pos -= y_pos;
+    } else {
+        this->y_pos += y_pos;
+    }
 }
 
 void Personaje::setOrientation(uint8_t orientation) {

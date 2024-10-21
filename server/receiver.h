@@ -15,12 +15,12 @@ private:
     ProtocoloServer& protocolo;
     bool& dead_connection;
     bool in_game;
-    BlockingQueue<CommandGame>& queue_comandos;
+    BlockingQueue<uint8_t>& queue_comandos;
 
 
 public:
     Receiver(ProtocoloServer& protocolo, bool& dead_connection,
-             BlockingQueue<CommandGame>& queue_comandos);
+             BlockingQueue<uint8_t>& queue_comandos);
     virtual void run() override;
     virtual ~Receiver();
 };

@@ -20,10 +20,11 @@
 class GameLoop: public Thread {
 
 private:
-    BlockingQueue<CommandGame>& queue_comandos;
+    BlockingQueue<uint8_t>& queue_comandos;
     bool& end_game;
     ProtectedQueuesMap& queues_map;
     Personaje personaje;
+    std::map<uint8_t, > boxes;
 
 public:
     GameLoop(BlockingQueue<CommandGame>& queue_comandos, bool& end_game,

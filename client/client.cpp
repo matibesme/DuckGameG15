@@ -4,7 +4,7 @@ Client::Client(const char* host, const char* port):
         protocolo(host, port, is_socket_close), is_socket_close(false), decode_id_to_gun() {}
 
 void Client::execute() {
-    firstInteraction();
+  
 
     while (!is_socket_close) {
         std::string input;
