@@ -32,7 +32,7 @@ void ProtocoloServer::sendFullGame(const CommandGame& command) {
         protocolo.sendByte(element.element_id, dead_connection);
         protocolo.sendFloat(element.x_pos, dead_connection);
         protocolo.sendFloat(element.y_pos, dead_connection);
-        protocolo.sendByte(element.orientation, dead_connection);
+        protocolo.sendByte(element.typeOfMove, dead_connection);
     }
 }
 /*

@@ -102,6 +102,11 @@ bool Duck::isTouchingFloor() const {
     return positionY == initialY;
 }
 
+void Duck::setPosicion(float x, float y) {
+    positionX = x;
+    positionY = y;
+}
+
 bool Duck::checkCollision(SDL2pp::Rect rect) {
     Rect rectDuck((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
 

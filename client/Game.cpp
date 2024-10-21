@@ -17,11 +17,10 @@ Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, Blo
 void Game::run() {
     SDL_Event event;
 
-    bool isMovingRight = false, isMovingLeft = false, isOnFloor = false, is_jumping = false;
-
+    [[maybe_unused]]bool isMovingRight = false, isMovingLeft = false, isOnFloor = false, is_jumping = false;
     while (true) {
         unsigned int frameTicks = SDL_GetTicks();
-        unsigned int frameDelta = frameTicks - prevTicks;
+        [[maybe_unused]]unsigned int frameDelta = frameTicks - prevTicks;
         prevTicks = frameTicks;
 
         while (SDL_PollEvent(&event)) {
@@ -34,6 +33,7 @@ void Game::run() {
                         return;
                     case SDLK_d:
                         isMovingRight = true;
+                        queue_sender.push(RIGTH);
                         break;
                     case SDLK_a:
                         isMovingLeft = true;
@@ -63,10 +63,16 @@ void Game::run() {
                 }
             }
         }
-       
 
+        CommandGameShow command;
+
+        if(queue_receiver.try_pop(command)){
+           for(auto &element : command.elements) {
+                duck.setPosicion(element.x_pos, element.y_pos);
+           }
+        }
         duck.setOnFloor(isOnFloor);
-        duck.update(isMovingRight, isMovingLeft, is_jumping, frameDelta);
+        //duck.update(isMovingRight, isMovingLeft, is_jumping, frameDelta);
         graficos.GetRenderer().Clear();
         background.draw(graficos.GetRenderer());
         duck.draw(graficos.GetRenderer(), duckTexture);

@@ -22,7 +22,6 @@ private:
 public:
     Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver); 
     void run();
-
 };
 
 #endif // GAME_H

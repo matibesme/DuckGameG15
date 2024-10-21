@@ -11,7 +11,8 @@ struct Element{
     uint8_t element_id;
     float x_pos;
     float y_pos;
-    uint8_t orientation;
+    uint8_t typeOfMove;
+    uint8_t orientationFliped;
 };
 
 

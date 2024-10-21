@@ -15,6 +15,7 @@ public:
     bool checkCollision(Rect rect);
     bool isTouchingFloor() const;
     bool isOnTop() const;
+    void setPosicion(float x, float y);
 
 private:
     float positionX;
