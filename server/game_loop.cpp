@@ -40,7 +40,7 @@ void GameLoop::processCommands() {
         } 
 
 
-        CommandGame command = {FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(), personaje.getOrientation()}}, 0, {},""};
+        CommandGame command = {FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(), personaje.getOrientation()}}, 0,""};
         queues_map.sendMessagesToQueues(command);
     }
 

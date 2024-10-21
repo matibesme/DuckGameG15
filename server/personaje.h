@@ -1,3 +1,4 @@
+#include <cstdint>
 
 
 class Personaje{
@@ -9,7 +10,7 @@ class Personaje{
         uint8_t orientation;
 
     public:
-        Personaje(uint16_t x_pos, uint16_t y_pos, uint8_t orientation);
+        Personaje();
         void move(uint8_t movement);
         uint16_t getXPos();
         uint16_t getYPos();
@@ -22,4 +23,4 @@ class Personaje{
 
         ~Personaje();
 
-}
+};

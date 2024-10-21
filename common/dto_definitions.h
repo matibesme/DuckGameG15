@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
 #include <string>
+#include <vector>
+
 
 
 
@@ -22,10 +24,17 @@ struct CommandGame {
     std::vector<Element> elements;
     //end of round scene
     uint8_t players_quantity;
-    std::vector<PlayerStatus> players_status;
+    //std::vector<PlayerStatus> players_status;
     //CommandVictory
     std::string player_name;
 };
+
+struct CommandGameShow {
+    uint8_t scene_id;
+    uint8_t elements_quantity;
+    std::vector<Element> elements;
+};
+
 
 struct CommandClient {
     uint8_t type_of_action; 
@@ -41,6 +50,5 @@ struct GameAccess {
     uint8_t action_type; // new game or join game
     uint8_t game_id;
 };
-
 
 

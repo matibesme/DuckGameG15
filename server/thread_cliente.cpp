@@ -2,7 +2,7 @@
 
 #include "../common/game_exception.h"
 
-ThreadCliente::ThreadCliente(Socket peer, BlockingQueue<CommandGame>& queue_comandos, uint8_t id):
+ThreadCliente::ThreadCliente(Socket peer, BlockingQueue<uint8_t>& queue_comandos, uint8_t id):
 
         dead_connection(),
         queue_comandos(queue_comandos),

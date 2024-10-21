@@ -4,7 +4,6 @@
 #include <iostream>
 
 #include "../common/game_exception.h"
-#include "../common/liberror.h"
 
 Sender::Sender(ProtocoloServer& protocolo, BlockingQueue<CommandGame>& queue_sender,
                bool& dead_connection):
@@ -14,7 +13,7 @@ void Sender::run() {
     try {
         while (!dead_connection) {
             CommandGame command = queue_sender.pop();
-            protocolo.sendMessegeToClients(command);
+            protocolo.sendToClient(command);
         }
     } catch (const ClosedQueue& e) {
         dead_connection = true;

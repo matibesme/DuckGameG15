@@ -5,7 +5,7 @@ constexpr char SALIDA = 'q';
 constexpr uint8_t FULL_GAME_BYTE = 0x20;
 constexpr uint8_t END_ROUND_BYTE = 0x21;
 constexpr uint8_t VICTORY_BYTE = 0x22;
-
+constexpr uint8_t MOVEMENT_ACTION = 0x03;
 constexpr uint8_t RIGTH = 0x05;
 constexpr uint8_t LEFT = 0x06;
 constexpr uint8_t JUMP = 0x04;

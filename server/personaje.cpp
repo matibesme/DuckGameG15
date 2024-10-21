@@ -1,8 +1,6 @@
-
+#include "personaje.h"
 
 Personaje::Personaje(): x_pos(30), y_pos(30), orientation(0) {}
-
-
 
 
 uint16_t Personaje::getXPos() {
@@ -37,4 +35,5 @@ void Personaje::setOrientation(uint8_t orientation) {
     this->orientation = orientation;
 }
 
+Personaje::~Personaje() {}
 

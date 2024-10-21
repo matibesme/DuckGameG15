@@ -2,7 +2,7 @@
 
 ProtectedQueuesMap::ProtectedQueuesMap(): map_queues_sender(), m() {}
 
-void ProtectedQueuesMap::addClient(const uint8_t& id, BlockingQueue<CommandReward>& queue) {
+void ProtectedQueuesMap::addClient(const uint8_t& id, BlockingQueue<CommandGame>& queue) {
     std::lock_guard<std::mutex> lock(m);
     map_queues_sender[id] = &queue;
 }
@@ -13,7 +13,7 @@ void ProtectedQueuesMap::removeQueue(const uint8_t& id) {
     map_queues_sender.erase(id);
 }
 
-void ProtectedQueuesMap::sendMessagesToQueues(const CommandReward& command) {
+void ProtectedQueuesMap::sendMessagesToQueues(const CommandGame& command) {
     std::lock_guard<std::mutex> lock(m);
     for (auto it = map_queues_sender.begin(); it != map_queues_sender.end(); ++it) {
         it->second->push(command);

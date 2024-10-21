@@ -24,10 +24,10 @@ private:
     bool& end_game;
     ProtectedQueuesMap& queues_map;
     Personaje personaje;
-    std::map<uint8_t, > boxes;
+
 
 public:
-    GameLoop(BlockingQueue<CommandGame>& queue_comandos, bool& end_game,
+    GameLoop(BlockingQueue<uint8_t>& queue_comandos, bool& end_game,
              ProtectedQueuesMap& queues_map);
     virtual void run() override;
     void processCommands();

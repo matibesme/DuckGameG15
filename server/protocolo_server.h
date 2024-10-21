@@ -6,8 +6,9 @@
 #include <utility>
 
 #include "../common/dto_definitions.h"
+#include "constant_definitons.h"
 #include "../common/game_exception.h"
-#include "../common/liberror.h"
+
 #include "../common/protocolo.h"
 #include "../common/socket.h"
 
@@ -21,10 +22,10 @@ public:
     
     void sendToClient(const CommandGame& command);
     void sendFullGame(const CommandGame& command);
-    void sendVictory(const CommandGame& command);
-    void sendEndOfRound(const CommandGame& command);
-    void sendToClient(const CommandGame& command);
-    CommandClient receiveCommandFromClients();
+    /*void sendVictory(const CommandGame& command);
+    void sendEndOfRound(const CommandGame& command);*/
+   
+    uint8_t receiveCommandFromClients();
     void closeSocket();
     ~ProtocoloServer();
 };

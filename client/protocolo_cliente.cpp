@@ -1,50 +1,51 @@
 #include "protocolo_cliente.h"
 
 ProtocoloCliente::ProtocoloCliente(const char* host, const char* port, bool& dead_connection):
-        socket(host, port), dead_connection(dead_connection), protocolo(socket), decode_type_of_action({RIGTH: MOVEMENT_ACTION, LEFT: MOVEMENT_ACTION, JUMP: MOVEMENT_ACTION, DOWN: MOVEMENT_ACTION, PICKUP: WEAPON_ACTION, LEAVE_GUN: WEAPON_ACTION, SHOT: WEAPON_ACTION, AIM_UP: WEAPON_ACTION}) {}
+        socket(host, port), dead_connection(dead_connection), protocolo(socket),
+        decode_type_of_action({{RIGTH, MOVEMENT_ACTION}, {LEFT, MOVEMENT_ACTION}, {JUMP, MOVEMENT_ACTION}, {DOWN, MOVEMENT_ACTION}, {PICKUP, WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOT, WEAPON_ACTION}, {AIM_UP, WEAPON_ACTION}}) {}
 
-
-
+/*
 void ProtocoloCliente::sendGameAccessToServer(const GameAccess& game_access) {
     try {
         protocolo.sendByte(game_access.action_type);
         protocolo.sendByte(game_access.game_id);
     } catch (const SocketClose& e) {
         std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
-    } catch (const LibError& e) {
+    } catch (const std::exception& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;
     }
-}
+}*/
 
 void ProtocoloCliente::sendInGameToServer(const uint8_t& command) {
     try {
-        protocolo.sendByte(decode_type_of_action[command]);
-        protocolo.sendByte(command);
+        protocolo.sendByte(decode_type_of_action[command],dead_connection);
+        protocolo.sendByte(command,dead_connection);
 
     } catch (const SocketClose& e) {
         std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
-    } catch (const LibError& e) {
+    } catch (const std::exception& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;
     }
 }
 
 
-CommandFullGame ProtocoloCliente::reciveFromServer() {
+CommandGameShow ProtocoloCliente::reciveFromServer() {
     try {
         uint8_t firstByte = protocolo.receiveByte(dead_connection);
-        if (first_byte==FULL_GAME_BYTE) return reciveFullGameFromServer();
-        if (firstByte == END_ROUND_BYTE) return reciveEndOfRoundFromServer();
+        if (firstByte==FULL_GAME_BYTE) return reciveFullGameFromServer();
+        /*if (firstByte == END_ROUND_BYTE) return reciveEndOfRoundFromServer();
         if (firstByte == VICTORY_BYTE) return reciveVictoryFromServer();
-    } catch (const LibError& e) {
+        */
+    } catch (const std::exception& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;
     }
     throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
 
-CommandFullGame ProtocoloCliente::reciveFullGameFromServer() {
+CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
     uint8_t scene_id = protocolo.receiveByte(dead_connection);
     uint8_t elements_quantity = protocolo.receiveByte(dead_connection);
     std::vector<Element> elements;
@@ -58,7 +59,7 @@ CommandFullGame ProtocoloCliente::reciveFullGameFromServer() {
     }
     return {scene_id, elements_quantity, elements};
 }
-
+/*
 CommandEndOfRound ProtocoloCliente::reciveEndOfRoundFromServer() {
     uint8_t players_quantity = protocolo.receiveByte(dead_connection);
     std::vector<PlayerStatus> players_status;
@@ -73,4 +74,6 @@ CommandEndOfRound ProtocoloCliente::reciveEndOfRoundFromServer() {
 CommandVictory ProtocoloCliente::reciveVictoryFromServer() {
     std::string player_name = protocolo.receivePlayerName(dead_connection);
     return {player_name};
-}
+}*/
+
+ProtocoloCliente::~ProtocoloCliente() {}

@@ -6,9 +6,7 @@
 const uint8_t FIRST_SEND_BYTE = 0x03;
 const uint8_t FIRST_RECIVE_BYTE = 0x06;
 
-#define WELCOME_MESSAGE "What is your name?"
-#define NEW_BOX_MESSAGE "A new box has appeared"
-#define PICKED_UP_MESSAGE " picked up a "
+
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
 #define CANT_ARGUMENTS 3

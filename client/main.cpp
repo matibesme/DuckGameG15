@@ -1,15 +1,29 @@
-#include "Game.h"
-
-#include <iostream>
 #include <exception>
+#include <iostream>
 
-int main() try {
-    Game game;
-    game.run();
+#include "client.h"
+#include "constant_definitons.h"
 
-	return 0;
-} catch (std::exception& e) {
-	// If case of error, print it and exit with error
-	std::cerr << e.what() << std::endl;
-	return 1;
+
+int main(int argc, char* argv[]) {
+    if (argc != CANT_ARGUMENTS) {
+        std::cerr << "Ingrese correctamente la IP o host y el puerto o servicio.\n";
+        return EXIT_FAILURE;
+    }
+
+    try {
+        const char* host = argv[HOST];
+        const char* port = argv[PORT];
+
+        Client client(host, port);
+        client.execute();
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << '\n';
+        return EXIT_FAILURE;
+    } catch (...) {
+        std::cerr << "Error desconocido.\n";
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }

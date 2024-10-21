@@ -23,9 +23,9 @@ void Server::run() {
         acceptor.join();
         game_loop.join();
 
-    } catch (const LibError& e) {
+    } /*catch (const std::exception& e) {
         std::cerr << e.what() << "Error en el socket, mirar servidor" << std::endl;
-    } catch (const std::exception& e) {
+    }*/ catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
 }

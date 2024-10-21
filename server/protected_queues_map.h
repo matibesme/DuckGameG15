@@ -10,13 +10,13 @@
 
 class ProtectedQueuesMap {
 private:
-    std::map<uint8_t, BlockingQueue<CommandReward>*> map_queues_sender;
+    std::map<uint8_t, BlockingQueue<CommandGame>*> map_queues_sender;
     std::mutex m;
 
 public:
     ProtectedQueuesMap();
-    void addClient(const uint8_t& id, BlockingQueue<CommandReward>& queue);
+    void addClient(const uint8_t& id, BlockingQueue<CommandGame>& queue);
     void removeQueue(const uint8_t& id);
-    void sendMessagesToQueues(const CommandReward& command);
+    void sendMessagesToQueues(const CommandGame& command);
     ~ProtectedQueuesMap();
 };

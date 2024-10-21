@@ -3,12 +3,13 @@
 #include <ostream>
 #include <string>
 #include <utility>
-
+#include <map>
 #include "../common/dto_definitions.h"
 #include "../common/game_exception.h"
-#include "../common/liberror.h"
+//#include "../common/liberror.h"
 #include "../common/protocolo.h"
 #include "../common/socket.h"
+
 
 #include "constant_definitons.h"
 
@@ -21,12 +22,12 @@ class ProtocoloCliente {
 public:
     ProtocoloCliente(const char* host, const char* port, bool& dead_connection);
 
-    void sendGameAccessToServer(const GameAccess& game_access);
+   // void sendGameAccessToServer(const GameAccess& game_access);
     void sendInGameToServer(const uint8_t& command);
-    CommandFullGame reciveFromServer();
-    CommandFullGame reciveFullGameFromServer();
-    CommandEndOfRound reciveEndOfRoundFromServer();
-    CommandVictory reciveVictoryFromServer();
+    CommandGameShow reciveFromServer();
+    CommandGameShow reciveFullGameFromServer();
+    /*CommandEndOfRound reciveEndOfRoundFromServer();
+    CommandVictory reciveVictoryFromServer();*/
 
     ~ProtocoloCliente();
 };

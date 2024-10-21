@@ -4,7 +4,7 @@
 
 
 Acceptor::Acceptor(const char* port, ProtectedQueuesMap& map_queues_sender,
-                   BlockingQueue<CommandGame>& queue_comandos, bool& close):
+                   BlockingQueue<uint8_t>& queue_comandos, bool& close):
         socket_servidor(port),
         map_queues_sender(map_queues_sender),
         lista_clientes(),
@@ -32,7 +32,7 @@ void Acceptor::run() {
         try {
 
             accept_new_client();
-        } catch (const LibError& e) {
+        } catch (const std::exception& e) {
             if (!close) {
                 std::cerr << e.what() << std::endl;
             }

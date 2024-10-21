@@ -1,6 +1,6 @@
 #include "receiver.h"
 
-#include "../common/liberror.h"
+//#include "../common/liberror.h"
 #include "lobby_partidas.h"
 
 Receiver::Receiver(ProtocoloServer& protocolo, bool& dead_connection,

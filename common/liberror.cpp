@@ -1,3 +1,5 @@
+
+#define _POSIX_C_SOURCE 200112L
 /*
  * Este es un hack alrededor de un bug de G++ que, a pesar de decirle
  * que use un estándar (véase el Makefile), igualmente usa código
@@ -22,7 +24,6 @@
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
-
 #include <errno.h>
 
 LibError::LibError(int error_code, const char* fmt, ...) noexcept {

@@ -14,16 +14,16 @@ class Acceptor: public Thread {
 
 private:
     Socket socket_servidor;
-    LobbyPartidas& lobby_partidas;
+    ProtectedQueuesMap& map_queues_sender;
     std::list<ThreadCliente> lista_clientes;
-    BlockingQueue<CommandGame>& queue_comandos;
+    BlockingQueue<uint8_t>& queue_comandos;
     bool& close;
     uint8_t cantidad_clientes;
 
 
 public:
-    Acceptor(const char* port, LobbyPartidas& lobby_partidas,
-             BlockingQueue<CommandGame>& queue_comandos, bool& close);  //saco el queue_Sender
+    Acceptor(const char* port, ProtectedQueuesMap& map_queues_sender,
+             BlockingQueue<uint8_t>& queue_comandos, bool& close);  //saco el queue_Sender
     virtual void run() override;
     void accept_new_client();
     void deleteAClient(ThreadCliente& cliente);
