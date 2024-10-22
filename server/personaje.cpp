@@ -1,6 +1,6 @@
 #include "personaje.h"
 
-Personaje::Personaje(): x_pos(0), y_pos(386), typeOfMove(0) {}
+Personaje::Personaje():  typeOfMove(0) {}
 
 
 float Personaje::getXPos() {
