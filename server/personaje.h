@@ -1,23 +1,25 @@
 #include <cstdint>
 #include "constant_definitons.h"
-#include "element.h"
+#include "objeto.h"
 
-class Personaje: public Element {
+class Personaje: public Objeto {
     private:
         uint8_t typeOfMove;
+        bool saltando;
 
     public:
         Personaje();
         void move(uint8_t movement);
         float getXPos();
         float getYPos();
-        uint8_t getTypeOfMove();
+        uint8_t getTypeOfMoveSprite();
         uint8_t getId();
-        void setXPos(float pos_x, bool isRight);
-        void setYPos(float pos_y, bool isJump);
-        void setTypeOfMove(uint8_t orientation);
-        void setId(uint8_t id);
+        void setXPos(float pos_x);
+        void setYPos(float pos_y);
+        void setTypeOfMoveSprite(uint8_t orientation);
 
+        void setEnSalto(bool enSalto);
+        bool estaSaltando();
         ~Personaje();
 
 };

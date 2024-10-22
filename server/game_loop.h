@@ -33,7 +33,7 @@ public:
     void processCommands();
     void handleNewBox();
     void saltar();
-
+    void sendCompleteScene();
 
 
     virtual ~GameLoop();

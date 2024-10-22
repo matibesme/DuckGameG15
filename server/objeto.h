@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-class Element {
+class Objeto {
 protected:
     uint8_t type;  // tipo de elemento
     uint8_t id;    // identificador único
@@ -11,7 +11,7 @@ protected:
     float y_pos;   // posición en Y
 
 public:
-    Element();
+    Objeto();
     
     // Métodos getter
     float getXPos() const;
@@ -21,9 +21,9 @@ public:
     // Métodos setter
     void setXPos(float pos_x);
     void setYPos(float pos_y);
-    void setId(uint8_t id);
+    void setId(uint8_t new_id);
 
-    virtual ~Element();
+    virtual ~Objeto();
 };
 
 #endif // ELEMENT_H

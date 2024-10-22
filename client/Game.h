@@ -18,9 +18,11 @@ private:
     ProtocoloCliente& protocol;
     BlockingQueue<uint8_t>& queue_sender;
     BlockingQueue<CommandGameShow>& queue_receiver;
+    void dibujar(float pos_x, float pos_y, uint8_t typeOfMove);
     void correrHandlers();
 
 public:
+
     Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver);
 
     void run();

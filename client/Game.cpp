@@ -5,21 +5,18 @@
 #include <iostream>
 
 Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver)
-        : graficos("SDL2pp demo", 640, 480),
+        : graficos("DUCK GAME", 640, 480),
           duck(0.0, 386),
           background(graficos),
           prevTicks(SDL_GetTicks()),
-          duckTexture (graficos.LoadTexture(DATA_PATH "/duck.png")) ,
+          duckTexture (graficos.LoadTexture(DATA_PATH "/whiteDuck.png")) ,
           protocol(protocol),
           queue_sender(queue_sender),
           queue_receiver(queue_receiver) {}
 
 void Game::run() {
     CommandGameShow command;
-    graficos.GetRenderer().Clear();
-    background.draw(graficos.GetRenderer());
-    duck.draw(graficos.GetRenderer(), duckTexture, STILL);
-    graficos.GetRenderer().Present();
+    dibujar(0, 386, STILL);
 
     while (true) try {
         unsigned int frameTicks = SDL_GetTicks();
@@ -30,11 +27,7 @@ void Game::run() {
 
         if (queue_receiver.try_pop(command)){
             for(auto &element : command.elements) {
-                graficos.GetRenderer().Clear();
-                background.draw(graficos.GetRenderer());
-                duck.update(element.y_pos, element.x_pos);
-                duck.draw(graficos.GetRenderer(), duckTexture, element.typeOfMove);
-                graficos.GetRenderer().Present();
+                dibujar(element.x_pos, element.y_pos, element.typeOfMove);
             }
         }
 
@@ -47,6 +40,7 @@ void Game::run() {
 
 void Game::correrHandlers() {
     SDL_Event event;
+    bool wWasPressed = false;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             throw std::runtime_error("Termino el juego");
@@ -54,7 +48,7 @@ void Game::correrHandlers() {
             switch (event.key.keysym.sym) {
                 case SDLK_ESCAPE:
                 case SDLK_q:
-                    return;
+                    throw std::runtime_error("Termino el juego");
                 case SDLK_d:
                     queue_sender.push(RIGTH);
                     break;
@@ -65,9 +59,11 @@ void Game::correrHandlers() {
                     queue_sender.push(DOWN);
                     break;
                 case SDLK_w:
-                    if (duck.isTouchingFloor())
-
-                        break;
+                    if(!wWasPressed) {
+                        wWasPressed = true;
+                        queue_sender.push(JUMP);
+                    }
+                    break;
             }
         } else if (event.type == SDL_KEYUP) {
             switch (event.key.keysym.sym) {
@@ -81,9 +77,18 @@ void Game::correrHandlers() {
                     queue_sender.push(STILL);
                     break;
                 case SDLK_w:
+                    wWasPressed = false;
                     queue_sender.push(STILL);
                     break;
             }
         }
     }
+}
+
+void Game::dibujar(float posX, float posY, const uint8_t typeOfMove) {
+    graficos.GetRenderer().Clear();
+    background.draw(graficos.GetRenderer());
+    duck.update(posY, posX);
+    duck.draw(graficos.GetRenderer(), duckTexture, typeOfMove);
+    graficos.GetRenderer().Present();
 }

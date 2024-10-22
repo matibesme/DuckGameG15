@@ -54,8 +54,7 @@ void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites, uint8_t ty
     if(typeOfMove != STILL) {
         if (typeOfMove == RIGTH || typeOfMove == LEFT) {
             src_x = SPRITE_WIDTH * colSprite;
-        }
-        if (typeOfMove == JUMP) {
+        } else if (typeOfMove == JUMP) {
             src_y = SRC_Y_JUMPING;
             src_x = SPRITE_WIDTH * colSprite;
         } else if (typeOfMove == DOWN) {

@@ -99,7 +99,8 @@ endif()
 
 if(TALLER_SERVER)
     # Cambiar el nombre del ejecutable si es necesario
-    add_executable(taller_server)
+    add_executable(taller_server
+            server/objeto.cpp)
 
     # Incluir el directorio 'server' para los archivos de encabezado (opcional)
     include_directories(${CMAKE_SOURCE_DIR}/server)

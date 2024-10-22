@@ -26,50 +26,50 @@ void GameLoop::processCommands() {
     uint8_t comando;
     while (queue_comandos.try_pop(comando)) {
         if (comando==S_RIGTH){
-            personaje.setXPos(MOVEMENT_QUANTITY,true);
-            personaje.setTypeOfMove(S_RIGTH);
+            personaje.setXPos(MOVEMENT_QUANTITY_X);
+            personaje.setTypeOfMoveSprite(S_RIGTH);
         } else if (comando==S_LEFT){
-            personaje.setXPos(MOVEMENT_QUANTITY,false);
-            personaje.setTypeOfMove(S_LEFT);
-        } else if (comando==S_JUMP){
+            personaje.setXPos(-MOVEMENT_QUANTITY_X);
+            personaje.setTypeOfMoveSprite(S_LEFT);
+
+        } else if (comando==S_JUMP && !personaje.estaSaltando()){
             saltar();
         } else if (comando==S_DOWN){
-            personaje.setTypeOfMove(S_DOWN);
+            personaje.setTypeOfMoveSprite(S_DOWN);
         }else if (comando==S_STILL){
-            personaje.setTypeOfMove(S_STILL);
+            personaje.setTypeOfMoveSprite(S_STILL);
         }
 
-        CommandGame command = {S_FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(),
-                                                         personaje.getTypeOfMove()}}, 0, ""};
-        queues_map.sendMessagesToQueues(command);
+        sendCompleteScene();
     }
-
 }
 
 void GameLoop::saltar() {
-    personaje.setTypeOfMove(S_JUMP);
-    while(personaje.getYPos() <= personaje.getPosicionSalto() - PIXELES_JUMP){
-        personaje.setEnSalto();
-        personaje.setYPos(1, true);
-        CommandGame command = {S_FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(),
-                                                         personaje.getTypeOfMove()}}, 0, ""};
-        queues_map.sendMessagesToQueues(command);
+    personaje.setEnSalto(true);
+    personaje.setTypeOfMoveSprite(S_JUMP);
+    float initial_pos = personaje.getYPos();
+
+    while(personaje.getYPos() >= initial_pos - PIXELES_JUMP) {
+        personaje.setYPos(-MOVEMENT_QUANTITY_Y);
+        sendCompleteScene();
+        processCommands();
+
+    }
+    while(personaje.getYPos() < initial_pos ) {
+        personaje.setYPos(MOVEMENT_QUANTITY_Y);
+        sendCompleteScene();
         processCommands();
     }
-
+    personaje.setEnSalto(false);
 }
 
-/* if (isJumping && !tocoTecho) {
-        isOnFloor = false;
-        positionY += jumpVelocity * frameDelta * JUMP_VELOCITY_SCALE;
-    } else {
-        isJumping = false;
-        positionY -= jumpVelocity * frameDelta * JUMP_VELOCITY_SCALE;
-        if (positionY >= initialY) {
-            positionY = initialY;
-            tocoTecho = false;
-        }
-    }
-*/
+
+void GameLoop::sendCompleteScene(){
+    CommandGame command = {S_FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(),
+                                                     personaje.getTypeOfMoveSprite()}}, 0, ""};
+    queues_map.sendMessagesToQueues(command);
+
+    std::cout<<"pos x: "<<personaje.getXPos()<<" posicion y:"<< personaje.getYPos()<<std::endl;
+}
 
 GameLoop::~GameLoop() {}
