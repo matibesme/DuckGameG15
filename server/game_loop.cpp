@@ -13,7 +13,7 @@ void GameLoop::run() {
         while (!end_game) {
            
             processCommands();
-            std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
         }
     } catch (const ClosedQueue& e) {
         // Queue closed
@@ -29,23 +29,50 @@ void GameLoop::processCommands() {
     while (queue_comandos.try_pop(comando)) {
         if (comando==S_RIGTH){
             personaje.setXPos(MOVEMENT_QUANTITY,true);
-            personaje.setTypeOfMove(ORIENTATION_RIGTH);
+            personaje.setTypeOfMove(S_RIGTH);
         } else if (comando==S_LEFT){
             personaje.setXPos(MOVEMENT_QUANTITY,false);
-            personaje.setTypeOfMove(ORIENTATION_LEFT);
+            personaje.setTypeOfMove(S_LEFT);
         } else if (comando==S_JUMP){
-            //personaje.setYPos(-1);
+            personaje.setTypeOfMove(S_JUMP)
         } else if (comando==S_DOWN){
-            //personaje.setYPos(1);
-        } 
+            personaje.setTypeOfMove(S_DOWN);
+        }
 
-
-        CommandGame command = {S_FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(), personaje.getOrientation()}}, 0,""};
+        CommandGame command = {S_FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(),
+                                                         personaje.getTypeOfMove()}}, 0, ""};
         queues_map.sendMessagesToQueues(command);
     }
 
 }
 
+const float GRAVEDAD = 9.81f;
+const float VELOCIDAD_INICIAL = 10.0f; // Velocidad inicial en Y (hacia arriba)
+const float TIEMPO_ENTRE_FRAMES = 0.016f; // Simulación a 60 FPS (1/60 = 0.016 segundos)
 
+
+/*void GameLoop::saltar() {
+    int tope = personaje.getYPos() + 5;
+    while (personaje.getYPos() != tope) {
+    if(personaje  tope ) {
+
+    }
+
+    }
+
+}*/
+
+/* if (isJumping && !tocoTecho) {
+        colSprite = JUMP_SPRITE_INDEX;
+        isOnFloor = false;
+        positionY += jumpVelocity * frameDelta * JUMP_VELOCITY_SCALE;
+    } else {
+        isJumping = false;
+        positionY -= jumpVelocity * frameDelta * JUMP_VELOCITY_SCALE;
+        if (positionY >= initialY) {
+            positionY = initialY;
+            tocoTecho = false;
+        }
+    }*/
 
 GameLoop::~GameLoop() {}

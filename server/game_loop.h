@@ -32,6 +32,7 @@ public:
     virtual void run() override;
     void processCommands();
     void handleNewBox();
+    void saltar();
 
 
 

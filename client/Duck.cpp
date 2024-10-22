@@ -19,14 +19,14 @@ const int JUMP_LIMIT = 150;
 
 Duck::Duck(float initialX, float initialY)
         : positionX(initialX), positionY(initialY),
-          isMovingRight(false), isMovingLeft(false), isJumping(false), isOnFloor(true), colSprite(-1), initialY(initialY), tocoTecho(false) {}
+          isOnFloor(true), colSprite(0), initialY(initialY), tocoTecho(false) {}
 
-void Duck::update(bool moveRight, bool moveLeft, bool jump, unsigned int frameDelta) {
-    isMovingRight = moveRight;
-    isMovingLeft = moveLeft;
-    isJumping = jump;
-
-    if (isMovingRight && false) {
+void Duck::update(float y_pos, float x_pos) {
+    positionX = x_pos;
+    positionY = y_pos;
+    colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
+    /*
+    if (isMovingRight) {
         positionX += frameDelta * MOVE_SPEED;
         colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
     } else if (isMovingLeft) {
@@ -50,10 +50,11 @@ void Duck::update(bool moveRight, bool moveLeft, bool jump, unsigned int frameDe
             positionY = initialY;
             tocoTecho = false;
         }
-    }
+    }*/
 }
 
-void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites) {
+void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites, uint8_t typeOfMove) {
+
     if (positionX > renderer.GetOutputWidth())
         positionX = -SCREEN_WRAP_OFFSET;
 
@@ -62,21 +63,21 @@ void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites) {
 
     int src_x = 0, src_y = SRC_Y_MOVING;
 
-    if (isMovingRight || isMovingLeft) {
+    if (typeOfMove==RIGTH || typeOfMove==LEFT) {
         src_x = SPRITE_WIDTH * colSprite;
     }
 
-    if (isJumping) {
+    if (typeOfMove==JUMP) {
         src_y = SRC_Y_JUMPING;
         src_x = SPRITE_WIDTH * colSprite;
-    } else if (isOnFloor) {
+    } else if (typeOfMove== DOWN) {
         src_y = SRC_Y_STANDING;
     }
 
     int vcenter = renderer.GetOutputHeight() / VERTICAL_CENTER_DIVISOR;
     Rect destRect((int)positionX, (int)(vcenter - DUCK_HEIGHT - (initialY - positionY)), DUCK_WIDTH, DUCK_HEIGHT);
 
-    if (isMovingLeft) {
+    if (typeOfMove==LEFT) {
         renderer.Copy(sprites, Rect(src_x, src_y, SPRITE_WIDTH, SPRITE_HEIGHT), destRect, 0.0, Point(0, 0), SDL_FLIP_HORIZONTAL);
     } else {
         renderer.Copy(sprites, Rect(src_x, src_y, SPRITE_WIDTH, SPRITE_HEIGHT), destRect);
@@ -103,11 +104,11 @@ bool Duck::isTouchingFloor() const {
     return positionY == initialY;
 }
 
-void Duck::setPosicion(float x, [[maybe_unused]]float y) {
+void Duck::setPosicion([[maybe_unused]]float x, [[maybe_unused]]float y) {
     positionX = x ;
-    //positionY = y;
-    isMovingRight = true;
+    positionY = y;
     colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
+
 }
 
 bool Duck::checkCollision(SDL2pp::Rect rect) {

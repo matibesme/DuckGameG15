@@ -2,13 +2,14 @@
 #define PLAYER_H
 
 #include <SDL2pp/SDL2pp.hh>
+#include "constant_definitons.h"
 
 using namespace SDL2pp;
 class Duck {
 public:
     Duck(float initialX, float initialY);
-    void update(bool moveRight, bool moveLeft, bool jump, unsigned int frameDelta);
-    void draw(Renderer& renderer, Texture& sprites);
+    void update(float y_pos, float x_pos);
+    void draw(Renderer& renderer, Texture& sprites, uint8_t typeOfMove);
     void setOnFloor(bool onFloor);
     float getPosition() const;
     bool is_Jumping() const;

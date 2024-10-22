@@ -11,8 +11,10 @@ constexpr uint8_t S_LEFT = 0x06;
 constexpr uint8_t S_JUMP = 0x04;
 constexpr uint8_t S_DOWN = 0x07;
 
-constexpr float MOVEMENT_QUANTITY= 1;
 
+constexpr float MOVEMENT_QUANTITY= .5f;
+constexpr float MAP_LIMIT_X= 640;
+constexpr float MAP_LIMIT_Y= 480;
 
 constexpr uint8_t ORIENTATION_RIGTH = 0x00;
 constexpr uint8_t ORIENTATION_LEFT = 0x01;
