@@ -32,4 +32,5 @@ const uint8_t SHOT = 0x0B;
 const uint8_t AIM_UP = 0x0C;
 const int TAMANIO_MAX = 100;
 
-
+const float POSICION_INICIAL_X = 0.0f;
+const float POSICION_INICIAL_Y = 386;

@@ -6,7 +6,7 @@
 
 Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver)
         : graficos("DUCK GAME", 640, 480),
-          duck(0.0, 386),
+          duck(POSICION_INICIAL_X, POSICION_INICIAL_Y),
           background(graficos),
           prevTicks(SDL_GetTicks()),
           duckTexture (graficos.LoadTexture(DATA_PATH "/whiteDuck.png")) ,
@@ -16,7 +16,7 @@ Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, Blo
 
 void Game::run() {
     CommandGameShow command;
-    dibujar(0, 386, STILL);
+    dibujar(POSICION_INICIAL_X, POSICION_INICIAL_Y, STILL);
 
     while (true) try {
         unsigned int frameTicks = SDL_GetTicks();
