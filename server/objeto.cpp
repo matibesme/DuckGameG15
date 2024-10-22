@@ -1,7 +1,7 @@
 #include "objeto.h"
 
 // Constructor
-Objeto::Objeto() : type(1), id(1), x_pos(0), y_pos(360) {}
+Objeto::Objeto() : type(1), id(1), x_pos(12), y_pos(386) {}
 
 // Métodos getter
 float Objeto::getXPos() const {
