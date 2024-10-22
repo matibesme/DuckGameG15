@@ -40,7 +40,7 @@ void Game::run() {
 
 void Game::correrHandlers() {
     SDL_Event event;
-    bool wWasPressed = false;
+
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             throw std::runtime_error("Termino el juego");
@@ -59,10 +59,11 @@ void Game::correrHandlers() {
                     queue_sender.push(DOWN);
                     break;
                 case SDLK_w:
-                    if(!wWasPressed) {
-                        wWasPressed = true;
+                    if (event.key.repeat==0) {
                         queue_sender.push(JUMP);
+
                     }
+
                     break;
             }
         } else if (event.type == SDL_KEYUP) {
@@ -77,7 +78,7 @@ void Game::correrHandlers() {
                     queue_sender.push(STILL);
                     break;
                 case SDLK_w:
-                    wWasPressed = false;
+
                     queue_sender.push(STILL);
                     break;
             }

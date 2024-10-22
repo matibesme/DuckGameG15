@@ -25,7 +25,9 @@ void GameLoop::run() {
 void GameLoop::processCommands() {
     uint8_t comando;
     while (queue_comandos.try_pop(comando)) {
+
         if (comando==S_RIGTH){
+         
             personaje.setXPos(MOVEMENT_QUANTITY_X);
             personaje.setTypeOfMoveSprite(S_RIGTH);
         } else if (comando==S_LEFT){
@@ -51,8 +53,9 @@ void GameLoop::saltar() {
 
     while(personaje.getYPos() >= initial_pos - PIXELES_JUMP) {
         personaje.setYPos(-MOVEMENT_QUANTITY_Y);
-        sendCompleteScene();
         processCommands();
+        sendCompleteScene();
+
 
     }
     while(personaje.getYPos() < initial_pos ) {
@@ -69,7 +72,7 @@ void GameLoop::sendCompleteScene(){
                                                      personaje.getTypeOfMoveSprite()}}, 0, ""};
     queues_map.sendMessagesToQueues(command);
 
-    std::cout<<"pos x: "<<personaje.getXPos()<<" posicion y:"<< personaje.getYPos()<<std::endl;
+    //std::cout<<"pos x: "<<personaje.getXPos()<<" posicion y:"<< personaje.getYPos()<<std::endl;
 }
 
 GameLoop::~GameLoop() {}
