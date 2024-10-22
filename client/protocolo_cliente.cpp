@@ -2,7 +2,7 @@
 
 ProtocoloCliente::ProtocoloCliente(const char* host, const char* port, bool& dead_connection):
         socket(host, port), dead_connection(dead_connection), protocolo(socket),
-        decode_type_of_action({{RIGTH, MOVEMENT_ACTION}, {LEFT, MOVEMENT_ACTION}, {JUMP, MOVEMENT_ACTION}, {DOWN, MOVEMENT_ACTION}, {PICKUP, WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOT, WEAPON_ACTION}, {AIM_UP, WEAPON_ACTION}}) {}
+        decode_type_of_action({{RIGTH, MOVEMENT_ACTION}, {LEFT, MOVEMENT_ACTION}, {JUMP, MOVEMENT_ACTION}, {DOWN, MOVEMENT_ACTION},{STILL,MOVEMENT_ACTION}, {PICKUP, WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOT, WEAPON_ACTION}, {AIM_UP, WEAPON_ACTION}}) {}
 
 /*
 void ProtocoloCliente::sendGameAccessToServer(const GameAccess& game_access) {
