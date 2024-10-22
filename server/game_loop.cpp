@@ -11,9 +11,7 @@ GameLoop::GameLoop(BlockingQueue<uint8_t>& queue_comandos, bool& end_game,
 void GameLoop::run() {
     try {
         while (!end_game) {
-           
             processCommands();
-
         }
     } catch (const ClosedQueue& e) {
         // Queue closed
@@ -34,9 +32,11 @@ void GameLoop::processCommands() {
             personaje.setXPos(MOVEMENT_QUANTITY,false);
             personaje.setTypeOfMove(S_LEFT);
         } else if (comando==S_JUMP){
-            personaje.setTypeOfMove(S_JUMP)
+            personaje.setTypeOfMove(S_JUMP);
         } else if (comando==S_DOWN){
             personaje.setTypeOfMove(S_DOWN);
+        }else if (comando==S_STILL){
+            personaje.setTypeOfMove(S_STILL);
         }
 
         CommandGame command = {S_FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(),

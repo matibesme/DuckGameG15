@@ -13,9 +13,13 @@ Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, Blo
           protocol(protocol),
           queue_sender(queue_sender),
           queue_receiver(queue_receiver) {}
-//VA A ANDAR PADRE
+
 void Game::run() {
     CommandGameShow command;
+    graficos.GetRenderer().Clear();
+    background.draw(graficos.GetRenderer());
+    duck.draw(graficos.GetRenderer(), duckTexture, STILL);
+    graficos.GetRenderer().Present();
 
     while (true) try {
         unsigned int frameTicks = SDL_GetTicks();
@@ -24,18 +28,15 @@ void Game::run() {
 
         correrHandlers();
 
-        graficos.GetRenderer().Clear();
-        background.draw(graficos.GetRenderer());
-
-        if(queue_receiver.try_pop(command)){
-           for(auto &element : command.elements) {
-               duck.update(element.y_pos, element.x_pos);
-               duck.draw(graficos.GetRenderer(), duckTexture, element.typeOfMove);
-           }
-        } else{
-            duck.draw(graficos.GetRenderer(), duckTexture, STILL);
+        if (queue_receiver.try_pop(command)){
+            for(auto &element : command.elements) {
+                graficos.GetRenderer().Clear();
+                background.draw(graficos.GetRenderer());
+                duck.update(element.y_pos, element.x_pos);
+                duck.draw(graficos.GetRenderer(), duckTexture, element.typeOfMove);
+                graficos.GetRenderer().Present();
+            }
         }
-        graficos.GetRenderer().Present();
 
         SDL_Delay(1);
     } catch (const std::exception& e) {
@@ -44,7 +45,6 @@ void Game::run() {
     }
 }
 
-//recibe por referencia
 void Game::correrHandlers() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -62,12 +62,27 @@ void Game::correrHandlers() {
                     queue_sender.push(LEFT);
                     break;
                 case SDLK_s:
-
+                    queue_sender.push(DOWN);
                     break;
                 case SDLK_w:
                     if (duck.isTouchingFloor())
 
                         break;
+            }
+        } else if (event.type == SDL_KEYUP) {
+            switch (event.key.keysym.sym) {
+                case SDLK_d:
+                    queue_sender.push(STILL);
+                    break;
+                case SDLK_a:
+                    queue_sender.push(STILL);
+                    break;
+                case SDLK_s:
+                    queue_sender.push(STILL);
+                    break;
+                case SDLK_w:
+                    queue_sender.push(STILL);
+                    break;
             }
         }
     }

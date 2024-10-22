@@ -18,11 +18,11 @@ const uint8_t VICTORY_BYTE = 0x22;
 
 const uint8_t MOVEMENT_ACTION = 0x03;
 
-const uint8_t STILL = 0x04;
+const uint8_t JUMP = 0x04;
 const uint8_t RIGTH = 0x05;
 const uint8_t LEFT = 0x06;
-const uint8_t JUMP = 0x04;
 const uint8_t DOWN = 0x07;
+const uint8_t STILL = 0x08;
 
 
 const uint8_t WEAPON_ACTION = 0x08;
