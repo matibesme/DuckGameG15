@@ -8,6 +8,7 @@ class Background{
 private:
     SDL2pp::Texture background;
     SDL2pp::Texture platform;
+    SDL2pp::Texture platform_base;
 public:
     Background(Graficos& graficos);
     void draw(SDL2pp::Renderer& renderer);
