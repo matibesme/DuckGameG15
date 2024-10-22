@@ -1,12 +1,9 @@
 #include <cstdint>
 #include "constant_definitons.h"
+#include "element.h"
 
-class Personaje{
+class Personaje: public Element {
     private:
-        uint8_t type;
-        uint8_t id;
-        float x_pos;
-        float y_pos;
         uint8_t typeOfMove;
 
     public:
