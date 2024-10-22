@@ -77,10 +77,7 @@ void Game::correrHandlers() {
                 case SDLK_s:
                     queue_sender.push(STILL);
                     break;
-                case SDLK_w:
-
-                    queue_sender.push(STILL);
-                    break;
+                
             }
         }
     }

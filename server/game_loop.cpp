@@ -35,7 +35,7 @@ void GameLoop::checkCommand(uint8_t comando) {
         saltar();
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
-    }else if (comando==S_STILL){
+    }else if (comando==S_STILL && !personaje.estaSaltando()){
         personaje.setTypeOfMoveSprite(S_STILL);
     }
 
@@ -75,6 +75,8 @@ void GameLoop::saltar() {
         }
     }
     personaje.setEnSalto(false);
+    personaje.setTypeOfMoveSprite(S_STILL);
+    sendCompleteScene();
 }
 
 
