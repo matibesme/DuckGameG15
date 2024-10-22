@@ -32,7 +32,7 @@ void GameLoop::processCommands() {
             personaje.setXPos(MOVEMENT_QUANTITY,false);
             personaje.setTypeOfMove(S_LEFT);
         } else if (comando==S_JUMP){
-            personaje.setTypeOfMove(S_JUMP);
+            saltar();
         } else if (comando==S_DOWN){
             personaje.setTypeOfMove(S_DOWN);
         }else if (comando==S_STILL){
@@ -46,24 +46,20 @@ void GameLoop::processCommands() {
 
 }
 
-const float GRAVEDAD = 9.81f;
-const float VELOCIDAD_INICIAL = 10.0f; // Velocidad inicial en Y (hacia arriba)
-const float TIEMPO_ENTRE_FRAMES = 0.016f; // Simulación a 60 FPS (1/60 = 0.016 segundos)
-
-
-/*void GameLoop::saltar() {
-    int tope = personaje.getYPos() + 5;
-    while (personaje.getYPos() != tope) {
-    if(personaje  tope ) {
-
+void GameLoop::saltar() {
+    personaje.setTypeOfMove(S_JUMP);
+    while(personaje.getYPos() <= personaje.getPosicionSalto() - PIXELES_JUMP){
+        personaje.setEnSalto();
+        personaje.setYPos(1, true);
+        CommandGame command = {S_FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(),
+                                                         personaje.getTypeOfMove()}}, 0, ""};
+        queues_map.sendMessagesToQueues(command);
+        processCommands();
     }
 
-    }
-
-}*/
+}
 
 /* if (isJumping && !tocoTecho) {
-        colSprite = JUMP_SPRITE_INDEX;
         isOnFloor = false;
         positionY += jumpVelocity * frameDelta * JUMP_VELOCITY_SCALE;
     } else {
@@ -73,6 +69,7 @@ const float TIEMPO_ENTRE_FRAMES = 0.016f; // Simulación a 60 FPS (1/60 = 0.016 
             positionY = initialY;
             tocoTecho = false;
         }
-    }*/
+    }
+*/
 
 GameLoop::~GameLoop() {}

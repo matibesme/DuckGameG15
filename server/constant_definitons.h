@@ -16,6 +16,7 @@ constexpr float MOVEMENT_QUANTITY= 5;
 constexpr float MAP_LIMIT_X= 640;
 constexpr float MAP_LIMIT_Y= 480;
 
+constexpr float PIXELES_JUMP=150;
 constexpr uint8_t ORIENTATION_RIGTH = 0x00;
 constexpr uint8_t ORIENTATION_LEFT = 0x01;
 constexpr uint8_t ORIENTATION_DOWN = 0x02;
