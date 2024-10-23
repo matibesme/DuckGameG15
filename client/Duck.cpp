@@ -21,32 +21,6 @@ void Duck::update(float y_pos, float x_pos) {
     positionX = x_pos;
     positionY = y_pos;
     colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
-    /*
-    if (isMovingRight) {
-        positionX += frameDelta * MOVE_SPEED;
-        colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
-    } else if (isMovingLeft) {
-        //positionX -= frameDelta * MOVE_SPEED;
-        positionX -= frameDelta * 0.2f;
-        colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
-    }
-
-    if (isOnTop()) {
-        tocoTecho = true;
-    }
-
-    if (isJumping && !tocoTecho) {
-        colSprite = JUMP_SPRITE_INDEX;
-        isOnFloor = false;
-        positionY += jumpVelocity * frameDelta * JUMP_VELOCITY_SCALE;
-    } else {
-        isJumping = false;
-        positionY -= jumpVelocity * frameDelta * JUMP_VELOCITY_SCALE;
-        if (positionY >= initialY) {
-            positionY = initialY;
-            tocoTecho = false;
-        }
-    }*/
 }
 
 void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites, uint8_t typeOfMove) {

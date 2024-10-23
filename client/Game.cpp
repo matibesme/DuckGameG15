@@ -19,19 +19,13 @@ void Game::run() {
     CommandGameShow command;
     dibujar(POSICION_INICIAL_X, POSICION_INICIAL_Y, STILL, renderer);
     try {
-        while (true) {
-            unsigned int frameTicks = SDL_GetTicks();
-            [[maybe_unused]]unsigned int frameDelta = frameTicks - prevTicks;
-            prevTicks = frameTicks;
-
+        while (1) {
             correrHandlers();
-
             if (queue_receiver.try_pop(command)) {
                 for (auto &element: command.elements) {
                     dibujar(element.x_pos, element.y_pos, element.typeOfMove, renderer);
                 }
             }
-
             SDL_Delay(1);
         }
     }catch (const std::exception& e) {
@@ -40,7 +34,6 @@ void Game::run() {
     }
     graficos.GetRenderer().Clear();
 }
-
 void Game::correrHandlers() {
     SDL_Event event;
 
@@ -52,37 +45,41 @@ void Game::correrHandlers() {
                 case SDLK_ESCAPE:
                 case SDLK_q:
                     throw std::runtime_error("Termino el juego");
-                case SDLK_d:
-                    queue_sender.push(RIGTH);
-                    break;
-                case SDLK_a:
-                    queue_sender.push(LEFT);
-                    break;
-                case SDLK_s:
-                    queue_sender.push(DOWN);
-                    break;
-                case SDLK_w:
-                    if (event.key.repeat==0) {
-                        queue_sender.push(JUMP);
-                    }
-                    break;
             }
         } else if (event.type == SDL_KEYUP) {
             switch (event.key.keysym.sym) {
                 case SDLK_d:
-                    queue_sender.push(STILL);
-                    break;
                 case SDLK_a:
-                    queue_sender.push(STILL);
-                    break;
                 case SDLK_s:
+                case SDLK_w:
                     queue_sender.push(STILL);
                     break;
-
             }
         }
     }
+
+    const Uint8* estadoTeclas = SDL_GetKeyboardState(NULL);
+
+    if (estadoTeclas[SDL_SCANCODE_D]) {
+        queue_sender.push(RIGTH);
+    }
+
+    if (estadoTeclas[SDL_SCANCODE_A]) {
+        queue_sender.push(LEFT);
+    }
+
+    if (estadoTeclas[SDL_SCANCODE_S]) {
+        queue_sender.push(DOWN);
+    }
+
+    if (estadoTeclas[SDL_SCANCODE_W]) {
+        if (event.key.repeat == 0) {
+            queue_sender.push(JUMP);
+        }
+    }
 }
+
+
 
 void Game::dibujar(float posX, float posY, const uint8_t typeOfMove, Renderer& renderer) {
     renderer.Clear();

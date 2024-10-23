@@ -18,7 +18,6 @@ void GameLoop::run() {
                 checkCommand(comando);
             }
             paraCadaPatoAction();
-            sendCompleteScene();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000/60));
         }
 
@@ -39,7 +38,6 @@ void GameLoop::checkCommand(uint8_t comando) {
         personaje.setTypeOfMoveSprite(S_LEFT);
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
         personaje.setEnSalto(true);
-        std::cout << "salto" << std::endl;
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
     }else if (comando==S_STILL && !personaje.estaSaltando()){

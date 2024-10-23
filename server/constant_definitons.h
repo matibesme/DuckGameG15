@@ -12,7 +12,7 @@ constexpr uint8_t S_JUMP = 0x04;
 constexpr uint8_t S_DOWN = 0x07;
 constexpr uint8_t S_STILL = 0x08;
 
-constexpr float MOVEMENT_QUANTITY_X= 8;
+constexpr float MOVEMENT_QUANTITY_X= 1;
 constexpr float MOVEMENT_QUANTITY_Y= 3;
 constexpr float MAP_LIMIT_X= 640;
 constexpr float MAP_LIMIT_Y= 480;
