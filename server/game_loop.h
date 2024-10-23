@@ -24,20 +24,18 @@ private:
     bool& end_game;
     ProtectedQueuesMap& queues_map;
     Personaje personaje;
-
+    std::list<Personaje> lista_personajes;
+    void paraCadaPatoAction();
 
 public:
     GameLoop(BlockingQueue<uint8_t>& queue_comandos, bool& end_game,
              ProtectedQueuesMap& queues_map);
     virtual void run() override;
-
     void checkCommand(uint8_t comando);
-
     void processCommands();
     void handleNewBox();
     void saltar();
     void sendCompleteScene();
-
 
     virtual ~GameLoop();
 };

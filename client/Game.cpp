@@ -61,9 +61,7 @@ void Game::correrHandlers() {
                 case SDLK_w:
                     if (event.key.repeat==0) {
                         queue_sender.push(JUMP);
-
                     }
-
                     break;
             }
         } else if (event.type == SDL_KEYUP) {

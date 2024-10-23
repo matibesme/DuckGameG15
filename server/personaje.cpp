@@ -1,6 +1,6 @@
 #include "personaje.h"
 
-Personaje::Personaje():  typeOfMove(0),saltando(false){}
+Personaje::Personaje():  typeOfMove(0),saltando(false),velocidad(){}
 
 
 float Personaje::getXPos() {
@@ -45,6 +45,13 @@ bool Personaje::estaSaltando() {
     return this->saltando;
 }
 
+void Personaje::setVelocidadY(float nuevaVelocidad){
+    this->velocidad = nuevaVelocidad;
+}
+
+float Personaje::getVelocidadY(){
+    return this->velocidad;
+}
 
 Personaje::~Personaje() {}
 

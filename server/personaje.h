@@ -6,7 +6,7 @@ class Personaje: public Objeto {
     private:
         uint8_t typeOfMove;
         bool saltando;
-
+        float velocidad;
     public:
         Personaje();
         void move(uint8_t movement);
@@ -17,9 +17,10 @@ class Personaje: public Objeto {
         void setXPos(float pos_x);
         void setYPos(float pos_y);
         void setTypeOfMoveSprite(uint8_t orientation);
-
         void setEnSalto(bool enSalto);
         bool estaSaltando();
+        void setVelocidadY(float nueva_velocidad);
+        float getVelocidadY();
         ~Personaje();
 
 };
