@@ -30,7 +30,7 @@ void GameLoop::run() {
 }
 
 void GameLoop::checkCommand(uint8_t comando) {
-    std::cout << "Comando recibido: " << (int)comando << std::endl;
+
     if (comando==S_RIGTH){
         personaje.setXPos(MOVEMENT_QUANTITY_X);
         personaje.setTypeOfMoveSprite(S_RIGTH);
@@ -39,13 +39,14 @@ void GameLoop::checkCommand(uint8_t comando) {
         personaje.setTypeOfMoveSprite(S_LEFT);
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
         personaje.setEnSalto(true);
+        std::cout << "salto" << std::endl;
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
     }else if (comando==S_STILL && !personaje.estaSaltando()){
         personaje.setTypeOfMoveSprite(S_STILL);
     }
 
-    sendCompleteScene();
+    //sendCompleteScene();  comento nose si esta bien? tal vez deberia mandar siempre la escena completa
 }
 
 void GameLoop::sendCompleteScene(){
@@ -56,19 +57,11 @@ void GameLoop::sendCompleteScene(){
 }
 
 void GameLoop::paraCadaPatoAction() {
-    float gravedad = 0.5; // Valor de gravedad, ajusta según la escala de tu juego.
-    for (auto& personaje_i : lista_personajes) {
-        if (personaje_i.estaSaltando()) {
-            personaje_i.setYPos(personaje_i.getYPos() + personaje_i.getVelocidadY()); // Actualiza la posición vertical
-            personaje_i.setVelocidadY(personaje_i.getVelocidadY() - gravedad); // Aplica la gravedad
 
-            if (personaje_i.getYPos() <= 0) { // Si el personaje toca el suelo (Y = 0)
-                personaje_i.setYPos(0); // Restablece la posición en el suelo
-                personaje_i.setEnSalto(false); // El personaje ha aterrizado
-                personaje_i.setVelocidadY(20); // Reinicia la velocidad del salto para la próxima vez
-            }
-        }
-    }
+    //for (Personaje& personaje_i : lista_personajes) {
+        personaje.executeAction();
+
+    //}
 }
 
 GameLoop::~GameLoop() {}

@@ -21,6 +21,7 @@ class Personaje: public Objeto {
         bool estaSaltando();
         void setVelocidadY(float nueva_velocidad);
         float getVelocidadY();
+        void executeAction();
         ~Personaje();
 
 };

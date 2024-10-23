@@ -32,7 +32,7 @@ public:
              ProtectedQueuesMap& queues_map);
     virtual void run() override;
     void checkCommand(uint8_t comando);
-    void processCommands();
+
     void handleNewBox();
     void saltar();
     void sendCompleteScene();

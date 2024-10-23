@@ -24,3 +24,7 @@ constexpr uint8_t ORIENTATION_DOWN = 0x02;
 
 constexpr float POSICION_INICIAL_X = 0.0f;
 constexpr float POSICION_INICIAL_Y = 386;
+
+
+constexpr float GRAVEDAD = 1;
+constexpr float VELOCIDAD_INICIAL = 20;

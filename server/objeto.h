@@ -23,6 +23,7 @@ public:
     void setYPos(float pos_y);
     void setId(uint8_t new_id);
 
+
     virtual ~Objeto();
 };
 
