@@ -49,6 +49,7 @@ void Game::correrHandlers() {
                 case SDLK_d:
                 case SDLK_a:
                 case SDLK_s:
+                case SDLK_w:
                     queue_sender.push(STILL);
                     break;
             }

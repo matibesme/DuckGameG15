@@ -3,6 +3,7 @@
 
 const int SPRITE_ANIMATION_RATE = 100;
 const int MAX_SPRITE_FRAMES = 6;
+const int MAX_SPRITE_FRAMES_JUMP = 5;
 const int DUCK_WIDTH = 50;
 const int DUCK_HEIGHT = 50;
 const int SRC_Y_STANDING = 70;
@@ -20,17 +21,18 @@ Duck::Duck(float initialX, float initialY)
 void Duck::update(float y_pos, float x_pos) {
     positionX = x_pos;
     positionY = y_pos;
-    colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
 }
 
 void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites, uint8_t typeOfMove) {
     int src_x = 0, src_y = SRC_Y_MOVING;
     if(typeOfMove != STILL) {
+        colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
         if (typeOfMove == RIGTH || typeOfMove == LEFT) {
             src_x = SPRITE_WIDTH * colSprite;
         } else if (typeOfMove == JUMP) {
             src_y = SRC_Y_JUMPING;
             src_x = SPRITE_WIDTH * colSprite;
+            colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES_JUMP;
         } else if (typeOfMove == DOWN) {
             src_y = SRC_Y_STANDING;
         }
