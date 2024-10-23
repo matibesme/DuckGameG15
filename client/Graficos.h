@@ -10,6 +10,7 @@ public:
     Graficos(const char* title, int width, int height);
     Renderer& GetRenderer();
     Texture LoadTexture(const char* path);
+    void Clear();
 
 private:
     Window window;

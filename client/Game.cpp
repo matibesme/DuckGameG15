@@ -15,8 +15,9 @@ Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, Blo
           queue_receiver(queue_receiver) {}
 
 void Game::run() {
+    Renderer& renderer = graficos.GetRenderer();
     CommandGameShow command;
-    dibujar(POSICION_INICIAL_X, POSICION_INICIAL_Y, STILL);
+    dibujar(POSICION_INICIAL_X, POSICION_INICIAL_Y, STILL, renderer);
     try {
         while (true) {
             unsigned int frameTicks = SDL_GetTicks();
@@ -27,7 +28,7 @@ void Game::run() {
 
             if (queue_receiver.try_pop(command)) {
                 for (auto &element: command.elements) {
-                    dibujar(element.x_pos, element.y_pos, element.typeOfMove);
+                    dibujar(element.x_pos, element.y_pos, element.typeOfMove, renderer);
                 }
             }
 
@@ -37,6 +38,7 @@ void Game::run() {
         std::cerr << e.what() << std::endl;
         queue_sender.close();
     }
+    graficos.GetRenderer().Clear();
 }
 
 void Game::correrHandlers() {
@@ -82,10 +84,10 @@ void Game::correrHandlers() {
     }
 }
 
-void Game::dibujar(float posX, float posY, const uint8_t typeOfMove) {
-    graficos.GetRenderer().Clear();
-    background.draw(graficos.GetRenderer());
+void Game::dibujar(float posX, float posY, const uint8_t typeOfMove, Renderer& renderer) {
+    renderer.Clear();
+    background.draw(renderer);
     duck.update(posY, posX);
-    duck.draw(graficos.GetRenderer(), duckTexture, typeOfMove);
-    graficos.GetRenderer().Present();
+    duck.draw(renderer, duckTexture, typeOfMove);
+    renderer.Present();
 }

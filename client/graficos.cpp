@@ -13,3 +13,8 @@ Texture Graficos::LoadTexture(const char* path) {
     Surface surface(IMG_Load(path));
     return Texture(renderer, surface);
 }
+
+void Graficos::Clear() {
+    renderer.SetDrawColor(0, 0, 0, 255);
+    renderer.Clear();
+}

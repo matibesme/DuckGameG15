@@ -46,7 +46,7 @@ void GameLoop::checkCommand(uint8_t comando) {
         personaje.setTypeOfMoveSprite(S_STILL);
     }
 
-    //sendCompleteScene();  comento nose si esta bien? tal vez deberia mandar siempre la escena completa
+    sendCompleteScene();  //comento nose si esta bien? tal vez deberia mandar siempre la escena completa
 }
 
 void GameLoop::sendCompleteScene(){
