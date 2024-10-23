@@ -14,8 +14,8 @@ void Client::execute() {
 
 
 Client::~Client() {
-    //receiver.stop();
-    //sender.stop();
+    receiver.stop();
+    sender.stop();
     receiver.join();
     sender.join();
 }

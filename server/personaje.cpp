@@ -28,8 +28,8 @@ void Personaje::setYPos(float pos_y) {
 
     this->y_pos = pos_y;
 
-    if (this->y_pos<0 ||this->y_pos>MAP_LIMIT_Y ){
-        this->y_pos=0;
+    if (this->y_pos<POSICION_INICIAL_X ||this->y_pos>MAP_LIMIT_Y ){
+        this->y_pos=POSICION_INICIAL_X;
     }
 }
 
@@ -62,10 +62,10 @@ void Personaje::executeAction() {
        setVelocidadY(getVelocidadY() - gravedad);
 
 
-        if (getYPos() >= 386) {
-            this->y_pos = 386;         // Aterriza en el suelo
-            setEnSalto(false);         // Termina el salto
-            setVelocidadY(20);         // Reinicia velocidad de salto
+        if (getYPos() >= POSICION_INICIAL_Y) {
+            this->y_pos = POSICION_INICIAL_Y;
+            setEnSalto(false);
+            setVelocidadY(VELOCIDAD_INICIAL);
         }
     }
 }

@@ -27,4 +27,4 @@ constexpr float POSICION_INICIAL_Y = 386;
 
 
 constexpr float GRAVEDAD = 1;
-constexpr float VELOCIDAD_INICIAL = 20;
+constexpr float VELOCIDAD_INICIAL = 15;

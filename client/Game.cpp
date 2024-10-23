@@ -17,24 +17,25 @@ Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, Blo
 void Game::run() {
     CommandGameShow command;
     dibujar(POSICION_INICIAL_X, POSICION_INICIAL_Y, STILL);
+    try {
+        while (true) {
+            unsigned int frameTicks = SDL_GetTicks();
+            [[maybe_unused]]unsigned int frameDelta = frameTicks - prevTicks;
+            prevTicks = frameTicks;
 
-    while (true) try {
-        unsigned int frameTicks = SDL_GetTicks();
-        [[maybe_unused]]unsigned int frameDelta = frameTicks - prevTicks;
-        prevTicks = frameTicks;
+            correrHandlers();
 
-        correrHandlers();
-
-        if (queue_receiver.try_pop(command)){
-            for(auto &element : command.elements) {
-                dibujar(element.x_pos, element.y_pos, element.typeOfMove);
+            if (queue_receiver.try_pop(command)) {
+                for (auto &element: command.elements) {
+                    dibujar(element.x_pos, element.y_pos, element.typeOfMove);
+                }
             }
-        }
 
-        SDL_Delay(1);
-    } catch (const std::exception& e) {
+            SDL_Delay(1);
+        }
+    }catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
-        break;
+        queue_sender.close();
     }
 }
 

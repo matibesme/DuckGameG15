@@ -1,117 +1,66 @@
-#ifndef __THREAD_H__
-#define __THREAD_H__
+#ifndef THREAD_H_
+#define THREAD_H_
 
-#include <exception>
+#include <atomic>
 #include <iostream>
 #include <thread>
-#include <vector>
 
-#define N 10
+class Runnable {
+public:
+    virtual void start() = 0;
+    virtual void join() = 0;
+    virtual void stop() = 0;
+    virtual bool is_alive() const = 0;
 
-class Thread {
+    virtual ~Runnable() {}
+};
+
+class Thread: public Runnable {
 private:
     std::thread thread;
 
+protected:
+    // Subclasses that inherit from Thread will have access to these
+    // flags, mostly to control how Thread::run() will behave
+    std::atomic<bool> _keep_running;
+    std::atomic<bool> _is_alive;
+
 public:
-    Thread() {}
+    Thread(): _keep_running(true), _is_alive(false) {}
 
-    void start() {
-        /* [2] Lanzamos el thread que correrá
-           siempre la misma función (Thread::main)
-
-           Como Thread::main es un **método**
-           sin parámetros y std::thread espera
-           a una **función** podemos ver a
-           Thread::main como una función que
-           recibe como primer argumento al
-           objeto this (tal como en los TDA de C!)
-
-           std::thread soporta correr una
-           función con argumentos con la llamada:
-
-              std::thread( funcion, arg1, arg2, ...)
-
-           Por lo tanto
-                std::thread( metodo, this )
-
-           es equivalente a correr el método
-           sin argumentos en un thread.
-
-           Como Thread::main llama a Thread::run
-           y Thread::run es un método **polimórfico**,
-           cada objeto ejecutara
-           un código particular en el thread.
-
-           Objetos distintos podrán correr en
-           sus propios threads con esta única
-           implementación de Thread mientras
-           hereden de Thread y creen sus propias
-           versiones del método run.
-        */
+    void start() override {
+        _is_alive = true;
+        _keep_running = true;
         thread = std::thread(&Thread::main, this);
     }
 
-    // [3]
-    //
-    // Este método es el que correrá en su propio thread.
-    //
-    // Obviamente el que hacer esta dentro de Thread::run
-    // que es polimórfico
-    //
-    // La idea de Thread::main es que me permite poner
-    // un try-catch y atrapar cualquier excepción que
-    // se lance en Thread::run.
-    //
-    // Si una excepción se escapa de la función que esta
-    // corriendo en un thread, el program termina con un abort
-    //
-    // Not nice.
-    //
-    // Quienes implementen Thread::run deberían atrapar
-    // las excepciones ellos. El try-catch de Thread::main
-    // es solo como último recurso.
+    void join() override { thread.join(); }
+
     void main() {
         try {
             this->run();
         } catch (const std::exception& err) {
-            // Nota: por simplicidad estoy haciendo unos prints.
-            // Código productivo debería *loggear* el error, no solo
-            // prints.
             std::cerr << "Unexpected exception: " << err.what() << "\n";
         } catch (...) {
             std::cerr << "Unexpected exception: <unknown>\n";
         }
+
+        _is_alive = false;
     }
 
-    void join() { thread.join(); }
+    // Note: it is up to the subclass to make something meaningful to
+    // really stop the thread. The Thread::run() may be blocked and/or
+    // it may not read _keep_running.
+    void stop() override { _keep_running = false; }
 
-    /* [4] Virtual puro para forzar una
-       definición en las clases hijas.
+    bool is_alive() const override { return _is_alive; }
 
-       Sera responsabilidad de ellas implementar lo que quieran
-       que corran en un thread aquí.
-    */
     virtual void run() = 0;
-
-
-    /* [5] Destructor virtual: siempre hacerlo
-       virtual si pensamos en usar herencia.
-    */
     virtual ~Thread() {}
 
-
-    /* [6] No tiene sentido copiar hilos, así
-       que forzamos a que no se puedan copiar.
-    */
     Thread(const Thread&) = delete;
     Thread& operator=(const Thread&) = delete;
 
-    /* [7] Y aunque tiene sentido, vamos a ver
-       que es un peligro permitir mover un thread
-       así que también vamos a prohibir el move.
-
-       Lo vas a entender cuando veas [10]
-    */
     Thread(Thread&& other) = delete;
     Thread& operator=(Thread&& other) = delete;
 };

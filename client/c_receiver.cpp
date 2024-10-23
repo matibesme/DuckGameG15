@@ -6,17 +6,19 @@ Receiver::Receiver(ProtocoloCliente& protocolo, BlockingQueue<CommandGameShow>& 
     protocolo(protocolo), queue_receiver(queue_receiver) {}
 
 void Receiver::run() {
-    while (true) {
+    while (_keep_running) {
         try {
             CommandGameShow command = protocolo.reciveFromServer();
             queue_receiver.push(command);
         } catch (const std::exception& e) {
             std::cerr << "Error: " << e.what() << '\n';
+            _keep_running = false;
         } catch (...) {
             std::cerr << "Error desconocido.\n";
+            _keep_running = false;
         }
     }
-    
+    queue_receiver.close();
 }
 
 Receiver::~Receiver() = default;
