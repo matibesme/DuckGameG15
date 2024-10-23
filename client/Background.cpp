@@ -15,6 +15,7 @@ void Background::draw(SDL2pp::Renderer& renderer){
     int posX = (renderer.GetOutputWidth() - platformWidth) / 2 - 8;
     int posY = (renderer.GetOutputHeight() - platformHeight) + 50;
 
+
     SDL2pp::Rect destRectBase(posX, posY, platformWidth, platformHeight);
 
     renderer.Copy(platform, SDL2pp::NullOpt, destRect);

@@ -2,7 +2,7 @@
 #include "constant_definitons.h"
 
 // Constructor
-Objeto::Objeto() : type(1), id(1), x_pos(POSICION_INICIAL_X), y_pos(POSICION_INICIAL_Y) {}
+Objeto::Objeto() : type(1), id(1), x_pos(POSICION_INICIAL_X), y_pos(POSICION_INICIAL_X) {}
 
 // Métodos getter
 float Objeto::getXPos() const {
