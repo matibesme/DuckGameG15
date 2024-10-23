@@ -7,7 +7,7 @@ GameLoop::GameLoop(BlockingQueue<uint8_t>& queue_comandos, bool& end_game,
         end_game(end_game),
         queues_map(queues_map),
         personaje(),
-        lista_personajes()
+        lista_personajes({personaje})
         {}
 
 void GameLoop::run() {
@@ -19,7 +19,7 @@ void GameLoop::run() {
             }
             paraCadaPatoAction();
             sendCompleteScene();
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000/60));
         }
 
     } catch (const ClosedQueue& e) {
