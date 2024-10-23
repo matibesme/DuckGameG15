@@ -18,6 +18,7 @@ void GameLoop::run() {
                 checkCommand(comando);
             }
             paraCadaPatoAction();
+            sendCompleteScene();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000/60));
         }
 
@@ -44,7 +45,7 @@ void GameLoop::checkCommand(uint8_t comando) {
         personaje.setTypeOfMoveSprite(S_STILL);
     }
 
-    sendCompleteScene();  //comento nose si esta bien? tal vez deberia mandar siempre la escena completa
+    //sendCompleteScene();  //comento nose si esta bien? tal vez deberia mandar siempre la escena completa
 }
 
 void GameLoop::sendCompleteScene(){

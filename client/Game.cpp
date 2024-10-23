@@ -38,9 +38,7 @@ void Game::correrHandlers() {
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            throw std::runtime_error("Termino el juego");
-        } else if (event.type == SDL_KEYDOWN) {
+        if (event.type == SDL_KEYDOWN) {
             switch (event.key.keysym.sym) {
                 case SDLK_ESCAPE:
                 case SDLK_q:
@@ -51,10 +49,11 @@ void Game::correrHandlers() {
                 case SDLK_d:
                 case SDLK_a:
                 case SDLK_s:
-                case SDLK_w:
                     queue_sender.push(STILL);
                     break;
             }
+        } else if (event.type == SDL_QUIT) {
+            throw std::runtime_error("Termino el juego");
         }
     }
 
@@ -62,20 +61,13 @@ void Game::correrHandlers() {
 
     if (estadoTeclas[SDL_SCANCODE_D]) {
         queue_sender.push(RIGTH);
-    }
-
-    if (estadoTeclas[SDL_SCANCODE_A]) {
+    } else if (estadoTeclas[SDL_SCANCODE_A]) {
         queue_sender.push(LEFT);
-    }
-
-    if (estadoTeclas[SDL_SCANCODE_S]) {
+    } else if (estadoTeclas[SDL_SCANCODE_S]) {
         queue_sender.push(DOWN);
     }
-
     if (estadoTeclas[SDL_SCANCODE_W]) {
-        if (event.key.repeat == 0) {
-            queue_sender.push(JUMP);
-        }
+        queue_sender.push(JUMP);
     }
 }
 
