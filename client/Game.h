@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "Duck.h"
+#include "Bullet.h"
 #include "Graficos.h"
 #include "Background.h"
 #include "protocolo_cliente.h"
@@ -12,6 +13,7 @@ class Game {
 private:
     Graficos graficos;
     Duck duck;
+    Bullet bullet;
     Background background;
     unsigned int prevTicks;
     SDL2pp::Texture duckTexture;
@@ -22,7 +24,6 @@ private:
     void correrHandlers();
 
 public:
-
     Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver);
 
     void run();

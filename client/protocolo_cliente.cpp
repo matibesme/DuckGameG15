@@ -2,7 +2,7 @@
 
 ProtocoloCliente::ProtocoloCliente(const char* host, const char* port, bool& dead_connection):
         socket(host, port), dead_connection(dead_connection), protocolo(socket),
-        decode_type_of_action({{RIGTH, MOVEMENT_ACTION}, {LEFT, MOVEMENT_ACTION}, {JUMP, MOVEMENT_ACTION}, {DOWN, MOVEMENT_ACTION},{STILL,MOVEMENT_ACTION}, {PICKUP, WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOT, WEAPON_ACTION}, {AIM_UP, WEAPON_ACTION}}) {}
+        decode_type_of_action({{RIGTH, MOVEMENT_ACTION}, {LEFT, MOVEMENT_ACTION}, {JUMP, MOVEMENT_ACTION}, {DOWN, MOVEMENT_ACTION},{STILL,MOVEMENT_ACTION}, {PICKUP, WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOOT, WEAPON_ACTION}}) {}
 
 /*
 void ProtocoloCliente::sendGameAccessToServer(const GameAccess& game_access) {
@@ -50,6 +50,7 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
     uint8_t personajes_quantity = protocolo.receiveByte(dead_connection);
     std::vector<Personaje> personajes;
     for (int i = 0; i < personajes_quantity; i++) {
+        uint8_t type_of_personaje= protocolo.receiveByte(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t orientation = protocolo.receiveByte(dead_connection);

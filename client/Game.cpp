@@ -7,10 +7,10 @@
 Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver)
         : graficos("DUCK GAME", 640, 480),
           duck(POSICION_INICIAL_X, POSICION_INICIAL_Y, graficos),
+          bullet(POSICION_INICIAL_X, POSICION_INICIAL_Y, graficos),
           background(graficos),
           prevTicks(SDL_GetTicks()),
           duckTexture (graficos.LoadTexture(DATA_PATH "/whiteDuck.png")) ,
-          bulletTexture (graficos.LoadTexture(DATA_PATH "/whiteDuck.png")) ,
           protocol(protocol),
           queue_sender(queue_sender),
           queue_receiver(queue_receiver) {}
@@ -23,12 +23,12 @@ void Game::run() {
         while (1) {
             correrHandlers();
             if (queue_receiver.try_pop(command)) {
-                for (auto &element: command.elements) {
-                    duck.update(element.x_pos, element.y_pos, element.typeOfMove, element.isEquipped);
+                for (auto & personaje: command.personajes_list) {
+                    duck.update(personaje.x_pos, personaje.y_pos, personaje.typeOfMove, personaje.isEquipped);
                 }
-                /*for(auto &element: command.weapon){
-                    bullet.update(element.x_pos, element.y_pos, renderer);
-                }*/
+                for(auto &bullet_i: command.bullets_list){
+                    bullet.update(bullet_i.x_pos, bullet_i.y_pos, renderer);
+                }
             }
             SDL_Delay(1);
         }
@@ -47,12 +47,12 @@ void Game::correrHandlers() {
                 case SDLK_ESCAPE:
                 case SDLK_q:
                     throw std::runtime_error("Termino el juego");
-                case SDLK_g:
+                /*case SDLK_g:
                 duck.setGunEquipped(true);
                 break;
                 case SDLK_h:
                 duck.setGunEquipped(false);
-                break;
+                break;*/
             }
         } else if (event.type == SDL_KEYUP) {
             switch (event.key.keysym.sym) {
