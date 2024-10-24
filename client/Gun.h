@@ -17,6 +17,7 @@ private:
     const int height;
     const int width;
     bool is_equipped;
+    uint8_t typeOfGun;
 
 public:
     //Este es el constructor que va.
@@ -25,7 +26,7 @@ public:
     void draw(SDL2pp::Renderer& renderer);
     void update_pos(float pos_x, float pos_y);
     bool isEquipped();
-    void set_is_equipped(bool is_equipped);
+    void setGun(uint8_t gun);
 };
 
 #endif

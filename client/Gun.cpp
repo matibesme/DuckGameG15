@@ -8,24 +8,22 @@
 }*/
 
 Gun::Gun(Graficos& graficos) : texture_equipped(graficos.LoadTexture(DATA_PATH "/CowboyPistolEquipped.png")), 
-                                texture_not_equipped(graficos.LoadTexture(DATA_PATH "/CowboyPistol.png")), height(13), width(25){
+                                texture_not_equipped(graficos.LoadTexture(DATA_PATH "/CowboyPistol.png")),
+                                height(13), width(25){
     pos_x = 0.0;
     pos_y = 0.0;
     is_equipped = false;
 }
 
 void Gun::draw(SDL2pp::Renderer& renderer){
-    /*
-    Esto también se podría implementar con el sprite del ala (duckArms.png) para que se pueda animar el ala aparte.
-    */
+    //CUIDADO = llegan como int por parametro, pero se guardan como float
     SDL2pp::Rect area_gun(pos_x, pos_y, width, height);
 
     if(is_equipped){
         renderer.Copy(texture_equipped, SDL2pp::NullOpt, area_gun);
-    }else{
+    } else{
         renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, area_gun);
     }
-    
 }
 
 void Gun::update_pos(float posX, float posY){
@@ -34,9 +32,9 @@ void Gun::update_pos(float posX, float posY){
 }
 
 bool Gun::isEquipped(){
-    return is_equipped;
+    return typeOfGun != NO_GUN;
 }
 
-void Gun::set_is_equipped(bool isEquipped){
-    this->is_equipped = isEquipped;
+void Gun::setGun(uint8_t gun){
+    typeOfGun = gun;
 }

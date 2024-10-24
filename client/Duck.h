@@ -28,6 +28,7 @@ private:
     bool isFlipped;
     float pixelGunSpriteX;
     float pixelGunSpriteY;
+    uint8_t typeOfGun;
 };
 
 #endif // PLAYER_H

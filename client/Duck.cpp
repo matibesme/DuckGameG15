@@ -18,12 +18,14 @@ Duck::Duck(float initialX, float initialY, Graficos& graficos)
         : positionX(initialX), positionY(initialY),
           isOnFloor(true), numSprite(0), initialY(initialY), gun(graficos),
           pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING), isFlipped(false),
-          pixelGunSpriteX(0), pixelGunSpriteY(SRC_Y_STANDING) {}
+          pixelGunSpriteX(0), pixelGunSpriteY(SRC_Y_STANDING), typeOfGun(NO_GUN) {}
 
 void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped) {
     positionX = x_pos;
     positionY = y_pos;
     isFlipped = false;
+    gun.setGun(gunEquipped);
+
     if(typeOfMove != STILL) {
         numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
         if (typeOfMove == RIGTH) {
@@ -52,8 +54,9 @@ void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites) {
     } else {
         renderer.Copy(sprites, Rect(pixelDuckSpriteX, pixelDuckSpriteY, SPRITE_WIDTH, SPRITE_HEIGHT), destRect);
     }
+
     if(gun.isEquipped()){
-        gun.update_pos(positionX+(2 * DUCK_WIDTH / 5), ((vcenter - DUCK_HEIGHT - (initialY - positionY)))+ DUCK_HEIGHT / 2);
+        gun.update_pos(positionX + (2 * DUCK_WIDTH / 5), ((vcenter - DUCK_HEIGHT - (initialY - positionY))) + DUCK_HEIGHT / 2);
         gun.draw(renderer);
     }
 }
