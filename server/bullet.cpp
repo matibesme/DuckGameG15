@@ -30,6 +30,17 @@ uint8_t Bullet::getTypeOfBullet() {
     return type;
 }
 
+void Bullet::release(float x_pos, float y_pos, uint8_t direction) {
+    this->x_pos = x_pos;
+    this->y_pos = y_pos;
+    this->direction = direction;
+}
+
+void Bullet::executeAction() {
+
+}
+
+
 Bullet::~Bullet() {
     // Limpieza, si es necesaria
 }
