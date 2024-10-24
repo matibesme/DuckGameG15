@@ -11,11 +11,11 @@ class Weapon : public Objeto {
 private:
     uint8_t damage;
     uint8_t range;
-    //std::list<CowBoyBullet> ammo_list;
+    uint8_t ammo_quantity;
     CowBoyBullet bala;
 
 public:
-    Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range);
+    Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range,uint8_t ammo_quantity);
     bool isEmptyAmmo();
     CowBoyBullet shoot();
 

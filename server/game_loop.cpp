@@ -95,12 +95,12 @@ void GameLoop::sendCompleteScene(){
     command.type_of_action = S_FULL_GAME_BYTE;
     command.scene_id = S_SCENE_ID;
     
-    //recorrer map_personajes
+
    // for (auto& personaje_i : map_personajes) {
 
    DTODuck dto_duck = {personaje.getType(), personaje.getXPos(), personaje.getYPos(),
                         personaje.getTypeOfMoveSprite(), personaje.getWeapon().getType() };
-   //agrego al vector de lista_patos el dto_duck
+
    command.lista_patos.push_back(dto_duck);
 
     //}
