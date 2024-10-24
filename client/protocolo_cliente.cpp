@@ -47,24 +47,26 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
     uint8_t scene_id = protocolo.receiveByte(dead_connection);
    
     //recivo personajes
-    uint8_t personajes_quantity = protocolo.receiveByte(dead_connection);
-    std::vector<Personaje> personajes;
+    uint8_t patos_quantity = protocolo.receiveByte(dead_connection);
+    std::vector<Pato> lista_patos;
     for (int i = 0; i < personajes_quantity; i++) {
-        uint8_t type_of_personaje= protocolo.receiveByte(dead_connection);
+        uint8_t personajes_type = protocolo.receiveByte(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);
-        uint8_t orientation = protocolo.receiveByte(dead_connection);
-        uint8_t type_of_gun = protocolo.receiveByte(dead_connection);
-        personajes.push_back({x_pos, y_pos, orientation, type_of_gun});
+        uint8_t typeOfMove = protocolo.receiveByte(dead_connection);
+        uint8_t typeOfGun = protocolo.receiveByte(dead_connection);
+        lista_patos.push_back({personajes_type, x_pos, y_pos, typeOfMove, typeOfGun});
     }
     //recivo balas
     uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);
-    std::vector<Bullet> bullets;
+
+    std::vector<Bala> bullets;
     for (int i = 0; i < bullets_quantity; i++) {
+        uint8_t bala_type = protocolo.receiveByte(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t orientation = protocolo.receiveByte(dead_connection);
-        bullets.push_back({x_pos, y_pos, orientation});
+        bullets.push_back({bala_type, x_pos, y_pos, orientation});
     }
 
     return {scene_id, personajes, bullets};

@@ -6,15 +6,15 @@ GameLoop::GameLoop(BlockingQueue<uint8_t>& queue_comandos, bool& end_game,
         queue_comandos(queue_comandos),
         end_game(end_game),
         queues_map(queues_map),
-        //personaje(),
         map_free_weapons(),
-        map_personajes()
+        map_personajes({{1, Personaje(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y, S_STILL,S_COWBOY_GUN)}}),
+        map_bullets()
         {}
 
 void GameLoop::run() {
     try {
         while (!end_game) {
-            uint8_t comando;
+            CommandClient comando;
             while (queue_comandos.try_pop(comando)) {
                 checkCommand(comando);
             }
@@ -30,7 +30,16 @@ void GameLoop::run() {
     }
 }
 
-void GameLoop::checkCommand(uint8_t comando) {
+void GameLoop::checkCommand(CommandClient comando) {
+    if (comando.type_of_action == S_MOVEMENT_ACTION) {
+        movementComand(comando.type_of_movement);
+    } else if (comando.type_of_action == S_WEAPON_ACTION) {
+        weaponComand(comando.type_of_movement);
+    }
+}
+
+
+void GameLoop::movementComand(uint8_t comando) {
 
     if (comando==S_RIGTH){
         personaje.setXPos(MOVEMENT_QUANTITY_X);
@@ -50,6 +59,18 @@ void GameLoop::checkCommand(uint8_t comando) {
     //sendCompleteScene();  //comento nose si esta bien? tal vez deberia mandar siempre la escena completa
 }
 
+void GameLoop::weaponComand(uint8_t comando) {
+    if (comando==S_PICKUP){
+        
+    } else if (comando==S_LEAVE_GUN){
+        
+    } else if (comando==S_SHOOT){
+    
+    }
+}
+
+
+
 void GameLoop::sendCompleteScene(){
     std::list<Personaje> lista_personajes;
     std::list<Bullet> lista_balas;
@@ -58,14 +79,14 @@ void GameLoop::sendCompleteScene(){
     command.scene_id = S_SCENE_ID;
     
     for (Personaje& personaje_i : lista_personajes) {
-        Personajes personaje = {personaje_i.getTypeOfPersonaje(), personaje_i.getXPos(), personaje_i.getYPos(),
+        Pato pato = {personaje_i.getTypeOfPersonaje(), personaje_i.getXPos(), personaje_i.getYPos(),
                                  personaje_i.getTypeOfMoveSprite(), personaje_i.getWeapon()};
-        command.personajes.push_back(personaje);
+        command.lista_patos.push_back(pato);
     }
 
     for (Bullet& bala_i : lista_balas) {
-        Bullet bala = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getOrientation()};
-        command.bullets.push_back(bala);
+        Bala bala = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getOrientation()};
+        command.lista_balas.push_back(bala);
     }  
   
 

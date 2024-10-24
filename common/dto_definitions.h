@@ -6,7 +6,7 @@
 
 
 
-struct Personaje{
+struct Pato{
     uint8_t personajes_type;
     float x_pos;
     float y_pos;
@@ -14,7 +14,7 @@ struct Personaje{
     uint8_t typeOfGun; // nogun, cowboy ...
 };
 
-struct Bullet{
+struct Bala{
     uint8_t element_type; // cowboy Bullet
     float x_pos;
     float y_pos;
@@ -22,7 +22,7 @@ struct Bullet{
 }
 
 
-struct Weapon{ //free wapons in the floor
+struct Armas{ //free wapons in the floor
     float x_pos;
     float y_pos;
 
@@ -35,18 +35,20 @@ struct CommandGame {
     //full game scene
     uint8_t scene_id;
 
-    std::vector<Personaje> personajes;
+    std::vector<Pato> lista_patos;
 
-    std::vector<Bullet> bullets;
+    std::vector<Bala> lista_balas;
 
 };
+
+
 
 struct CommandGameShow {
     uint8_t scene_id;
 
-    std::vector<Personaje> personajes_list;
+    std::vector<Pato> lista_patos;
 
-    std::vector<Bullet> bullets_list;
+    std::vector<Bala> lista_balas;
 
 };
 
@@ -56,10 +58,13 @@ struct CommandClient {
     // Movement
     uint8_t type_of_movement;  
 
-    //Weapons
-    uint8_t weapon_action;
+   
 
 };
+
+
+
+
 
 struct GameAccess {
     uint8_t action_type; // new game or join game

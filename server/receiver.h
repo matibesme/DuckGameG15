@@ -15,7 +15,7 @@ private:
     ProtocoloServer& protocolo;
     bool& dead_connection;
     bool in_game;
-    BlockingQueue<uint8_t>& queue_comandos;
+    BlockingQueue<CommandClient>& queue_comandos;
 
 
 public:

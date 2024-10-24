@@ -16,7 +16,7 @@ private:
     Socket socket_servidor;
     ProtectedQueuesMap& map_queues_sender;
     std::list<ThreadCliente> lista_clientes;
-    BlockingQueue<uint8_t>& queue_comandos;
+    BlockingQueue<CommandClient>& queue_comandos;
     bool& close;
     uint8_t cantidad_clientes;
 

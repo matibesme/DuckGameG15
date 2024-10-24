@@ -25,7 +25,7 @@ public:
     /*void sendVictory(const CommandGame& command);
     void sendEndOfRound(const CommandGame& command);*/
    
-    uint8_t receiveCommandFromClients();
+    CommandClient receiveCommandFromClients();
     void closeSocket();
     ~ProtocoloServer();
 };

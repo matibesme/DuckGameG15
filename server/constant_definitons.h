@@ -37,10 +37,10 @@ constexpr float GRAVEDAD = 1;
 constexpr float VELOCIDAD_INICIAL = 15;
 
 //armas action
-const uint8_t WEAPON_ACTION = 0x08;
-const uint8_t PICKUP = 0x09;
-const uint8_t LEAVE_GUN= 0x0A;
-const uint8_t SHOOT = 0x0B;
+const uint8_t S_WEAPON_ACTION = 0x08;
+const uint8_t S_PICKUP = 0x09;
+const uint8_t S_LEAVE_GUN= 0x0A;
+const uint8_t S_SHOOT = 0x0B;
 
 constexpr uint8_t S_NOGUN= 0X33;
 constexpr uint8_t S_COWBOY_GUN= 0X34;

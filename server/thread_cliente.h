@@ -16,7 +16,7 @@ class ThreadCliente: public Thread {
 
 private:
     bool dead_connection;
-    BlockingQueue<uint8_t>& queue_comandos;
+    BlockingQueue<CommandClient>& queue_comandos;
     BlockingQueue<CommandGame> queue_sender;
     ProtocoloServer protocolo;
     Receiver receiver;
