@@ -48,7 +48,7 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
    
     //recivo personajes
     uint8_t patos_quantity = protocolo.receiveByte(dead_connection);
-    std::vector<DTODuck> lista_patos;
+    std::list<DTODuck> lista_patos;
     for (int i = 0; i < patos_quantity; i++) {
         uint8_t personajes_type = protocolo.receiveByte(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
@@ -60,7 +60,7 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
     //recivo balas
     uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);
 
-    std::vector<DTOBullet> bullets;
+    std::list<DTOBullet> bullets;
     for (int i = 0; i < bullets_quantity; i++) {
         uint8_t bala_type = protocolo.receiveByte(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
