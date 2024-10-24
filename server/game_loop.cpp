@@ -1,14 +1,13 @@
 #include "game_loop.h"
 
-
-GameLoop::GameLoop(BlockingQueue<uint8_t>& queue_comandos, bool& end_game,
+GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
                    ProtectedQueuesMap& queues_map):
         queue_comandos(queue_comandos),
         end_game(end_game),
         queues_map(queues_map),
+        personaje(),
         map_free_weapons(),
-        map_personajes({{1, Personaje(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y)}}),
-        map_bullets()
+        lista_bullets()
         {}
 
 void GameLoop::run() {
@@ -41,7 +40,7 @@ void GameLoop::checkCommand(CommandClient comando) {
 
 void GameLoop::movementComand(uint8_t comando) {
 
-    Personaje personaje = map_personajes[1]; 
+    //Personaje personaje = map_personajes[1];
     if (comando==S_RIGTH){
         personaje.setXPos(MOVEMENT_QUANTITY_X);
         personaje.setTypeOfMoveSprite(S_RIGTH);
@@ -79,13 +78,13 @@ void GameLoop::sendCompleteScene(){
     command.scene_id = S_SCENE_ID;
     
     //recorrer map_personajes
-    for (auto& personaje_i : map_personajes) {
-        DTODuck dto_duck = {personaje_i.getTypeOfPersonaje(), personaje_i.getXPos(), personaje_i.getYPos(),
-                        personaje_i.getTypeOfMoveSprite(), personaje_i.getWeapon()};
-        command.lista_patos.push_back(dto_duck);
-    }
+   // for (auto& personaje_i : map_personajes) {
 
-   for (auto& bala_i : map_bullets) {
+        DTODuck dto_duck = {personaje.getTypeOfPersonaje(), personaje.getXPos(), personaje.getYPos(),
+                        personaje.getTypeOfMoveSprite(), personaje.getWeapon()};
+        command.lista_patos.push_back(dto_duck);
+    //}
+    for (auto& bala_i : lista_bullets) {
         DTOBullet dto_bullet = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getOrientation()};
         command.lista_balas.push_back(dto_bullet);
     }  

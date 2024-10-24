@@ -17,7 +17,7 @@ class Server {
 private:
     bool close;
     ProtectedQueuesMap map_queues_sender;
-    BlockingQueue<uint8_t> queue_comandos;
+    BlockingQueue<CommandClient> queue_comandos;
     Acceptor acceptor;
     GameLoop game_loop;
 
