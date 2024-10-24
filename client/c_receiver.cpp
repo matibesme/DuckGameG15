@@ -11,7 +11,7 @@ void Receiver::run() {
             CommandGameShow command = protocolo.reciveFromServer();
             queue_receiver.push(command);
         } catch (const std::exception& e) {
-            std::cerr << "Error: " << e.what() << '\n';
+            std::cerr << e.what() << '\n';
             _keep_running = false;
         } catch (...) {
             std::cerr << "Error desconocido.\n";

@@ -13,11 +13,11 @@ Game::Game( BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>
           queue_receiver(queue_receiver) {}
 
 void Game::run() {
-    Renderer& renderer = graficos.GetRenderer();
-    CommandGameShow command;
-    dibujar(renderer);
-
     try {
+        Renderer& renderer = graficos.GetRenderer();
+        CommandGameShow command;
+        dibujar(renderer);
+
         while (true) {
             correrHandlers();
             if (queue_receiver.try_pop(command)) {
@@ -88,4 +88,5 @@ void Game::dibujar(Renderer& renderer) {
     bullet.draw(renderer);
 
     renderer.Present();
+
 }

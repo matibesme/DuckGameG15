@@ -23,11 +23,11 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
         renderer.Copy(texture, SDL2pp::NullOpt, area_gun, 90.0, SDL2pp::NullOpt, SDL_FLIP_NONE);
 }
 
-void Bullet::update(const float new_pos_x,const float new_pos_y, const uint8_t typeOfBullet, const uint8_t orientacion) {
+void Bullet::update(const float new_pos_x,const float new_pos_y, [[maybe_unused]]const uint8_t typeOfBullet, const uint8_t orientacion) {
     pos_x = new_pos_x;
     pos_y = new_pos_y;
     orientationOfBullet = orientacion;
-    actualizarTipo(typeOfBullet);
+    //actualizarTipo(typeOfBullet);
 }
 
 void Bullet::actualizarTipo(const uint8_t type) {

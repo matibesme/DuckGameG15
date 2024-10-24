@@ -17,7 +17,7 @@ Duck::Duck(float initialX, float initialY, Graficos& graficos)
           isOnFloor(true), numSprite(0), initialY(initialY), gun(graficos),
           pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING), isFlipped(false),
           typeOfGun(C_NOGUN),
-          sprites(graficos.LoadTexture(DATA_PATH "/DuckSprite.png")) {}
+          sprites(graficos.LoadTexture(DATA_PATH "/whiteDuck.png")) {}
 
 void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped) {
     positionX = x_pos;
