@@ -82,8 +82,8 @@ void Game::correrHandlers() {
 
 void Game::dibujar(Renderer& renderer) {
     renderer.Clear();
+    
     background.draw(renderer);
-
     duck.draw(renderer);
     bullet.draw(renderer);
 

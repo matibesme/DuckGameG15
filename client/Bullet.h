@@ -7,11 +7,12 @@
 
 class Bullet {
 private:
+    Graficos& graficos;      // Referencia a la clase Graficos
     SDL2pp::Texture texture;  // Textura de la bala
     float pos_x, pos_y;       // Posición de la bala
     int height, width;        // Dimensiones de la bala
     uint8_t orientationOfBullet;              // Si la bala está volteada o no
-    uint8_t typeOfBullet;
+    void actualizarTipo(uint8_t bullet);
 
 public:
     // Constructor
@@ -22,7 +23,6 @@ public:
 
     // Actualiza la posición de la bala con nuevos valores
     void update(float new_pos_x, float new_pos_y, uint8_t type, uint8_t orientacion);
-
 };
 
 #endif  // BULLET_H
