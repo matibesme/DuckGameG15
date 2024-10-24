@@ -22,11 +22,11 @@ void Game::run() {
         while (1) {
             correrHandlers();
             if (queue_receiver.try_pop(command)) {
-                for (auto & personaje: command.personajes_list) {
+                for (auto & personaje: command.lista_patos) {
                     duck.update(personaje.x_pos, personaje.y_pos, personaje.typeOfMove, personaje.typeOfGun);
                 }
-                for(auto &bullet_i: command.bullets_list){
-                    bullet.update(bullet_i.x_pos, bullet_i.y_pos, bullet_i.elementType, renderer);
+                for(auto &bullet_i: command.lista_balas){
+                    bullet.update(bullet_i.x_pos, bullet_i.y_pos, bullet_i.typeOfBullet, bullet_i.orientation);
                 }
                 dibujar(renderer);
             }
