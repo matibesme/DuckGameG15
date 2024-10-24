@@ -27,7 +27,7 @@ private:
     Personaje personaje;
     //std::map<uint8_t, Personaje&> map_personajes;
     std::map<uint8_t,Weapon&> map_free_weapons;
-    std::list<Bullet*> lista_bullets;
+    std::list<Bullet&> lista_bullets;
 
     void paraCadaPatoAction();
 
@@ -38,7 +38,7 @@ public:
     void checkCommand(CommandClient comando);
     void movementComand(uint8_t comando);
     void weaponComand(uint8_t comando);
-
+    void checkBullets();
     void saltar();
     void sendCompleteScene();
 

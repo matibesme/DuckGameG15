@@ -16,12 +16,13 @@ public:
     // Métodos getter
     float getXPos() const;
     float getYPos() const;
-    uint8_t getId() const;
+    uint8_t& getId() const;
+    uint8_t& getType() const;
 
     // Métodos setter
-    virtual void setXPos(float pos_x);
-    void setYPos(float pos_y);
-    void setId(uint8_t new_id);
+    virtual void setXPos(float& pos_x);
+    void setYPos(float& pos_y);
+    void setId(uint8_t& new_id);
 
 
     virtual ~Objeto();

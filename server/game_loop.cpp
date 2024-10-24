@@ -5,7 +5,7 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         queue_comandos(queue_comandos),
         end_game(end_game),
         queues_map(queues_map),
-        personaje(),
+        personaje(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y),
         map_free_weapons(),
         lista_bullets()
         {}
@@ -18,6 +18,7 @@ void GameLoop::run() {
                 checkCommand(comando);
             }
             paraCadaPatoAction();
+            checkBullets();
             sendCompleteScene();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000/60));
         }
@@ -37,6 +38,11 @@ void GameLoop::checkCommand(CommandClient comando) {
     }
 }
 
+void GameLoop::checkBullets() {
+    for (auto& bala_i : lista_bullets) {
+        (bala_i).executeAction();
+    }
+}
 
 void GameLoop::movementComand(uint8_t comando) {
 
@@ -65,7 +71,12 @@ void GameLoop::weaponComand(uint8_t comando) {
     } else if (comando==S_LEAVE_GUN){
         
     } else if (comando==S_SHOOT){
-    
+        Weapon weapon = personaje.getWeapon();
+        weapon.setXPos(personaje.getXPos());
+        weapon.setYPos(personaje.getYPos());    
+        Bullet bullet = weapon.shoot();
+        lista_bullets.push_back(bullet);
+        
     }
 }
 
@@ -81,11 +92,11 @@ void GameLoop::sendCompleteScene(){
    // for (auto& personaje_i : map_personajes) {
 
         DTODuck dto_duck = {personaje.getTypeOfPersonaje(), personaje.getXPos(), personaje.getYPos(),
-                        personaje.getTypeOfMoveSprite(), personaje.getWeapon()};
+                        personaje.getTypeOfMoveSprite(), personaje.getWeapon().getType() };
         command.lista_patos.push_back(dto_duck);
     //}
     for (auto& bala_i : lista_bullets) {
-        DTOBullet dto_bullet = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getOrientation()};
+        DTOBullet dto_bullet = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getDirection()};
         command.lista_balas.push_back(dto_bullet);
     }  
   

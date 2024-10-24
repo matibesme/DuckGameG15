@@ -21,6 +21,12 @@ uint8_t Bullet::getRange() {
     return range;
 }
 
+uint8_t Bullet::getTypeOfBullet() {
+    return type;
+}
+
+
+
 void Bullet::executeAction(){}
 
 Bullet::~Bullet() {}

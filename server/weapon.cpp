@@ -5,15 +5,18 @@ Weapon::Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damag
         Objeto(type, id, x_pos, y_pos),
         damage(damage),
         range(range),
-    
-        id(id) {}
+        ammo_list() 
+        {}
 
 
 
 
 
-void Weapon::shoot() {
-    
+Bullet& Weapon::shoot() {
+    Bullet bullet = ammo_list.front();
+    ammo_list.pop_front();
+    bullet.release(x_pos, y_pos);
+    return bullet;
 }
 
 void Weapon::setId(uint8_t id) {

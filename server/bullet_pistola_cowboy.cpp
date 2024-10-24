@@ -8,6 +8,11 @@ CowBoyBullet::CowBoyBullet (uint8_t type, uint8_t id, float x_pos, float y_pos, 
     Bullet(type, id, x_pos, y_pos, damage, range),
     direction(DERECHA) {}
 
+
+Direccion CowBoyBullet::getDirection() {
+    return direction;
+}
+
 void CowBoyBullet::release(float x_pos, float y_pos) {
     this->x_pos = x_pos;
     this->y_pos = y_pos;

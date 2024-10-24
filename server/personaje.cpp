@@ -8,23 +8,23 @@ Personaje::Personaje(uint8_t type, uint8_t id, float x_pos, float y_pos)
         velocidad(VELOCIDAD_INICIAL),
         weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10),
         weapons_list(){
-            weapons_list.push_back(&weapon);
+            weapons_list.push_back(weapon);
         }
 
 
-float Personaje::getXPos() {
+float& Personaje::getXPos() {
     return x_pos;
 }
 
-float Personaje::getYPos() {
+float& Personaje::getYPos() {
     return y_pos;
 }
 
-uint8_t Personaje::getTypeOfMoveSprite() {
+uint8_t& Personaje::getTypeOfMoveSprite() {
     return typeOfMove;
 }
 
-void Personaje::setXPos(float pos_x) {
+void Personaje::setXPos(float& pos_x) {
 
     this->x_pos += pos_x;
 
@@ -34,43 +34,58 @@ void Personaje::setXPos(float pos_x) {
 }
 
 
-void Personaje::setTypeOfMoveSprite(uint8_t orientation) {
+void Personaje::setTypeOfMoveSprite(uint8_t& orientation) {
     this->typeOfMove = orientation;
 }
 
-void Personaje::setEnSalto(bool enSalto) {
+void Personaje::setEnSalto(bool& enSalto) {
     this->saltando=enSalto;
 }
 
-bool Personaje::estaSaltando() {
-    return this->saltando;
-}
 
-void Personaje::setVelocidadY(float nuevaVelocidad){
+void Personaje::setVelocidadY(float& nuevaVelocidad){
     this->velocidad = nuevaVelocidad;
 }
 
-float Personaje::getVelocidadY(){
+float& Personaje::getVelocidadY(){
     return this->velocidad;
 }
 
 void Personaje::executeAction() {
     float gravedad = GRAVEDAD;
     if (estaSaltando()) {
-        this->y_pos=(getYPos() -getVelocidadY());
+        this->y_pos=(this->velocidad -getVelocidadY());
 
 
-       setVelocidadY(getVelocidadY() - gravedad);
+       this->velocidad=(this->velocidad - gravedad);
 
 
         if (getYPos() >= POSICION_INICIAL_Y) {
             this->y_pos = POSICION_INICIAL_Y;
-            setEnSalto(false);
-            setVelocidadY(VELOCIDAD_INICIAL);
+            this->saltando=false;
+            this->velocidad=  VELOCIDAD_INICIAL;
         }
     }
 }
 
+
+
+
+Weapon& Personaje::getWeapon() {
+    return weapons_list.front();
+}
+
+void Personaje::unequippWeapon() {
+    if (is_weapon_equiped) {
+        is_weapon_equiped = false;
+    }
+}
+
+void Personaje::equippWeapon() {
+    if (!is_weapon_equiped) {
+        is_weapon_equiped = true;
+    }
+}
 
 
 
