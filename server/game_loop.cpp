@@ -83,7 +83,7 @@ void GameLoop::weaponComand(uint8_t comando) {
         weapon.setXPos(personaje.getXPos());
         weapon.setYPos(personaje.getYPos());    
         CowBoyBullet bullet = weapon.shoot();
-        //lista_bullets.push_back(bullet);
+        lista_bullets.push_back(bullet);
 
         
     }
