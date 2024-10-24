@@ -6,8 +6,8 @@
 
 
 
-struct Personajes{
-    uint8_t personajes_type;//the character
+struct Personaje{
+    uint8_t personajes_type;
     float x_pos;
     float y_pos;
     uint8_t typeOfMove;//right left down jump still
@@ -35,16 +35,10 @@ struct CommandGame {
     //full game scene
     uint8_t scene_id;
 
-    std::vector<Personajes> personajes;
+    std::vector<Personaje> personajes;
 
     std::vector<Bullet> bullets;
-    /*
-    //end of round scene
-    uint8_t players_quantity;
-    //std::vector<PlayerStatus> players_status;
-    //CommandVictory
-    std::string player_name;
-    */
+
 };
 
 struct CommandGameShow {

@@ -2,7 +2,7 @@
 #define GUN_H
 
 #include <SDL2pp/SDL2pp.hh>
-
+#include "constant_definitons.h"
 #include "Graficos.h"
 
 class Gun{
@@ -16,7 +16,6 @@ private:
     SDL2pp::Texture texture_not_equipped;
     const int height;
     const int width;
-    bool is_equipped;
     uint8_t typeOfGun;
 
 public:

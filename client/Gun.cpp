@@ -12,14 +12,13 @@ Gun::Gun(Graficos& graficos) : texture_equipped(graficos.LoadTexture(DATA_PATH "
                                 height(13), width(25){
     pos_x = 0.0;
     pos_y = 0.0;
-    is_equipped = false;
 }
 
 void Gun::draw(SDL2pp::Renderer& renderer){
     //CUIDADO = llegan como int por parametro, pero se guardan como float
     SDL2pp::Rect area_gun(pos_x, pos_y, width, height);
 
-    if(is_equipped){
+    if(isEquipped()){
         renderer.Copy(texture_equipped, SDL2pp::NullOpt, area_gun);
     } else{
         renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, area_gun);
@@ -32,7 +31,7 @@ void Gun::update_pos(float posX, float posY){
 }
 
 bool Gun::isEquipped(){
-    return typeOfGun != NO_GUN;
+    return typeOfGun != C_NOGUN;
 }
 
 void Gun::setGun(uint8_t gun){
