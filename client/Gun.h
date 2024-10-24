@@ -16,8 +16,10 @@ private:
     bool is_equiped;
     float pos_x;
     float pos_y;
+    Texture texture_equipped;
+    Texture texture_not_equipped;
     void setEquip(bool equip);
-    void actualizarTextura(Texture &texture_equipped, Texture &texture_not_equipped);
+    void actualizarTextura();
 
 public:
     Gun(Graficos& graficos);
