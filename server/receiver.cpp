@@ -10,7 +10,7 @@ Receiver::Receiver(ProtocoloServer& protocolo, bool& dead_connection,
 void Receiver::run() {
     try {
         while (!dead_connection) {
-            uint8_t command = protocolo.receiveCommandFromClients();
+            CommandClient command = protocolo.receiveCommandFromClients();
             queue_comandos.push(command);
         }
     } catch (const SocketClose& e) {

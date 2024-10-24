@@ -27,32 +27,32 @@ void ProtocoloServer::sendFullGame(const CommandGame& command) {
     
     //ENVIO DE PERSONAJES
   
-    protocolo.sendByte(command.personajes.size(), dead_connection);
-    for (const Element& element : command.personajes) {
-        protocolo.sendFloat(element.x_pos, dead_connection);
-        protocolo.sendFloat(element.y_pos, dead_connection);
-        protocolo.sendByte(element.typeOfMove, dead_connection);
-        protocolo.sendByte(element.typeOfGun, dead_connection);
+    protocolo.sendByte(command.lista_patos.size(), dead_connection);
+    for (const Pato& pato : command.lista_patos) {
+        protocolo.sendFloat(pato.x_pos, dead_connection);
+        protocolo.sendFloat(pato.y_pos, dead_connection);
+        protocolo.sendByte(pato.typeOfMove, dead_connection);
+        protocolo.sendByte(pato.typeOfGun, dead_connection);
     }
 
     //ENVIO DE BALAS
     
-    protocolo.sendByte(command.bullets.size(), dead_connection);
-    for (const Element& element : command.bullets) {
-        protocolo.sendFloat(element.x_pos, dead_connection);
-        protocolo.sendFloat(element.y_pos, dead_connection);
-        protocolo.sendByte(element.orientation, dead_connection);
+    protocolo.sendByte(command.lista_balas.size(), dead_connection);
+    for (const Bala& bala : command.bullets) {
+        protocolo.sendFloat(bala.x_pos, dead_connection);
+        protocolo.sendFloat(bala.y_pos, dead_connection);
+        protocolo.sendByte(bala.orientation, dead_connection);
     }
 }
 
 
-uint8_t ProtocoloServer::receiveCommandFromClients() {
+CommandClient ProtocoloServer::receiveCommandFromClients() {
     try {
-    
-        uint8_t first_byte = protocolo.receiveByte(dead_connection);
-        if (first_byte == S_MOVEMENT_ACTION) {
-            return protocolo.receiveByte(dead_connection);
-        }
+       
+        uint8_t type_of_action = protocolo.receiveByte(dead_connection);
+        uint8_t type_of_movement = protocolo.receiveByte(dead_connection);
+            
+        return {type_of_action, type_of_movement};
         
         
         
