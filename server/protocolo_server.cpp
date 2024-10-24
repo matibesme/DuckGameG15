@@ -28,11 +28,11 @@ void ProtocoloServer::sendFullGame(const CommandGame& command) {
     //ENVIO DE PERSONAJES
   
     protocolo.sendByte(command.lista_patos.size(), dead_connection);
-    for (const DTODuck& pato : command.lista_patos) {
-        protocolo.sendFloat(pato.x_pos, dead_connection);
-        protocolo.sendFloat(pato.y_pos, dead_connection);
-        protocolo.sendByte(pato.typeOfMove, dead_connection);
-        protocolo.sendByte(pato.typeOfGun, dead_connection);
+    for (const DTODuck& dto_duck : command.lista_patos) {
+        protocolo.sendFloat(dto_duck.x_pos, dead_connection);
+        protocolo.sendFloat(dto_duck.y_pos, dead_connection);
+        protocolo.sendByte(dto_duck.typeOfMove, dead_connection);
+        protocolo.sendByte(dto_duck.typeOfGun, dead_connection);
     }
 
     //ENVIO DE BALAS
