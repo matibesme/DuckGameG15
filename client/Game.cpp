@@ -26,7 +26,8 @@ void Game::run() {
                     duck.update(personaje.x_pos, personaje.y_pos, personaje.typeOfMove, personaje.typeOfGun);
                 }
                 for(auto &bullet_i: command.lista_balas){
-                    bullet.update(bullet_i.x_pos, bullet_i.y_pos, bullet_i.typeOfBullet, bullet_i.orientation);
+                    bullet.update(bullet_i.x_pos, bullet_i.y_pos - DUCK_HEIGHT / 2,bullet_i.typeOfBullet,
+                                  bullet_i.orientation);
                 }
                 dibujar(renderer);
             }
@@ -38,21 +39,15 @@ void Game::run() {
     }
     graficos.GetRenderer().Clear();
 }
+
 void Game::correrHandlers() {
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_KEYDOWN) {
             switch (event.key.keysym.sym) {
-                case SDLK_ESCAPE:
                 case SDLK_q:
                     throw std::runtime_error("Termino el juego");
-                /*case SDLK_g:
-                duck.setGunEquipped(true);
-                break;
-                case SDLK_h:
-                duck.setGunEquipped(false);
-                break;*/
             }
         } else if (event.type == SDL_KEYUP) {
             switch (event.key.keysym.sym) {
@@ -80,7 +75,10 @@ void Game::correrHandlers() {
     if (estadoTeclas[SDL_SCANCODE_W]) {
         queue_sender.push(JUMP);
     }
-}
+    //disparar con la tecla espacio
+    if (estadoTeclas[SDL_SCANCODE_SPACE]) {
+        queue_sender.push(SHOOT);
+    }
 
 
 void Game::dibujar(Renderer& renderer) {

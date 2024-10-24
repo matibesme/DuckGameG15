@@ -4,8 +4,6 @@
 const int SPRITE_ANIMATION_RATE = 100;
 const int MAX_SPRITE_FRAMES = 6;
 const int MAX_SPRITE_FRAMES_JUMP = 5;
-const int DUCK_WIDTH = 50;
-const int DUCK_HEIGHT = 50;
 const int SRC_Y_STANDING = 70;
 const int SRC_Y_JUMPING = 40;
 const int SRC_Y_MOVING = 6;
