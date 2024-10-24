@@ -30,4 +30,8 @@ uint8_t Bullet::getTypeOfBullet() {
     return type;
 }
 
-Bullet::~Bullet() {}
+Bullet::~Bullet() {
+    // Limpieza, si es necesaria
+}
+
+

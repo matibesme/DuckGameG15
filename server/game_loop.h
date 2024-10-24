@@ -17,6 +17,8 @@
 #include "protected_queues_map.h"
 #include "personaje.h"
 #include "weapon.h"
+//eliminar dsp
+#include "bullet_pistola_cowboy.h"
 
 class GameLoop: public Thread {
 
@@ -27,7 +29,7 @@ private:
     Personaje personaje;
     //std::map<uint8_t, Personaje&> map_personajes;
     std::map<uint8_t,Weapon&> map_free_weapons;
-    //std::list<Bullet> lista_bullets;
+    std::list<CowBoyBullet> lista_bullets;
 
     void paraCadaPatoAction();
 

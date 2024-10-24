@@ -7,8 +7,7 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         queues_map(queues_map),
         personaje(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y),
         map_free_weapons(),
-        //lista_bullets()
-
+        lista_bullets()
         {}
 
 void GameLoop::run() {
@@ -40,12 +39,12 @@ void GameLoop::checkCommand(CommandClient comando) {
 }
 
 void GameLoop::checkBullets() {
-    //for (auto& bala_i : lista_bullets) {
+    for (auto& bala_i : lista_bullets) {
         if (bala_i.isAlive()){
             (bala_i).executeAction();
         }
 
-    //}
+    }
 }
 
 void GameLoop::movementComand(uint8_t comando) {
@@ -83,7 +82,7 @@ void GameLoop::weaponComand(uint8_t comando) {
         }
         weapon.setXPos(personaje.getXPos());
         weapon.setYPos(personaje.getYPos());    
-        Bullet bullet = weapon.shoot();
+        CowBoyBullet bullet = weapon.shoot();
         //lista_bullets.push_back(bullet);
 
         
@@ -105,10 +104,10 @@ void GameLoop::sendCompleteScene(){
    command.lista_patos.push_back(dto_duck);
 
     //}
-    //for (auto& bala_i : lista_bullets) {
+    for (auto& bala_i : lista_bullets) {
         DTOBullet dto_bullet = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getDirection()};
         command.lista_balas.push_back(dto_bullet);
-    //}
+    }
 
     queues_map.sendMessagesToQueues(command);
 
