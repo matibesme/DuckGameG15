@@ -7,7 +7,8 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         queues_map(queues_map),
         personaje(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y),
         map_free_weapons(),
-        lista_bullets()
+        //lista_bullets()
+
         {}
 
 void GameLoop::run() {
@@ -39,9 +40,12 @@ void GameLoop::checkCommand(CommandClient comando) {
 }
 
 void GameLoop::checkBullets() {
-    for (auto& bala_i : lista_bullets) {
-        (bala_i).executeAction();
-    }
+    //for (auto& bala_i : lista_bullets) {
+        if (bala_i.isAlive()){
+            (bala_i).executeAction();
+        }
+
+    //}
 }
 
 void GameLoop::movementComand(uint8_t comando) {
@@ -50,9 +54,11 @@ void GameLoop::movementComand(uint8_t comando) {
     if (comando==S_RIGTH){
         personaje.setXPos(MOVEMENT_QUANTITY_X);
         personaje.setTypeOfMoveSprite(S_RIGTH);
+        personaje.setDirection(S_RIGTH);
     } else if (comando==S_LEFT){
         personaje.setXPos(-MOVEMENT_QUANTITY_X);
         personaje.setTypeOfMoveSprite(S_LEFT);
+        personaje.setDirection(S_LEFT);
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
         personaje.setEnSalto(true);
         personaje.setTypeOfMoveSprite(S_JUMP);
@@ -78,13 +84,11 @@ void GameLoop::weaponComand(uint8_t comando) {
         weapon.setXPos(personaje.getXPos());
         weapon.setYPos(personaje.getYPos());    
         Bullet bullet = weapon.shoot();
-        lista_bullets.push_back(bullet);
+        //lista_bullets.push_back(bullet);
 
         
     }
 }
-
-
 
 void GameLoop::sendCompleteScene(){
 
@@ -95,15 +99,16 @@ void GameLoop::sendCompleteScene(){
     //recorrer map_personajes
    // for (auto& personaje_i : map_personajes) {
 
-        DTODuck dto_duck = {personaje.getType(), personaje.getXPos(), personaje.getYPos(),
+   DTODuck dto_duck = {personaje.getType(), personaje.getXPos(), personaje.getYPos(),
                         personaje.getTypeOfMoveSprite(), personaje.getWeapon().getType() };
-        command.lista_patos.push_back(dto_duck);
+   //agrego al vector de lista_patos el dto_duck
+   command.lista_patos.push_back(dto_duck);
+
     //}
-    for (auto& bala_i : lista_bullets) {
+    //for (auto& bala_i : lista_bullets) {
         DTOBullet dto_bullet = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getDirection()};
         command.lista_balas.push_back(dto_bullet);
-    }  
-  
+    //}
 
     queues_map.sendMessagesToQueues(command);
 

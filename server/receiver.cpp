@@ -4,7 +4,7 @@
 #include "lobby_partidas.h"
 
 Receiver::Receiver(ProtocoloServer& protocolo, bool& dead_connection,
-                   BlockingQueue<uint8_t>& queue_comandos):
+                   BlockingQueue<CommandClient>& queue_comandos):
         protocolo(protocolo), dead_connection(dead_connection), queue_comandos(queue_comandos) {}
 
 void Receiver::run() {

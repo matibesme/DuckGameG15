@@ -13,6 +13,7 @@
 
 
 #include "constant_definitons.h"
+#include <vector>
 
 class ProtocoloCliente {
     Socket socket;

@@ -10,7 +10,7 @@ class Personaje: public Objeto {
         bool saltando;
         float velocidad;
         Weapon weapon;
-        std::list<Weapon&> weapons_list;
+        std::list<Weapon> weapons_list;
     public:
         Personaje();
         void move(uint8_t movement);
@@ -21,7 +21,7 @@ class Personaje: public Objeto {
         float getYPos();
         uint8_t getTypeOfMoveSprite();
         uint8_t getId();
-        void setXPos(float pos_x);
+        void setXPos(float pos_x) override;
         Weapon& getWeapon();
 
         void equippWeapon();
@@ -30,7 +30,7 @@ class Personaje: public Objeto {
         void setTypeOfMoveSprite(uint8_t orientation);
         void setEnSalto(bool enSalto);
         bool estaSaltando();
-        void setVelocidadY(float nueva_velocidad);
+
         float& getVelocidadY();
         void executeAction();
         ~Personaje();

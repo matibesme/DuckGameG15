@@ -20,7 +20,7 @@ private:
 
 public:
     Receiver(ProtocoloServer& protocolo, bool& dead_connection,
-             BlockingQueue<uint8_t>& queue_comandos);
+             BlockingQueue<CommandClient>& queue_comandos);
     virtual void run() override;
     virtual ~Receiver();
 };

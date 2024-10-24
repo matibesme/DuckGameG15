@@ -43,12 +43,9 @@ uint8_t Objeto::getDirection() const {
     return direction;
 }
 
-uint8_t Objeto::setDirection(uint8_t new_direction) {
+void Objeto::setDirection(uint8_t new_direction) {
     this->direction = new_direction;
 }
-
-
-
 
 // Destructor
 Objeto::~Objeto() {}

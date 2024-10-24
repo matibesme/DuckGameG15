@@ -18,18 +18,16 @@ uint8_t Bullet::getDamage() {
     return damage;
 }
 
-
-
 uint8_t Bullet::getRange() {
     return range;
+}
+
+bool Bullet::isAlive() {
+    return this->is_alive;
 }
 
 uint8_t Bullet::getTypeOfBullet() {
     return type;
 }
-
-
-
-void Bullet::executeAction(){}
 
 Bullet::~Bullet() {}

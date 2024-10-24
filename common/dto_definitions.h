@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <string>
-#include <vector>
+#include <list>
 
 
 
@@ -35,9 +35,9 @@ struct CommandGame {
     //full game scene
     uint8_t scene_id;
 
-    std::vector<DTODuck> lista_patos;
+    std::list<DTODuck> lista_patos;
 
-    std::vector<DTOBullet> lista_balas;
+    std::list<DTOBullet> lista_balas;
 
 };
 
@@ -46,9 +46,9 @@ struct CommandGame {
 struct CommandGameShow {
     uint8_t scene_id;
 
-    std::vector<DTODuck> lista_patos;
+    std::list<DTODuck> lista_patos;
 
-    std::vector<DTOBullet> lista_balas;
+    std::list<DTOBullet> lista_balas;
 
 };
 

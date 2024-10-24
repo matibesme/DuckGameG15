@@ -31,7 +31,12 @@ void Bullet::update(const float new_pos_x,const float new_pos_y, const uint8_t t
 }
 
 void Bullet::actualizarTipo(const uint8_t type) {
-    if(type == C_COWBOY_BULLET)
-        texture = graficos.LoadTexture(IMAGE_CHAIN_BULLET);
+    switch (type) {
+        case C_COWBOY_BULLET:
+            texture = graficos.LoadTexture(IMAGE_CHAIN_BULLET);
+            break;
+        default:
+            break;
+    }
 
 }

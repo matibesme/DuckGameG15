@@ -4,9 +4,8 @@
 
 #ifndef BULLET_PISTOLA_COWBOY_H
 #define BULLET_PISTOLA_COWBOY_H
-#include "weapon.h"
-
-
+#include "bullet.h"
+#include "constant_definitons.h"
 
 class CowBoyBullet : public Bullet {
 
@@ -15,10 +14,9 @@ public:
 
     uint8_t getDirection();
 
-
     void release(float x_pos, float y_pos, uint8_t direction) override;
     void executeAction() override;
-    ~CowBoyBullet() override;
+
 };
 
 

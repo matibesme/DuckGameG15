@@ -5,13 +5,11 @@
 #include "constant_definitons.h"
 #include "Graficos.h"
 
+using namespace SDL2pp;
+
 class Gun{
 private:
-    //La implementación que debería ir es la comentada, pero para que sea más sencillo harcodear lo dejo así.
-    //SDL2pp::Texture& texture_not_equipped;
-    //SDL2pp::Texture& texture_equipped;
-    SDL2pp::Texture texture_equipped;
-    SDL2pp::Texture texture_not_equipped;
+    Graficos& graficos;
     const int height;
     const int width;
     uint8_t typeOfGun;
@@ -19,15 +17,15 @@ private:
     float pos_x;
     float pos_y;
     void setEquip(bool equip);
+    void actualizarTextura(Texture &texture_equipped, Texture &texture_not_equipped);
 
 public:
-    //Este es el constructor que va.
-    //Gun(float initial_pos_x, float initial_pos_y, int height, int width, SDL2pp::Texture& texture_equipped, SDL2pp::Texture& texture_not_equipped);
     Gun(Graficos& graficos);
     void draw(bool isFliped, SDL2pp::Renderer& renderer);
     void update_pos(float pos_x, float pos_y);
     bool isEquipped();
     void setGun(uint8_t gun);
+
 };
 
 #endif

@@ -10,7 +10,7 @@
 
 #include "receiver.h"
 #include "sender.h"
-
+#include "../common/dto_definitions.h"
 
 class ThreadCliente: public Thread {
 
@@ -24,7 +24,7 @@ private:
     uint8_t id;
 
 public:
-    ThreadCliente(Socket peer, BlockingQueue<uint8_t>& queue_comandos, uint8_t id);
+    ThreadCliente(Socket peer, BlockingQueue<CommandClient>& queue_comandos, uint8_t id);
     virtual void run() override;
     void sendAction(const CommandGame& action);
     bool isDead();

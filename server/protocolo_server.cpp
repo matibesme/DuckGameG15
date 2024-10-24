@@ -38,7 +38,7 @@ void ProtocoloServer::sendFullGame(const CommandGame& command) {
     //ENVIO DE BALAS
     
     protocolo.sendByte(command.lista_balas.size(), dead_connection);
-    for (const DTOBullet& bala : command.bullets) {
+    for (const DTOBullet& bala : command.lista_balas) {
         protocolo.sendFloat(bala.x_pos, dead_connection);
         protocolo.sendFloat(bala.y_pos, dead_connection);
         protocolo.sendByte(bala.orientation, dead_connection);
@@ -53,15 +53,12 @@ CommandClient ProtocoloServer::receiveCommandFromClients() {
         uint8_t type_of_movement = protocolo.receiveByte(dead_connection);
             
         return {type_of_action, type_of_movement};
-        
-        
-        
 
     } catch (const std::exception& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;
     }
-    return 0;
+    return {0,0};
 }
 
 void ProtocoloServer::closeSocket() {

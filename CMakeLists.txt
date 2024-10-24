@@ -101,10 +101,6 @@ if(TALLER_SERVER)
     # Cambiar el nombre del ejecutable si es necesario
     add_executable(taller_server
             server
-            server/bullet.cpp
-            server/bullet.h
-            server/bullet_pistola_cowboy.cpp
-            server/bullet_pistola_cowboy.h
     )
 
     # Incluir el directorio 'server' para los archivos de encabezado (opcional)

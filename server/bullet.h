@@ -7,8 +7,6 @@
 #include "objeto.h"
 #include <cstdint>
 
-
-
 class Bullet: public Objeto {
     protected:
         uint8_t damage;
@@ -22,9 +20,10 @@ class Bullet: public Objeto {
         uint8_t getRange();
 
         uint8_t getTypeOfBullet();
+        bool isAlive();
         virtual void release(float x_pos, float y_pos, uint8_t direction);
         virtual void executeAction();
-        ~Bullet();
+        virtual ~Bullet()=default;
 };
 
 

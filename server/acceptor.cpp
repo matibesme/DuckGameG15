@@ -4,7 +4,7 @@
 
 
 Acceptor::Acceptor(const char* port, ProtectedQueuesMap& map_queues_sender,
-                   BlockingQueue<uint8_t>& queue_comandos, bool& close):
+                   BlockingQueue<CommandClient>& queue_comandos, bool& close):
         socket_servidor(port),
         map_queues_sender(map_queues_sender),
         lista_clientes(),

@@ -23,7 +23,7 @@ private:
 
 public:
     Acceptor(const char* port, ProtectedQueuesMap& map_queues_sender,
-             BlockingQueue<uint8_t>& queue_comandos, bool& close);  //saco el queue_Sender
+             BlockingQueue<CommandClient>& queue_comandos, bool& close);  //saco el queue_Sender
     virtual void run() override;
     void accept_new_client();
     void deleteAClient(ThreadCliente& cliente);

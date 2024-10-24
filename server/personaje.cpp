@@ -7,7 +7,8 @@ Personaje::Personaje(uint8_t type, uint8_t id, float x_pos, float y_pos)
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
         weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10),
-        weapons_list(){
+        weapons_list()
+        {
             weapons_list.push_back(weapon);
         }
 
@@ -43,9 +44,7 @@ void Personaje::setEnSalto(bool enSalto) {
 }
 
 
-void Personaje::setVelocidadY(float nuevaVelocidad){
-    this->velocidad = nuevaVelocidad;
-}
+
 
 float& Personaje::getVelocidadY(){
     return this->velocidad;
@@ -68,7 +67,9 @@ void Personaje::executeAction() {
     }
 }
 
-
+bool Personaje::estaSaltando() {
+    return this->saltando;
+}
 
 
 Weapon& Personaje::getWeapon() {

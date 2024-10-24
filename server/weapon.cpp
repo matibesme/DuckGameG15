@@ -5,26 +5,21 @@ Weapon::Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damag
         Objeto(type, id, x_pos, y_pos),
         damage(damage),
         range(range),
-        ammo_list() 
+        bala(S_COWBOY_BULLET,1, 0,0,5,20)
         {}
 
 bool Weapon::isEmptyAmmo() {
-    return ammo_list.empty();
+   // return ammo_list.empty();
+   return false;
 }
 
-
-
-Bullet& Weapon::shoot() {
-    Bullet bullet = ammo_list.front();
+CowBoyBullet Weapon::shoot() {
+    /*CowBoyBullet bullet = ammo_list.front();
     ammo_list.pop_front();
     bullet.release(x_pos, y_pos, direction);
-    return bullet;
+    return bullet;*/
+    return  bala;
 }
 
-void Weapon::setId(uint8_t id) {
-    this->id = id;
-}
 
-uint8_t Weapon::getId() {
-    return id;
-}
+
