@@ -7,7 +7,7 @@ GameLoop::GameLoop(BlockingQueue<uint8_t>& queue_comandos, bool& end_game,
         end_game(end_game),
         queues_map(queues_map),
         map_free_weapons(),
-        map_personajes({{1, Personaje(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y, S_STILL,S_COWBOY_GUN)}}),
+        map_personajes({{1, Personaje(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y)}}),
         map_bullets()
         {}
 
@@ -41,6 +41,7 @@ void GameLoop::checkCommand(CommandClient comando) {
 
 void GameLoop::movementComand(uint8_t comando) {
 
+    Personaje personaje = map_personajes[1]; 
     if (comando==S_RIGTH){
         personaje.setXPos(MOVEMENT_QUANTITY_X);
         personaje.setTypeOfMoveSprite(S_RIGTH);
@@ -72,21 +73,21 @@ void GameLoop::weaponComand(uint8_t comando) {
 
 
 void GameLoop::sendCompleteScene(){
-    std::list<Personaje> lista_personajes;
-    std::list<Bullet> lista_balas;
+
     CommandGame command;
     command.type_of_action = S_FULL_GAME_BYTE;
     command.scene_id = S_SCENE_ID;
     
-    for (Personaje& personaje_i : lista_personajes) {
-        DTODuck pato = {personaje_i.getTypeOfPersonaje(), personaje_i.getXPos(), personaje_i.getYPos(),
+    //recorrer map_personajes
+    for (auto& personaje_i : map_personajes) {
+        DTODuck dto_duck = {personaje_i.getTypeOfPersonaje(), personaje_i.getXPos(), personaje_i.getYPos(),
                         personaje_i.getTypeOfMoveSprite(), personaje_i.getWeapon()};
-        command.lista_patos.push_back(pato);
+        command.lista_patos.push_back(dto_duck);
     }
 
-    for (Bullet& bala_i : lista_balas) {
-        DTOBullet bala = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getOrientation()};
-        command.lista_balas.push_back(bala);
+   for (auto& bala_i : map_bullets) {
+        DTOBullet dto_bullet = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getOrientation()};
+        command.lista_balas.push_back(dto_bullet);
     }  
   
 
@@ -96,10 +97,10 @@ void GameLoop::sendCompleteScene(){
 
 void GameLoop::paraCadaPatoAction() {
 
-    //for (Personaje& personaje_i : lista_personajes) {
+    for (Personaje& personaje_i : lista_personajes) {
         personaje.executeAction();
 
-    //}
+    }
 }
 
 GameLoop::~GameLoop() {}

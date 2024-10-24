@@ -24,9 +24,9 @@ private:
     BlockingQueue<CommandClient>& queue_comandos;
     bool& end_game;
     ProtectedQueuesMap& queues_map;
-    std::map<uint8_t, Personaje> map_personajes;
-    std::map<uint8_t,Weapon> map_free_weapons;
-    std::map<uint8_t, DTOBullet> map_bullets;
+    std::map<uint8_t, Personaje*> map_personajes;
+    std::map<uint8_t,Weapon*> map_free_weapons;
+    std::map<uint8_t, Bullet*> map_bullets;
 
     void paraCadaPatoAction();
 
