@@ -6,22 +6,17 @@
 #define BULLET_PISTOLA_COWBOY_H
 #include "weapon.h"
 
-enum Direccion {
-    ARRIBA = 50,
-    IZQUIERDA = 51,
-    DERECHA = 52
-};
+
 
 class CowBoyBullet : public Bullet {
-private:
-    Direccion direction;
+
 public:
     CowBoyBullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range);
 
-    Direccion getDirection();
+    uint8_t getDirection();
 
-    void release(float x_pos, float y_pos) override;
-    void release(float x_pos, float y_pos, Direccion direction);
+
+    void release(float x_pos, float y_pos, uint8_t direction) override;
     void executeAction() override;
     ~CowBoyBullet() override;
 };

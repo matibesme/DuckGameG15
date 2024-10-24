@@ -12,19 +12,19 @@ Personaje::Personaje(uint8_t type, uint8_t id, float x_pos, float y_pos)
         }
 
 
-float& Personaje::getXPos() {
+float Personaje::getXPos() {
     return x_pos;
 }
 
-float& Personaje::getYPos() {
+float Personaje::getYPos() {
     return y_pos;
 }
 
-uint8_t& Personaje::getTypeOfMoveSprite() {
+uint8_t Personaje::getTypeOfMoveSprite() {
     return typeOfMove;
 }
 
-void Personaje::setXPos(float& pos_x) {
+void Personaje::setXPos(float pos_x) {
 
     this->x_pos += pos_x;
 
@@ -34,16 +34,16 @@ void Personaje::setXPos(float& pos_x) {
 }
 
 
-void Personaje::setTypeOfMoveSprite(uint8_t& orientation) {
+void Personaje::setTypeOfMoveSprite(uint8_t orientation) {
     this->typeOfMove = orientation;
 }
 
-void Personaje::setEnSalto(bool& enSalto) {
+void Personaje::setEnSalto(bool enSalto) {
     this->saltando=enSalto;
 }
 
 
-void Personaje::setVelocidadY(float& nuevaVelocidad){
+void Personaje::setVelocidadY(float nuevaVelocidad){
     this->velocidad = nuevaVelocidad;
 }
 

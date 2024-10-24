@@ -32,7 +32,7 @@ private:
     void paraCadaPatoAction();
 
 public:
-    GameLoop(BlockingQueue<uint8_t>& queue_comandos, bool& end_game,
+    GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
              ProtectedQueuesMap& queues_map);
     virtual void run() override;
     void checkCommand(CommandClient comando);

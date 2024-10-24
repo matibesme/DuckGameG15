@@ -72,10 +72,14 @@ void GameLoop::weaponComand(uint8_t comando) {
         
     } else if (comando==S_SHOOT){
         Weapon weapon = personaje.getWeapon();
+        if (weapon.isEmptyAmmo()){
+            return;
+        }
         weapon.setXPos(personaje.getXPos());
         weapon.setYPos(personaje.getYPos());    
         Bullet bullet = weapon.shoot();
         lista_bullets.push_back(bullet);
+
         
     }
 }
@@ -91,7 +95,7 @@ void GameLoop::sendCompleteScene(){
     //recorrer map_personajes
    // for (auto& personaje_i : map_personajes) {
 
-        DTODuck dto_duck = {personaje.getTypeOfPersonaje(), personaje.getXPos(), personaje.getYPos(),
+        DTODuck dto_duck = {personaje.getType(), personaje.getXPos(), personaje.getYPos(),
                         personaje.getTypeOfMoveSprite(), personaje.getWeapon().getType() };
         command.lista_patos.push_back(dto_duck);
     //}
@@ -107,10 +111,10 @@ void GameLoop::sendCompleteScene(){
 
 void GameLoop::paraCadaPatoAction() {
 
-    for (Personaje& personaje_i : lista_personajes) {
+    //for (Personaje& personaje_i : lista_personajes) {
         personaje.executeAction();
 
-    }
+    //}
 }
 
 GameLoop::~GameLoop() {}

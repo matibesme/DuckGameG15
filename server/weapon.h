@@ -6,7 +6,7 @@
 
 #include  "objeto.h"
 #include "bullet.h"
-
+#include "constant_definitons.h"
 
 class Weapon : public Objeto {
 private:
