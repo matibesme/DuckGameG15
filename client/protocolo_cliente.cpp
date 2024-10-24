@@ -35,9 +35,7 @@ CommandGameShow ProtocoloCliente::reciveFromServer() {
     try {
         uint8_t firstByte = protocolo.receiveByte(dead_connection);
         if (firstByte==FULL_GAME_BYTE) return reciveFullGameFromServer();
-        /*if (firstByte == END_ROUND_BYTE) return reciveEndOfRoundFromServer();
-        if (firstByte == VICTORY_BYTE) return reciveVictoryFromServer();
-        */
+      
     } catch (const std::exception& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;
@@ -47,17 +45,28 @@ CommandGameShow ProtocoloCliente::reciveFromServer() {
 
 CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
     uint8_t scene_id = protocolo.receiveByte(dead_connection);
-    uint8_t elements_quantity = protocolo.receiveByte(dead_connection);
-    std::vector<Element> elements;
-    for (int i = 0; i < elements_quantity; i++) {
-        uint8_t element_type = protocolo.receiveByte(dead_connection);
-        uint8_t element_id = protocolo.receiveByte(dead_connection);
+   
+    //recivo personajes
+    uint8_t personajes_quantity = protocolo.receiveByte(dead_connection);
+    std::vector<Personaje> personajes;
+    for (int i = 0; i < personajes_quantity; i++) {
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t orientation = protocolo.receiveByte(dead_connection);
-        elements.push_back({element_type, element_id, x_pos, y_pos, orientation});
+        uint8_t type_of_gun = protocolo.receiveByte(dead_connection);
+        personajes.push_back({x_pos, y_pos, orientation, type_of_gun});
     }
-    return {scene_id, elements_quantity, elements};
+    //recivo balas
+    uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);
+    std::vector<Bullet> bullets;
+    for (int i = 0; i < bullets_quantity; i++) {
+        float x_pos = protocolo.receiveFloat(dead_connection);
+        float y_pos = protocolo.receiveFloat(dead_connection);
+        uint8_t orientation = protocolo.receiveByte(dead_connection);
+        bullets.push_back({x_pos, y_pos, orientation});
+    }
+
+    return {scene_id, personajes, bullets};
 }
 /*
 CommandEndOfRound ProtocoloCliente::reciveEndOfRoundFromServer() {

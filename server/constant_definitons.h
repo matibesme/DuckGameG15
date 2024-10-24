@@ -5,6 +5,10 @@ constexpr char SALIDA = 'q';
 constexpr uint8_t S_FULL_GAME_BYTE = 0x20;
 constexpr uint8_t S_END_ROUND_BYTE = 0x21;
 constexpr uint8_t S_VICTORY_BYTE = 0x22;
+
+constexpr uint8_t S_SCENE_ID = 0x02;
+
+//recieve from client
 constexpr uint8_t S_MOVEMENT_ACTION = 0x03;
 constexpr uint8_t S_RIGTH = 0x05;
 constexpr uint8_t S_LEFT = 0x06;
@@ -28,3 +32,14 @@ constexpr float POSICION_INICIAL_Y = 386;
 
 constexpr float GRAVEDAD = 1;
 constexpr float VELOCIDAD_INICIAL = 15;
+
+
+
+
+constexpr uint8_t S_NOGUN= 0X33;
+constexpr uint8_t S_COWBOY_GUN= 0X34;
+
+
+constexpr uint8_t S_COWBOY_BULLET=;
+
+constexpr uint8_t S_SHOOT= ;

@@ -16,6 +16,7 @@
 #include "constant_definitons.h"
 #include "protected_queues_map.h"
 #include "personaje.h"
+#include "weapon.h"
 
 class GameLoop: public Thread {
 
@@ -23,8 +24,9 @@ private:
     BlockingQueue<uint8_t>& queue_comandos;
     bool& end_game;
     ProtectedQueuesMap& queues_map;
-    Personaje personaje;
-    std::list<Personaje> lista_personajes;
+    std::map<uint8_t, Personaje> map_personajes;
+    std::map<uint8_t,Weapon> map_free_weapons;
+
     void paraCadaPatoAction();
 
 public:
