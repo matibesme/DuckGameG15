@@ -3,7 +3,7 @@
 
 // Constructor para inicializar la bala con la textura y dimensiones predeterminadas
 Bullet::Bullet(float initial_pos_x, float initial_pos_y, Graficos& graficos)
-        : texture(graficos.LoadTexture(DATA_PATH "/CowboyBullet.png")),
+        : texture(graficos.LoadTexture(DATA_PATH "/chainBullet.png")),
           pos_x(initial_pos_x), pos_y(initial_pos_y),
           height(HEIGHT_BULLET), width(WIDTH_BULLET),
           orientationOfBullet(false), typeOfBullet(0) {}
@@ -13,12 +13,13 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
     SDL2pp::Rect area_gun(pos_x, pos_y, width, height);
 
     // Si la orientacion es tanto gira o para arriba o para los costados
-    if(orientationOfBullet)
+    if(orientationOfBullet == BULLET_LEFT)
         //map con typeOfBullet a texture
         renderer.Copy(texture, SDL2pp::NullOpt, area_gun, 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
-    else
+    else if (orientationOfBullet == BULLET_RIGTH)
         renderer.Copy(texture, SDL2pp::NullOpt, area_gun);
-
+    else if (orientationOfBullet == BULLET_UP)
+        renderer.Copy(texture, SDL2pp::NullOpt, area_gun, 90.0, SDL2pp::NullOpt, SDL_FLIP_NONE);
 }
 
 void Bullet::update(float new_pos_x, float new_pos_y, uint8_t type, uint8_t orientacion) {

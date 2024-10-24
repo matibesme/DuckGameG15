@@ -10,7 +10,7 @@ private:
     SDL2pp::Texture texture;  // Textura de la bala
     float pos_x, pos_y;       // Posición de la bala
     int height, width;        // Dimensiones de la bala
-    bool orientationOfBullet;              // Si la bala está volteada o no
+    uint8_t orientationOfBullet;              // Si la bala está volteada o no
     uint8_t typeOfBullet;
 
 public:

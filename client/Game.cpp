@@ -19,7 +19,7 @@ void Game::run() {
     dibujar(renderer);
 
     try {
-        while (1) {
+        while (true) {
             correrHandlers();
             if (queue_receiver.try_pop(command)) {
                 for (auto & personaje: command.lista_patos) {

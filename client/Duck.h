@@ -18,16 +18,14 @@ private:
     float positionY;
     bool isMovingRight;
     bool isMovingLeft;
-    bool isJumping;         // Controla si el pato está saltando
-    bool isOnFloor;         // Controla si el pato está en el suelo
+    bool isJumping;
+    bool isOnFloor;
     int numSprite;
-    const float initialY;    // Mantiene la posición en Y inicial (suelo)
+    const float initialY;
     Gun gun;
     float pixelDuckSpriteX;
     float pixelDuckSpriteY;
     bool isFlipped;
-    float pixelGunSpriteX;
-    float pixelGunSpriteY;
     uint8_t typeOfGun;
     Texture sprites;
 };

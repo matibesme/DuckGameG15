@@ -18,7 +18,7 @@ const uint8_t FULL_GAME_BYTE = 0x20;
 const uint8_t END_ROUND_BYTE = 0x21;
 const uint8_t VICTORY_BYTE = 0x22;
 
-//movement actions
+//duck movement actions
 const uint8_t MOVEMENT_ACTION = 0x03;
 const uint8_t JUMP = 0x04;
 const uint8_t RIGTH = 0x05;
@@ -45,5 +45,10 @@ constexpr uint8_t C_COWBOY_GUN= 0X34;
 constexpr uint8_t C_COWBOY_BULLET= 0x54;
 
 //bullet action
-constexpr int HEIGHT_BULLET= 13;
-constexpr int WIDTH_BULLET= 25;
+constexpr int HEIGHT_BULLET= 5;
+constexpr int WIDTH_BULLET= 5;
+const uint8_t BULLET_RIGTH = 0x05;
+const uint8_t BULLET_LEFT = 0x06;
+const uint8_t BULLET_UP = 0x50;
+
+
