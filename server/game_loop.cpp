@@ -51,8 +51,17 @@ void GameLoop::checkCommand(uint8_t comando) {
 }
 
 void GameLoop::sendCompleteScene(){
-    CommandGame command = {S_FULL_GAME_BYTE, 1, 1, {{1, 1, personaje.getXPos(), personaje.getYPos(),
-                                                     personaje.getTypeOfMoveSprite()}}, 0, ""};
+    
+    uint8_t personajes_type;//the character
+    float x_pos;
+    float y_pos;
+    uint8_t typeOfMove;//right left down jump still
+    uint8_t typeOfGun; // nogun, cowboy ...
+    
+    CommandGame command = {S_FULL_GAME_BYTE, S_PERSONAJE_TYPE, 1, {{ 1, personaje.getXPos(), personaje.getYPos(),
+                                                     personaje.getTypeOfMoveSprite(), personaje.getWeapon()}}, 0, ""};
+    
+
     queues_map.sendMessagesToQueues(command);
 
 }

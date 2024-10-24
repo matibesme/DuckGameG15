@@ -9,7 +9,7 @@
 
 class CowBoyBullet : public Bullet {
 public:
-    CowBoyBullet();
+    CowBoyBullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range);
     void executeAction() override;
     ~CowBoyBullet() override;
 };

@@ -26,6 +26,7 @@ void ProtocoloServer::sendToClient(const CommandGame& command) {
 void ProtocoloServer::sendFullGame(const CommandGame& command) {
     protocolo.sendByte(0x20, dead_connection);
     protocolo.sendByte(command.scene_id, dead_connection);
+    protocolo.sendByte(S_PERSONAJE_TYPE, dead_connection);
     protocolo.sendByte(command.elements_quantity, dead_connection);
     for (const Element& element : command.elements) {
         protocolo.sendByte(element.element_type, dead_connection);

@@ -6,9 +6,11 @@
 
 #include "constant_definitons.h"
 
-Bullet::Bullet(uint8_t damage, uint8_t range): Objeto(S_BULLET),
-damage(damage), range(range) {
-}
+Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range):
+    Objeto(type, id, x_pos, y_pos),
+    damage(damage),
+    range(range),
+    is_alive(true) {}
 
 
 uint8_t Bullet::getDamage() {

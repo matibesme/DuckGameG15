@@ -17,7 +17,7 @@ private:
     std::list<Bullet> ammo_list;
 
 public:
-    Weapon(uint8_t damage, uint8_t range, uint8_t ammo);
+    Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range, uint8_t ammo);
     uint8_t getAmmo();
     void setAmmo(uint8_t ammo);
     void shoot();

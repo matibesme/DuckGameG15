@@ -29,5 +29,13 @@ constexpr float POSICION_INICIAL_Y = 386;
 constexpr float GRAVEDAD = 1;
 constexpr float VELOCIDAD_INICIAL = 15;
 
-constexpr uint8_t S_WEAPON = 0x01;//ver bien que
-constexpr uint8_t S_BULLET = 0x02;
+constexpr uint8_t S_PERSONAJE_TYPE
+constexpr uint8_t S_WEAPON_TYPE = 0x01;
+constexpr uint8_t S_BULLET_TYPE = 0x32;
+constexpr uint8_t S_NOGUN= 0X33;
+constexpr uint8_t S_COWBOY_GUN= 0X34;
+
+
+constexpr uint8_t S_COWBOY_BULLET=;
+
+constexpr uint8_t S_SHOOT= ;

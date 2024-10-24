@@ -6,21 +6,42 @@
 
 
 
-struct Element{
-    uint8_t element_type;
-    uint8_t element_id;
+struct Personajes{
+    uint8_t personajes_type;//the character
     float x_pos;
     float y_pos;
-    uint8_t typeOfMove;
+    uint8_t typeOfMove;//right left down jump still
+    uint8_t typeOfGun; // nogun, cowboy ...
 };
+
+struct Bullet{
+    uint8_t element_type; // cowboy Bullet
+    float x_pos;
+    float y_pos;
+    uint8_t orientation; //derecha izquierda
+}
+
+
+struct Weapon{ //free wapons in the floor
+    float x_pos;
+    float y_pos;    
+
+}
+
 
 
 struct CommandGame {
     uint8_t type_of_action;
     //full game scene
     uint8_t scene_id;
-    uint8_t elements_quantity;
-    std::vector<Element> elements;
+    
+    uint8_t personaje_type;
+    uint8_t personaje_quantity;
+    std::vector<Personajes> Personajes;
+    uint8_t bullet_type;
+    uint8_t bullet_quantity;
+    std::vector<Bullet> Bullets;
+
     //end of round scene
     uint8_t players_quantity;
     //std::vector<PlayerStatus> players_status;
