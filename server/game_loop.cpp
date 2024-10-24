@@ -51,16 +51,23 @@ void GameLoop::checkCommand(uint8_t comando) {
 }
 
 void GameLoop::sendCompleteScene(){
+    std::list<Personaje> lista_personajes;
+    std::list<Bullet> lista_balas;
+    CommandGame command;
+    command.type_of_action = S_FULL_GAME_BYTE;
+    command.scene_id = S_SCENE_ID;
     
-    uint8_t personajes_type;//the character
-    float x_pos;
-    float y_pos;
-    uint8_t typeOfMove;//right left down jump still
-    uint8_t typeOfGun; // nogun, cowboy ...
-    
-    CommandGame command = {S_FULL_GAME_BYTE, S_PERSONAJE_TYPE, 1, {{ 1, personaje.getXPos(), personaje.getYPos(),
-                                                     personaje.getTypeOfMoveSprite(), personaje.getWeapon()}}, 0, ""};
-    
+    for (Personaje& personaje_i : lista_personajes) {
+        Personajes personaje = {personaje_i.getTypeOfPersonaje(), personaje_i.getXPos(), personaje_i.getYPos(),
+                                 personaje_i.getTypeOfMoveSprite(), personaje_i.getWeapon()};
+        command.personajes.push_back(personaje);
+    }
+
+    for (Bullet& bala_i : lista_balas) {
+        Bullet bala = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getOrientation()};
+        command.bullets.push_back(bala);
+    }  
+  
 
     queues_map.sendMessagesToQueues(command);
 

@@ -10,11 +10,8 @@ void ProtocoloServer::sendToClient(const CommandGame& command) {
     try {
         if (command.type_of_action == S_FULL_GAME_BYTE) {
             sendFullGame(command);
-        }/* else if (command.type_of_action == END_ROUND_BYTE) {
-            sendEndOfRound(command);
-        } else if (command.type_of_action == VICTORY_BYTE) {
-            sendVictory(command);
-        }*/
+        }
+
     } catch (const SocketClose& e) {
         std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
     } catch (const std::exception& e) {
@@ -24,32 +21,30 @@ void ProtocoloServer::sendToClient(const CommandGame& command) {
 }
 
 void ProtocoloServer::sendFullGame(const CommandGame& command) {
-    protocolo.sendByte(0x20, dead_connection);
+    protocolo.sendByte(S_FULL_GAME_BYTE, dead_connection);
+    //ENVIO ESCENA
     protocolo.sendByte(command.scene_id, dead_connection);
-    protocolo.sendByte(S_PERSONAJE_TYPE, dead_connection);
-    protocolo.sendByte(command.elements_quantity, dead_connection);
-    for (const Element& element : command.elements) {
-        protocolo.sendByte(element.element_type, dead_connection);
-        protocolo.sendByte(element.element_id, dead_connection);
+    
+    //ENVIO DE PERSONAJES
+  
+    protocolo.sendByte(command.personajes.size(), dead_connection);
+    for (const Element& element : command.personajes) {
         protocolo.sendFloat(element.x_pos, dead_connection);
         protocolo.sendFloat(element.y_pos, dead_connection);
         protocolo.sendByte(element.typeOfMove, dead_connection);
+        protocolo.sendByte(element.typeOfGun, dead_connection);
     }
-}
-/*
-void ProtocoloServer::sendVictory(const CommandGame& command) {
-    protocolo.sendByte(0x22, dead_connection);
-    protocolo.sendPlayerName(command.player_name, dead_connection);
+
+    //ENVIO DE BALAS
+    
+    protocolo.sendByte(command.bullets.size(), dead_connection);
+    for (const Element& element : command.bullets) {
+        protocolo.sendFloat(element.x_pos, dead_connection);
+        protocolo.sendFloat(element.y_pos, dead_connection);
+        protocolo.sendByte(element.orientation, dead_connection);
+    }
 }
 
-void ProtocoloServer::sendEndOfRound(const CommandGame& command) {
-    protocolo.sendByte(0x21, dead_connection);
-    protocolo.sendByte(command.players_quantity, dead_connection);
-    for (const PlayerStatus& player : command.players_status) {
-        protocolo.sendPlayerName(player.player_name, dead_connection);
-        protocolo.sendByte(player.victories, dead_connection);
-    }
-}*/
 
 uint8_t ProtocoloServer::receiveCommandFromClients() {
     try {

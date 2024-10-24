@@ -35,24 +35,25 @@ struct CommandGame {
     //full game scene
     uint8_t scene_id;
     
-    uint8_t personaje_type;
-    uint8_t personaje_quantity;
-    std::vector<Personajes> Personajes;
-    uint8_t bullet_type;
-    uint8_t bullet_quantity;
-    std::vector<Bullet> Bullets;
-
+    std::vector<Personajes> personajes;
+    
+    std::vector<Bullet> bullets;
+    /*
     //end of round scene
     uint8_t players_quantity;
     //std::vector<PlayerStatus> players_status;
     //CommandVictory
     std::string player_name;
+    */
 };
 
 struct CommandGameShow {
     uint8_t scene_id;
-    uint8_t elements_quantity;
-    std::vector<Element> elements;
+  
+    std::vector<Personaje> personajes_list;
+  
+    std::vector<Bullet> bullets_list;
+
 };
 
 
