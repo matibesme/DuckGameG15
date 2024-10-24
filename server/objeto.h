@@ -11,7 +11,7 @@ protected:
     float y_pos;   // posición en Y
 
 public:
-    Objeto();
+    Objeto(uint8_t type, uint8_t id, float x_pos, float y_pos);
     
     // Métodos getter
     float getXPos() const;
@@ -19,7 +19,7 @@ public:
     uint8_t getId() const;
 
     // Métodos setter
-    void setXPos(float pos_x);
+    virtual void setXPos(float pos_x);
     void setYPos(float pos_y);
     void setId(uint8_t new_id);
 

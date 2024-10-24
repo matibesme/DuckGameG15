@@ -1,6 +1,9 @@
 #include "personaje.h"
 
-Personaje::Personaje():  typeOfMove(S_STILL),saltando(false),velocidad(VELOCIDAD_INICIAL){}
+Personaje::Personaje(uint8_t type, uint8_t id, float x_pos, float y_pos)
+        : Objeto(type, id, x_pos, y_pos), typeOfMove(S_STILL), saltando(false), velocidad(VELOCIDAD_INICIAL) {
+
+}
 
 
 float Personaje::getXPos() {
@@ -24,14 +27,6 @@ void Personaje::setXPos(float pos_x) {
     }
 }
 
-void Personaje::setYPos(float pos_y) {
-
-    this->y_pos = pos_y;
-
-    if (this->y_pos<POSICION_INICIAL_X ||this->y_pos>MAP_LIMIT_Y ){
-        this->y_pos=POSICION_INICIAL_X;
-    }
-}
 
 void Personaje::setTypeOfMoveSprite(uint8_t orientation) {
     this->typeOfMove = orientation;
@@ -69,6 +64,9 @@ void Personaje::executeAction() {
         }
     }
 }
+
+
+
 
 Personaje::~Personaje() {}
 

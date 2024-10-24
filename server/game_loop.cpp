@@ -6,8 +6,9 @@ GameLoop::GameLoop(BlockingQueue<uint8_t>& queue_comandos, bool& end_game,
         queue_comandos(queue_comandos),
         end_game(end_game),
         queues_map(queues_map),
-        personaje(),
-        lista_personajes({personaje})
+        //personaje(),
+        map_free_weapons(),
+        map_personajes()
         {}
 
 void GameLoop::run() {
