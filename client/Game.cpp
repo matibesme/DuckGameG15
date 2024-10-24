@@ -6,7 +6,7 @@
 
 Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver)
         : graficos("DUCK GAME", 640, 480),
-          duck(POSICION_INICIAL_X, POSICION_INICIAL_Y),
+          duck(POSICION_INICIAL_X, POSICION_INICIAL_Y, graficos),
           background(graficos),
           prevTicks(SDL_GetTicks()),
           duckTexture (graficos.LoadTexture(DATA_PATH "/whiteDuck.png")) ,
@@ -43,6 +43,12 @@ void Game::correrHandlers() {
                 case SDLK_ESCAPE:
                 case SDLK_q:
                     throw std::runtime_error("Termino el juego");
+                case SDLK_g:
+                duck.setGunEquipped(true);
+                break;
+                case SDLK_h:
+                duck.setGunEquipped(false);
+                break;
             }
         } else if (event.type == SDL_KEYUP) {
             switch (event.key.keysym.sym) {

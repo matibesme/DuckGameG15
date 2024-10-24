@@ -14,9 +14,9 @@ const int SPRITE_HEIGHT = 24;
 const float VERTICAL_CENTER_DIVISOR = 1.1f;
 
 
-Duck::Duck(float initialX, float initialY)
+Duck::Duck(float initialX, float initialY, Graficos& graficos)
         : positionX(initialX), positionY(initialY),
-          isOnFloor(true), colSprite(0), initialY(initialY), tocoTecho(false) {}
+          isOnFloor(true), colSprite(0), initialY(initialY), tocoTecho(false), gun(graficos) {}
 
 void Duck::update(float y_pos, float x_pos) {
     positionX = x_pos;
@@ -46,6 +46,10 @@ void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites, uint8_t ty
     } else {
         renderer.Copy(sprites, Rect(src_x, src_y, SPRITE_WIDTH, SPRITE_HEIGHT), destRect);
     }
+    if(gun.get_is_equipped()){
+        gun.update_pos(positionX+(2*DUCK_WIDTH/5), ((vcenter - DUCK_HEIGHT - (initialY - positionY)))+DUCK_HEIGHT/2);
+        gun.draw(renderer);
+    }
 }
 
 bool Duck::isTouchingFloor() const {
@@ -56,4 +60,7 @@ bool Duck::checkCollision(SDL2pp::Rect rect) {
     Rect rectDuck((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
 
     return (SDL_HasIntersection(&rectDuck, &rect));
+}
+void Duck::setGunEquipped(bool is_equipped){
+    gun.set_is_equipped(is_equipped);
 }
