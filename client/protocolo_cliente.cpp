@@ -48,8 +48,8 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
    
     //recivo personajes
     uint8_t patos_quantity = protocolo.receiveByte(dead_connection);
-    std::vector<Pato> lista_patos;
-    for (int i = 0; i < personajes_quantity; i++) {
+    std::vector<DTODuck> lista_patos;
+    for (int i = 0; i < patos_quantity; i++) {
         uint8_t personajes_type = protocolo.receiveByte(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);
@@ -60,7 +60,7 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
     //recivo balas
     uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);
 
-    std::vector<Bala> bullets;
+    std::vector<DTOBullet> bullets;
     for (int i = 0; i < bullets_quantity; i++) {
         uint8_t bala_type = protocolo.receiveByte(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
@@ -69,7 +69,7 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
         bullets.push_back({bala_type, x_pos, y_pos, orientation});
     }
 
-    return {scene_id, personajes, bullets};
+    return {scene_id, lista_patos, bullets};
 }
 /*
 CommandEndOfRound ProtocoloCliente::reciveEndOfRoundFromServer() {

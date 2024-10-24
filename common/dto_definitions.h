@@ -6,7 +6,7 @@
 
 
 
-struct Pato{
+struct DTODuck{
     uint8_t personajes_type;
     float x_pos;
     float y_pos;
@@ -14,8 +14,8 @@ struct Pato{
     uint8_t typeOfGun; // nogun, cowboy ...
 };
 
-struct Bala{
-    uint8_t element_type; // cowboy Bullet
+struct DTOBullet{
+    uint8_t typeOfBullet; // cowboy Bullet
     float x_pos;
     float y_pos;
     uint8_t orientation; //derecha izquierda
@@ -35,9 +35,9 @@ struct CommandGame {
     //full game scene
     uint8_t scene_id;
 
-    std::vector<Pato> lista_patos;
+    std::vector<DTODuck> lista_patos;
 
-    std::vector<Bala> lista_balas;
+    std::vector<DTOBullet> lista_balas;
 
 };
 
@@ -46,9 +46,9 @@ struct CommandGame {
 struct CommandGameShow {
     uint8_t scene_id;
 
-    std::vector<Pato> lista_patos;
+    std::vector<DTODuck> lista_patos;
 
-    std::vector<Bala> lista_balas;
+    std::vector<DTOBullet> lista_balas;
 
 };
 

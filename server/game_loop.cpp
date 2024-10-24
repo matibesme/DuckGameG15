@@ -79,13 +79,13 @@ void GameLoop::sendCompleteScene(){
     command.scene_id = S_SCENE_ID;
     
     for (Personaje& personaje_i : lista_personajes) {
-        Pato pato = {personaje_i.getTypeOfPersonaje(), personaje_i.getXPos(), personaje_i.getYPos(),
-                                 personaje_i.getTypeOfMoveSprite(), personaje_i.getWeapon()};
+        DTODuck pato = {personaje_i.getTypeOfPersonaje(), personaje_i.getXPos(), personaje_i.getYPos(),
+                        personaje_i.getTypeOfMoveSprite(), personaje_i.getWeapon()};
         command.lista_patos.push_back(pato);
     }
 
     for (Bullet& bala_i : lista_balas) {
-        Bala bala = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getOrientation()};
+        DTOBullet bala = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getOrientation()};
         command.lista_balas.push_back(bala);
     }  
   

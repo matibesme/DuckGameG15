@@ -28,7 +28,7 @@ void ProtocoloServer::sendFullGame(const CommandGame& command) {
     //ENVIO DE PERSONAJES
   
     protocolo.sendByte(command.lista_patos.size(), dead_connection);
-    for (const Pato& pato : command.lista_patos) {
+    for (const DTODuck& pato : command.lista_patos) {
         protocolo.sendFloat(pato.x_pos, dead_connection);
         protocolo.sendFloat(pato.y_pos, dead_connection);
         protocolo.sendByte(pato.typeOfMove, dead_connection);
@@ -38,7 +38,7 @@ void ProtocoloServer::sendFullGame(const CommandGame& command) {
     //ENVIO DE BALAS
     
     protocolo.sendByte(command.lista_balas.size(), dead_connection);
-    for (const Bala& bala : command.bullets) {
+    for (const DTOBullet& bala : command.bullets) {
         protocolo.sendFloat(bala.x_pos, dead_connection);
         protocolo.sendFloat(bala.y_pos, dead_connection);
         protocolo.sendByte(bala.orientation, dead_connection);
