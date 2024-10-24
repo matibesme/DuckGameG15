@@ -5,13 +5,15 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         queue_comandos(queue_comandos),
         end_game(end_game),
         queues_map(queues_map),
-        personaje(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y),
+        map_personajes(),
         map_free_weapons(),
         lista_bullets()
         {}
 
 void GameLoop::run() {
     try {
+
+        map_personajes.emplace(1, Personaje(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
         while (!end_game) {
             CommandClient comando;
             while (queue_comandos.try_pop(comando)) {
@@ -48,8 +50,8 @@ void GameLoop::checkBullets() {
 }
 
 void GameLoop::movementComand(uint8_t comando) {
+    Personaje& personaje = map_personajes[1];
 
-    //Personaje personaje = map_personajes[1];
     if (comando==S_RIGTH){
         personaje.setXPos(MOVEMENT_QUANTITY_X);
         personaje.setTypeOfMoveSprite(S_RIGTH);
@@ -71,6 +73,7 @@ void GameLoop::movementComand(uint8_t comando) {
 }
 
 void GameLoop::weaponComand(uint8_t comando) {
+    Personaje& personaje = map_personajes[1];
     if (comando==S_PICKUP){
         
     } else if (comando==S_LEAVE_GUN){
@@ -95,15 +98,17 @@ void GameLoop::sendCompleteScene(){
     command.type_of_action = S_FULL_GAME_BYTE;
     command.scene_id = S_SCENE_ID;
     
+    //recooro el map solo para personaje no id
 
-   // for (auto& personaje_i : map_personajes) {
+    for (auto& personaje : map_personajes) {
 
-   DTODuck dto_duck = {personaje.getType(), personaje.getXPos(), personaje.getYPos(),
-                        personaje.getTypeOfMoveSprite(), personaje.getWeapon().getType() };
+       DTODuck dto_duck = {personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
+                            personaje.second.getTypeOfMoveSprite(), personaje.second.getWeapon().getType() };
 
-   command.lista_patos.push_back(dto_duck);
 
-    //}
+       command.lista_patos.push_back(dto_duck);
+
+    }
     for (auto& bala_i : lista_bullets) {
         DTOBullet dto_bullet = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getDirection()};
         command.lista_balas.push_back(dto_bullet);
@@ -114,11 +119,9 @@ void GameLoop::sendCompleteScene(){
 }
 
 void GameLoop::paraCadaPatoAction() {
-
-    //for (Personaje& personaje_i : lista_personajes) {
-        personaje.executeAction();
-
-    //}
+    for (auto& personaje : map_personajes) {
+        personaje.second.executeAction();
+    }
 }
 
 GameLoop::~GameLoop() {}
