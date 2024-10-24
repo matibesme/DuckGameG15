@@ -16,51 +16,50 @@ const float VERTICAL_CENTER_DIVISOR = 1.1f;
 
 Duck::Duck(float initialX, float initialY, Graficos& graficos)
         : positionX(initialX), positionY(initialY),
-          isOnFloor(true), colSprite(0), initialY(initialY), tocoTecho(false), gun(graficos) {}
+          isOnFloor(true), numSprite(0), initialY(initialY), gun(graficos),
+          pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING), isFlipped(false),
+          pixelGunSpriteX(0), pixelGunSpriteY(SRC_Y_STANDING) {}
 
-void Duck::update(float y_pos, float x_pos) {
+void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped) {
     positionX = x_pos;
     positionY = y_pos;
-}
-
-void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites, uint8_t typeOfMove) {
-    int src_x = 0, src_y = SRC_Y_MOVING;
+    isFlipped = false;
     if(typeOfMove != STILL) {
-        colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
-        if (typeOfMove == RIGTH || typeOfMove == LEFT) {
-            src_x = SPRITE_WIDTH * colSprite;
-        } else if (typeOfMove == JUMP) {
-            src_y = SRC_Y_JUMPING;
-            src_x = SPRITE_WIDTH * colSprite;
-            colSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES_JUMP;
+        numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
+        if (typeOfMove == RIGTH) {
+            pixelDuckSpriteX = SPRITE_WIDTH * numSprite;
+        } else if (typeOfMove == LEFT) {
+            pixelDuckSpriteX = SPRITE_WIDTH * numSprite;
+            isFlipped = true;
+        }
+        else if (typeOfMove == JUMP) {
+            pixelDuckSpriteY = SRC_Y_JUMPING;
+            pixelDuckSpriteX = SPRITE_WIDTH * numSprite;
+            numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES_JUMP;
         } else if (typeOfMove == DOWN) {
-            src_y = SRC_Y_STANDING;
+            pixelDuckSpriteY = SRC_Y_STANDING;
         }
     }
+}
+
+void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites) {
 
     int vcenter = renderer.GetOutputHeight() / VERTICAL_CENTER_DIVISOR;
     Rect destRect((int)positionX, (int)(vcenter - DUCK_HEIGHT - (initialY - positionY)), DUCK_WIDTH, DUCK_HEIGHT);
 
-    if (typeOfMove==LEFT) {
-        renderer.Copy(sprites, Rect(src_x, src_y, SPRITE_WIDTH, SPRITE_HEIGHT), destRect, 0.0, Point(0, 0), SDL_FLIP_HORIZONTAL);
+    if (isFlipped) {
+        renderer.Copy(sprites, Rect(pixelDuckSpriteX, pixelDuckSpriteY, SPRITE_WIDTH, SPRITE_HEIGHT), destRect, 0.0, Point(0, 0), SDL_FLIP_HORIZONTAL);
     } else {
-        renderer.Copy(sprites, Rect(src_x, src_y, SPRITE_WIDTH, SPRITE_HEIGHT), destRect);
+        renderer.Copy(sprites, Rect(pixelDuckSpriteX, pixelDuckSpriteY, SPRITE_WIDTH, SPRITE_HEIGHT), destRect);
     }
-    if(gun.get_is_equipped()){
-        gun.update_pos(positionX+(2*DUCK_WIDTH/5), ((vcenter - DUCK_HEIGHT - (initialY - positionY)))+DUCK_HEIGHT/2);
+    if(gun.isEquipped()){
+        gun.update_pos(positionX+(2 * DUCK_WIDTH / 5), ((vcenter - DUCK_HEIGHT - (initialY - positionY)))+ DUCK_HEIGHT / 2);
         gun.draw(renderer);
     }
-}
-
-bool Duck::isTouchingFloor() const {
-    return positionY == initialY;
 }
 
 bool Duck::checkCollision(SDL2pp::Rect rect) {
     Rect rectDuck((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
 
     return (SDL_HasIntersection(&rectDuck, &rect));
-}
-void Duck::setGunEquipped(bool is_equipped){
-    gun.set_is_equipped(is_equipped);
 }

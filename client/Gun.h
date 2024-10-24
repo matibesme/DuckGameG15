@@ -24,7 +24,7 @@ public:
     Gun(Graficos& graficos);
     void draw(SDL2pp::Renderer& renderer);
     void update_pos(float pos_x, float pos_y);
-    bool get_is_equipped();
+    bool isEquipped();
     void set_is_equipped(bool is_equipped);
 };
 

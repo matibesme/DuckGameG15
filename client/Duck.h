@@ -9,16 +9,9 @@ using namespace SDL2pp;
 class Duck {
 public:
     Duck(float initialX, float initialY, Graficos& graficos);
-    void update(float y_pos, float x_pos);
-    void draw(Renderer& renderer, Texture& sprites, uint8_t typeOfMove);
-    void setOnFloor(bool onFloor);
-    float getPosition() const;
-    bool is_Jumping() const;
+    void update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped);
+    void draw(Renderer& renderer, Texture& sprites);
     bool checkCollision(Rect rect);
-    bool isTouchingFloor() const;
-    bool isOnTop() const;
-    void setPosicion(float x, float y);
-    void setGunEquipped(bool is_equipped);
 
 private:
     float positionX;
@@ -27,11 +20,14 @@ private:
     bool isMovingLeft;
     bool isJumping;         // Controla si el pato está saltando
     bool isOnFloor;         // Controla si el pato está en el suelo
-    int colSprite;
-    const float jumpVelocity = -1.0f;  // Velocidad inicial del salto
+    int numSprite;
     const float initialY;    // Mantiene la posición en Y inicial (suelo)
-    bool tocoTecho;
     Gun gun;
+    float pixelDuckSpriteX;
+    float pixelDuckSpriteY;
+    bool isFlipped;
+    float pixelGunSpriteX;
+    float pixelGunSpriteY;
 };
 
 #endif // PLAYER_H

@@ -10,6 +10,7 @@ Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, Blo
           background(graficos),
           prevTicks(SDL_GetTicks()),
           duckTexture (graficos.LoadTexture(DATA_PATH "/whiteDuck.png")) ,
+          bulletTexture (graficos.LoadTexture(DATA_PATH "/whiteDuck.png")) ,
           protocol(protocol),
           queue_sender(queue_sender),
           queue_receiver(queue_receiver) {}
@@ -17,14 +18,17 @@ Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, Blo
 void Game::run() {
     Renderer& renderer = graficos.GetRenderer();
     CommandGameShow command;
-    dibujar(POSICION_INICIAL_X, POSICION_INICIAL_Y, STILL, renderer);
+    dibujar(renderer);
     try {
         while (1) {
             correrHandlers();
             if (queue_receiver.try_pop(command)) {
                 for (auto &element: command.elements) {
-                    dibujar(element.x_pos, element.y_pos, element.typeOfMove, renderer);
+                    duck.update(element.x_pos, element.y_pos, element.typeOfMove, element.isEquipped);
                 }
+                /*for(auto &element: command.weapon){
+                    bullet.update(element.x_pos, element.y_pos, renderer);
+                }*/
             }
             SDL_Delay(1);
         }
@@ -79,11 +83,12 @@ void Game::correrHandlers() {
 }
 
 
-
-void Game::dibujar(float posX, float posY, const uint8_t typeOfMove, Renderer& renderer) {
+void Game::dibujar(Renderer& renderer) {
     renderer.Clear();
     background.draw(renderer);
-    duck.update(posY, posX);
-    duck.draw(renderer, duckTexture, typeOfMove);
+
+    duck.draw(renderer, duckTexture);
+    bullet.draw(renderer, bulletTexture);
+
     renderer.Present();
 }

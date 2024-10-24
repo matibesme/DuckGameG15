@@ -28,15 +28,15 @@ void Gun::draw(SDL2pp::Renderer& renderer){
     
 }
 
-void Gun::update_pos(float pos_x, float pos_y){
-    this->pos_x = pos_x;
-    this->pos_y = pos_y;
+void Gun::update_pos(float posX, float posY){
+    this->pos_x = posX;
+    this->pos_y = posY;
 }
 
-bool Gun::get_is_equipped(){
+bool Gun::isEquipped(){
     return is_equipped;
 }
 
-void Gun::set_is_equipped(bool is_equipped){
-    this->is_equipped = is_equipped;
+void Gun::set_is_equipped(bool isEquipped){
+    this->is_equipped = isEquipped;
 }

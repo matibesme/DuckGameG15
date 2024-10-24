@@ -32,6 +32,7 @@ struct CommandGameShow {
     uint8_t scene_id;
     uint8_t elements_quantity;
     std::vector<Element> elements;
+    //std::vector<Weapon> weapon;
 };
 
 
