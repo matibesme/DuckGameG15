@@ -1,3 +1,4 @@
+#include <SDL_render.h>
 #include "Gun.h"
 
 /*Gun::Gun(float initial_pos_x, float initial_pos_y, int height, int width, SDL2pp::Texture& texture_equipped, SDL2pp::Texture& texture_not_equipped) 
@@ -9,18 +10,27 @@
 
 Gun::Gun(Graficos& graficos) : texture_equipped(graficos.LoadTexture(DATA_PATH "/CowboyPistolEquipped.png")), 
                                 texture_not_equipped(graficos.LoadTexture(DATA_PATH "/CowboyPistol.png")),
-                                height(13), width(25){
-    pos_x = 0.0;
-    pos_y = 0.0;
-}
+                                height(HEIGHT_GUN), width(WIDTH_GUN) , typeOfGun(C_NOGUN), is_equiped(false),
+                                pos_x(0), pos_y(0){}
 
-void Gun::draw(SDL2pp::Renderer& renderer){
+void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
+    if(typeOfGun == C_NOGUN){
+        return;
+    }
+
     //CUIDADO = llegan como int por parametro, pero se guardan como float
     SDL2pp::Rect area_gun(pos_x, pos_y, width, height);
 
-    if(isEquipped()){
+    if(is_equiped){
+        //map con typeOfGun a textura
+        if (isFliped)
+        renderer.Copy(texture_equipped, SDL2pp::NullOpt, area_gun, 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+        else
         renderer.Copy(texture_equipped, SDL2pp::NullOpt, area_gun);
     } else{
+        if (isFliped)
+        renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, area_gun, 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+        else
         renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, area_gun);
     }
 }
@@ -31,9 +41,17 @@ void Gun::update_pos(float posX, float posY){
 }
 
 bool Gun::isEquipped(){
-    return typeOfGun != C_NOGUN;
+    return typeOfGun != C_NOGUN && is_equiped;
+}
+
+void Gun::setEquip(bool equip){
+    is_equiped = equip;
 }
 
 void Gun::setGun(uint8_t gun){
     typeOfGun = gun;
+    if(gun == C_NOGUN)
+        is_equiped = false;
+    else
+        is_equiped = true;
 }

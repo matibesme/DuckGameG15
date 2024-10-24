@@ -38,7 +38,12 @@ const float POSICION_INICIAL_X = 0.0f;
 const float POSICION_INICIAL_Y = 386;
 
 //armas action
-
+constexpr int HEIGHT_GUN= 13;
+constexpr int WIDTH_GUN= 25;
 constexpr uint8_t C_NOGUN= 0X33;
 constexpr uint8_t C_COWBOY_GUN= 0X34;
 constexpr uint8_t C_COWBOY_BULLET= 0x54;
+
+//bullet action
+constexpr int HEIGHT_BULLET= 13;
+constexpr int WIDTH_BULLET= 25;

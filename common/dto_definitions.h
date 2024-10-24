@@ -19,14 +19,14 @@ struct Bullet{
     float x_pos;
     float y_pos;
     uint8_t orientation; //derecha izquierda
-}
+};
 
 
 struct Weapon{ //free wapons in the floor
     float x_pos;
     float y_pos;
 
-}
+};
 
 
 

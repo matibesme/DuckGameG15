@@ -10,7 +10,7 @@ class Duck {
 public:
     Duck(float initialX, float initialY, Graficos& graficos);
     void update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped);
-    void draw(Renderer& renderer, Texture& sprites);
+    void draw(Renderer& renderer);
     bool checkCollision(Rect rect);
 
 private:
@@ -29,6 +29,7 @@ private:
     float pixelGunSpriteX;
     float pixelGunSpriteY;
     uint8_t typeOfGun;
+    Texture sprites;
 };
 
 #endif // PLAYER_H

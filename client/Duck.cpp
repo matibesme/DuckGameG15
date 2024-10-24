@@ -18,7 +18,8 @@ Duck::Duck(float initialX, float initialY, Graficos& graficos)
         : positionX(initialX), positionY(initialY),
           isOnFloor(true), numSprite(0), initialY(initialY), gun(graficos),
           pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING), isFlipped(false),
-          pixelGunSpriteX(0), pixelGunSpriteY(SRC_Y_STANDING), typeOfGun(NO_GUN) {}
+          pixelGunSpriteX(0), pixelGunSpriteY(SRC_Y_STANDING), typeOfGun(C_NOGUN),
+          sprites(graficos.LoadTexture(DATA_PATH "/DuckSprite.png")) {}
 
 void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped) {
     positionX = x_pos;
@@ -44,7 +45,7 @@ void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquip
     }
 }
 
-void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites) {
+void Duck::draw(SDL2pp::Renderer& renderer) {
 
     int vcenter = renderer.GetOutputHeight() / VERTICAL_CENTER_DIVISOR;
     Rect destRect((int)positionX, (int)(vcenter - DUCK_HEIGHT - (initialY - positionY)), DUCK_WIDTH, DUCK_HEIGHT);
@@ -57,7 +58,7 @@ void Duck::draw(SDL2pp::Renderer& renderer, SDL2pp::Texture& sprites) {
 
     if(gun.isEquipped()){
         gun.update_pos(positionX + (2 * DUCK_WIDTH / 5), ((vcenter - DUCK_HEIGHT - (initialY - positionY))) + DUCK_HEIGHT / 2);
-        gun.draw(renderer);
+        gun.draw(isFlipped, renderer);
     }
 }
 

@@ -7,8 +7,6 @@
 
 class Gun{
 private:
-    float pos_x;
-    float pos_y;
     //La implementación que debería ir es la comentada, pero para que sea más sencillo harcodear lo dejo así.
     //SDL2pp::Texture& texture_not_equipped;
     //SDL2pp::Texture& texture_equipped;
@@ -17,12 +15,16 @@ private:
     const int height;
     const int width;
     uint8_t typeOfGun;
+    bool is_equiped;
+    float pos_x;
+    float pos_y;
+    void setEquip(bool equip);
 
 public:
     //Este es el constructor que va.
     //Gun(float initial_pos_x, float initial_pos_y, int height, int width, SDL2pp::Texture& texture_equipped, SDL2pp::Texture& texture_not_equipped);
     Gun(Graficos& graficos);
-    void draw(SDL2pp::Renderer& renderer);
+    void draw(bool isFliped, SDL2pp::Renderer& renderer);
     void update_pos(float pos_x, float pos_y);
     bool isEquipped();
     void setGun(uint8_t gun);
