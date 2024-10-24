@@ -15,14 +15,13 @@ private:
     Duck duck;
     Bullet bullet;
     Background background;
-    ProtocoloCliente& protocol;
     BlockingQueue<uint8_t>& queue_sender;
     BlockingQueue<CommandGameShow>& queue_receiver;
     void dibujar(Renderer& renderer);
     void correrHandlers();
 
 public:
-    Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver);
+    Game(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver);
 
     void run();
 };

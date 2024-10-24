@@ -4,12 +4,11 @@
 #include <exception>
 #include <iostream>
 
-Game::Game(ProtocoloCliente& protocol, BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver)
+Game::Game( BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver)
         : graficos("DUCK GAME", 640, 480),
           duck(POSICION_INICIAL_X, POSICION_INICIAL_Y, graficos),
           bullet(POSICION_INICIAL_X, POSICION_INICIAL_Y, graficos),
           background(graficos),
-          protocol(protocol),
           queue_sender(queue_sender),
           queue_receiver(queue_receiver) {}
 
@@ -63,7 +62,7 @@ void Game::correrHandlers() {
         }
     }
 
-    const Uint8* estadoTeclas = SDL_GetKeyboardState(NULL);
+    const Uint8 *estadoTeclas = SDL_GetKeyboardState(NULL);
 
     if (estadoTeclas[SDL_SCANCODE_D]) {
         queue_sender.push(RIGTH);
@@ -79,7 +78,7 @@ void Game::correrHandlers() {
     if (estadoTeclas[SDL_SCANCODE_SPACE]) {
         queue_sender.push(SHOOT);
     }
-
+}
 
 void Game::dibujar(Renderer& renderer) {
     renderer.Clear();
