@@ -41,6 +41,7 @@ void ProtocoloServer::sendFullGame(const CommandGame& command) {
     
     protocolo.sendByte(command.lista_balas.size(), dead_connection);
     for (const DTOBullet& bala : command.lista_balas) {
+        protocolo.sendByte(bala.id, dead_connection);
         protocolo.sendByte(bala.typeOfBullet, dead_connection);
         protocolo.sendFloat(bala.x_pos, dead_connection);
         protocolo.sendFloat(bala.y_pos, dead_connection);
