@@ -55,11 +55,12 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
 
     std::list<DTOBullet> bullets;
     for (int i = 0; i < bullets_quantity; i++) {
+        uint8_t id = protocolo.receiveByte(dead_connection);
         uint8_t bala_type = protocolo.receiveByte(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t orientation = protocolo.receiveByte(dead_connection);
-        bullets.push_back({bala_type, x_pos, y_pos, orientation});
+        bullets.push_back({ id, bala_type, x_pos, y_pos, orientation});
     }
 
     //recivo armas libres

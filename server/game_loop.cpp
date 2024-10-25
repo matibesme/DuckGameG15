@@ -7,7 +7,8 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         queues_map(queues_map),
         map_personajes(),
         map_free_weapons(),
-        lista_bullets()
+        map_bullets(),
+        id_balas(1)
         {}
 
 void GameLoop::run() {
@@ -42,14 +43,13 @@ void GameLoop::checkCommand(CommandClient comando) {
 }
 
 void GameLoop::checkBullets() {
-    for (auto it = lista_bullets.begin(); it != lista_bullets.end(); ) {
-        if ((*it)->isAlive()) {
-            (*it)->executeAction();
-            ++it;
-        } else {
-            it = lista_bullets.erase(it);
+    for (auto& bullet : map_bullets) {
+        if (!bullet.second->isAlive()) {
+            map_bullets.erase(bullet.first);
         }
+        bullet.second->executeAction();
     }
+
 }
 
 void GameLoop::movementComand(uint8_t comando) {
@@ -94,7 +94,8 @@ void GameLoop::weaponComand(uint8_t comando) {
         weapon.setYPos(personaje.getYPos());
         weapon.setDirection(personaje.getDirection());
         std::unique_ptr<Bullet> bullet = weapon.shoot();
-        lista_bullets.emplace_back(std::move(bullet));
+        map_bullets.emplace(id_balas, std::move(bullet));
+        id_balas++;
 
 
         
@@ -107,7 +108,7 @@ void GameLoop::sendCompleteScene(){
     command.type_of_action = S_FULL_GAME_BYTE;
     command.scene_id = S_SCENE_ID;
     
-    //recooro el map solo para personaje no id
+
 
     for (auto& personaje : map_personajes) {
 
@@ -118,9 +119,8 @@ void GameLoop::sendCompleteScene(){
        command.lista_patos.push_back(dto_duck);
 
     }
-    for (auto& bullet : lista_bullets) {
-        DTOBullet dto_bullet = {bullet->getTypeOfBullet(), bullet->getXPos(), bullet->getYPos(),
-                            bullet->getDirection()};
+    for (auto& bullet : map_bullets) {
+        DTOBullet dto_bullet = {bullet.first, bullet.second->getType(), bullet.second->getXPos(), bullet.second->getYPos(), bullet.second->getDirection()};
         command.lista_balas.push_back(dto_bullet);
     }
 
