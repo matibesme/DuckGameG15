@@ -25,9 +25,7 @@ void Game::run() {
                 // Actualiza los patos activos
                 ducks.clear();
                 for (const auto& personaje : command.lista_patos) {
-                    auto duck = std::make_unique<Duck>(personaje.x_pos, personaje.y_pos, graficos);
-                    duck->update(personaje.x_pos, personaje.y_pos, personaje.typeOfMove, personaje.typeOfGun);
-                    ducks.push_back(std::move(duck));
+                    ducks.emplace_back(personaje.x_pos, personaje.y_pos, personaje.typeOfMove, personaje.typeOfGun, graficos);
                 }
                 // Actualiza las balas activas
                 bullets.clear();
