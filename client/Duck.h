@@ -18,12 +18,11 @@ private:
     float positionY;
     Graficos& graficos;
     int numSprite;
-    const float initialY;
     Gun gun;
-    float pixelDuckSpriteX;
-    float pixelDuckSpriteY;
     bool isFlipped;
     uint8_t typeOfGun;
+    float pixelDuckSpriteX;
+    float pixelDuckSpriteY;
     void actualizarTipo(const char*& texture);
 };
 

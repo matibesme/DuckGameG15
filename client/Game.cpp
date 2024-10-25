@@ -25,7 +25,7 @@ void Game::run() {
                 // Actualiza los patos activos
                 ducks.clear();
                 for (const auto& personaje : command.lista_patos) {
-                    ducks.emplace_back(personaje.x_pos, personaje.y_pos, personaje.typeOfMove, personaje.typeOfGun, graficos);
+                    ducks.emplace_back(personaje.x_pos, personaje.y_pos , personaje.typeOfMove, personaje.typeOfGun, graficos);
                 }
                 // Actualiza las balas activas
                 bullets.clear();
@@ -50,12 +50,9 @@ void Game::dibujar(Renderer& renderer, std::list<Duck>& ducks, std::list<Bullet>
 
     background.draw(renderer);
 
-    // Dibuja solo los patos activos
     for (auto& duck : ducks) {
         duck.draw(renderer);
     }
-
-    // Dibuja solo las balas activas
     for (auto& bullet : bullets) {
         bullet.draw(renderer);
     }

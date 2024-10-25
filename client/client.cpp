@@ -12,7 +12,6 @@ void Client::execute() {
         game.run();
 }
 
-
 Client::~Client() {
     receiver.stop();
     sender.stop();

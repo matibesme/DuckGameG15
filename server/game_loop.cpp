@@ -51,6 +51,7 @@ void GameLoop::checkBullets() {
         }
     }
 }
+
 void GameLoop::movementComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
 
