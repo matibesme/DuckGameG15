@@ -56,7 +56,7 @@ void GameRunner::actualizarElementos(const CommandGameShow& command, std::list<D
                                    return bullet.getId() == bulletStruct.id;
                                });
         if (it == bullets.end()) {
-            bullets.emplace_back(bulletStruct.id ,bulletStruct.x_pos, bulletStruct.y_pos, graficos, bulletStruct.orientation,
+            bullets.emplace_back(bulletStruct.id ,bulletStruct.x_pos, bulletStruct.y_pos , graficos, bulletStruct.orientation,
                                  bulletStruct.typeOfBullet);
         } else {
             it->update(bulletStruct.x_pos, bulletStruct.y_pos, bulletStruct.typeOfBullet, bulletStruct.orientation);

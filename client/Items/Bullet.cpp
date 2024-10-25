@@ -11,7 +11,6 @@ Bullet::Bullet(uint8_t id, float initial_pos_x, float initial_pos_y, Graficos& g
 
 void Bullet::draw(SDL2pp::Renderer& renderer) {
     //CUIDADO = llegan como int por parametro, pero se guardan como float
-    SDL2pp::Rect area_gun(pos_x, pos_y, width, height);
 
     const char* texture_path;
     actualizarTipo(texture_path);
@@ -21,16 +20,14 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
     // Si la orientacion es tanto gira o para arriba o para los costados
     if(orientationOfBullet == BULLET_LEFT)
         //map con typeOfBullet a texture
-        renderer.Copy(texture, SDL2pp::NullOpt, area_gun, 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+        renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x, pos_y + DUCK_HEIGHT/2, width, height), 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
     else if (orientationOfBullet == BULLET_RIGTH)
-        renderer.Copy(texture, SDL2pp::NullOpt, area_gun);
+        renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x + DUCK_WIDTH, pos_y + DUCK_HEIGHT/2, width, height));
     else if (orientationOfBullet == BULLET_UP)
-        renderer.Copy(texture, SDL2pp::NullOpt, area_gun, 90.0, SDL2pp::NullOpt, SDL_FLIP_NONE);
-    else
-        renderer.Copy(texture, SDL2pp::NullOpt, area_gun);
+        renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x, pos_y, height, width), 90.0, SDL2pp::NullOpt, SDL_FLIP_NONE);
 }
 
-void Bullet::update(const float new_pos_x,const float new_pos_y, [[maybe_unused]]const uint8_t typeOfBullet, const uint8_t orientacion) {
+void Bullet::update(const float new_pos_x,const float new_pos_y, [[maybe_unused]]const uint8_t type, const uint8_t orientacion) {
     pos_x = new_pos_x;
     pos_y = new_pos_y;
     orientationOfBullet = orientacion;
