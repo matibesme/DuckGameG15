@@ -42,14 +42,15 @@ void GameLoop::checkCommand(CommandClient comando) {
 }
 
 void GameLoop::checkBullets() {
-    for (auto& bala_i : lista_bullets) {
-        if (bala_i.isAlive()){
-            (bala_i).executeAction();
+    for (auto it = lista_bullets.begin(); it != lista_bullets.end(); ) {
+        if (it->isAlive()) {
+            it->executeAction();
+            ++it; // Mover al siguiente elemento solo si no se elimina
+        } else {
+            it = lista_bullets.erase(it); // Elimina y obtiene el siguiente iterador
         }
-
     }
 }
-
 void GameLoop::movementComand(uint8_t comando) {
     Personaje& personaje = map_personajes[1];
 
@@ -81,7 +82,7 @@ void GameLoop::weaponComand(uint8_t comando) {
         
     } else if (comando==S_SHOOT){
 
-        Weapon weapon = personaje.getWeapon();
+        Weapon& weapon = personaje.getWeapon();
         if (weapon.isEmptyAmmo()){
             return;
         }
@@ -89,6 +90,7 @@ void GameLoop::weaponComand(uint8_t comando) {
         weapon.setYPos(personaje.getYPos());    
         Bullet bullet = weapon.shoot();
         lista_bullets.emplace_back(bullet);
+
 
         
     }

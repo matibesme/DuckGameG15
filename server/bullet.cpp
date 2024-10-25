@@ -4,6 +4,8 @@
 
 #include "bullet.h"
 
+#include <iostream>
+
 #include "constant_definitons.h"
 
 Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range):
@@ -37,7 +39,19 @@ void Bullet::release(float x_pos, float y_pos, uint8_t direction) {
 }
 
 void Bullet::executeAction() {
-
+    if (is_alive && range > 0) {
+        if (direction == S_RIGTH) {
+            x_pos += 1;
+        } else if (direction == S_LEFT) {
+            x_pos -= 1;
+        } else if (direction == S_UP) {
+            y_pos -= 1;
+        }
+        range--;
+        if (range == 0) {
+            is_alive = false;
+        }
+    }
 }
 
 

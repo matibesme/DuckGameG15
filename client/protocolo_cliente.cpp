@@ -57,7 +57,13 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
         uint8_t orientation = protocolo.receiveByte(dead_connection);
         bullets.push_back({bala_type, x_pos, y_pos, orientation});
     }
-
+    //imprimir todo
+    for (auto& pato : lista_patos) {
+        std::cout << "personaje type: " << (int)pato.personajes_type << " x: " << pato.x_pos << " y: " << pato.y_pos << " type of move: " << (int)pato.typeOfMove << " type of gun: " << (int)pato.typeOfGun << std::endl;
+    }
+    for (auto& bala : bullets) {
+        std::cout << "bala type: " << (int)bala.typeOfBullet << " x: " << bala.x_pos << " y: " << bala.y_pos << " orientation: " << (int)bala.orientation << std::endl;
+    }
     return {scene_id, lista_patos, bullets};
 }
 /*
