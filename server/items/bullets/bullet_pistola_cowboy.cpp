@@ -19,13 +19,13 @@ void CowBoyBullet::release(float x_pos, float y_pos, uint8_t direction) {
 void CowBoyBullet::executeAction() {
     if (is_alive && range > 0) {
         if (direction == S_RIGTH) {
-            x_pos += 1;
+            x_pos += 5;
         } else if (direction == S_LEFT) {
-            x_pos -= 1;
+            x_pos -= 5;
         } else if (direction == S_UP) {
-            y_pos -= 1;
+            y_pos -= 5;
         }
-        range--;
+        range-=5;
         if (range == 0) {
             is_alive = false;
         }
