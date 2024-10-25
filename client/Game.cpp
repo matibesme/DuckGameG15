@@ -7,7 +7,6 @@
 Game::Game( BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver)
         : graficos("DUCK GAME", 640, 480),
           duck(POSICION_INICIAL_X, POSICION_INICIAL_Y, graficos),
-          bullet(POSICION_INICIAL_X, POSICION_INICIAL_Y, graficos),
           background(graficos),
           queue_sender(queue_sender),
           queue_receiver(queue_receiver) {}
@@ -17,18 +16,16 @@ void Game::run() {
         Renderer& renderer = graficos.GetRenderer();
         CommandGameShow command;
         dibujar(renderer);
-
+        std::list<Bullet> bullets;
         while (true) {
             correrHandlers();
             if (queue_receiver.try_pop(command)) {
                 for (auto & personaje: command.lista_patos) {
                     duck.update(personaje.x_pos, personaje.y_pos, personaje.typeOfMove, personaje.typeOfGun);
                 }
-                for(auto &bullet_i: command.lista_balas){
-                    Bullet bullet1 (bullet_i.x_pos , bullet_i.y_pos + DUCK_HEIGHT / 2, graficos);
-                    bullet1.draw(renderer);
-                    //bullet.update(bullet_i.x_pos +  DUCK_WIDTH, bullet_i.y_pos + DUCK_HEIGHT / 2,bullet_i.typeOfBullet,
-                      //            bullet_i.orientation);
+                bullets.clear();
+                for (const auto& bullet_info : command.lista_balas) {
+                    bullets.emplace_back(bullet_info.x_pos, bullet_info.y_pos, graficos, bullet_info.orientation);
                 }
 
                 dibujar(renderer);
@@ -89,7 +86,6 @@ void Game::dibujar(Renderer& renderer) {
     
     background.draw(renderer);
     duck.draw(renderer);
-    //bullet.draw(renderer);
 
     renderer.Present();
 

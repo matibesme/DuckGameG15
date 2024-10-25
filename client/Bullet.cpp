@@ -3,15 +3,20 @@
 
 #define IMAGE_CHAIN_BULLET DATA_PATH "/chainBullet.png"
 
-Bullet::Bullet(float initial_pos_x, float initial_pos_y, Graficos& graficos)
-        : graficos(graficos), texture(graficos.LoadTexture(IMAGE_CHAIN_BULLET)),
+Bullet::Bullet(float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t orientacion)
+        : graficos(graficos),
           pos_x(initial_pos_x), pos_y(initial_pos_y),
           height(HEIGHT_BULLET), width(WIDTH_BULLET),
-          orientationOfBullet(false) {}
+          orientationOfBullet(orientacion) {}
 
-void Bullet::draw(SDL2pp::Renderer& renderer) {
+void Bullet::draw(SDL2pp::Renderer& renderer, uint8_t type) {
     //CUIDADO = llegan como int por parametro, pero se guardan como float
     SDL2pp::Rect area_gun(pos_x, pos_y, width, height);
+
+    const char* texture_path;
+    actualizarTipo(type, texture_path);
+
+    Texture texture (graficos.LoadTexture(texture_path));
 
     // Si la orientacion es tanto gira o para arriba o para los costados
     if(orientationOfBullet == BULLET_LEFT)
@@ -32,10 +37,10 @@ void Bullet::update(const float new_pos_x,const float new_pos_y, [[maybe_unused]
     //actualizarTipo(typeOfBullet);
 }
 
-void Bullet::actualizarTipo(const uint8_t type) {
+void Bullet::actualizarTipo(const uint8_t type, const char*& texture) {
     switch (type) {
         case C_COWBOY_BULLET:
-            texture = graficos.LoadTexture(IMAGE_CHAIN_BULLET);
+            texture = IMAGE_CHAIN_BULLET;
             break;
         default:
             break;

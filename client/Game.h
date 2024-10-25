@@ -13,7 +13,6 @@ class Game {
 private:
     Graficos graficos;
     Duck duck;
-    Bullet bullet;
     Background background;
     BlockingQueue<uint8_t>& queue_sender;
     BlockingQueue<CommandGameShow>& queue_receiver;
