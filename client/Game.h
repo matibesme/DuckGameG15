@@ -12,11 +12,10 @@ class Game {
 
 private:
     Graficos graficos;
-    Duck duck;
     Background background;
     BlockingQueue<uint8_t>& queue_sender;
     BlockingQueue<CommandGameShow>& queue_receiver;
-    void dibujar(Renderer& renderer , std::list<Bullet>& bullets);
+    void dibujar(Renderer& renderer , std::list<Duck>& ducks, std::list<Bullet>& bullets);
     void correrHandlers();
 
 public:
