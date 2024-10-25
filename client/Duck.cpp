@@ -39,6 +39,7 @@ void Duck::update(float x_pos, float y_pos, uint8_t typeOfMove, uint8_t gunEquip
             numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES_JUMP;
         } else if (typeOfMove == DOWN) {
             pixelDuckSpriteY = SRC_Y_STANDING;
+            pixelDuckSpriteX = SPRITE_WIDTH ;
         }
     }
 }

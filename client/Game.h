@@ -16,7 +16,7 @@ private:
     Background background;
     BlockingQueue<uint8_t>& queue_sender;
     BlockingQueue<CommandGameShow>& queue_receiver;
-    void dibujar(Renderer& renderer);
+    void dibujar(Renderer& renderer , std::list<Bullet>& bullets);
     void correrHandlers();
 
 public:

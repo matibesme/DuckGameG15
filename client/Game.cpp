@@ -15,20 +15,20 @@ void Game::run() {
     try {
         Renderer& renderer = graficos.GetRenderer();
         CommandGameShow command;
-        dibujar(renderer);
         std::list<Bullet> bullets;
+        dibujar(renderer, bullets);
         while (true) {
             correrHandlers();
             if (queue_receiver.try_pop(command)) {
                 for (auto & personaje: command.lista_patos) {
-                    duck.update(personaje.x_pos, personaje.y_pos, personaje.typeOfMove, personaje.typeOfGun);
+                    duck.update(personaje.x_pos , personaje.y_pos, personaje.typeOfMove, personaje.typeOfGun);
                 }
                 bullets.clear();
                 for (const auto& bullet_info : command.lista_balas) {
-                    bullets.emplace_back(bullet_info.x_pos, bullet_info.y_pos, graficos, bullet_info.orientation);
+                    bullets.emplace_back(bullet_info.x_pos + DUCK_WIDTH, bullet_info.y_pos  + DUCK_HEIGHT / 2 , graficos, bullet_info.orientation, bullet_info.typeOfBullet);
                 }
 
-                dibujar(renderer);
+                dibujar(renderer, bullets);
             }
             SDL_Delay(1);
         }
@@ -39,6 +39,18 @@ void Game::run() {
     graficos.GetRenderer().Clear();
 }
 
+void Game::dibujar(Renderer& renderer, std::list<Bullet>& bullets) {
+    renderer.Clear();
+
+    background.draw(renderer);
+    duck.draw(renderer);
+    for (auto& bullet : bullets) {
+        bullet.draw(renderer);
+    }
+
+    renderer.Present();
+
+}
 void Game::correrHandlers() {
     SDL_Event event;
 
@@ -79,14 +91,4 @@ void Game::correrHandlers() {
     if (estadoTeclas[SDL_SCANCODE_SPACE]) {
         queue_sender.push(SHOOT);
     }
-}
-
-void Game::dibujar(Renderer& renderer) {
-    renderer.Clear();
-    
-    background.draw(renderer);
-    duck.draw(renderer);
-
-    renderer.Present();
-
 }
