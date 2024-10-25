@@ -21,6 +21,8 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
         renderer.Copy(texture, SDL2pp::NullOpt, area_gun);
     else if (orientationOfBullet == BULLET_UP)
         renderer.Copy(texture, SDL2pp::NullOpt, area_gun, 90.0, SDL2pp::NullOpt, SDL_FLIP_NONE);
+    else
+        renderer.Copy(texture, SDL2pp::NullOpt, area_gun);
 }
 
 void Bullet::update(const float new_pos_x,const float new_pos_y, [[maybe_unused]]const uint8_t typeOfBullet, const uint8_t orientacion) {

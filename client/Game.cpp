@@ -25,9 +25,12 @@ void Game::run() {
                     duck.update(personaje.x_pos, personaje.y_pos, personaje.typeOfMove, personaje.typeOfGun);
                 }
                 for(auto &bullet_i: command.lista_balas){
-                    bullet.update(bullet_i.x_pos, bullet_i.y_pos - DUCK_HEIGHT / 2,bullet_i.typeOfBullet,
-                                  bullet_i.orientation);
+                    Bullet bullet1 (bullet_i.x_pos , bullet_i.y_pos + DUCK_HEIGHT / 2, graficos);
+                    bullet1.draw(renderer);
+                    //bullet.update(bullet_i.x_pos +  DUCK_WIDTH, bullet_i.y_pos + DUCK_HEIGHT / 2,bullet_i.typeOfBullet,
+                      //            bullet_i.orientation);
                 }
+
                 dibujar(renderer);
             }
             SDL_Delay(1);
@@ -54,6 +57,7 @@ void Game::correrHandlers() {
                 case SDLK_a:
                 case SDLK_s:
                 case SDLK_w:
+                case SDL_SCANCODE_SPACE:
                     queue_sender.push(STILL);
                     break;
             }
@@ -85,7 +89,7 @@ void Game::dibujar(Renderer& renderer) {
     
     background.draw(renderer);
     duck.draw(renderer);
-    bullet.draw(renderer);
+    //bullet.draw(renderer);
 
     renderer.Present();
 
