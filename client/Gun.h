@@ -14,15 +14,12 @@ private:
     bool is_equiped;
     float pos_x;
     float pos_y;
-    Texture texture_equipped;
-    Texture texture_not_equipped;
     void setEquip(bool equip);
-    void actualizarTextura();
+    void actualizarTextura(const char*& texture_equipped, const char*& texture_not_equipped);
 
 public:
-    Gun(Graficos& graficos);
+    Gun(Graficos& graficos, float pos_x, float pos_y, uint8_t typeOfGun);
     void draw(bool isFliped, SDL2pp::Renderer& renderer);
-    void update_pos(float pos_x, float pos_y);
     bool isEquipped();
     void setGun(uint8_t gun);
 

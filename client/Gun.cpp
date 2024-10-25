@@ -4,16 +4,20 @@
 #define IMAGE_COWBOY_GUN DATA_PATH "/CowboyPistol.png"
 #define IMAGE_COWBOY_GUN_EQUIPPED DATA_PATH "/CowboyPistolEquipped.png"
 
-Gun::Gun(Graficos& graficos) :  graficos(graficos), typeOfGun(C_NOGUN), is_equiped(false),
-                                pos_x(0), pos_y(0), texture_equipped(graficos.LoadTexture(IMAGE_COWBOY_GUN_EQUIPPED)),
-                                texture_not_equipped(graficos.LoadTexture(IMAGE_COWBOY_GUN)){}
+Gun::Gun(Graficos& graficos, float pos_x, float pos_y, uint8_t typeOfGun) :
+        graficos(graficos), typeOfGun(typeOfGun), is_equiped(false),
+        pos_x(pos_x), pos_y(pos_y) {}
 
 void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
     if(typeOfGun == C_NOGUN){
         return;
     }
+    const char* texture_path_equipped;
+    const char* texture_path_not_equipped;
+    actualizarTextura(texture_path_equipped, texture_path_not_equipped);
 
-    actualizarTextura();
+    Texture texture_equipped (graficos.LoadTexture(texture_path_equipped));
+    Texture texture_not_equipped (graficos.LoadTexture(texture_path_not_equipped));
 
     if(is_equiped){
         //map con typeOfGun a textura
@@ -27,11 +31,6 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
         else
             renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x, pos_y, WIDTH_GUN, HEIGHT_GUN));
     }
-}
-
-void Gun::update_pos(float posX, float posY){
-    this->pos_x = posX;
-    this->pos_y = posY;
 }
 
 bool Gun::isEquipped(){
@@ -50,13 +49,13 @@ void Gun::setGun(uint8_t gun){
         is_equiped = true;
 }
 
-void Gun::actualizarTextura() {
+void Gun::actualizarTextura(const char*& texture_equipped, const char*& texture_not_equipped) {
     switch (typeOfGun) {
         case C_NOGUN:
             break;
         case C_COWBOY_GUN:
-            texture_equipped = graficos.LoadTexture(IMAGE_COWBOY_GUN_EQUIPPED);
-            texture_not_equipped = graficos.LoadTexture(IMAGE_COWBOY_GUN);
+            texture_equipped = IMAGE_COWBOY_GUN_EQUIPPED;
+            texture_not_equipped = IMAGE_COWBOY_GUN;
             break;
     }
 }

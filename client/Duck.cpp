@@ -14,7 +14,7 @@ const float VERTICAL_CENTER_DIVISOR = 1.1f;
 
 Duck::Duck(float x_pos, float y_pos, uint8_t typeOfMove, uint8_t gunEquipped, Graficos& graficos)
         : positionX(x_pos), positionY(y_pos), graficos(graficos),
-          numSprite(0), gun(graficos),
+          numSprite(0), gun(graficos, positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2, gunEquipped),
           isFlipped(false), typeOfGun(gunEquipped), pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING)
           {
 
@@ -60,7 +60,6 @@ void Duck::draw(SDL2pp::Renderer& renderer) {
     }
 
     if(gun.isEquipped()){
-        gun.update_pos(positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2);
         gun.draw(isFlipped, renderer);
     }
 }

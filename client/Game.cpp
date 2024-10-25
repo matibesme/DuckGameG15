@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <exception>
 #include <iostream>
+#include <unordered_set>
 
 Game::Game(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver)
         : graficos("DUCK GAME", 640, 480),
@@ -22,12 +23,10 @@ void Game::run() {
         while (true) {
             correrHandlers();
             if (queue_receiver.try_pop(command)) {
-                // Actualiza los patos activos
                 ducks.clear();
                 for (const auto& personaje : command.lista_patos) {
                     ducks.emplace_back(personaje.x_pos, personaje.y_pos , personaje.typeOfMove, personaje.typeOfGun, graficos);
                 }
-                // Actualiza las balas activas
                 bullets.clear();
                 for (const auto& bullet_info : command.lista_balas) {
                     bullets.emplace_back(bullet_info.x_pos + DUCK_WIDTH, bullet_info.y_pos + DUCK_HEIGHT / 2,
@@ -61,43 +60,58 @@ void Game::dibujar(Renderer& renderer, std::list<Duck>& ducks, std::list<Bullet>
 }
 
 void Game::correrHandlers() {
+    static std::unordered_set<SDL_Keycode> teclas_presionadas;  // Mantiene un registro de teclas actualmente presionadas
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_KEYDOWN) {
-            switch (event.key.keysym.sym) {
-                case SDLK_q:
-                    throw std::runtime_error("Termino el juego");
+        switch (event.type) {
+            case SDL_KEYDOWN: {
+                SDL_Keycode key = event.key.keysym.sym;
+                if (teclas_presionadas.find(key) == teclas_presionadas.end()) {  // Solo procesa si la tecla no estaba presionada
+                    teclas_presionadas.insert(key);
+                    switch (key) {
+                        case SDLK_q:
+                            throw std::runtime_error("Termino el juego");
+                        case SDLK_s:
+                            queue_sender.push(DOWN);
+                            break;
+                        case SDLK_w:
+                            queue_sender.push(JUMP);
+                            break;
+                        case SDLK_SPACE:
+                            queue_sender.push(SHOOT);
+                            break;
+                        /*case SDLK_r:
+                            queue_sender.push(CAMBIAR_ARMA);
+                            break;*/<
+                    }
+                }
+                break;
             }
-        } else if (event.type == SDL_KEYUP) {
-            switch (event.key.keysym.sym) {
-                case SDLK_d:
-                case SDLK_a:
-                case SDLK_s:
-                case SDLK_w:
-                case SDL_SCANCODE_SPACE:
-                    queue_sender.push(STILL);
-                    break;
+            case SDL_KEYUP: {
+                SDL_Keycode key = event.key.keysym.sym;
+                teclas_presionadas.erase(key);
+                switch (key) {
+                    case SDLK_d:
+                    case SDLK_a:
+                    case SDLK_SPACE:
+                        queue_sender.push(STILL);  // Envía "STILL" al soltar las teclas de movimiento
+                        break;
+                    /*case SDLK_SPACE:
+                        queue_sender.push(STOP_SHOOT);  // Detiene el disparo al soltar la barra espaciadora
+                        break;*/
+                }
+                break;
             }
-        } else if (event.type == SDL_QUIT) {
-            throw std::runtime_error("Termino el juego");
+            case SDL_QUIT:
+                throw std::runtime_error("Termino el juego");
         }
     }
 
-    const Uint8 *estadoTeclas = SDL_GetKeyboardState(NULL);
-
-    if (estadoTeclas[SDL_SCANCODE_D]) {
-        queue_sender.push(RIGTH);
-    } else if (estadoTeclas[SDL_SCANCODE_A]) {
-        queue_sender.push(LEFT);
-    } else if (estadoTeclas[SDL_SCANCODE_S]) {
-        queue_sender.push(DOWN);
-    }
-    if (estadoTeclas[SDL_SCANCODE_W]) {
-        queue_sender.push(JUMP);
-    }
-    //disparar con la tecla espacio
-    if (estadoTeclas[SDL_SCANCODE_SPACE]) {
-        queue_sender.push(SHOOT);
+    // Mantener el movimiento continuo hacia la derecha o izquierda si la tecla está presionada
+    if (teclas_presionadas.find(SDLK_d) != teclas_presionadas.end()) {
+        queue_sender.push(RIGTH);  // Movimiento hacia la derecha
+    } else if (teclas_presionadas.find(SDLK_a) != teclas_presionadas.end()) {
+        queue_sender.push(LEFT);   // Movimiento hacia la izquierda
     }
 }
