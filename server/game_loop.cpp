@@ -120,6 +120,11 @@ void GameLoop::sendCompleteScene(){
         command.lista_balas.push_back(dto_bullet);
     }
 
+    for (auto& weapon : map_free_weapons) {
+        DTOGuns dto_gun = {weapon.second.getType(), weapon.second.getXPos(), weapon.second.getYPos()};
+        command.lista_guns.push_back(dto_gun);
+    }
+
 
     queues_map.sendMessagesToQueues(command);
 

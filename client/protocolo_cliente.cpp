@@ -57,24 +57,21 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
         uint8_t orientation = protocolo.receiveByte(dead_connection);
         bullets.push_back({bala_type, x_pos, y_pos, orientation});
     }
-    
-    return {scene_id, lista_patos, bullets};
-}
-/*
-CommandEndOfRound ProtocoloCliente::reciveEndOfRoundFromServer() {
-    uint8_t players_quantity = protocolo.receiveByte(dead_connection);
-    std::vector<PlayerStatus> players_status;
-    for (int i = 0; i < players_quantity; i++) {
-        std::string player_name = protocolo.receivePlayerName(dead_connection);
-        uint8_t victories = protocolo.receiveByte(dead_connection);
-        players_status.push_back({player_name, victories});
+
+    //recivo armas libres
+    uint8_t guns_quantity = protocolo.receiveByte(dead_connection);
+    std::list<DTOGuns> guns;
+    for (int i = 0; i < guns_quantity; i++) {
+        uint8_t gun_type = protocolo.receiveByte(dead_connection);
+        float x_pos = protocolo.receiveFloat(dead_connection);
+        float y_pos = protocolo.receiveFloat(dead_connection);
+        guns.push_back({gun_type, x_pos, y_pos});
     }
-    return {players_quantity, players_status};
+
+
+
+    return {scene_id, lista_patos, bullets, guns};
 }
 
-CommandVictory ProtocoloCliente::reciveVictoryFromServer() {
-    std::string player_name = protocolo.receivePlayerName(dead_connection);
-    return {player_name};
-}*/
 
 ProtocoloCliente::~ProtocoloCliente() {}
