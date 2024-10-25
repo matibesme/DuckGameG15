@@ -69,6 +69,7 @@ void Duck::draw(SDL2pp::Renderer& renderer) {
     }
 
     if(gun.isEquipped()){
+        gun.update(positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2);
         gun.draw(isFlipped, renderer);
     }
 }
@@ -88,4 +89,8 @@ bool Duck::checkCollision(SDL2pp::Rect rect) {
     Rect rectDuck((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
 
     return (SDL_HasIntersection(&rectDuck, &rect));
+}
+
+uint8_t Duck::getId() const {
+    return idDuck;
 }

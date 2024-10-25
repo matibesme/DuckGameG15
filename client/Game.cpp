@@ -27,7 +27,7 @@ void Game::run() {
                 for (const auto& duckStruct : command.lista_patos) {
                     auto it = std::find_if(ducks.begin(), ducks.end(),
                                            [&duckStruct](const Duck &duck) {
-                                               return duck.id == duckStruct.id;
+                                               return duck.getId() == duckStruct.id;
                                            });
                     if (it == ducks.end()) {
                         Duck new_duck(duckStruct.id, duckStruct.x_pos, duckStruct.y_pos, duckStruct.typeOfGun,
@@ -40,7 +40,7 @@ void Game::run() {
                 }
 
                 // Compruebo si la bala ya está en la lista, si no está la agrego.
-                for (const auto& bulletStruct : command.lista_balas) {
+                /*for (const auto& bulletStruct : command.lista_balas) {
                     auto it = std::find_if(bullets.begin(), bullets.end(),
                                            [&bulletStruct](const Bullet& bullet) {
                                                return bullet.id == bulletStruct.id;
@@ -54,7 +54,7 @@ void Game::run() {
                         it->update(bulletStruct.x_pos, bulletStruct.y_pos, bulletStruct.typeOfBullet,
                                    bulletStruct.orientation);
                     }
-                }
+                }*/
 
                 dibujar(renderer, ducks, bullets);
             }

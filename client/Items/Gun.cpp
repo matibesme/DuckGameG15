@@ -59,3 +59,8 @@ void Gun::actualizarTextura(const char*& texture_equipped, const char*& texture_
             break;
     }
 }
+
+void Gun::update(float new_x, float new_y) {
+    pos_x = new_x;
+    pos_y = new_y;
+}
