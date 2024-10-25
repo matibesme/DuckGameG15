@@ -1,5 +1,4 @@
 #include "objeto.h"
-#include "constant_definitons.h"
 
 // Constructor
 Objeto::Objeto(uint8_t type, uint8_t id,float x_pos, float y_pos)
@@ -30,8 +29,8 @@ void Objeto::setXPos(float pos_x) {
 void Objeto::setYPos(float pos_y) {
     this->y_pos = pos_y;
 
-    if (this->y_pos<POSICION_INICIAL_X ||this->y_pos>MAP_LIMIT_Y ){
-        this->y_pos=POSICION_INICIAL_X;
+    if (this->y_pos<S_POSICION_INICIAL_Y ||this->y_pos>MAP_LIMIT_Y ){
+        this->y_pos=S_POSICION_INICIAL_Y;
     }
 }
 

@@ -1,11 +1,11 @@
 #ifndef WEAPON_H
 #define WEAPON_H
-#include "objeto.h"
+#include "../objeto.h"
 #include <cstdint>
 #include <list>
-#include "bullet.h"
-#include "bullet_pistola_cowboy.h"
-#include "constant_definitons.h"
+#include "../bullets/bullet.h"
+#include "../bullets/bullet_pistola_cowboy.h"
+#include "../../constant_definitons.h"
 #include <memory>
 
 class Weapon : public Objeto {

@@ -1,5 +1,5 @@
 #pragma once
-
+#include <cstdint>
 
 constexpr char SALIDA = 'q';
 //imagen completa
@@ -29,10 +29,10 @@ constexpr float MOVEMENT_QUANTITY_Y= 3;
 constexpr uint8_t ORIENTATION_RIGTH = 0x00;
 constexpr uint8_t ORIENTATION_LEFT = 0x01;
 constexpr uint8_t ORIENTATION_DOWN = 0x02;
-constexpr float POSICION_INICIAL_X = 0.0f;
+constexpr float S_POSICION_INICIAL_X = 0.0f;
 
 //jump
-constexpr float POSICION_INICIAL_Y = 386;
+constexpr float S_POSICION_INICIAL_Y = 386;
 constexpr float PIXELES_JUMP= 90;
 constexpr float GRAVEDAD = 1;
 constexpr float VELOCIDAD_INICIAL = 15;

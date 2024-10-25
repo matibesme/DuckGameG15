@@ -15,10 +15,11 @@
 
 #include "constant_definitons.h"
 #include "protected_queues_map.h"
-#include "personaje.h"
-#include "weapon.h"
+#include "items/ducks/personaje.h"
+#include "items/weapons/weapon.h"
 //eliminar dsp
-#include "bullet_pistola_cowboy.h"
+#include "items/bullets/bullet.h"
+#include "items/bullets/bullet_pistola_cowboy.h"
 
 class GameLoop: public Thread {
 

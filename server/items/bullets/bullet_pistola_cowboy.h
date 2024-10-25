@@ -5,7 +5,7 @@
 #ifndef BULLET_PISTOLA_COWBOY_H
 #define BULLET_PISTOLA_COWBOY_H
 #include "bullet.h"
-#include "constant_definitons.h"
+#include "../../constant_definitons.h"
 
 class CowBoyBullet : public Bullet {
 
