@@ -46,6 +46,14 @@ void ProtocoloServer::sendFullGame(const CommandGame& command) {
         protocolo.sendByte(bala.orientation, dead_connection);
 
     }
+
+    protocolo.sendByte(command.lista_guns.size(), dead_connection);
+    for (const DTOGuns& gun : command.lista_guns) {
+        protocolo.sendByte(gun.typeOfGun, dead_connection);
+        protocolo.sendFloat(gun.x_pos, dead_connection);
+        protocolo.sendFloat(gun.y_pos, dead_connection);
+    }
+
 }
 
 

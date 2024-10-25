@@ -22,7 +22,8 @@ struct DTOBullet{
 };
 
 
-struct Armas{ //free wapons in the floor
+struct DTOGuns{ //free wapons in the floor
+    uint8_t typeOfGun;
     float x_pos;
     float y_pos;
 
@@ -39,6 +40,8 @@ struct CommandGame {
 
     std::list<DTOBullet> lista_balas;
 
+    std::list<DTOGuns> lista_guns;
+
 };
 
 
@@ -49,6 +52,8 @@ struct CommandGameShow {
     std::list<DTODuck> lista_patos;
 
     std::list<DTOBullet> lista_balas;
+
+    std::list<DTOGuns> lista_guns;
 
 };
 
