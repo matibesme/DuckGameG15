@@ -83,7 +83,7 @@ void Game::correrHandlers() {
                             break;
                         /*case SDLK_r:
                             queue_sender.push(CAMBIAR_ARMA);
-                            break;*/<
+                            break;*/
                     }
                 }
                 break;
@@ -92,10 +92,12 @@ void Game::correrHandlers() {
                 SDL_Keycode key = event.key.keysym.sym;
                 teclas_presionadas.erase(key);
                 switch (key) {
-                    case SDLK_d:
                     case SDLK_a:
+                        queue_sender.push(STILL_LEFT);  // Envía "STILL" al soltar las teclas de movimiento
+                        break;
+                    case SDLK_d:
                     case SDLK_SPACE:
-                        queue_sender.push(STILL);  // Envía "STILL" al soltar las teclas de movimiento
+                        queue_sender.push(STILL_RIGTH);  // Envía "STILL" al soltar las teclas de movimiento
                         break;
                     /*case SDLK_SPACE:
                         queue_sender.push(STOP_SHOOT);  // Detiene el disparo al soltar la barra espaciadora

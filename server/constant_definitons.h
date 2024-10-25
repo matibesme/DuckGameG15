@@ -19,7 +19,8 @@ constexpr uint8_t S_RIGTH = 0x05;
 constexpr uint8_t S_LEFT = 0x06;
 constexpr uint8_t S_JUMP = 0x04;
 constexpr uint8_t S_DOWN = 0x07;
-constexpr uint8_t S_STILL = 0x08;
+constexpr uint8_t S_STILL_RIGTH = 0x08;
+constexpr uint8_t S_STILL_LEFT = 0x09;
 const uint8_t S_UP = 0x50;
 
 constexpr float MOVEMENT_QUANTITY_X= 1;

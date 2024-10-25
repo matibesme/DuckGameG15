@@ -4,7 +4,7 @@
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
         is_weapon_equiped(true),
-        typeOfMove(S_STILL),
+        typeOfMove(S_STILL_RIGTH),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
         weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,20),
@@ -47,9 +47,6 @@ void DuckPlayer::setEnSalto(bool enSalto) {
 void DuckPlayer::setVelocidadY(float velocidad_) {
     this->velocidad = velocidad_;
 }
-
-
-
 
 float& DuckPlayer::getVelocidadY(){
     return this->velocidad;

@@ -69,8 +69,10 @@ void GameLoop::movementComand(uint8_t comando) {
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
 
-    }else if (comando==S_STILL){
-        personaje.setTypeOfMoveSprite(S_STILL);
+    }else if (comando == S_STILL_RIGTH){
+       personaje.setTypeOfMoveSprite(S_STILL_RIGTH);
+    } else if (comando == S_STILL_LEFT){
+        personaje.setTypeOfMoveSprite(S_STILL_LEFT);
     }
 
     //sendCompleteScene();  //comento nose si esta bien? tal vez deberia mandar siempre la escena completa
