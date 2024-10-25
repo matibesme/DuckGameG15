@@ -1,7 +1,7 @@
 #include <cstdint>
-#include "constant_definitons.h"
-#include "objeto.h"
-#include "weapon.h"
+#include "../../constant_definitons.h"
+#include "../objeto.h"
+#include "../weapons/weapon.h"
 
 class Personaje: public Objeto {
     private:

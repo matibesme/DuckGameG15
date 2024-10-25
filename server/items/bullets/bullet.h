@@ -4,8 +4,9 @@
 
 #ifndef BULLET_H
 #define BULLET_H
-#include "objeto.h"
+#include "../objeto.h"
 #include <cstdint>
+#include "../../constant_definitons.h"
 
 class Bullet: public Objeto {
     protected:

@@ -13,7 +13,7 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
 void GameLoop::run() {
     try {
 
-        map_personajes.emplace(1, Personaje(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
+        map_personajes.emplace(1, Personaje(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         while (!end_game) {
             CommandClient comando;
             while (queue_comandos.try_pop(comando)) {

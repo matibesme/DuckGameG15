@@ -64,8 +64,8 @@ void Personaje::executeAction() {
         setVelocidadY(getVelocidadY() - gravedad);
 
 
-        if (getYPos() >= POSICION_INICIAL_Y) {
-            this->y_pos = POSICION_INICIAL_Y;
+        if (getYPos() >= S_POSICION_INICIAL_Y) {
+            this->y_pos = S_POSICION_INICIAL_Y;
             setEnSalto(false);
             setVelocidadY(VELOCIDAD_INICIAL);
         }
