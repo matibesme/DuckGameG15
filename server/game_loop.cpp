@@ -91,7 +91,8 @@ void GameLoop::weaponComand(uint8_t comando) {
             return;
         }
         weapon.setXPos(personaje.getXPos());
-        weapon.setYPos(personaje.getYPos());    
+        weapon.setYPos(personaje.getYPos());
+        weapon.setDirection(personaje.getDirection());
         std::unique_ptr<Bullet> bullet = weapon.shoot();
         lista_bullets.emplace_back(std::move(bullet));
 
@@ -111,7 +112,7 @@ void GameLoop::sendCompleteScene(){
     for (auto& personaje : map_personajes) {
 
        DTODuck dto_duck = {personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
-                            personaje.second.getTypeOfMoveSprite(), personaje.second.getWeapon().getType() };
+                            personaje.second.getTypeOfMoveSprite(), personaje.second.getWeapon().getType() , personaje.second.getDirection()};
 
 
        command.lista_patos.push_back(dto_duck);

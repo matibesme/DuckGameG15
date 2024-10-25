@@ -25,7 +25,7 @@ void Game::run() {
             if (queue_receiver.try_pop(command)) {
                 ducks.clear();
                 for (const auto& personaje : command.lista_patos) {
-                    ducks.emplace_back(personaje.x_pos, personaje.y_pos , personaje.typeOfMove, personaje.typeOfGun, graficos);
+                    ducks.emplace_back(personaje.x_pos, personaje.y_pos , personaje.typeOfMove, personaje.typeOfGun, personaje.direction,graficos);
                 }
                 bullets.clear();
                 for (const auto& bullet_info : command.lista_balas) {
