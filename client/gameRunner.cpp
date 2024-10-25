@@ -39,8 +39,7 @@ void GameRunner::actualizarElementos(const CommandGameShow& command, std::list<D
                                    return duck.getId() == duckStruct.id;
                                });
         if (it == ducks.end()) {
-            ducks.emplace_back(duckStruct.id, duckStruct.x_pos, duckStruct.y_pos, duckStruct.typeOfGun,
-                               duckStruct.direction, graficos);
+            ducks.emplace_back(duckStruct.id, duckStruct.x_pos, duckStruct.y_pos, duckStruct.typeOfGun, duckStruct.typeOfMove, graficos);
         } else {
             it->update(duckStruct.y_pos, duckStruct.x_pos, duckStruct.typeOfMove, duckStruct.typeOfGun);
         }

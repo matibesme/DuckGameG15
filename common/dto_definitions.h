@@ -13,7 +13,6 @@ struct DTODuck{
     float y_pos;
     uint8_t typeOfMove;//right left down jump still
     uint8_t typeOfGun; // nogun, cowboy ...
-    uint8_t direction;
 };
 
 struct DTOBullet{
