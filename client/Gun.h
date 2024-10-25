@@ -10,8 +10,6 @@ using namespace SDL2pp;
 class Gun{
 private:
     Graficos& graficos;
-    const int height;
-    const int width;
     uint8_t typeOfGun;
     bool is_equiped;
     float pos_x;
