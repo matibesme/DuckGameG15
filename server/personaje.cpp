@@ -6,7 +6,7 @@ Personaje::Personaje(uint8_t type, uint8_t id, float x_pos, float y_pos)
         typeOfMove(S_STILL),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
-        weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,10),
+        weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,1),
         weapons_list()
         {
             weapons_list.push_back(weapon);

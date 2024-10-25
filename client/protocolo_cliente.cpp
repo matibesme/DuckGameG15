@@ -4,18 +4,7 @@ ProtocoloCliente::ProtocoloCliente(const char* host, const char* port, bool& dea
         socket(host, port), dead_connection(dead_connection), protocolo(socket),
         decode_type_of_action({{RIGTH, MOVEMENT_ACTION}, {LEFT, MOVEMENT_ACTION}, {JUMP, MOVEMENT_ACTION}, {DOWN, MOVEMENT_ACTION},{STILL,MOVEMENT_ACTION}, {PICKUP, WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOOT, WEAPON_ACTION}}) {}
 
-/*
-void ProtocoloCliente::sendGameAccessToServer(const GameAccess& game_access) {
-    try {
-        protocolo.sendByte(game_access.action_type);
-        protocolo.sendByte(game_access.game_id);
-    } catch (const SocketClose& e) {
-        std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
-    } catch (const std::exception& e) {
-        dead_connection = true;
-        std::cerr << e.what() << std::endl;
-    }
-}*/
+
 
 void ProtocoloCliente::sendInGameToServer(const uint8_t& command) {
     try {
