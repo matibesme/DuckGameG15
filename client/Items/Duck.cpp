@@ -46,8 +46,11 @@ void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquip
 
         } else if (typeOfMove == DOWN) {
             pixelDuckSpriteY = SRC_Y_STANDING;
-            pixelDuckSpriteX = SPRITE_WIDTH;
+            pixelDuckSpriteX = 0;
         }
+    } else {
+        pixelDuckSpriteX = 0;
+        pixelDuckSpriteY = SRC_Y_MOVING;
     }
 }
 

@@ -15,6 +15,10 @@ void GameRunner::run() {
         std::list<Bullet> bullets;
 
         gameRenderer.dibujar(sdl_renderer, ducks, bullets);
+        //REVISAR:
+        //Por que el pato no se queda quieto
+        //La imagen del pato cuando se agacha es otra
+        //Tener en cuenta mas imagenes en cuanto a las armas y balas
 
         while (true) {
             handler.correrHandlers();

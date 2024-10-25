@@ -37,6 +37,7 @@ void EventHandler::correrHandlers() {
                         break;
                     case SDLK_d:
                     case SDLK_SPACE:
+                    case SDLK_s:
                         queue_sender.push(STILL_RIGTH);
                         break;
                 }
