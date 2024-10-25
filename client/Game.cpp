@@ -40,10 +40,10 @@ void Game::run() {
                 }
 
                 // Compruebo si la bala ya está en la lista, si no está la agrego.
-                /*for (const auto& bulletStruct : command.lista_balas) {
+                for (const auto& bulletStruct : command.lista_balas) {
                     auto it = std::find_if(bullets.begin(), bullets.end(),
                                            [&bulletStruct](const Bullet& bullet) {
-                                               return bullet.id == bulletStruct.id;
+                                               return bullet.getId() == bulletStruct.id;
                                            });
                     if (it == bullets.end()) {
                         Bullet new_bullet(bulletStruct.id ,bulletStruct.x_pos, bulletStruct.y_pos, graficos, bulletStruct.orientation,
@@ -54,7 +54,7 @@ void Game::run() {
                         it->update(bulletStruct.x_pos, bulletStruct.y_pos, bulletStruct.typeOfBullet,
                                    bulletStruct.orientation);
                     }
-                }*/
+                }
 
                 dibujar(renderer, ducks, bullets);
             }

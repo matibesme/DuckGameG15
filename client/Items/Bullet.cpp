@@ -47,3 +47,7 @@ void Bullet::actualizarTipo(const char*& texture) {
     }
 
 }
+
+uint8_t Bullet::getId() const {
+    return idBullet;
+}

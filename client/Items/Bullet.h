@@ -24,6 +24,8 @@ public:
 
     // Actualiza la posición de la bala con nuevos valores
     void update(float new_pos_x, float new_pos_y, uint8_t type, uint8_t orientacion);
+
+    uint8_t getId() const;
 };
 
 #endif  // BULLET_H
