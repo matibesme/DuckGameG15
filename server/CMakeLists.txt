@@ -5,13 +5,13 @@ target_sources(taller_server
         items/bullets/bullet.cpp
         items/bullets/bullet_pistola_cowboy.cpp
         items/weapons/weapon.cpp
-        items/ducks/personaje.cpp
+        items/ducks/duck.cpp
         items/objeto.cpp
     PUBLIC
     # .h files
         items/bullets/bullet.h
         items/bullets/bullet_pistola_cowboy.h
         items/weapons/weapon.h
-        items/ducks/personaje.h
+        items/ducks/duck.h
         items/objeto.h
 )

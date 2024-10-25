@@ -1,7 +1,7 @@
-#include "personaje.h"
+#include "duck.h"
 #include <iostream>
 
-Personaje::Personaje(uint8_t type, uint8_t id, float x_pos, float y_pos)
+DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
         is_weapon_equiped(true),
         typeOfMove(S_STILL),
@@ -14,19 +14,19 @@ Personaje::Personaje(uint8_t type, uint8_t id, float x_pos, float y_pos)
         }
 
 
-float Personaje::getXPos() {
+float DuckPlayer::getXPos() {
     return x_pos;
 }
 
-float Personaje::getYPos() {
+float DuckPlayer::getYPos() {
     return y_pos;
 }
 
-uint8_t Personaje::getTypeOfMoveSprite() {
+uint8_t DuckPlayer::getTypeOfMoveSprite() {
     return typeOfMove;
 }
 
-void Personaje::setXPos(float pos_x) {
+void DuckPlayer::setXPos(float pos_x) {
 
     this->x_pos += pos_x;
 
@@ -36,26 +36,26 @@ void Personaje::setXPos(float pos_x) {
 }
 
 
-void Personaje::setTypeOfMoveSprite(uint8_t orientation) {
+void DuckPlayer::setTypeOfMoveSprite(uint8_t orientation) {
     this->typeOfMove = orientation;
 }
 
-void Personaje::setEnSalto(bool enSalto) {
+void DuckPlayer::setEnSalto(bool enSalto) {
     this->saltando=enSalto;
 }
 
-void Personaje::setVelocidadY(float velocidad) {
+void DuckPlayer::setVelocidadY(float velocidad) {
     this->velocidad = velocidad;
 }
 
 
 
 
-float& Personaje::getVelocidadY(){
+float& DuckPlayer::getVelocidadY(){
     return this->velocidad;
 }
 
-void Personaje::executeAction() {
+void DuckPlayer::executeAction() {
     float gravedad = GRAVEDAD;
     if (estaSaltando()) {
         this->y_pos=(getYPos() -getVelocidadY());
@@ -72,22 +72,22 @@ void Personaje::executeAction() {
     }
 }
 
-bool Personaje::estaSaltando() {
+bool DuckPlayer::estaSaltando() {
     return this->saltando;
 }
 
 
-Weapon& Personaje::getWeapon() {
+Weapon& DuckPlayer::getWeapon() {
     return weapons_list.front();
 }
 
-void Personaje::unequippWeapon() {
+void DuckPlayer::unequippWeapon() {
     if (is_weapon_equiped) {
         is_weapon_equiped = false;
     }
 }
 
-void Personaje::equippWeapon() {
+void DuckPlayer::equippWeapon() {
     if (!is_weapon_equiped) {
         is_weapon_equiped = true;
     }
@@ -97,5 +97,5 @@ void Personaje::equippWeapon() {
 
 
 
-Personaje::~Personaje() {}
+DuckPlayer::~DuckPlayer() {}
 

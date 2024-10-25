@@ -15,7 +15,7 @@
 
 #include "constant_definitons.h"
 #include "protected_queues_map.h"
-#include "items/ducks/personaje.h"
+#include "items/ducks/duck.h"
 #include "items/weapons/weapon.h"
 //eliminar dsp
 #include "items/bullets/bullet.h"
@@ -27,7 +27,7 @@ private:
     BlockingQueue<CommandClient>& queue_comandos;
     bool& end_game;
     ProtectedQueuesMap& queues_map;
-    std::map<uint8_t, Personaje> map_personajes;
+    std::map<uint8_t, DuckPlayer> map_personajes;
     std::map<uint8_t,Weapon> map_free_weapons;
     std::vector<std::unique_ptr<Bullet>> lista_bullets;
 

@@ -13,7 +13,7 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
 void GameLoop::run() {
     try {
 
-        map_personajes.emplace(1, Personaje(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
+        map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         while (!end_game) {
             CommandClient comando;
             while (queue_comandos.try_pop(comando)) {
@@ -52,7 +52,7 @@ void GameLoop::checkBullets() {
     }
 }
 void GameLoop::movementComand(uint8_t comando) {
-    Personaje& personaje = map_personajes[1];
+    DuckPlayer& personaje = map_personajes[1];
 
     if (comando==S_RIGTH){
         personaje.setXPos(MOVEMENT_QUANTITY_X);
@@ -76,7 +76,7 @@ void GameLoop::movementComand(uint8_t comando) {
 }
 
 void GameLoop::weaponComand(uint8_t comando) {
-    Personaje& personaje = map_personajes[1];
+    DuckPlayer& personaje = map_personajes[1];
     if (comando==S_PICKUP){
         
     } else if (comando==S_LEAVE_GUN){

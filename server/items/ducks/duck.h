@@ -3,7 +3,7 @@
 #include "../objeto.h"
 #include "../weapons/weapon.h"
 
-class Personaje: public Objeto {
+class DuckPlayer: public Objeto {
     private:
         bool is_weapon_equiped;
         uint8_t typeOfMove;
@@ -14,9 +14,9 @@ class Personaje: public Objeto {
     public:
 
         //constructor por defecto
-        Personaje():Objeto(0,0,0,0),is_weapon_equiped(false),typeOfMove(S_STILL),saltando(false),velocidad(VELOCIDAD_INICIAL),weapon(S_COWBOY_GUN,1,0,0,5,20,10){}
+        DuckPlayer():Objeto(0,0,0,0),is_weapon_equiped(false),typeOfMove(S_STILL),saltando(false),velocidad(VELOCIDAD_INICIAL),weapon(S_COWBOY_GUN,1,0,0,5,20,10){}
 
-        Personaje(uint8_t type, uint8_t id, float x_pos, float y_pos);
+        DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos);
 
 
         float getXPos();
@@ -35,6 +35,6 @@ class Personaje: public Objeto {
 
         float& getVelocidadY();
         void executeAction();
-        ~Personaje();
+        ~DuckPlayer();
 
 };
