@@ -112,7 +112,7 @@ void GameLoop::sendCompleteScene(){
 
     for (auto& personaje : map_personajes) {
 
-       DTODuck dto_duck = {personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
+       DTODuck dto_duck = {personaje.first,personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
                             personaje.second.getTypeOfMoveSprite(), personaje.second.getWeapon().getType() , personaje.second.getDirection()};
 
 

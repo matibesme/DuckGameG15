@@ -42,20 +42,21 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
     uint8_t patos_quantity = protocolo.receiveByte(dead_connection);
     std::list<DTODuck> lista_patos;
     for (int i = 0; i < patos_quantity; i++) {
+        uint8_t id = protocolo.receiveByte(dead_connection);
         uint8_t personajes_type = protocolo.receiveByte(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t typeOfMove = protocolo.receiveByte(dead_connection);
         uint8_t typeOfGun = protocolo.receiveByte(dead_connection);
         uint8_t direction = protocolo.receiveByte(dead_connection);
-        lista_patos.push_back({personajes_type, x_pos, y_pos, typeOfMove, typeOfGun, direction});
+        lista_patos.push_back({id,personajes_type, x_pos, y_pos, typeOfMove, typeOfGun, direction});
     }
     //recivo balas
     uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);
 
     std::list<DTOBullet> bullets;
     for (int i = 0; i < bullets_quantity; i++) {
-        uint8_t id = protocolo.receiveByte(dead_connection);
+        uint16_t id = protocolo.receiveShort(dead_connection);
         uint8_t bala_type = protocolo.receiveByte(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);

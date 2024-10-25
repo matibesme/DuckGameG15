@@ -7,6 +7,7 @@
 
 
 struct DTODuck{
+    uint8_t id;
     uint8_t personajes_type;
     float x_pos;
     float y_pos;
@@ -16,7 +17,7 @@ struct DTODuck{
 };
 
 struct DTOBullet{
-    uint8_t id;
+    uint16_t id;
     uint8_t typeOfBullet; // cowboy Bullet
     float x_pos;
     float y_pos;
