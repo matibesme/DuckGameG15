@@ -35,7 +35,7 @@ void GameLoop::run() {
 void GameLoop::checkCommand(CommandClient comando) {
     if (comando.type_of_action == S_MOVEMENT_ACTION) {
         movementComand(comando.type_of_movement);
-        std::cout << "movimiento" << std::endl;
+
     } else if (comando.type_of_action == S_WEAPON_ACTION) {
         weaponComand(comando.type_of_movement);
     }
@@ -54,7 +54,6 @@ void GameLoop::movementComand(uint8_t comando) {
     Personaje& personaje = map_personajes[1];
 
     if (comando==S_RIGTH){
-
         personaje.setXPos(MOVEMENT_QUANTITY_X);
         personaje.setTypeOfMoveSprite(S_RIGTH);
         personaje.setDirection(S_RIGTH);
@@ -124,6 +123,7 @@ void GameLoop::sendCompleteScene(){
 void GameLoop::paraCadaPatoAction() {
     for (auto& personaje : map_personajes) {
         personaje.second.executeAction();
+
     }
 }
 

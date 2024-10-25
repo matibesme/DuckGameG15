@@ -19,7 +19,7 @@ Duck::Duck(float initialX, float initialY, Graficos& graficos)
           typeOfGun(C_NOGUN),
           sprites(graficos.LoadTexture(DATA_PATH "/whiteDuck.png")) {}
 
-void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped) {
+void Duck::update(float x_pos, float y_pos, uint8_t typeOfMove, uint8_t gunEquipped) {
     positionX = x_pos;
     positionY = y_pos;
     isFlipped = false;

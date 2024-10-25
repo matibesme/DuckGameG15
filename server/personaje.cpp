@@ -1,4 +1,5 @@
 #include "personaje.h"
+#include <iostream>
 
 Personaje::Personaje(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
@@ -64,6 +65,7 @@ void Personaje::executeAction() {
             this->saltando=false;
             this->velocidad=  VELOCIDAD_INICIAL;
         }
+      
     }
 }
 
