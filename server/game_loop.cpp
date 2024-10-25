@@ -43,13 +43,14 @@ void GameLoop::checkCommand(CommandClient comando) {
 }
 
 void GameLoop::checkBullets() {
-    for (auto& bullet : map_bullets) {
-        if (!bullet.second->isAlive()) {
-            map_bullets.erase(bullet.first);
+    for (auto it = map_bullets.begin(); it != map_bullets.end(); ) {
+        if (!it->second->isAlive()) {
+            it = map_bullets.erase(it);     
+        } else {
+            it->second->executeAction();
+            ++it;
         }
-        bullet.second->executeAction();
     }
-
 }
 
 void GameLoop::movementComand(uint8_t comando) {
