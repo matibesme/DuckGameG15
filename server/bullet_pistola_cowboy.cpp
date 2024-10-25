@@ -4,6 +4,8 @@
 
 #include "bullet_pistola_cowboy.h"
 
+#include <iostream>
+
 CowBoyBullet::CowBoyBullet (uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range):
     Bullet(type, id, x_pos, y_pos, damage, range){}
 

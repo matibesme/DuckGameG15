@@ -13,10 +13,10 @@ bool Weapon::isEmptyAmmo() {
    return ammo_quantity == 0;
 }
 
-CowBoyBullet Weapon::shoot() {
+std::unique_ptr<Bullet> Weapon::shoot() {
     ammo_quantity--;
     bala.release(x_pos, y_pos, direction);
-    return  bala;
+    return std::make_unique<CowBoyBullet>(bala);
 }
 
 

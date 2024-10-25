@@ -43,11 +43,11 @@ void GameLoop::checkCommand(CommandClient comando) {
 
 void GameLoop::checkBullets() {
     for (auto it = lista_bullets.begin(); it != lista_bullets.end(); ) {
-        if (it->isAlive()) {
-            it->executeAction();
-            ++it; // Mover al siguiente elemento solo si no se elimina
+        if ((*it)->isAlive()) {
+            (*it)->executeAction();
+            ++it;
         } else {
-            it = lista_bullets.erase(it); // Elimina y obtiene el siguiente iterador
+            it = lista_bullets.erase(it);
         }
     }
 }
@@ -89,8 +89,8 @@ void GameLoop::weaponComand(uint8_t comando) {
         }
         weapon.setXPos(personaje.getXPos());
         weapon.setYPos(personaje.getYPos());    
-        Bullet bullet = weapon.shoot();
-        lista_bullets.emplace_back(bullet);
+        std::unique_ptr<Bullet> bullet = weapon.shoot();
+        lista_bullets.emplace_back(std::move(bullet));
 
 
         
@@ -114,10 +114,12 @@ void GameLoop::sendCompleteScene(){
        command.lista_patos.push_back(dto_duck);
 
     }
-    for (auto& bala_i : lista_bullets) {
-        DTOBullet dto_bullet = {bala_i.getTypeOfBullet(), bala_i.getXPos(), bala_i.getYPos(), bala_i.getDirection()};
+    for (auto& bullet : lista_bullets) {
+        DTOBullet dto_bullet = {bullet->getTypeOfBullet(), bullet->getXPos(), bullet->getYPos(),
+                            bullet->getDirection()};
         command.lista_balas.push_back(dto_bullet);
     }
+
 
     queues_map.sendMessagesToQueues(command);
 
@@ -128,6 +130,7 @@ void GameLoop::paraCadaPatoAction() {
         personaje.second.executeAction();
 
     }
+
 }
 
 GameLoop::~GameLoop() {}
