@@ -8,6 +8,7 @@
 class Bullet {
 private:
     Graficos& graficos;      // Referencia a la clase Graficos
+    uint8_t idBullet;        // Identificador de la bala
     float pos_x, pos_y;       // Posición de la bala
     int height, width;        // Dimensiones de la bala
     uint8_t orientationOfBullet;              // Si la bala está volteada o no
@@ -16,7 +17,7 @@ private:
 
 public:
     // Constructor
-    Bullet(float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t orientacion, uint8_t type);
+    Bullet(uint8_t id, float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t orientacion, uint8_t type);
 
     // Dibuja la bala en su posición actual
     void draw(SDL2pp::Renderer& renderer);

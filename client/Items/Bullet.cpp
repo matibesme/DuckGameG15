@@ -3,8 +3,8 @@
 
 #define IMAGE_CHAIN_BULLET DATA_PATH "/chainBullet.png"
 
-Bullet::Bullet(float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t orientacion, uint8_t type) :
-          graficos(graficos),
+Bullet::Bullet(uint8_t id, float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t orientacion, uint8_t type) :
+          graficos(graficos), idBullet(id),
           pos_x(initial_pos_x), pos_y(initial_pos_y),
           height(HEIGHT_BULLET), width(WIDTH_BULLET),
           orientationOfBullet(orientacion), typeOfBullet(type) {}

@@ -23,14 +23,37 @@ void Game::run() {
         while (true) {
             correrHandlers();
             if (queue_receiver.try_pop(command)) {
-                ducks.clear();
-                for (const auto& personaje : command.lista_patos) {
-                    ducks.emplace_back(personaje.x_pos, personaje.y_pos , personaje.typeOfMove, personaje.typeOfGun, personaje.direction,graficos);
+                //compruebo si el duck ya está en la lista, si no está lo agrego.
+                for (const auto& duckStruct : command.lista_patos) {
+                    auto it = std::find_if(ducks.begin(), ducks.end(),
+                                           [&duckStruct](const Duck &duck) {
+                                               return duck.id == duckStruct.id;
+                                           });
+                    if (it == ducks.end()) {
+                        Duck new_duck(duckStruct.id, duckStruct.x_pos, duckStruct.y_pos, duckStruct.typeOfGun,
+                                      duckStruct.direction, graficos);
+                        ducks.push_back(std::move(new_duck));
+                    } else {
+                        // Si ya existe, cargarlo con los datos actuales
+                        it->update(duckStruct.y_pos, duckStruct.x_pos, duckStruct.typeOfMove, duckStruct.typeOfGun);
+                    }
                 }
-                bullets.clear();
-                for (const auto& bullet_info : command.lista_balas) {
-                    bullets.emplace_back(bullet_info.x_pos + DUCK_WIDTH, bullet_info.y_pos + DUCK_HEIGHT / 2,
-                                         graficos, bullet_info.orientation, bullet_info.typeOfBullet);
+
+                // Compruebo si la bala ya está en la lista, si no está la agrego.
+                for (const auto& bulletStruct : command.lista_balas) {
+                    auto it = std::find_if(bullets.begin(), bullets.end(),
+                                           [&bulletStruct](const Bullet& bullet) {
+                                               return bullet.id == bulletStruct.id;
+                                           });
+                    if (it == bullets.end()) {
+                        Bullet new_bullet(bulletStruct.id ,bulletStruct.x_pos, bulletStruct.y_pos, graficos, bulletStruct.orientation,
+                                          bulletStruct.typeOfBullet);
+                        bullets.push_back(std::move(new_bullet));
+                    } else {
+                        // Si ya existe, actualizarlo con los datos actuales
+                        it->update(bulletStruct.x_pos, bulletStruct.y_pos, bulletStruct.typeOfBullet,
+                                   bulletStruct.orientation);
+                    }
                 }
 
                 dibujar(renderer, ducks, bullets);
