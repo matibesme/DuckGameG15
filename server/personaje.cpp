@@ -44,6 +44,10 @@ void Personaje::setEnSalto(bool enSalto) {
     this->saltando=enSalto;
 }
 
+void Personaje::setVelocidadY(float velocidad) {
+    this->velocidad = velocidad;
+}
+
 
 
 
@@ -54,18 +58,17 @@ float& Personaje::getVelocidadY(){
 void Personaje::executeAction() {
     float gravedad = GRAVEDAD;
     if (estaSaltando()) {
-        this->y_pos=(this->velocidad -getVelocidadY());
+        this->y_pos=(getYPos() -getVelocidadY());
 
 
-       this->velocidad=(this->velocidad - gravedad);
+        setVelocidadY(getVelocidadY() - gravedad);
 
 
         if (getYPos() >= POSICION_INICIAL_Y) {
             this->y_pos = POSICION_INICIAL_Y;
-            this->saltando=false;
-            this->velocidad=  VELOCIDAD_INICIAL;
+            setEnSalto(false);
+            setVelocidadY(VELOCIDAD_INICIAL);
         }
-      
     }
 }
 

@@ -27,6 +27,7 @@ class Personaje: public Objeto {
 
         void equippWeapon();
         void unequippWeapon();
+        void setVelocidadY(float velocidad); 
 
         void setTypeOfMoveSprite(uint8_t orientation);
         void setEnSalto(bool enSalto);
