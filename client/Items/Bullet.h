@@ -2,7 +2,7 @@
 #define BULLET_H
 
 #include "Graficos.h"
-#include <SDL2pp/SDL2pp.hh>
+#include "SDL2pp/SDL2pp.hh"
 #include "constant_definitons.h"
 
 class Bullet {

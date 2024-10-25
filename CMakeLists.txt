@@ -65,13 +65,14 @@ if(TALLER_CLIENT)
     find_package(SDL2_image REQUIRED)
     add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
 
-
     # Incluir directorios 'client' y 'common' para los archivos de encabezado
     include_directories(${CMAKE_SOURCE_DIR}/client)
     include_directories(${CMAKE_SOURCE_DIR}/common)
+    include_directories(${CMAKE_SOURCE_DIR}/client/items)
+
 
     # Incluir automáticamente todos los archivos .cpp y .h de las carpetas 'client' y 'common'
-    file(GLOB CLIENT_SOURCES
+    file(GLOB_RECURSE CLIENT_SOURCES
             "${CMAKE_SOURCE_DIR}/client/*.cpp"
             "${CMAKE_SOURCE_DIR}/client/*.h"
     )

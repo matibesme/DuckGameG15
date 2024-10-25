@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Duck.h"
-#include "Bullet.h"
+#include "Items/Duck.h"
+#include "Items/Bullet.h"
 #include "Graficos.h"
 #include "Background.h"
 #include "protocolo_cliente.h"

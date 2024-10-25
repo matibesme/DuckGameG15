@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <SDL2pp/SDL2pp.hh>
+#include "SDL2pp/SDL2pp.hh"
 #include "constant_definitons.h"
 #include "Gun.h"
 #include "Graficos.h"
