@@ -46,7 +46,6 @@ void Bullet::actualizarTipo(const char*& texture) {
         case C_COWBOY_BULLET:
             texture = IMAGE_CHAIN_BULLET;
             break;
-        //ingresa como case los bullet definidos en constant_definitions.h y agregale las ammo que te parezcan
         case C_AK47_BULLET:
             texture = IMAGE_AMMO_1;
             break;
