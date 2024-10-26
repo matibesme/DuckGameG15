@@ -49,6 +49,33 @@ constexpr int WIDTH_GUN= 25;
 constexpr uint8_t C_NOGUN= 0X33;
 constexpr uint8_t C_COWBOY_GUN= 0X34;
 constexpr uint8_t C_COWBOY_BULLET= 0x54;
+constexpr uint8_t C_AK47_GUN= 0X35;
+constexpr uint8_t C_AK47_BULLET= 0x55;
+constexpr uint8_t C_PISTOLA_DUELOS_GUN= 0X36;
+constexpr uint8_t C_PISTOLA_DUELOS_BULLET= 0x56;
+constexpr uint8_t C_MAGNUM_GUN= 0X37;
+constexpr uint8_t C_MAGNUM_BULLET= 0x57;
+constexpr uint8_t C_ESCOPETA_GUN= 0X38;
+constexpr uint8_t C_ESCOPETA_BULLET= 0x58;
+constexpr uint8_t C_SNIPER_GUN= 0X39;
+constexpr uint8_t C_SNIPER_BULLET= 0x59;
+constexpr uint8_t C_GRANADA_GUN= 0X40;
+constexpr uint8_t C_GRANADA_BULLET= 0x60;
+constexpr uint8_t C_BANANA_GUN= 0X41;
+constexpr uint8_t C_BANANA_BULLET= 0x61;
+constexpr uint8_t C_PEW_PEW_LASER_GUN= 0X42;
+constexpr uint8_t C_PEW_PEW_LASER_BULLET= 0x62;
+constexpr uint8_t C_LASER_RIFLE_GUN= 0X43;
+constexpr uint8_t C_LASER_RIFLE_BULLET= 0x63;
+
+
+
+
+
+
+
+
+
 
 //bullet action
 constexpr int HEIGHT_BULLET= 5;
