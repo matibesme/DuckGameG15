@@ -21,7 +21,7 @@ std::unique_ptr<Bullet> Weapon::shoot() {
     } else  if (direction == S_LEFT) {
         setXPos(x_pos - recoil);
     }
-    return std::make_unique<CowBoyBullet>(bala);
+    return std::make_unique<Bullet>(bala);
 }
 
 

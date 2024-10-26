@@ -12,9 +12,9 @@ Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damag
     Objeto(type, id, x_pos, y_pos),
     damage(damage),
     range(range),
-    spread(spread),
-    is_alive(true)
-    {}
+    is_alive(true),
+spread(spread)
+{}
 
 
 uint8_t Bullet::getDamage() {

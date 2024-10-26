@@ -13,7 +13,7 @@ private:
     uint8_t damage;
     uint8_t range;
     uint8_t ammo_quantity;
-    CowBoyBullet bala;
+    Bullet bala;
     int recoil;
 
 public:
