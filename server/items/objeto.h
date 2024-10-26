@@ -23,7 +23,7 @@ public:
     uint8_t getDirection() const;
     void setDirection(uint8_t new_direction);
     // Métodos setter
-    virtual void setXPos(float pos_x);
+    void setXPos(float pos_x);
     void setYPos(float pos_y);
     void setId(uint8_t new_id);
 

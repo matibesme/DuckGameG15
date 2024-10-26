@@ -13,10 +13,11 @@ private:
     uint8_t range;
     uint8_t ammo_quantity;
     Bullet bala;
-    int recoil;
+    float recoil;
 
 public:
-    Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range,uint8_t ammo_quantity);
+    Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range,uint8_t ammo_quantity,float recoil);
+
     bool isEmptyAmmo();
     std::unique_ptr<Bullet> shoot();
 
