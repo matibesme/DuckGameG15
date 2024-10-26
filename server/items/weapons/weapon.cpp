@@ -15,12 +15,12 @@ bool Weapon::isEmptyAmmo() {
 std::unique_ptr<Bullet> Weapon::shoot() {
     ammo_quantity--;
   
-    bala.release(x_pos, y_pos, direction);
+    bala.release(x_pos, y_pos, direction);/*
     if (direction == S_RIGTH) {
         setXPos(x_pos + recoil);
     } else  if (direction == S_LEFT) {
         setXPos(x_pos - recoil);
-    }
+    }*/
     return std::make_unique<Bullet>(bala);
 }
 

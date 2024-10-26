@@ -24,8 +24,8 @@ class Bullet: public Objeto {
         uint8_t getTypeOfBullet();
         bool isAlive();
         void release(float x_pos, float y_pos, uint8_t direction);
-        virtual void executeAction();
-        virtual ~Bullet();
+        void executeAction();
+
 };
 
 
