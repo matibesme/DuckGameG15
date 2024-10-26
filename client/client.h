@@ -9,7 +9,7 @@
 
 #include "constant_definitons.h"
 #include "protocolo_cliente.h"
-#include "Game.h"
+#include "gameRunner.h"
 #include "c_sender.h"
 #include "c_receiver.h"
 
@@ -19,7 +19,7 @@ private:
     bool is_socket_close;
     BlockingQueue<uint8_t> queue_sender;
     BlockingQueue<CommandGameShow> queue_receiver;
-    Game game;
+    GameRunner game;
     Sender sender;
     Receiver receiver;
 

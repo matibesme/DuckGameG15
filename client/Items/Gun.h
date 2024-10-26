@@ -23,6 +23,7 @@ public:
     bool isEquipped();
     void setGun(uint8_t gun);
 
+    void update(float d, float d1);
 };
 
 #endif

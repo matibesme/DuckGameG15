@@ -48,8 +48,7 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
         float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t typeOfMove = protocolo.receiveByte(dead_connection);
         uint8_t typeOfGun = protocolo.receiveByte(dead_connection);
-        uint8_t direction = protocolo.receiveByte(dead_connection);
-        lista_patos.push_back({id,personajes_type, x_pos, y_pos, typeOfMove, typeOfGun, direction});
+        lista_patos.push_back({id,personajes_type, x_pos, y_pos, typeOfMove, typeOfGun});
     }
     //recivo balas
     uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);

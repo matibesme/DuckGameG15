@@ -12,19 +12,19 @@ const int SPRITE_HEIGHT = 24;
 const float VERTICAL_CENTER_DIVISOR = 1.1f;
 
 
-Duck::Duck(float x_pos, float y_pos, uint8_t typeOfMove, uint8_t gunEquipped, uint8_t direction,Graficos& graficos)
-        : positionX(x_pos), positionY(y_pos), graficos(graficos),
+Duck::Duck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped, uint8_t typeOfMove, Graficos& graficos)
+        : idDuck(id),positionX(x_pos), positionY(y_pos), graficos(graficos),
           numSprite(0), gun(graficos, positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2, gunEquipped),
           isFlipped(false), typeOfGun(gunEquipped), pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING) {
+    update(y_pos, x_pos, typeOfMove, gunEquipped);
+}
 
+void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped) {
+    positionX = x_pos;
+    positionY = y_pos;
     gun.setGun(gunEquipped);  // Configura el arma al inicializar el pato
 
     if(typeOfMove == STILL_LEFT){
-        isFlipped = true;
-    }
-    if (direction != LEFT) {
-        isFlipped = false;
-    } else{
         isFlipped = true;
     }
 
@@ -46,10 +46,14 @@ Duck::Duck(float x_pos, float y_pos, uint8_t typeOfMove, uint8_t gunEquipped, ui
 
         } else if (typeOfMove == DOWN) {
             pixelDuckSpriteY = SRC_Y_STANDING;
-            pixelDuckSpriteX = SPRITE_WIDTH;
+            pixelDuckSpriteX = 0;
         }
+    } else {
+        pixelDuckSpriteX = 0;
+        pixelDuckSpriteY = SRC_Y_MOVING;
     }
 }
+
 
 void Duck::draw(SDL2pp::Renderer& renderer) {
 /*
@@ -68,6 +72,7 @@ void Duck::draw(SDL2pp::Renderer& renderer) {
     }
 
     if(gun.isEquipped()){
+        gun.update(positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2);
         gun.draw(isFlipped, renderer);
     }
 }
@@ -87,4 +92,8 @@ bool Duck::checkCollision(SDL2pp::Rect rect) {
     Rect rectDuck((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
 
     return (SDL_HasIntersection(&rectDuck, &rect));
+}
+
+uint8_t Duck::getId() const {
+    return idDuck;
 }
