@@ -56,6 +56,7 @@ void DuckPlayer::executeAction() {
     float gravedad = GRAVEDAD;
     if (estaSaltando()) {
         y_pos = (y_pos - velocidad);
+        getWeapon().setYPos(y_pos);
 
         setVelocidadY(velocidad - gravedad);
 
