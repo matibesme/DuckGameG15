@@ -16,9 +16,7 @@ void GameRunner::run() {
 
         gameRenderer.dibujar(sdl_renderer, ducks, bullets);
         //REVISAR:
-        //Por que el pato no se queda quieto
-        //La imagen del pato cuando se agacha es otra
-        //Tener en cuenta mas imagenes en cuanto a las armas y balas
+        //quiero cambiar de arma hardcodeando
 
         while (true) {
             handler.correrHandlers();
@@ -36,6 +34,7 @@ void GameRunner::run() {
 }
 
 void GameRunner::actualizarElementos(const CommandGameShow& command, std::list<Duck>& ducks, std::list<Bullet>& bullets) {
+    //PRIMERO ACTUALIZO PATOS
     // Actualizar y eliminar patos
     for (auto it = ducks.begin(); it != ducks.end();) {
         auto duckInCommand = std::find_if(command.lista_patos.begin(), command.lista_patos.end(),
@@ -64,6 +63,7 @@ void GameRunner::actualizarElementos(const CommandGameShow& command, std::list<D
         }
     }
 
+    //SEGUNDO ACTUALIZO BALAS
     // Actualizar y eliminar balas
     for (auto it = bullets.begin(); it != bullets.end();) {
         auto bulletInCommand = std::find_if(command.lista_balas.begin(), command.lista_balas.end(),
