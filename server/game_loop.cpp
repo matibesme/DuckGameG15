@@ -95,6 +95,8 @@ void GameLoop::weaponComand(uint8_t comando) {
         weapon.setYPos(personaje.getYPos());
         weapon.setDirection(personaje.getDirection());
         std::unique_ptr<Bullet> bullet = weapon.shoot();
+        personaje.setXPos(weapon.getXPos());
+        personaje.setYPos(weapon.getYPos());
         map_bullets.emplace(id_balas, std::move(bullet));
         id_balas++;
 
