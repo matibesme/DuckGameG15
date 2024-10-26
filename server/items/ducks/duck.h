@@ -19,8 +19,6 @@ class DuckPlayer: public Objeto {
         DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos);
 
 
-        float getXPos();
-        float getYPos();
         uint8_t getTypeOfMoveSprite();
         void setXPos(float pos_x) override;
         Weapon& getWeapon();

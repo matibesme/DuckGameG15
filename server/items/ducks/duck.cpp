@@ -14,13 +14,8 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         }
 
 
-float DuckPlayer::getXPos() {
-    return x_pos;
-}
 
-float DuckPlayer::getYPos() {
-    return y_pos;
-}
+
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
     return typeOfMove;
