@@ -15,6 +15,7 @@ void GameLoop::run() {
     try {
 
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
+
         while (!end_game) {
             CommandClient comando;
             while (queue_comandos.try_pop(comando)) {
@@ -67,6 +68,8 @@ void GameLoop::movementComand(uint8_t comando) {
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
         personaje.setEnSalto(true);
         personaje.setTypeOfMoveSprite(S_JUMP);
+    } else if (comando==S_JUMP){
+        personaje.setTypeOfMoveSprite(S_FLAP);
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
 

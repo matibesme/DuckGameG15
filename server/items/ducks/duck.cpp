@@ -57,10 +57,15 @@ void DuckPlayer::executeAction() {
 
         if (y_pos >= S_POSICION_INICIAL_Y) {
             y_pos = S_POSICION_INICIAL_Y;
-            setEnSalto(false);
-            setVelocidadY(VELOCIDAD_INICIAL);
+            this->saltando = false;
+            this->velocidad = VELOCIDAD_INICIAL;
+            if (this-> direction==S_RIGTH) {
+                this-> typeOfMove = S_STILL_RIGTH;
+            }else(this-> direction== S_LEFT);
+            this-> typeOfMove(S_STILL_LEFT);
         }
     }
+
 }
 
 bool DuckPlayer::estaSaltando() {
