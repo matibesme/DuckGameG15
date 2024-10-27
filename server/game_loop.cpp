@@ -57,11 +57,11 @@ void GameLoop::movementComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
 
     if (comando==S_RIGTH){
-        personaje.setXPos(MOVEMENT_QUANTITY_X);
+        personaje.incrementXPos(MOVEMENT_QUANTITY_X);
         personaje.setTypeOfMoveSprite(S_RIGTH);
         personaje.setDirection(S_RIGTH);
     } else if (comando==S_LEFT){
-        personaje.setXPos(-MOVEMENT_QUANTITY_X);
+        personaje.incrementXPos(-MOVEMENT_QUANTITY_X);
         personaje.setTypeOfMoveSprite(S_LEFT);
         personaje.setDirection(S_LEFT);
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
@@ -95,6 +95,8 @@ void GameLoop::weaponComand(uint8_t comando) {
         weapon.setYPos(personaje.getYPos());
         weapon.setDirection(personaje.getDirection());
         std::unique_ptr<Bullet> bullet = weapon.shoot();
+        personaje.setXPos(weapon.getXPos());
+        personaje.setYPos(weapon.getYPos());
         map_bullets.emplace(id_balas, std::move(bullet));
         id_balas++;
 

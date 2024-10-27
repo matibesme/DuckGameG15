@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <list>
 #include "../bullets/bullet.h"
-#include "../bullets/bullet_pistola_cowboy.h"
 #include "../../constant_definitons.h"
 #include <memory>
 
@@ -13,10 +12,12 @@ private:
     uint8_t damage;
     uint8_t range;
     uint8_t ammo_quantity;
-    CowBoyBullet bala;
+    Bullet bala;
+    float recoil;
 
 public:
-    Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range,uint8_t ammo_quantity);
+    Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range,uint8_t ammo_quantity,float recoil);
+
     bool isEmptyAmmo();
     std::unique_ptr<Bullet> shoot();
 

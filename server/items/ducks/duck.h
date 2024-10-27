@@ -14,15 +14,13 @@ class DuckPlayer: public Objeto {
     public:
 
         //constructor por defecto
-        DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false), velocidad(VELOCIDAD_INICIAL), weapon(S_COWBOY_GUN, 1, 0, 0, 5, 20, 10){}
+        DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false), velocidad(VELOCIDAD_INICIAL), weapon(S_COWBOY_GUN, 1, 0, 0, 5, 20, 10,3){}
 
         DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos);
 
 
-        float getXPos();
-        float getYPos();
         uint8_t getTypeOfMoveSprite();
-        void setXPos(float pos_x) override;
+        void incrementXPos(float pos_x) ;
         Weapon& getWeapon();
 
         void equippWeapon();

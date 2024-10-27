@@ -7,26 +7,21 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         typeOfMove(S_STILL_RIGTH),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
-        weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,20),
+        weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,20,4),
         weapons_list()
         {
             weapons_list.push_back(weapon);
         }
 
 
-float DuckPlayer::getXPos() {
-    return x_pos;
-}
 
-float DuckPlayer::getYPos() {
-    return y_pos;
-}
+
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
     return typeOfMove;
 }
 
-void DuckPlayer::setXPos(float pos_x) {
+void DuckPlayer::incrementXPos(float pos_x) {
 
     this->x_pos += pos_x;
 
@@ -56,6 +51,7 @@ void DuckPlayer::executeAction() {
     float gravedad = GRAVEDAD;
     if (estaSaltando()) {
         y_pos = (y_pos - velocidad);
+        getWeapon().setYPos(y_pos);
 
         setVelocidadY(velocidad - gravedad);
 

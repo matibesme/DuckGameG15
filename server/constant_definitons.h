@@ -22,6 +22,7 @@ constexpr uint8_t S_DOWN = 0x07;
 constexpr uint8_t S_STILL_RIGTH = 0x08;
 constexpr uint8_t S_STILL_LEFT = 0x09;
 const uint8_t S_UP = 0x50;
+constexpr uint8_t S_FLAP = 0x51;
 
 constexpr float MOVEMENT_QUANTITY_X= 1;
 constexpr float MOVEMENT_QUANTITY_Y= 3;
@@ -47,4 +48,6 @@ const uint8_t S_SHOOT = 0x0B;
 constexpr uint8_t S_NOGUN= 0X33;
 constexpr uint8_t S_COWBOY_GUN= 0X34;
 constexpr uint8_t S_COWBOY_BULLET= 0x54;
+constexpr float BULLET_VEL = 5;
+
 

@@ -19,7 +19,6 @@
 #include "items/weapons/weapon.h"
 //eliminar dsp
 #include "items/bullets/bullet.h"
-#include "items/bullets/bullet_pistola_cowboy.h"
 
 class GameLoop: public Thread {
 

@@ -8,12 +8,13 @@
 
 
 
-Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range):
+Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range, float spread):
     Objeto(type, id, x_pos, y_pos),
     damage(damage),
     range(range),
-    is_alive(true)
-    {}
+    is_alive(true),
+spread(spread)
+{}
 
 
 uint8_t Bullet::getDamage() {
@@ -38,12 +39,23 @@ void Bullet::release(float x_pos, float y_pos, uint8_t direction) {
     this->direction = direction;
 }
 
-void Bullet::executeAction() {
+void Bullet::executeAction(){
+    if (is_alive && range > 0) {
+        if (direction == S_RIGTH) {
+            x_pos += BULLET_VEL;
+        } else if (direction == S_LEFT) {
+            x_pos -= BULLET_VEL;
+        } else if (direction == S_UP) {
+            y_pos -= BULLET_VEL;
+        }
+        range--;
+        if (range == 0) {
+            is_alive = false;
+        }
+    }
 }
 
 
-Bullet::~Bullet() {
-    // Limpieza, si es necesaria
-}
+
 
 
