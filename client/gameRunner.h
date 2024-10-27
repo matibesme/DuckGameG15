@@ -4,7 +4,7 @@
 #include "Graficos.h"
 #include "EventHandler.h"
 #include "GameRenderer.h"
-#include "Items/Duck.h"
+#include "Items/ClientDuck.h"
 #include "Items/Bullet.h"
 #include "common/blocking_queue.h"
 #include <list>
@@ -16,7 +16,7 @@ private:
     EventHandler handler;
     BlockingQueue<uint8_t>& queue_sender;
     BlockingQueue<CommandGameShow>& queue_receiver;
-    void actualizarElementos(const CommandGameShow &command, std::list<Duck> &ducks, std::list<Bullet> &bullets);
+    void actualizarElementos(const CommandGameShow &command, std::list<ClientDuck> &ducks, std::list<Bullet> &bullets);
 
 public:
     GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver);

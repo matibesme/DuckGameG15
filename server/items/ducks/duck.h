@@ -11,13 +11,15 @@ class DuckPlayer: public Objeto {
         float velocidad;
         uint8_t life;
         bool is_alive;
+        float gravity;
         Weapon weapon;
         std::list<Weapon> weapons_list;
     public:
 
         //constructor por defecto
-        DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false), velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),
+        DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false), velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD),
         weapon(S_COWBOY_GUN, 1, 0, 0, 5, 20, 10,3){}
+        
 
         DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos);
 
@@ -39,6 +41,7 @@ class DuckPlayer: public Objeto {
 
         bool isAlive();
         void applyDamage(uint8_t damage);
+        void setGravity(float gravity_);
         ~DuckPlayer();
 
 };

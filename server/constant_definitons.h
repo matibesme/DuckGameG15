@@ -21,10 +21,11 @@ constexpr uint8_t S_JUMP = 0x04;
 constexpr uint8_t S_DOWN = 0x07;
 constexpr uint8_t S_STILL_RIGTH = 0x08;
 constexpr uint8_t S_STILL_LEFT = 0x09;
+constexpr uint8_t S_FLAP = 0x10;
 const uint8_t S_UP = 0x50;
-constexpr uint8_t S_FLAP = 0x51;
 
-constexpr float MOVEMENT_QUANTITY_X= 1;
+
+constexpr float MOVEMENT_QUANTITY_X= 0.5;
 constexpr float MOVEMENT_QUANTITY_Y= 3;
 
 
@@ -38,6 +39,7 @@ constexpr float S_POSICION_INICIAL_Y = 386;
 constexpr float PIXELES_JUMP= 90;
 constexpr float GRAVEDAD = 1;
 constexpr float VELOCIDAD_INICIAL = 15;
+constexpr float GRAVITY_FLAP = 0.0002;
 
 //armas action
 const uint8_t S_WEAPON_ACTION = 0x08;
