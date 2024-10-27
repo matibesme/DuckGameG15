@@ -1,7 +1,8 @@
-#include "Duck.h"
+#include "ClientDuck.h"
 #include <SDL_image.h>
 
-const int SPRITE_ANIMATION_RATE = 100;
+#define IMAGE_DUCK DATA_PATH "/Duck.png"
+const int SPRITE_ANIMATION_RATE = 160;
 const int MAX_SPRITE_FRAMES = 6;
 const int MAX_SPRITE_FRAMES_JUMP = 5;
 const int SRC_Y_STANDING = 70;
@@ -11,7 +12,8 @@ const int SPRITE_WIDTH = 32;
 const int SPRITE_HEIGHT = 24;
 const float VERTICAL_CENTER_DIVISOR = 1.1f;
 
-Duck::Duck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped, uint8_t typeOfMove, Graficos& graficos)
+
+ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped, uint8_t typeOfMove, Graficos& graficos)
         : idDuck(id), positionX(x_pos), positionY(y_pos), graficos(graficos),
           numSprite(0), gun(graficos, positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2, gunEquipped),
           isFlipped(false), typeOfGun(gunEquipped), pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING),
@@ -20,7 +22,7 @@ Duck::Duck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped, uint8_t ty
     update(y_pos, x_pos, typeOfMove, gunEquipped);
 }
 
-void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped) {
+void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped) {
     positionX = x_pos;
     positionY = y_pos;
     gun.setGun(gunEquipped);
@@ -45,6 +47,13 @@ void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquip
             pixelDuckSpriteX = SPRITE_WIDTH * numSprite;
             numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES_JUMP;
 
+        }else if (typeOfMove == FLUP) {
+            pixelDuckSpriteY = SRC_Y_JUMPING;
+            numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES_JUMP;
+            // Limitar numSprite entre 3 y 4
+            numSprite = std::clamp(numSprite, 3, 4);
+            // Calcular la posición del sprite
+            pixelDuckSpriteX = SPRITE_WIDTH * numSprite;
         } else if (typeOfMove == DOWN) {
             pixelDuckSpriteY = SRC_Y_STANDING;
             pixelDuckSpriteX = 0;
@@ -55,7 +64,7 @@ void Duck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquip
     }
 }
 
-void Duck::draw(Renderer& renderer) {
+void ClientDuck::draw(Renderer& renderer) {
     // Si aún no se ha aplicado el color, llamamos a applyColor
     if (!coloredTexture) {
         applyColor(renderer);
@@ -79,8 +88,8 @@ void Duck::draw(Renderer& renderer) {
     }
 }
 
-void Duck::applyColor(Renderer& renderer) {
-    SDL_Surface* loadedSurface = IMG_Load((DATA_PATH "/whiteDuck.png"));
+void ClientDuck::applyColor(Renderer& renderer) {
+    SDL_Surface* loadedSurface = IMG_Load((IMAGE_DUCK));
 
     SDL2pp::Surface surface(loadedSurface);
 
@@ -107,11 +116,11 @@ void Duck::applyColor(Renderer& renderer) {
 }
 
 
-bool Duck::checkCollision(SDL2pp::Rect rect) {
+bool ClientDuck::checkCollision(SDL2pp::Rect rect) {
     Rect rectDuck((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
     return SDL_HasIntersection(&rectDuck, &rect);
 }
 
-uint8_t Duck::getId() const {
+uint8_t ClientDuck::getId() const {
     return idDuck;
 }

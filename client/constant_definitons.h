@@ -31,6 +31,7 @@ const uint8_t LEFT = 0x06;
 const uint8_t DOWN = 0x07;
 const uint8_t STILL_RIGTH = 0x08;
 const uint8_t STILL_LEFT = 0x09;
+const uint8_t FLUP = 0x10;
 
 //escenas
 const uint8_t WEAPON_ACTION = 0x08;
