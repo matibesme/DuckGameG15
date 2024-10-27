@@ -13,24 +13,10 @@ Acceptor::Acceptor(const char* port, ProtectedQueuesMap& map_queues_sender,
         cantidad_clientes(0) {}
 
 
-void Acceptor::accept_new_client() {
-    Socket peer = socket_servidor.accept();
-
-    lista_clientes.emplace_back(std::move(peer), queue_comandos, cantidad_clientes);
-    ThreadCliente& cliente = lista_clientes.back();
-    cliente.start();
-    reapDead();
-    
-    map_queues_sender.addClient(cantidad_clientes, cliente.getQueueSender());//
-    cantidad_clientes++;
-}
-
-
 void Acceptor::run() {
 
     while (!close) {
         try {
-
             accept_new_client();
         } catch (const std::exception& e) {
             if (!close) {
@@ -39,6 +25,18 @@ void Acceptor::run() {
             // sino cerro el socket por el close de forma esperada
         }
     }
+}
+
+void Acceptor::accept_new_client() {
+    Socket peer = socket_servidor.accept();
+
+    lista_clientes.emplace_back(std::move(peer), queue_comandos, cantidad_clientes);
+    ThreadCliente& cliente = lista_clientes.back();
+    cliente.start();
+    reapDead();
+
+    map_queues_sender.addClient(cantidad_clientes, cliente.getQueueSender());//
+    cantidad_clientes++;
 }
 
 void Acceptor::deleteAClient(ThreadCliente& cliente) {

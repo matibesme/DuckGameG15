@@ -49,6 +49,7 @@ void GameLoop::checkBullets() {
             it = map_bullets.erase(it);     
         } else {
             it->second->executeAction();
+
             ++it;
         }
     }
@@ -69,7 +70,7 @@ void GameLoop::movementComand(uint8_t comando) {
         personaje.setEnSalto(true);
         personaje.setTypeOfMoveSprite(S_JUMP);
     } else if (comando==S_JUMP){
-        personaje.setTypeOfMoveSprite(S_FLAP);
+       // personaje.setTypeOfMoveSprite(S_FLAP);
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
 

@@ -7,15 +7,11 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         typeOfMove(S_STILL_RIGTH),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
-        weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,20,4),
+        weapon(S_COWBOY_BULLET, 1, 0, 0, 5, 10,20,4),
         weapons_list()
         {
             weapons_list.push_back(weapon);
         }
-
-
-
-
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
     return typeOfMove;
@@ -59,11 +55,13 @@ void DuckPlayer::executeAction() {
             y_pos = S_POSICION_INICIAL_Y;
             this->saltando = false;
             this->velocidad = VELOCIDAD_INICIAL;
-            if (this-> direction==S_RIGTH) {
-                this-> typeOfMove = S_STILL_RIGTH;
-            }else(this-> direction== S_LEFT);
-            this-> typeOfMove(S_STILL_LEFT);
+            if (this->direction == S_RIGTH)
+                this->typeOfMove = S_STILL_RIGTH;
+            else if(this->direction == S_LEFT)
+                this->typeOfMove = S_STILL_LEFT;
+
         }
+
     }
 
 }

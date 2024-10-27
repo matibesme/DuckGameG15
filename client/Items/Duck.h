@@ -5,7 +5,10 @@
 #include "constant_definitons.h"
 #include "Gun.h"
 #include "Graficos.h"
+#include <memory>
+
 using namespace SDL2pp;
+
 class Duck {
 public:
     Duck(uint8_t id, float initial_pos_x, float initial_pos_y, uint8_t typeOfGun, uint8_t typeOfMove,
@@ -26,7 +29,8 @@ private:
     uint8_t typeOfGun;
     float pixelDuckSpriteX;
     float pixelDuckSpriteY;
-    void actualizarTipo(const char*& texture);
+    std::unique_ptr<SDL2pp::Texture> coloredTexture;
+    void applyColor(Renderer& renderer);
 };
 
 #endif // PLAYER_H

@@ -45,9 +45,29 @@ const uint8_t S_PICKUP = 0x09;
 const uint8_t S_LEAVE_GUN= 0x0A;
 const uint8_t S_SHOOT = 0x0B;
 
+constexpr float BULLET_VEL = 5;
 constexpr uint8_t S_NOGUN= 0X33;
 constexpr uint8_t S_COWBOY_GUN= 0X34;
 constexpr uint8_t S_COWBOY_BULLET= 0x54;
-constexpr float BULLET_VEL = 5;
+constexpr uint8_t S_AK47_GUN= 0X35;
+constexpr uint8_t S_AK47_BULLET= 0x55;
+constexpr uint8_t S_PISTOLA_DUELOS_GUN= 0X36;
+constexpr uint8_t S_PISTOLA_DUELOS_BULLET= 0x56;
+constexpr uint8_t S_MAGNUM_GUN= 0X37;
+constexpr uint8_t S_MAGNUM_BULLET= 0x57;
+constexpr uint8_t S_ESCOPETA_GUN= 0X38;
+constexpr uint8_t S_ESCOPETA_BULLET= 0x58;
+constexpr uint8_t S_SNIPER_GUN= 0X39;
+constexpr uint8_t S_SNIPER_BULLET= 0x59;
+constexpr uint8_t S_GRANADA_GUN= 0X40;
+constexpr uint8_t S_GRANADA_BULLET= 0x60;
+constexpr uint8_t S_BANANA_GUN= 0X41;
+constexpr uint8_t S_BANANA_BULLET= 0x61;
+constexpr uint8_t S_PEW_PEW_LASER_GUN= 0X42;
+constexpr uint8_t S_PEW_PEW_LASER_BULLET= 0x62;
+constexpr uint8_t S_LASER_RIFLE_GUN= 0X43;
+constexpr uint8_t S_LASER_RIFLE_BULLET= 0x63;
+
+
 
 

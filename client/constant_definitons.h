@@ -68,15 +68,6 @@ constexpr uint8_t C_PEW_PEW_LASER_BULLET= 0x62;
 constexpr uint8_t C_LASER_RIFLE_GUN= 0X43;
 constexpr uint8_t C_LASER_RIFLE_BULLET= 0x63;
 
-
-
-
-
-
-
-
-
-
 //bullet action
 constexpr int HEIGHT_BULLET= 5;
 constexpr int WIDTH_BULLET= 5;

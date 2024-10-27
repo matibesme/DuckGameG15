@@ -3,9 +3,6 @@
 #include <string>
 #include <list>
 
-
-
-
 struct DTODuck{
     uint8_t id;
     uint8_t personajes_type;
