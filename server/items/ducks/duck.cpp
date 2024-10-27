@@ -7,6 +7,8 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         typeOfMove(S_STILL_RIGTH),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
+        life(100),
+        is_alive(true),
         weapon(S_COWBOY_BULLET, 1, 0, 0, 5, 10,20,4),
         weapons_list()
         {
@@ -84,6 +86,18 @@ void DuckPlayer::equippWeapon() {
     if (!is_weapon_equiped) {
         is_weapon_equiped = true;
     }
+}
+
+bool DuckPlayer::isAlive() {
+    return is_alive;
+}
+
+void DuckPlayer::applyDamage(uint8_t damage) {
+    life -= damage;
+    if (life <= 0) {
+        is_alive = false;
+    }
+
 }
 
 
