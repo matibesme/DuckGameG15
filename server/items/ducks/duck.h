@@ -10,6 +10,8 @@ class DuckPlayer: public Objeto {
         bool saltando;
         float velocidad;
         Weapon weapon;
+        uint8_t life;
+        bool is_alive;
         std::list<Weapon> weapons_list;
     public:
 
@@ -33,6 +35,10 @@ class DuckPlayer: public Objeto {
 
         float& getVelocidadY();
         void executeAction();
+
+        bool isAlive();
+        bool applyDamage(uint8_t damage);
+
         ~DuckPlayer();
 
 };

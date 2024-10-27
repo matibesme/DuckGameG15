@@ -49,6 +49,7 @@ void GameLoop::checkBullets() {
             it = map_bullets.erase(it);     
         } else {
             it->second->executeAction();
+            checkCoalition(it->second);
             ++it;
         }
     }
@@ -143,9 +144,25 @@ void GameLoop::sendCompleteScene(){
 void GameLoop::paraCadaPatoAction() {
     for (auto& personaje : map_personajes) {
         personaje.second.executeAction();
+    }
+}
+
+void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
+    for (auto& personaje : map_personajes) {
+        if (personaje.second.isAlive()){
+            if (personaje.second.getXPos() < bullet->getXPos() + bullet->getRange() &&
+                personaje.second.getXPos() + personaje.second.getWidth() > bullet->getXPos() &&
+                personaje.second.getYPos() < bullet->getYPos() + bullet->getRange() &&
+                personaje.second.getYPos() + personaje.second.getHeight() > bullet->getYPos()) {
+                if (personaje.second.applyDamage(bullet->getDamage())) {
+                    // personaje muerto
+                }
+                bullet->kill();
+            }
+        }
 
     }
-
 }
+
 
 GameLoop::~GameLoop() {}
