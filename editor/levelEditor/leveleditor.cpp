@@ -49,7 +49,7 @@ void LevelEditor::action_1_handler(){
 
     QPalette pal;
 
-    QPixmap fondo("../../data/city.png");
+    QPixmap fondo("data/city.png");
 
     QBrush brush(fondo);
     pal.setBrush(QPalette::Window, brush);
@@ -64,7 +64,7 @@ void LevelEditor::action_2_handler(){
 
     QPalette pal;
 
-    QPixmap fondo("../../data/forest.png");
+    QPixmap fondo("data/forest.png");
 
     QBrush brush(fondo);
     pal.setBrush(QPalette::Window, brush);
@@ -76,7 +76,7 @@ void LevelEditor::action_2_handler(){
 
 void LevelEditor::action_3_handler(){
     QLabel *platform_label = new QLabel(this);
-    QPixmap platform_industrial("../../data/plataforma_prueba.png");
+    QPixmap platform_industrial("data/plataforma_prueba.png");
     platform_label->setPixmap(platform_industrial); 
     platform_label->setGeometry(100, 100, 32, 15);
     platform_label->setAcceptDrops(true);
@@ -89,7 +89,7 @@ void LevelEditor::action_3_handler(){
     drag->setMimeData(mime_data);
     drag->setPixmap(platform_industrial);
 
-    Qt::DropAction drop_action = drag->exec();
+    //Qt::DropAction drop_action = drag->exec();
     
 }
 
