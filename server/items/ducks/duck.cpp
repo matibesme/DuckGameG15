@@ -47,21 +47,16 @@ float& DuckPlayer::getVelocidadY(){
 
 void DuckPlayer::executeAction() {
     if (estaSaltando()) {
-        y_pos = (y_pos - velocidad);
+        y_pos -= velocidad;
         getWeapon().setYPos(y_pos);
+       velocidad -= gravity;
 
-        setVelocidadY(velocidad - gravity);
-
+        this->gravity= GRAVEDAD;
         if (y_pos >= S_POSICION_INICIAL_Y) {
             y_pos = S_POSICION_INICIAL_Y;
             this->saltando = false;
             this->velocidad = VELOCIDAD_INICIAL;
-            this->gravity = GRAVEDAD;
-            if (this->direction == S_RIGTH)
-                this->typeOfMove = S_STILL_RIGTH;
-            else if(this->direction == S_LEFT)
-                this->typeOfMove = S_STILL_LEFT;
-
+            typeOfMove = (direction == S_RIGTH) ? S_STILL_RIGTH : S_STILL_LEFT;
         }
 
     }
@@ -87,11 +82,10 @@ void DuckPlayer::equippWeapon() {
         is_weapon_equiped = true;
     }
 }
-void DuckPlayer::setGravity(float gravity){
-    this->gravity = gravity;
+
+void DuckPlayer::setGravity(float gravity_){
+    this->gravity = gravity_;
 }
-
-
 
 DuckPlayer::~DuckPlayer() {}
 

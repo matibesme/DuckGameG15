@@ -72,12 +72,11 @@ void GameLoop::movementComand(uint8_t comando) {
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
         personaje.setEnSalto(true);
         personaje.setTypeOfMoveSprite(S_JUMP);
-    } else if (comando==S_JUMP){
+    } else if (comando==S_JUMP && personaje.getVelocidadY() < 0){
         personaje.setGravity(GRAVITY_FLAP);
-        //personaje.setTypeOfMoveSprite(S_FLAP);
+        personaje.setTypeOfMoveSprite(S_FLAP);
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
-
     }else if (comando == S_STILL_RIGTH){
        personaje.setTypeOfMoveSprite(S_STILL_RIGTH);
     } else if (comando == S_STILL_LEFT){
