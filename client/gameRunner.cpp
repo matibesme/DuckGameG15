@@ -11,7 +11,7 @@ void GameRunner::run() {
     try {
         Renderer& sdl_renderer = graficos.GetRenderer();
         CommandGameShow command;
-        std::list<Duck> ducks;
+        std::list<ClientDuck> ducks;
         std::list<Bullet> bullets;
 
         gameRenderer.dibujar(sdl_renderer, ducks, bullets);
@@ -33,7 +33,7 @@ void GameRunner::run() {
     graficos.GetRenderer().Clear();
 }
 
-void GameRunner::actualizarElementos(const CommandGameShow& command, std::list<Duck>& ducks, std::list<Bullet>& bullets) {
+void GameRunner::actualizarElementos(const CommandGameShow& command, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets) {
     //PRIMERO ACTUALIZO PATOS
     // Actualizar y eliminar patos
     for (auto it = ducks.begin(); it != ducks.end();) {
@@ -54,7 +54,7 @@ void GameRunner::actualizarElementos(const CommandGameShow& command, std::list<D
     // Agregar patos que están en el comando pero no en la lista local
     for (const auto& duckStruct : command.lista_patos) {
         auto it = std::find_if(ducks.begin(), ducks.end(),
-                               [&duckStruct](const Duck& duck) {
+                               [&duckStruct](const ClientDuck& duck) {
                                    return duck.getId() == duckStruct.id;
                                });
         if (it == ducks.end()) {
