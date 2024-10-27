@@ -51,5 +51,3 @@ constexpr uint8_t S_COWBOY_BULLET= 0x54;
 constexpr float BULLET_VEL = 5;
 
 
-
-

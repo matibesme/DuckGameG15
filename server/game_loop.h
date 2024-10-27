@@ -42,7 +42,6 @@ public:
     void checkBullets();
     void saltar();
     void sendCompleteScene();
-    void checkCoalition(std::unique_ptr<Bullet>& bullet);
 
     virtual ~GameLoop();
 };
