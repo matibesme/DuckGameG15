@@ -36,10 +36,11 @@ constexpr float S_POSICION_INICIAL_X = 0.0f;
 
 //jump
 constexpr float S_POSICION_INICIAL_Y = 386;
-constexpr float PIXELES_JUMP= 90;
 constexpr float GRAVEDAD = 1;
 constexpr float VELOCIDAD_INICIAL = 15;
-constexpr float GRAVITY_FLAP = 0.0002;
+constexpr float GRAVITY_FLAP = 0.001;
+constexpr uint8_t S_CANT_FLAP = 100;
+
 
 //armas action
 const uint8_t S_WEAPON_ACTION = 0x08;
@@ -70,6 +71,8 @@ constexpr uint8_t S_PEW_PEW_LASER_BULLET= 0x62;
 constexpr uint8_t S_LASER_RIFLE_GUN= 0X43;
 constexpr uint8_t S_LASER_RIFLE_BULLET= 0x63;
 
-
+//duck dimmensions
+constexpr int DUCK_WIDTH = 50;
+constexpr int DUCK_HEIGHT = 50;
 
 

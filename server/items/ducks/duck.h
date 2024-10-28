@@ -9,14 +9,19 @@ class DuckPlayer: public Objeto {
         uint8_t typeOfMove;
         bool saltando;
         float velocidad;
+        uint8_t life;
+        bool is_alive;
         float gravity;
         Weapon weapon;
         std::list<Weapon> weapons_list;
-    public:
+        uint8_t counter_flapping;
+        bool is_flapping;
+public:
 
         //constructor por defecto
-        DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false), velocidad(VELOCIDAD_INICIAL), gravity(GRAVEDAD),
-    weapon(S_COWBOY_GUN, 1, 0, 0, 5, 20, 10,3){}
+        DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false), velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD),
+        weapon(S_COWBOY_GUN, 1, 0, 0, 5, 20, 10,3){}
+        
 
         DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos);
 
@@ -35,7 +40,12 @@ class DuckPlayer: public Objeto {
 
         float& getVelocidadY();
         void executeAction();
+
+        bool isAlive();
+        void applyDamage(uint8_t damage);
+        void setFlapping(bool flapping);
         void setGravity(float gravity_);
+        void increaseFlappingCounter();
         ~DuckPlayer();
 
 };

@@ -73,8 +73,9 @@ void GameLoop::movementComand(uint8_t comando) {
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
         personaje.setEnSalto(true);
         personaje.setTypeOfMoveSprite(S_JUMP);
-    } else if (comando==S_JUMP && personaje.getVelocidadY() < 0){
-        personaje.setGravity(GRAVITY_FLAP);
+    } else if (comando==S_JUMP && personaje.getVelocidadY() < 0 ){
+        personaje.setFlapping(true);
+        personaje.increaseFlappingCounter();
         personaje.setTypeOfMoveSprite(S_FLAP);
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
@@ -122,8 +123,10 @@ void GameLoop::sendCompleteScene(){
 
 
     for (auto& personaje : map_personajes) {
-
-       DTODuck dto_duck = {personaje.first,personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
+        if (!personaje.second.isAlive()) {
+            continue;
+        }
+        DTODuck dto_duck = {personaje.first,personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
                             personaje.second.getTypeOfMoveSprite(), personaje.second.getWeapon().getType()};
 
 
@@ -150,6 +153,21 @@ void GameLoop::paraCadaPatoAction() {
         personaje.second.executeAction();
 
     }
+}
+
+
+void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
+    for (auto& personaje : map_personajes) {
+
+        if (personaje.second.isAlive()) {
+            if (personaje.second.getXPos() == bullet->getXPos()  ) {
+                personaje.second.applyDamage(100);
+                bullet->kill();
+
+              }
+
+        }
+        }
 
 }
 
