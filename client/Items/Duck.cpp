@@ -17,7 +17,7 @@ ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped
         : idDuck(id), positionX(x_pos), positionY(y_pos), graficos(graficos),
           numSprite(0), gun(graficos, positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2, gunEquipped),
           isFlipped(false), typeOfGun(gunEquipped), pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING),
-            coloredTexture(nullptr)
+          coloredTexture(nullptr), armor(graficos, positionX , positionY), helmet(graficos, positionX, positionY)
 {
     update(y_pos, x_pos, typeOfMove, gunEquipped);
 }
@@ -79,6 +79,12 @@ void ClientDuck::draw(Renderer& renderer) {
     } else {
         renderer.Copy(*coloredTexture, srcRect, destRect);
     }
+
+    //dibujo la armadura completa siempre por ahora
+    helmet.update(positionX, positionY);
+    helmet.draw(isFlipped, renderer);
+    armor.update(positionX, positionY);
+    armor.draw(isFlipped, renderer);
 
     // Dibujar el arma si está equipada
     if (gun.isEquipped()) {

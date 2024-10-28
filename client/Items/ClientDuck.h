@@ -6,6 +6,8 @@
 #include "Gun.h"
 #include "Graficos.h"
 #include <memory>
+#include "armor.h"
+#include "helmet.h"
 
 using namespace SDL2pp;
 
@@ -30,6 +32,9 @@ private:
     float pixelDuckSpriteX;
     float pixelDuckSpriteY;
     std::unique_ptr<SDL2pp::Texture> coloredTexture;
+
+    Armor armor;
+    Helmet helmet;
     void applyColor(Renderer& renderer);
 };
 
