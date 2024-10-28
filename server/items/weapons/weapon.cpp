@@ -9,21 +9,7 @@ Weapon::Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damag
         bala(S_COWBOY_BULLET,1, 0,0,5,250,0),
         recoil(recoil){}
 
-bool Weapon::isEmptyAmmo() {
-   return ammo_quantity == 0;
-}
 
-std::unique_ptr<Bullet> Weapon::shoot() {
-    ammo_quantity--;
-  
-    bala.release(x_pos, y_pos, direction);
-    if (direction == S_RIGTH) {
-        setXPos(x_pos - recoil);
-    } else  if (direction == S_LEFT) {
-        setXPos(x_pos + recoil);
-    }
-    return std::make_unique<Bullet>(bala);
-}
 
 
 

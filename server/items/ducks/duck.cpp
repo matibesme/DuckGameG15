@@ -1,5 +1,7 @@
 #include "duck.h"
 #include <iostream>
+#include <memory>
+#include "cowboy_pistol.h"
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
@@ -7,10 +9,9 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         typeOfMove(S_STILL_RIGTH),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
-        weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,20,4),
         weapons_list()
         {
-            weapons_list.push_back(weapon);
+            weapons_list.push_back(std::make_unique<CowboyPistol>(S_COWBOY_PISTOL,1,0,0,5,250,0,0));
         }
 
 
@@ -68,7 +69,7 @@ bool DuckPlayer::estaSaltando() {
 }
 
 Weapon& DuckPlayer::getWeapon() {
-    return weapons_list.front();
+    return *weapons_list.front();
 }
 
 void DuckPlayer::unequippWeapon() {
