@@ -4,7 +4,7 @@ GameRenderer::GameRenderer(Graficos& graficos)
         : graficos(graficos), background(graficos) {}
 
 void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
-                           std::list<Gun>& guns, std::list<Armor>& armors, std::list<Helmet>& helmets) {
+                           std::list<Gun>& guns, [[maybe_unused]]std::list<Armor>& armors,[[maybe_unused]] std::list<Helmet>& helmets) {
     renderer.Clear();
     background.draw(renderer);
 
@@ -30,7 +30,7 @@ void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std
 
 void GameRenderer::actualizarElementos(const CommandGameShow& command, std::list<ClientDuck>& ducks,
                                        std::list<Bullet>& bullets, std::list<Gun>& weapons,
-                                        std::list<Armor>& armors, std::list<Helmet>& helmets) {
+                                       [[maybe_unused]]std::list<Armor>& armors, [[maybe_unused]]std::list<Helmet>& helmets) {
     //PRIMERO ACTUALIZO PATOS
     // Actualizar y eliminar patos
     for (auto it = ducks.begin(); it != ducks.end();) {
