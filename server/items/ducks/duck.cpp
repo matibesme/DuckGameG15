@@ -59,6 +59,7 @@ void DuckPlayer::executeAction() {
             if (counter_flapping == 0) {
                 is_flapping = false;
                 gravity = GRAVEDAD;
+                typeOfMove=S_JUMP;
             }
         }
         y_pos -= velocidad;
