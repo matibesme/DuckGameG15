@@ -53,9 +53,7 @@ void DuckPlayer::executeAction() {
         if (is_flapping) {
             gravity = GRAVITY_FLAP;
             counter_flapping--;
-            if (counter_flapping==S_CANT_FLAP) {
-                velocidad =0;
-            }
+
             if (counter_flapping == 0) {
                 is_flapping = false;
                 gravity = GRAVEDAD;
@@ -116,7 +114,10 @@ void DuckPlayer::setFlapping(bool flapping) {
 }
 
 void DuckPlayer::increaseFlappingCounter() {
-   counter_flapping +=S_CANT_FLAP;
+    if (counter_flapping == 0) {
+        counter_flapping += S_CANT_FLAP;
+        velocidad = -1;
+    }
 }
 
 

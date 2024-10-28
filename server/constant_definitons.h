@@ -37,9 +37,10 @@ constexpr float S_POSICION_INICIAL_X = 0.0f;
 //jump
 constexpr float S_POSICION_INICIAL_Y = 386;
 constexpr float GRAVEDAD = 1;
-constexpr float VELOCIDAD_INICIAL = 20;
-constexpr float GRAVITY_FLAP = 0.1;
-constexpr uint8_t S_CANT_FLAP = 20;
+constexpr float VELOCIDAD_INICIAL = 15;
+constexpr float GRAVITY_FLAP = 0.001;
+constexpr uint8_t S_CANT_FLAP = 100;
+
 
 //armas action
 const uint8_t S_WEAPON_ACTION = 0x08;
