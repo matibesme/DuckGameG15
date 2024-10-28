@@ -45,6 +45,7 @@ public:
         void applyDamage(uint8_t damage);
         void setFlapping(bool flapping);
         void setGravity(float gravity_);
+        void increaseFlappingCounter();
         ~DuckPlayer();
 
 };

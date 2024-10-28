@@ -76,4 +76,15 @@ const uint8_t BULLET_RIGTH = 0x05;
 const uint8_t BULLET_LEFT = 0x06;
 const uint8_t BULLET_UP = 0x50;
 
+//armadura completa
+const uint8_t C_NOARMOR= 0X73;
+const uint8_t C_ARMOR= 0X74;
+const uint8_t WIDTH_ARMOR= 60;
+const uint8_t HEIGHT_ARMOR= 70;
+const uint8_t C_NOHELMET= 0X75;
+const uint8_t C_HELMET= 0X76;
+const uint8_t WIDTH_HELMET= 60;
+const uint8_t HEIGHT_HELMET= 70;
+
+
 

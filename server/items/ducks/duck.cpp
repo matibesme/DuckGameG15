@@ -12,7 +12,7 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         gravity(GRAVEDAD),
         weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,20,4),
         weapons_list(),
-        counter_flapping(S_CANT_FLAP),
+        counter_flapping(0),
         is_flapping(false)
         {
             weapons_list.push_back(weapon);
@@ -58,7 +58,6 @@ void DuckPlayer::executeAction() {
             }
             if (counter_flapping == 0) {
                 is_flapping = false;
-                counter_flapping = S_CANT_FLAP;
                 gravity = GRAVEDAD;
             }
         }
@@ -113,6 +112,10 @@ void DuckPlayer::applyDamage(uint8_t damage) {
 
 void DuckPlayer::setFlapping(bool flapping) {
     is_flapping = flapping;
+}
+
+void DuckPlayer::increaseFlappingCounter() {
+   counter_flapping +=S_CANT_FLAP;
 }
 
 

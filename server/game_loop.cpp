@@ -18,7 +18,7 @@ void GameLoop::run() {
 
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
-    
+        map_free_weapons.emplace(1, Weapon(S_COWBOY_GUN, 1, 100, 386, 5, 20, 10, 3));
         while (!end_game) {
             CommandClient comando;
             while (queue_comandos.try_pop(comando)) {
@@ -52,7 +52,7 @@ void GameLoop::checkBullets() {
             it = map_bullets.erase(it);     
         } else {
             it->second->executeAction();
-            checkCoalition(it->second);
+
             ++it;
         }
     }
@@ -72,9 +72,9 @@ void GameLoop::movementComand(uint8_t comando) {
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
         personaje.setEnSalto(true);
         personaje.setTypeOfMoveSprite(S_JUMP);
-    } else if (comando==S_JUMP && personaje.getVelocidadY() < 0){
+    } else if (comando==S_JUMP && personaje.getVelocidadY() < 0 ){
         personaje.setFlapping(true);
-        //personaje.setGravity(-personaje.getVelocidadY());
+        personaje.increaseFlappingCounter();
         personaje.setTypeOfMoveSprite(S_FLAP);
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
