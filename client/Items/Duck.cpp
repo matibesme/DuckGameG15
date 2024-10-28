@@ -44,8 +44,7 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gu
             isFlipped = true;
         } else if (typeOfMove == JUMP) {
             pixelDuckSpriteY = SRC_Y_JUMPING;
-            pixelDuckSpriteX = SPRITE_WIDTH * numSprite;
-            numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES_JUMP;
+            pixelDuckSpriteX = SPRITE_WIDTH;
 
         }else if (typeOfMove == FLUP) {
             pixelDuckSpriteY = SRC_Y_JUMPING;
