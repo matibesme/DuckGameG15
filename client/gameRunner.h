@@ -16,7 +16,6 @@ private:
     EventHandler handler;
     BlockingQueue<uint8_t>& queue_sender;
     BlockingQueue<CommandGameShow>& queue_receiver;
-    void actualizarElementos(const CommandGameShow &command, std::list<ClientDuck> &ducks, std::list<Bullet> &bullets);
 
 public:
     GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver);

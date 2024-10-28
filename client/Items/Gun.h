@@ -22,8 +22,9 @@ public:
     void draw(bool isFliped, SDL2pp::Renderer& renderer);
     bool isEquipped();
     void setGun(uint8_t gun);
-
     void update(float d, float d1);
+    float getPosX();
+    float getPosY();
 };
 
 #endif
