@@ -33,3 +33,11 @@ void Helmet::update(float new_x, float new_y) {
     pos_x = new_x;
     pos_y = new_y;
 }
+
+float Helmet::getPosX() {
+    return pos_x;
+}
+
+float Helmet::getPosY() {
+    return pos_y;
+}

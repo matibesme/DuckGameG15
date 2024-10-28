@@ -21,6 +21,10 @@ public:
     void equip();
     void unequip();
     void update(float new_x, float new_y);
+
+    float getPosX();
+
+    float getPosY();
 };
 
 #endif

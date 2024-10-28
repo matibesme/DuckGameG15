@@ -14,14 +14,16 @@ void GameRunner::run() {
         std::list<ClientDuck> ducks;
         std::list<Bullet> bullets;
         std::list<Gun> weapons;
+        std::list<Armor> armors;
+        std::list<Helmet> helmets;
 
-        gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons);
+        gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
 
         while (true) {
             handler.correrHandlers();
             if (queue_receiver.try_pop(command)) {
-                gameRenderer.actualizarElementos(command, ducks, bullets, weapons);
-                gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons);
+                gameRenderer.actualizarElementos(command, ducks, bullets, weapons, armors, helmets);
+                gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
             }
             SDL_Delay(1);
         }

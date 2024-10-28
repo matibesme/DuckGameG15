@@ -6,6 +6,8 @@
 #include "Items/ClientDuck.h"
 #include "Items/Bullet.h"
 #include "Items/Gun.h"
+#include "Items/helmet.h"
+#include "Items/armor.h"
 #include "dto_definitions.h"
 #include <list>
 
@@ -17,11 +19,11 @@ private:
 public:
     explicit GameRenderer(Graficos& graficos);
 
-    void dibujar(Renderer& renderer, std::list<ClientDuck>& ducks,
-                 std::list<Bullet>& bullets, std::list<Gun>& guns);
+    void dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
+                 std::list<Gun>& guns, std::list<Armor>& armors, std::list<Helmet>& helmets);
 
-    void actualizarElementos(const CommandGameShow &command, std::list<ClientDuck> &ducks,
-                             std::list<Bullet> &bullets, std::list<Gun> &guns);
+    void actualizarElementos(const CommandGameShow &command, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
+                             std::list<Gun>& guns, std::list<Armor>& armors, std::list<Helmet>& helmets);
 
 };
 

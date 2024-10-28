@@ -33,3 +33,11 @@ void Armor::update(float new_x, float new_y) {
     pos_x = new_x;
     pos_y = new_y;
 }
+
+float Armor::getPosX() {
+    return pos_x;
+}
+
+float Armor::getPosY() {
+    return pos_y;
+}
