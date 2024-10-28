@@ -18,7 +18,7 @@ void GameLoop::run() {
 
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
-
+        map_free_weapons.emplace(1, Weapon(S_COWBOY_GUN, 1, 100, 386, 5, 20, 10, 3));
         while (!end_game) {
             CommandClient comando;
             while (queue_comandos.try_pop(comando)) {
