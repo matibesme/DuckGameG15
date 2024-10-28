@@ -11,8 +11,9 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         is_alive(true),
         gravity(GRAVEDAD),
         weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,20,4),
-
-        weapons_list()
+        weapons_list(),
+        counter_flapping(S_CANT_FLAP),
+        is_flapping(false)
         {
             weapons_list.push_back(weapon);
         }
@@ -23,10 +24,10 @@ uint8_t DuckPlayer::getTypeOfMoveSprite() {
 
 void DuckPlayer::incrementXPos(float pos_x) {
 
-    this->x_pos += pos_x;
+    x_pos += pos_x;
 
-    if (this->x_pos<0 ||this->x_pos>MAP_LIMIT_X ){
-        this->x_pos=0;
+    if (x_pos<0 ||x_pos>MAP_LIMIT_X ){
+        x_pos=0;
     }
 }
 
@@ -40,24 +41,37 @@ void DuckPlayer::setEnSalto(bool enSalto) {
 }
 
 void DuckPlayer::setVelocidadY(float velocidad_) {
-    this->velocidad = velocidad_;
+   velocidad = velocidad_;
 }
 
 float& DuckPlayer::getVelocidadY(){
-    return this->velocidad;
+    return velocidad;
 }
 
 void DuckPlayer::executeAction() {
-    if (estaSaltando()) {
+    if (saltando) {
+        if (is_flapping) {
+            gravity = GRAVITY_FLAP;
+            counter_flapping--;
+            if (counter_flapping==S_CANT_FLAP) {
+                velocidad =0;
+            }
+            if (counter_flapping == 0) {
+                is_flapping = false;
+                counter_flapping = S_CANT_FLAP;
+                gravity = GRAVEDAD;
+            }
+        }
         y_pos -= velocidad;
         getWeapon().setYPos(y_pos);
         velocidad -= gravity;
 
-        this->gravity= GRAVEDAD;
         if (y_pos >= S_POSICION_INICIAL_Y) {
             y_pos = S_POSICION_INICIAL_Y;
-            this->saltando = false;
-            this->velocidad = VELOCIDAD_INICIAL;
+            saltando = false;
+            is_flapping = false;
+            gravity = GRAVEDAD;
+            velocidad = VELOCIDAD_INICIAL;
             typeOfMove = (direction == S_RIGTH) ? S_STILL_RIGTH : S_STILL_LEFT;
         }
 
@@ -97,11 +111,14 @@ void DuckPlayer::applyDamage(uint8_t damage) {
 
 }
 
+void DuckPlayer::setFlapping(bool flapping) {
+    is_flapping = flapping;
+}
 
 
 
 void DuckPlayer::setGravity(float gravity_){
-    this->gravity = gravity_;
+    gravity = gravity_;
 }
 
 DuckPlayer::~DuckPlayer() {}
