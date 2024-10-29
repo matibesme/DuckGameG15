@@ -49,13 +49,15 @@ struct GameAccess {
     uint8_t game_id;
 };
 
+struct DTOPlataform{
+    uint8_t id;
+    float x_pos;
+    float y_pos;
+    float width;
+    float height;
+};
+
 struct CommandBackGround {
-    uint8_t scene_id;
-
-    std::list<DTODuck> lista_patos;
-
-    std::list<DTOBullet> lista_balas;
-
-    std::list<DTOGuns> lista_guns;
-
+    uint8_t background_id;
+    std::list<DTOPlataform> lista_plataformas;
 };

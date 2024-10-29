@@ -1,8 +1,8 @@
 #include "Background.h"
 
-Background::Background(Graficos& graficos) : background(graficos.LoadTexture(DATA_PATH "/fondo_prueba.jpg")), platform(graficos.LoadTexture(DATA_PATH "/plataforma_prueba.png")), platform_base(graficos.LoadTexture(DATA_PATH "/plataforma_larga_prueba.png")){
-
-}
+Background::Background(Graficos& graficos) : background(graficos.LoadTexture(DATA_PATH "/fondo_prueba.jpg")),
+            platform(graficos.LoadTexture(DATA_PATH "/plataforma_prueba.png")),
+            platform_base(graficos.LoadTexture(DATA_PATH "/plataforma_larga_prueba.png")){}
 
 void Background::draw(SDL2pp::Renderer& renderer){
     renderer.Copy(background);
