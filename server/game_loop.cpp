@@ -72,11 +72,11 @@ void GameLoop::movementComand(uint8_t comando) {
         personaje.setDirection(S_LEFT);
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
         personaje.setEnSalto(true);
-        personaje.setTypeOfMoveSprite(S_JUMP);
+        //personaje.setTypeOfMoveSprite(S_JUMP);
     } else if (comando==S_JUMP && personaje.getVelocidadY() < 0 ){
         personaje.setFlapping(true);
         personaje.increaseFlappingCounter();
-        personaje.setTypeOfMoveSprite(S_FLAP);
+        //personaje.setTypeOfMoveSprite(S_FLAP);
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
     }else if (comando == S_STILL_RIGTH){
@@ -85,6 +85,7 @@ void GameLoop::movementComand(uint8_t comando) {
         personaje.setTypeOfMoveSprite(S_STILL_LEFT);
     }
 
+    //compruebo si esta saltando o flapeando en caso de que se mueva hacia los costados
     if(personaje.isFlapping()){
         personaje.setTypeOfMoveSprite(S_FLAP);
     }else if(personaje.estaSaltando()){
