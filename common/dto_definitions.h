@@ -50,7 +50,7 @@ struct GameAccess {
 };
 
 struct DTOPlataform{
-    uint8_t id;
+    uint8_t typeOfPlataform;
     float x_pos;
     float y_pos;
     float width;
