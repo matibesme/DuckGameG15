@@ -1,6 +1,8 @@
 #include "game_loop.h"
-
+#include "items/weapons/cowboy_pistol.h"
 #include <bits/fs_fwd.h>
+//despues sacar
+
 
 GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
                    ProtectedQueuesMap& queues_map):
@@ -18,7 +20,7 @@ void GameLoop::run() {
 
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
-        //map_free_weapons.emplace(1, Weapon(S_COWBOY_GUN, 1, 100, 386, 5, 20, 10, 3));
+        //map_free_weapons.emplace(1, CowboyPistol(S_COWBOY_GUN, 1, 100, 386, 5, 20, 10, 3));
 
         while (!end_game) {
             CommandClient comando;
@@ -108,19 +110,13 @@ void GameLoop::weaponComand(uint8_t comando) {
         personaje.setYPos(weapon.getYPos());
         map_bullets.emplace(id_balas, std::move(bullet));
         id_balas++;
-
-
-        
     }
 }
 
 void GameLoop::sendCompleteScene(){
-
     CommandGame command;
     command.type_of_action = S_FULL_GAME_BYTE;
     command.scene_id = S_SCENE_ID;
-    
-
 
     for (auto& personaje : map_personajes) {
         if (!personaje.second.isAlive()) {
@@ -139,11 +135,9 @@ void GameLoop::sendCompleteScene(){
     }
 
     for (auto& weapon : map_free_weapons) {
-        DTOGuns dto_gun = {weapon.second.getType(), weapon.second.getXPos(), weapon.second.getYPos()};
+        DTOGuns dto_gun = {weapon.second->getType(), weapon.second->getXPos(), weapon.second->getYPos()};
         command.lista_guns.push_back(dto_gun);
     }
-
-
     queues_map.sendMessagesToQueues(command);
 
 }
@@ -155,20 +149,16 @@ void GameLoop::paraCadaPatoAction() {
     }
 }
 
-
 void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
     for (auto& personaje : map_personajes) {
 
         if (personaje.second.isAlive()) {
-            if (personaje.second.getXPos() == bullet->getXPos()  ) {
+            if (personaje.second.getXPos() == bullet->getXPos()) {
                 personaje.second.applyDamage(100);
                 bullet->kill();
-
-              }
-
+            }
         }
-        }
-
+    }
 }
 
 GameLoop::~GameLoop() {}
