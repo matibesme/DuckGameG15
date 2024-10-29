@@ -2,6 +2,8 @@
 #include "../../constant_definitons.h"
 #include "../objeto.h"
 #include "../weapons/weapon.h"
+#include <list>
+#include <memory>
 
 class DuckPlayer: public Objeto {
     private:
@@ -12,19 +14,13 @@ class DuckPlayer: public Objeto {
         uint8_t life;
         bool is_alive;
         float gravity;
-        Weapon weapon;
-        std::list<Weapon> weapons_list;
+        std::list<std::shared_ptr<Weapon>> weapons_list;
         uint8_t counter_flapping;
         bool is_flapping;
-public:
 
-        //constructor por defecto
-        DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false), velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD),
-        weapon(S_COWBOY_GUN, 1, 0, 0, 5, 20, 10,3){}
-        
-
+    public:
+        DuckPlayer();
         DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos);
-
 
         uint8_t getTypeOfMoveSprite();
         void incrementXPos(float pos_x) ;
@@ -47,6 +43,9 @@ public:
         bool isFlapping();
         void setGravity(float gravity_);
         void increaseFlappingCounter();
+
+        //void setWeapon(Weapon& weapon);
+        void removeWeapon();
         ~DuckPlayer();
 
 };

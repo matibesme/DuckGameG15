@@ -102,6 +102,10 @@ if(TALLER_SERVER)
     # Cambiar el nombre del ejecutable si es necesario
     add_executable(taller_server
             server
+            server/items/weapons/cowboy_pistol.h
+            server/items/weapons/duel_pistol.cpp
+            server/items/weapons/magnum.cpp
+            server/items/weapons/cowboy_pistol.cpp
     )
 
     # Incluir el directorio 'server' para los archivos de encabezado (opcional)

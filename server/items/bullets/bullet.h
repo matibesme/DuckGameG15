@@ -14,6 +14,8 @@ class Bullet: public Objeto {
         uint8_t range;
         bool is_alive;
         float spread;
+        bool spread_direction;
+
 
 
     public:
@@ -24,6 +26,7 @@ class Bullet: public Objeto {
         uint8_t getTypeOfBullet();
         bool isAlive();
         void release(float x_pos, float y_pos, uint8_t direction);
+        bool randomSpread();
         void executeAction();
         void kill();
 

@@ -1,6 +1,10 @@
 #include "game_loop.h"
-
+#include "items/weapons/cowboy_pistol.h"
 #include <bits/fs_fwd.h>
+#include <items/weapons/duel_pistol.h>
+#include <items/weapons/magnum.h>
+//despues sacar
+
 
 GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
                    ProtectedQueuesMap& queues_map):
@@ -18,7 +22,12 @@ void GameLoop::run() {
 
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
-        map_free_weapons.emplace(1, Weapon(S_PEW_PEW_LASER_GUN, 1, 300, 386 + 35, 5, 20, 10, 3));
+        /*
+        list_free_weapons.emplace_back(CowboyPistol(S_COWBOY_GUN, 1, 100, 100, 10, 10, 10, 10));
+        list_free_weapons.emplace_back(DuelPistol(S_PISTOLA_DUELOS_GUN, 2, 200, 200, 10, 10, 10, 10));
+        list_free_weapons.emplace_back(Magnum(S_MAGNUM_GUN, 3, 300, 300, 10, 10, 10, 10));
+*/
+    
 
         while (!end_game) {
             //hago mover el pato 2 de manera constante hacia la derecha
@@ -103,8 +112,9 @@ void GameLoop::movementComand(uint8_t comando) {
 void GameLoop::weaponComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
     if (comando==S_PICKUP){
-        
+
     } else if (comando==S_LEAVE_GUN){
+       // personaje.removeWeapon();
         
     } else if (comando==S_SHOOT){
 
@@ -124,7 +134,6 @@ void GameLoop::weaponComand(uint8_t comando) {
 }
 
 void GameLoop::sendCompleteScene(){
-
     CommandGame command;
     command.scene_id = S_SCENE_ID;
 
@@ -144,7 +153,7 @@ void GameLoop::sendCompleteScene(){
     }
 
     for (auto& weapon : map_free_weapons) {
-        DTOGuns dto_gun = {weapon.second.getType(), weapon.second.getXPos(), weapon.second.getYPos()};
+        DTOGuns dto_gun = {weapon.second->getType(), weapon.second->getXPos(), weapon.second->getYPos()};
         command.lista_guns.push_back(dto_gun);
     }
     queues_map.sendMessagesToQueues(command);
@@ -161,7 +170,7 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
     for (auto& personaje : map_personajes) {
 
         if (personaje.second.isAlive()) {
-            if (personaje.second.getXPos() == bullet->getXPos()  ) {
+            if (personaje.second.getXPos() == bullet->getXPos()) {
                 personaje.second.applyDamage(100);
                 bullet->kill();
             }

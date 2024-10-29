@@ -1,5 +1,12 @@
 #include "duck.h"
 #include <iostream>
+#include <memory>
+#include "../weapons/cowboy_pistol.h"
+#include "../weapons/duel_pistol.h"
+#include "../weapons/magnum.h"
+
+DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false),
+              velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD){}
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
@@ -10,22 +17,20 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         life(100),
         is_alive(true),
         gravity(GRAVEDAD),
-        weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,20,4),
         weapons_list(),
         counter_flapping(0),
         is_flapping(false)
-        {
-            weapons_list.push_back(weapon);
-        }
+    {
+        // Agregando una nueva CowboyPistol a la lista de armas
+        weapons_list.push_back(std::make_shared<Magnum>(S_MAGNUM_GUN, 1, 0, 0, 5, 250, 20, 2));
+    }
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
     return typeOfMove;
 }
 
 void DuckPlayer::incrementXPos(float pos_x) {
-
     x_pos += pos_x;
-
     if (x_pos<0 ||x_pos>MAP_LIMIT_X ){
         x_pos=0;
     }
@@ -80,9 +85,15 @@ void DuckPlayer::executeAction() {
 bool DuckPlayer::estaSaltando() {
     return this->saltando;
 }
+/*
+void DuckPlayer::setWeapon(Weapon& weapon) {
+    
+    weapons_list.push_back(std::make_shared<Weapon>(weapon));
+    
+}*/
 
 Weapon& DuckPlayer::getWeapon() {
-    return weapons_list.front();
+    return *weapons_list.front();
 }
 
 void DuckPlayer::unequippWeapon() {
@@ -106,7 +117,6 @@ void DuckPlayer::applyDamage(uint8_t damage) {
     if (life <= 0) {
         is_alive = false;
     }
-
 }
 
 void DuckPlayer::setFlapping(bool flapping) {
@@ -127,6 +137,7 @@ void DuckPlayer::increaseFlappingCounter() {
 void DuckPlayer::setGravity(float gravity_){
     gravity = gravity_;
 }
+
 
 DuckPlayer::~DuckPlayer() {}
 
