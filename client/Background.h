@@ -11,6 +11,7 @@ private:
     SDL2pp::Texture background;
     SDL2pp::Texture platform;
     SDL2pp::Texture platform_base;
+    SDL2pp::Texture backgroundTexture;
     void draw2(Graficos& graficos, std::list<DTOPlataform> lista_plataformas, uint8_t background_id);
 
 public:
@@ -18,6 +19,7 @@ public:
     void draw(SDL2pp::Renderer& renderer);
     SDL2pp::Rect rangeOfCollision(SDL2pp::Renderer& renderer);
     Background(Graficos &graficos, std::list<DTOPlataform> lista_plataformas, uint8_t background_id);
+    void renderBackground(SDL2pp::Renderer& renderer);
 };
 
 #endif

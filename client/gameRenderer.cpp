@@ -1,11 +1,14 @@
 #include "GameRenderer.h"
 
-GameRenderer::GameRenderer(Graficos& graficos)
-        : graficos(graficos), background(graficos) {}
+GameRenderer::GameRenderer(Graficos& graficos, Background& background)
+        : graficos(graficos), background(background) {}
 
 void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
                            std::list<Gun>& guns, [[maybe_unused]]std::list<Armor>& armors,[[maybe_unused]] std::list<Helmet>& helmets) {
     renderer.Clear();
+
+    // Renderiza el fondo y las plataformas ya cargadas anteriormente
+    // background.renderBackground(renderer);
     background.draw(renderer);
 
     for (auto& duck : ducks) {

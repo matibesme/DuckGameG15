@@ -12,7 +12,6 @@
 class GameRunner {
 private:
     Graficos graficos;
-    GameRenderer gameRenderer;
     EventHandler handler;
     BlockingQueue<uint8_t>& queue_sender;
     BlockingQueue<CommandGame>& queue_receiver;

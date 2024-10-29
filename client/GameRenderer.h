@@ -14,10 +14,10 @@
 class GameRenderer {
 private:
     Graficos& graficos;
-    Background background;
+    Background& background;
 
 public:
-    explicit GameRenderer(Graficos& graficos);
+    explicit GameRenderer(Graficos& graficos, Background& background);
 
     void dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
                  std::list<Gun>& guns, std::list<Armor>& armors, std::list<Helmet>& helmets);
