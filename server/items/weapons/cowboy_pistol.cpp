@@ -1,4 +1,5 @@
 #include "cowboy_pistol.h"
+#include <iostream>
 
 CowboyPistol::CowboyPistol(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
 uint8_t range, uint8_t ammo_quantity, float recoil) : 
@@ -9,6 +10,7 @@ bool CowboyPistol::isEmptyAmmo() {
 }
 
 std::unique_ptr<Bullet> CowboyPistol::shoot() {
+    std::cout<< "disparoo"<< std::endl;
     ammo_quantity--;
   
     bala.release(x_pos, y_pos, direction);

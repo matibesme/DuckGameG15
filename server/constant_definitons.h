@@ -50,7 +50,7 @@ const uint8_t S_SHOOT = 0x0B;
 
 constexpr float BULLET_VEL = 5;
 constexpr uint8_t S_NOGUN= 0X33;
-constexpr uint8_t S_COWBOY_PISTOL= 0X34;
+constexpr uint8_t S_COWBOY_GUN= 0X34;
 constexpr uint8_t S_COWBOY_BULLET= 0x54;
 constexpr uint8_t S_AK47_GUN= 0X35;
 constexpr uint8_t S_AK47_BULLET= 0x55;

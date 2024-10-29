@@ -3,6 +3,8 @@
 #include <memory>
 #include "../weapons/cowboy_pistol.h"
 
+DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false),
+              velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD){}
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
@@ -13,13 +15,13 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         life(100),
         is_alive(true),
         gravity(GRAVEDAD),
-        weapon(S_COWBOY_GUN, 1, 0, 0, 5, 10,20,4),
         weapons_list(),
         counter_flapping(0),
         is_flapping(false)
-        {
-            weapons_list.push_back(weapon);
-        }
+    {
+        // Agregando una nueva CowboyPistol a la lista de armas
+        weapons_list.push_back(std::make_shared<CowboyPistol>(S_COWBOY_GUN, 1, 0, 0, 5, 250, 0, 0));
+    }
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
     return typeOfMove;
@@ -88,6 +90,8 @@ Weapon& DuckPlayer::getWeapon() {
     return *weapons_list.front();
 }
 
+
+
 void DuckPlayer::unequippWeapon() {
     if (is_weapon_equiped) {
         is_weapon_equiped = false;
@@ -99,6 +103,36 @@ void DuckPlayer::equippWeapon() {
         is_weapon_equiped = true;
     }
 }
+
+bool DuckPlayer::isAlive() {
+    return is_alive;
+}
+
+void DuckPlayer::applyDamage(uint8_t damage) {
+    life -= damage;
+    if (life <= 0) {
+        is_alive = false;
+    }
+
+}
+
+void DuckPlayer::setFlapping(bool flapping) {
+    is_flapping = flapping;
+}
+
+void DuckPlayer::increaseFlappingCounter() {
+    if (counter_flapping == 0) {
+        counter_flapping += S_CANT_FLAP;
+        velocidad = -1;
+    }
+}
+
+
+
+void DuckPlayer::setGravity(float gravity_){
+    gravity = gravity_;
+}
+
 
 DuckPlayer::~DuckPlayer() {}
 

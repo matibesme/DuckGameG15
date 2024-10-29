@@ -7,8 +7,6 @@ ProtocoloCliente::ProtocoloCliente(const char* host, const char* port, bool& dea
                                {STILL_LEFT,MOVEMENT_ACTION}, {STILL_RIGTH,MOVEMENT_ACTION},
                                {PICKUP, WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOOT, WEAPON_ACTION}}) {}
 
-
-
 void ProtocoloCliente::sendInGameToServer(const uint8_t& command) {
     try {
         protocolo.sendByte(decode_type_of_action[command],dead_connection);
@@ -73,10 +71,7 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
         guns.push_back({gun_type, x_pos, y_pos});
     }
 
-
-
     return {scene_id, lista_patos, bullets, guns};
 }
-
 
 ProtocoloCliente::~ProtocoloCliente() {}
