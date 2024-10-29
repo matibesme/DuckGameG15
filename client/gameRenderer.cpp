@@ -3,7 +3,7 @@
 GameRenderer::GameRenderer(Graficos& graficos)
         : graficos(graficos), background(graficos) {}
 
-void GameRenderer::dibujar(Renderer& renderer, std::list<Duck>& ducks, std::list<Bullet>& bullets) {
+void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets) {
     renderer.Clear();
     background.draw(renderer);
 

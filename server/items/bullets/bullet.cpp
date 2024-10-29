@@ -47,6 +47,10 @@ void Bullet::executeAction(){
     }
 }
 
+void Bullet::kill() {
+    is_alive = false;
+}
+
 
 
 

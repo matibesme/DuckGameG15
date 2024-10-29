@@ -2,6 +2,13 @@
 #include "Bullet.h"
 
 #define IMAGE_CHAIN_BULLET DATA_PATH "/chainBullet.png"
+#define IMAGE_AMMO_1 DATA_PATH "/ammo.png"
+#define IMAGE_AMMO_2 DATA_PATH "/ammo2.png"
+#define IMAGE_AMMO_3 DATA_PATH "/ammo3.png"
+#define IMAGE_AMMO_4 DATA_PATH "/ammo4.png"
+#define IMAGE_AMMO_5 DATA_PATH "/ammo5.png"
+#define IMAGE_LASER_AMMO DATA_PATH "/laserAmmo.png"
+#define IMAGE_LASER_AMMO2 DATA_PATH "/laserAmmo2.png"
 
 Bullet::Bullet(uint8_t id, float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t orientacion, uint8_t type) :
           graficos(graficos), idBullet(id),
@@ -38,6 +45,27 @@ void Bullet::actualizarTipo(const char*& texture) {
     switch (typeOfBullet) {
         case C_COWBOY_BULLET:
             texture = IMAGE_CHAIN_BULLET;
+            break;
+        case C_AK47_BULLET:
+            texture = IMAGE_AMMO_1;
+            break;
+        case C_PISTOLA_DUELOS_BULLET:
+            texture = IMAGE_AMMO_2;
+            break;
+        case C_MAGNUM_BULLET:
+            texture = IMAGE_AMMO_3;
+            break;
+        case C_ESCOPETA_BULLET:
+            texture = IMAGE_AMMO_4;
+            break;
+        case C_SNIPER_BULLET:
+            texture = IMAGE_AMMO_5;
+            break;
+        case C_PEW_PEW_LASER_BULLET:
+            texture = IMAGE_LASER_AMMO;
+            break;
+        case C_LASER_RIFLE_BULLET:
+            texture = IMAGE_LASER_AMMO2;
             break;
         default:
             break;

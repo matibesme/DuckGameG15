@@ -5,11 +5,16 @@
 #include "constant_definitons.h"
 #include "Gun.h"
 #include "Graficos.h"
+#include <memory>
+#include "armor.h"
+#include "helmet.h"
+
 using namespace SDL2pp;
-class Duck {
+
+class ClientDuck {
 public:
-    Duck(uint8_t id, float initial_pos_x, float initial_pos_y, uint8_t typeOfGun, uint8_t typeOfMove,
-         Graficos& graficos);
+    ClientDuck(uint8_t id, float initial_pos_x, float initial_pos_y, uint8_t typeOfGun, uint8_t typeOfMove,
+               Graficos& graficos);
     void update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped);
     void draw(Renderer& renderer);
     bool checkCollision(Rect rect);
@@ -26,7 +31,11 @@ private:
     uint8_t typeOfGun;
     float pixelDuckSpriteX;
     float pixelDuckSpriteY;
-    void actualizarTipo(const char*& texture);
+    std::unique_ptr<SDL2pp::Texture> coloredTexture;
+
+    Armor armor;
+    Helmet helmet;
+    void applyColor(Renderer& renderer);
 };
 
 #endif // PLAYER_H

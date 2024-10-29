@@ -1,5 +1,7 @@
 #include "game_loop.h"
 
+#include <bits/fs_fwd.h>
+
 GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
                    ProtectedQueuesMap& queues_map):
         queue_comandos(queue_comandos),
@@ -15,6 +17,8 @@ void GameLoop::run() {
     try {
 
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
+        map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
+        map_free_weapons.emplace(1, Weapon(S_COWBOY_GUN, 1, 100, 386, 5, 20, 10, 3));
         while (!end_game) {
             CommandClient comando;
             while (queue_comandos.try_pop(comando)) {
@@ -48,6 +52,7 @@ void GameLoop::checkBullets() {
             it = map_bullets.erase(it);     
         } else {
             it->second->executeAction();
+
             ++it;
         }
     }
@@ -67,9 +72,12 @@ void GameLoop::movementComand(uint8_t comando) {
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
         personaje.setEnSalto(true);
         personaje.setTypeOfMoveSprite(S_JUMP);
+    } else if (comando==S_JUMP && personaje.getVelocidadY() < 0 ){
+        personaje.setFlapping(true);
+        personaje.increaseFlappingCounter();
+        personaje.setTypeOfMoveSprite(S_FLAP);
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
-
     }else if (comando == S_STILL_RIGTH){
        personaje.setTypeOfMoveSprite(S_STILL_RIGTH);
     } else if (comando == S_STILL_LEFT){
@@ -114,8 +122,10 @@ void GameLoop::sendCompleteScene(){
 
 
     for (auto& personaje : map_personajes) {
-
-       DTODuck dto_duck = {personaje.first,personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
+        if (!personaje.second.isAlive()) {
+            continue;
+        }
+        DTODuck dto_duck = {personaje.first,personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
                             personaje.second.getTypeOfMoveSprite(), personaje.second.getWeapon().getType()};
 
 
@@ -142,6 +152,21 @@ void GameLoop::paraCadaPatoAction() {
         personaje.second.executeAction();
 
     }
+}
+
+
+void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
+    for (auto& personaje : map_personajes) {
+
+        if (personaje.second.isAlive()) {
+            if (personaje.second.getXPos() == bullet->getXPos()  ) {
+                personaje.second.applyDamage(100);
+                bullet->kill();
+
+              }
+
+        }
+        }
 
 }
 
