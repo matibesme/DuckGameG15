@@ -21,6 +21,11 @@ void GameLoop::run() {
         map_free_weapons.emplace(1, Weapon(S_PEW_PEW_LASER_GUN, 1, 300, 386 + 35, 5, 20, 10, 3));
 
         while (!end_game) {
+            //hago mover el pato 2 de manera constante hacia la derecha
+            DuckPlayer& personaje = map_personajes[2];
+            personaje.incrementXPos(MOVEMENT_QUANTITY_X);
+            personaje.setTypeOfMoveSprite(S_RIGTH);
+
             CommandClient comando;
             while (queue_comandos.try_pop(comando)) {
                 checkCommand(comando);
