@@ -6,6 +6,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <memory>
 
 #include "../common/blocking_queue.h"
 
@@ -27,7 +28,7 @@ private:
     bool& end_game;
     ProtectedQueuesMap& queues_map;
     std::map<uint8_t, DuckPlayer> map_personajes;
-    std::map<uint8_t,Weapon> map_free_weapons;
+    std::map<uint8_t,std::unique_ptr<Weapon>> map_free_weapons;
     std::map<uint16_t, std::unique_ptr<Bullet>> map_bullets;
     uint16_t id_balas;
     void paraCadaPatoAction();

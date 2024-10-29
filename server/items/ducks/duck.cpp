@@ -4,15 +4,15 @@
 #include "cowboy_pistol.h"
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
-        : Objeto(type, id, x_pos, y_pos),
-        is_weapon_equiped(true),
-        typeOfMove(S_STILL_RIGTH),
-        saltando(false),
-        velocidad(VELOCIDAD_INICIAL),
-        weapons_list()
-        {
-            weapons_list.push_back(std::make_unique<CowboyPistol>(S_COWBOY_PISTOL,1,0,0,5,250,0,0));
-        }
+    : Objeto(type, id, x_pos, y_pos),
+      is_weapon_equiped(true),
+      typeOfMove(S_STILL_RIGTH),
+      saltando(false),
+      velocidad(VELOCIDAD_INICIAL) // No es necesario inicializar weapons_list aquí
+{
+    // Agregando una nueva CowboyPistol a la lista de armas
+    weapons_list.push_back(std::make_shared<CowboyPistol>(S_COWBOY_PISTOL, 1, 0, 0, 5, 250, 0, 0));
+}
 
 
 

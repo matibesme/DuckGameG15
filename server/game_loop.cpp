@@ -128,7 +128,7 @@ void GameLoop::sendCompleteScene(){
     }
 
     for (auto& weapon : map_free_weapons) {
-        DTOGuns dto_gun = {weapon.second.getType(), weapon.second.getXPos(), weapon.second.getYPos()};
+        DTOGuns dto_gun = {weapon.second->getType(), weapon.second->getXPos(), weapon.second->getYPos()};
         command.lista_guns.push_back(dto_gun);
     }
 

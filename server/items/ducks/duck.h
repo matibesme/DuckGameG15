@@ -11,7 +11,7 @@ class DuckPlayer: public Objeto {
         uint8_t typeOfMove;
         bool saltando;
         float velocidad;
-        std::list<std::unique_ptr<Weapon>> weapons_list;
+        std::list<std::shared_ptr<Weapon>> weapons_list;
     public:
 
         //constructor por defecto
