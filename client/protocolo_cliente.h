@@ -26,8 +26,8 @@ public:
 
    // void sendGameAccessToServer(const GameAccess& game_access);
     void sendInGameToServer(const uint8_t& command);
-    CommandGame reciveFromServer();
-    CommandGame reciveFullGameFromServer();
+    GameState reciveFromServer();
+    GameState reciveFullGameFromServer();
     /*CommandEndOfRound reciveEndOfRoundFromServer();
     CommandVictory reciveVictoryFromServer();*/
 

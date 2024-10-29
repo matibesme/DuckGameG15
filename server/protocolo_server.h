@@ -20,8 +20,8 @@ class ProtocoloServer {
 public:
     ProtocoloServer(Socket socket, bool& dead_connection);
     
-    void sendToClient(const CommandGame& command);
-    void sendFullGame(const CommandGame& command);
+    void sendToClient(const GameState& command);
+    void sendFullGame(const GameState& command);
     /*void sendVictory(const CommandGame& command);
     void sendEndOfRound(const CommandGame& command);*/
    

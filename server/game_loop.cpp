@@ -19,15 +19,13 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
 
 void GameLoop::run() {
     try {
-
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
         /*
         list_free_weapons.emplace_back(CowboyPistol(S_COWBOY_GUN, 1, 100, 100, 10, 10, 10, 10));
         list_free_weapons.emplace_back(DuelPistol(S_PISTOLA_DUELOS_GUN, 2, 200, 200, 10, 10, 10, 10));
         list_free_weapons.emplace_back(Magnum(S_MAGNUM_GUN, 3, 300, 300, 10, 10, 10, 10));
-*/
-    
+         */
 
         while (!end_game) {
             //hago mover el pato 2 de manera constante hacia la derecha
@@ -134,7 +132,7 @@ void GameLoop::weaponComand(uint8_t comando) {
 }
 
 void GameLoop::sendCompleteScene(){
-    CommandGame command;
+    GameState command;
     command.scene_id = S_SCENE_ID;
 
     for (auto& personaje : map_personajes) {

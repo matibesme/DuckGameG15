@@ -14,10 +14,10 @@ private:
     Graficos graficos;
     EventHandler handler;
     BlockingQueue<uint8_t>& queue_sender;
-    BlockingQueue<CommandGame>& queue_receiver;
+    BlockingQueue<GameState>& queue_receiver;
 
 public:
-    GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGame>& queue_receiver);
+    GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<GameState>& queue_receiver);
 
     void run();
 };

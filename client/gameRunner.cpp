@@ -1,6 +1,6 @@
 #include "gameRunner.h"
 
-GameRunner::GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGame>& queue_receiver)
+GameRunner::GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<GameState>& queue_receiver)
         : graficos("DUCK GAME", 640, 480),
           handler(queue_sender),
           queue_sender(queue_sender),
@@ -9,7 +9,7 @@ GameRunner::GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<Comma
 void GameRunner::run() {
     try {
         Renderer& sdl_renderer = graficos.GetRenderer();
-        CommandGame command;
+        GameState command;
         std::list<ClientDuck> ducks;
         std::list<Bullet> bullets;
         std::list<Gun> weapons;
@@ -24,15 +24,23 @@ void GameRunner::run() {
         Background background(graficos);
         GameRenderer gameRenderer(graficos, background);
         gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
-
+        bool actualizar = false;
         while (true) {
             handler.correrHandlers();
-            command = queue_receiver.pop();
-            gameRenderer.actualizarElementos(command, ducks, bullets, weapons, armors, helmets);
+            //command = queue_receiver.pop();
+            while(queue_receiver.try_pop(command)) //y nos quedamos con la ultima
+            {
+                actualizar = true;
+            }
+            if(actualizar){
+                gameRenderer.actualizarElementos(command, ducks, bullets, weapons, armors, helmets);
+                actualizar = false;
+            }
             gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
 
-            SDL_Delay(1);
+            SDL_Delay(1); //reemplazar frame rate
         }
+
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
         queue_sender.close();

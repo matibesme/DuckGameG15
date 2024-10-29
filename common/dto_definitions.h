@@ -26,7 +26,7 @@ struct DTOGuns{ //free wapons in the floor
     float y_pos;
 };
 
-struct CommandGame {
+struct GameState {
     uint8_t scene_id;
 
     std::list<DTODuck> lista_patos;

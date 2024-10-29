@@ -25,7 +25,7 @@ constexpr uint8_t S_FLAP = 0x10;
 const uint8_t S_UP = 0x50;
 
 
-constexpr float MOVEMENT_QUANTITY_X= 3;
+constexpr float MOVEMENT_QUANTITY_X= 0.5;
 constexpr float MOVEMENT_QUANTITY_Y= 3;
 
 

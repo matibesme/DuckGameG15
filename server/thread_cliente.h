@@ -17,7 +17,7 @@ class ThreadCliente: public Thread {
 private:
     bool dead_connection;
     BlockingQueue<CommandClient>& queue_comandos;
-    BlockingQueue<CommandGame> queue_sender;
+    BlockingQueue<GameState> queue_sender;
     ProtocoloServer protocolo;
     Receiver receiver;
     Sender sender;
@@ -26,11 +26,11 @@ private:
 public:
     ThreadCliente(Socket peer, BlockingQueue<CommandClient>& queue_comandos, uint8_t id);
     virtual void run() override;
-    void sendAction(const CommandGame& action);
+    void sendAction(const GameState& action);
     bool isDead();
     void delete_client();
     uint8_t getId();
-    BlockingQueue<CommandGame>& getQueueSender();
+    BlockingQueue<GameState>& getQueueSender();
     void setIsDead();
     virtual ~ThreadCliente();
 };

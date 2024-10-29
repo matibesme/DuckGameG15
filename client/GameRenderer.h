@@ -22,7 +22,7 @@ public:
     void dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
                  std::list<Gun>& guns, std::list<Armor>& armors, std::list<Helmet>& helmets);
 
-    void actualizarElementos(const CommandGame &command, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
+    void actualizarElementos(const GameState &command, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
                              std::list<Gun>& guns, std::list<Armor>& armors, std::list<Helmet>& helmets);
 
 };
