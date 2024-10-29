@@ -42,3 +42,9 @@ void GameRunner::run() {
 
 //correr valgrind con
 //valgrind --tool=callgrind --compress-strings=no --dump-line=yes ./build-relwithdebinfo/tarlike x.xoz a ~/Documents/*pdf
+//en mi caso
+//valgrind --tool=callgrind --compress-strings=no --dump-line=yes ./taller_client localhost 8080
+//y luego para ver el callgrind
+//kcachegrind callgrind.out.xxxx donde xxxx es el numero de la corrida
+
+//otra app es Linux perf Examples

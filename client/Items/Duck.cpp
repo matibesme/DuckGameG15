@@ -2,7 +2,7 @@
 #include <SDL_image.h>
 
 #define IMAGE_DUCK DATA_PATH "/Duck.png"
-const int SPRITE_ANIMATION_RATE = 160;
+const int SPRITE_ANIMATION_RATE = 120;
 const int MAX_SPRITE_FRAMES = 6;
 const int MAX_SPRITE_FRAMES_JUMP = 5;
 const int SRC_Y_STANDING = 70;
@@ -81,10 +81,10 @@ void ClientDuck::draw(Renderer& renderer) {
     }
 
     //dibujo la armadura completa siempre por ahora
-    helmet.update(positionX, positionY);
+    /*helmet.update(positionX, positionY);
     helmet.draw(isFlipped, renderer);
     armor.update(positionX, positionY);
-    armor.draw(isFlipped, renderer);
+    armor.draw(isFlipped, renderer);*/
 
     // Dibujar el arma si está equipada
     if (gun.isEquipped()) {
