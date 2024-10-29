@@ -30,7 +30,6 @@ void Acceptor::run() {
 
     while (!close) {
         try {
-
             accept_new_client();
         } catch (const std::exception& e) {
             if (!close) {
