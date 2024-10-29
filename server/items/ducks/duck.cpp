@@ -3,6 +3,7 @@
 #include <memory>
 #include "../weapons/cowboy_pistol.h"
 #include "../weapons/duel_pistol.h"
+#include "../weapons/magnun.h"
 
 DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false),
               velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD){}
@@ -21,7 +22,7 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         is_flapping(false)
     {
         // Agregando una nueva CowboyPistol a la lista de armas
-        weapons_list.push_back(std::make_shared<CowboyPistol>(S_PISTOLA_DUELOS_GUN, 1, 0, 0, 5, 250, 20, 0));
+        weapons_list.push_back(std::make_shared<Magnum>(S_MAGNUM_GUN, 1, 0, 0, 5, 250, 20, 2));
     }
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
@@ -29,9 +30,7 @@ uint8_t DuckPlayer::getTypeOfMoveSprite() {
 }
 
 void DuckPlayer::incrementXPos(float pos_x) {
-
     x_pos += pos_x;
-
     if (x_pos<0 ||x_pos>MAP_LIMIT_X ){
         x_pos=0;
     }
