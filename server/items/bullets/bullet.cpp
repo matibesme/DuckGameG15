@@ -33,7 +33,7 @@ void Bullet::release(float x_pos, float y_pos, uint8_t direction) {
     randomSpread() ? spread_direction = true : spread_direction = false;
 }
 
-bool randomSpread() {
+bool Bullet::randomSpread() {
     // Inicializa el generador de números aleatorios con un "motor" de generación aleatoria
     std::random_device rd;  // fuente de entropía no determinista
     std::mt19937 gen(rd()); // motor generador de números aleatorios basado en Mersenne Twister

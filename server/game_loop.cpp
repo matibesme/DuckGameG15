@@ -2,7 +2,7 @@
 #include "items/weapons/cowboy_pistol.h"
 #include <bits/fs_fwd.h>
 #include <items/weapons/duel_pistol.h>
-#include <items/weapons/magnun.h>
+#include <items/weapons/magnum.h>
 //despues sacar
 
 
