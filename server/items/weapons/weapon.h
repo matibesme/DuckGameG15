@@ -12,7 +12,6 @@ protected:
     uint8_t damage;
     uint8_t range;
     uint8_t ammo_quantity;
-    Bullet bala;
     float recoil;
 
 public:

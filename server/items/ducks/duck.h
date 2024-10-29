@@ -42,6 +42,9 @@ class DuckPlayer: public Objeto {
         void setFlapping(bool flapping);
         void setGravity(float gravity_);
         void increaseFlappingCounter();
+
+        //void setWeapon(Weapon& weapon);
+        void removeWeapon();
         ~DuckPlayer();
 
 };

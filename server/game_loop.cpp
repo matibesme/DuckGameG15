@@ -1,6 +1,8 @@
 #include "game_loop.h"
 #include "items/weapons/cowboy_pistol.h"
 #include <bits/fs_fwd.h>
+#include <items/weapons/duel_pistol.h>
+#include <items/weapons/magnun.h>
 //despues sacar
 
 
@@ -20,7 +22,12 @@ void GameLoop::run() {
 
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
-        //map_free_weapons.emplace(1, CowboyPistol(S_COWBOY_GUN, 1, 100, 386, 5, 20, 10, 3));
+        /*
+        list_free_weapons.emplace_back(CowboyPistol(S_COWBOY_GUN, 1, 100, 100, 10, 10, 10, 10));
+        list_free_weapons.emplace_back(DuelPistol(S_PISTOLA_DUELOS_GUN, 2, 200, 200, 10, 10, 10, 10));
+        list_free_weapons.emplace_back(Magnum(S_MAGNUM_GUN, 3, 300, 300, 10, 10, 10, 10));
+*/
+    
 
         while (!end_game) {
             CommandClient comando;
@@ -93,8 +100,9 @@ void GameLoop::movementComand(uint8_t comando) {
 void GameLoop::weaponComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
     if (comando==S_PICKUP){
-        
+
     } else if (comando==S_LEAVE_GUN){
+       // personaje.removeWeapon();
         
     } else if (comando==S_SHOOT){
 
