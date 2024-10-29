@@ -44,6 +44,7 @@ public:
         bool isAlive();
         void applyDamage(uint8_t damage);
         void setFlapping(bool flapping);
+        bool isFlapping();
         void setGravity(float gravity_);
         void increaseFlappingCounter();
         ~DuckPlayer();

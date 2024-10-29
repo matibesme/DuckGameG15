@@ -113,14 +113,16 @@ void DuckPlayer::setFlapping(bool flapping) {
     is_flapping = flapping;
 }
 
+bool DuckPlayer::isFlapping() {
+    return is_flapping;
+}
+
 void DuckPlayer::increaseFlappingCounter() {
     if (counter_flapping == 0) {
         counter_flapping += S_CANT_FLAP;
         velocidad = -1;
     }
 }
-
-
 
 void DuckPlayer::setGravity(float gravity_){
     gravity = gravity_;

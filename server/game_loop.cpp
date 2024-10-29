@@ -85,6 +85,12 @@ void GameLoop::movementComand(uint8_t comando) {
         personaje.setTypeOfMoveSprite(S_STILL_LEFT);
     }
 
+    if(personaje.isFlapping()){
+        personaje.setTypeOfMoveSprite(S_FLAP);
+    }else if(personaje.estaSaltando()){
+        personaje.setTypeOfMoveSprite(S_JUMP);
+    }
+
     //sendCompleteScene();  //comento nose si esta bien? tal vez deberia mandar siempre la escena completa
 }
 
