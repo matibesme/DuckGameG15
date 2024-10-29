@@ -14,6 +14,8 @@ class Bullet: public Objeto {
         uint8_t range;
         bool is_alive;
         float spread;
+        bool spread_direction;
+
 
 
     public:

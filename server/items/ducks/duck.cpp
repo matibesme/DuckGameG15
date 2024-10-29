@@ -3,7 +3,7 @@
 #include <memory>
 #include "../weapons/cowboy_pistol.h"
 #include "../weapons/duel_pistol.h"
-#include "../weapons/magnun.h"
+#include "../weapons/magnum.h"
 
 DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false),
               velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD){}
