@@ -22,8 +22,7 @@ void ProtocoloCliente::sendInGameToServer(const uint8_t& command) {
     }
 }
 
-
-CommandGameShow ProtocoloCliente::reciveFromServer() {
+CommandGame ProtocoloCliente::reciveFromServer() {
     try {
         uint8_t firstByte = protocolo.receiveByte(dead_connection);
         if (firstByte==FULL_GAME_BYTE) return reciveFullGameFromServer();
@@ -35,7 +34,7 @@ CommandGameShow ProtocoloCliente::reciveFromServer() {
     throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
 
-CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
+CommandGame ProtocoloCliente::reciveFullGameFromServer() {
     uint8_t scene_id = protocolo.receiveByte(dead_connection);
    
     //recivo personajes
@@ -72,8 +71,6 @@ CommandGameShow ProtocoloCliente::reciveFullGameFromServer() {
         float y_pos = protocolo.receiveFloat(dead_connection);
         guns.push_back({gun_type, x_pos, y_pos});
     }
-
-
 
     return {scene_id, lista_patos, bullets, guns};
 }

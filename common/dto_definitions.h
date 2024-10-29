@@ -27,19 +27,6 @@ struct DTOGuns{ //free wapons in the floor
 };
 
 struct CommandGame {
-    uint8_t type_of_action;
-    //full game scene
-    uint8_t scene_id;
-
-    std::list<DTODuck> lista_patos;
-
-    std::list<DTOBullet> lista_balas;
-
-    std::list<DTOGuns> lista_guns;
-
-};
-
-struct CommandGameShow {
     uint8_t scene_id;
 
     std::list<DTODuck> lista_patos;
@@ -60,4 +47,15 @@ struct CommandClient {
 struct GameAccess {
     uint8_t action_type; // new game or join game
     uint8_t game_id;
+};
+
+struct CommandBackGround {
+    uint8_t scene_id;
+
+    std::list<DTODuck> lista_patos;
+
+    std::list<DTOBullet> lista_balas;
+
+    std::list<DTOGuns> lista_guns;
+
 };

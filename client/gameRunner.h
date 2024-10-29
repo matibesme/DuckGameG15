@@ -15,10 +15,10 @@ private:
     GameRenderer gameRenderer;
     EventHandler handler;
     BlockingQueue<uint8_t>& queue_sender;
-    BlockingQueue<CommandGameShow>& queue_receiver;
+    BlockingQueue<CommandGame>& queue_receiver;
 
 public:
-    GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver);
+    GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGame>& queue_receiver);
 
     void run();
 };

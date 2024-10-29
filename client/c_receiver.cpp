@@ -2,13 +2,13 @@
 
 //#include "../common/liberror.h"
 
-Receiver::Receiver(ProtocoloCliente& protocolo, BlockingQueue<CommandGameShow>& queue_receiver) :
+Receiver::Receiver(ProtocoloCliente& protocolo, BlockingQueue<CommandGame>& queue_receiver) :
     protocolo(protocolo), queue_receiver(queue_receiver) {}
 
 void Receiver::run() {
     while (_keep_running) {
         try {
-            CommandGameShow command = protocolo.reciveFromServer();
+            CommandGame command = protocolo.reciveFromServer();
             queue_receiver.push(command);
         } catch (const std::exception& e) {
             std::cerr << e.what() << '\n';

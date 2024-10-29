@@ -108,19 +108,13 @@ void GameLoop::weaponComand(uint8_t comando) {
         personaje.setYPos(weapon.getYPos());
         map_bullets.emplace(id_balas, std::move(bullet));
         id_balas++;
-
-
-        
     }
 }
 
 void GameLoop::sendCompleteScene(){
 
     CommandGame command;
-    command.type_of_action = S_FULL_GAME_BYTE;
     command.scene_id = S_SCENE_ID;
-    
-
 
     for (auto& personaje : map_personajes) {
         if (!personaje.second.isAlive()) {
@@ -131,7 +125,6 @@ void GameLoop::sendCompleteScene(){
 
 
        command.lista_patos.push_back(dto_duck);
-
     }
     for (auto& bullet : map_bullets) {
         DTOBullet dto_bullet = {bullet.first, bullet.second->getType(), bullet.second->getXPos(), bullet.second->getYPos(), bullet.second->getDirection()};
@@ -142,10 +135,7 @@ void GameLoop::sendCompleteScene(){
         DTOGuns dto_gun = {weapon.second.getType(), weapon.second.getXPos(), weapon.second.getYPos()};
         command.lista_guns.push_back(dto_gun);
     }
-
-
     queues_map.sendMessagesToQueues(command);
-
 }
 
 void GameLoop::paraCadaPatoAction() {
@@ -155,7 +145,6 @@ void GameLoop::paraCadaPatoAction() {
     }
 }
 
-
 void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
     for (auto& personaje : map_personajes) {
 
@@ -163,12 +152,9 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
             if (personaje.second.getXPos() == bullet->getXPos()  ) {
                 personaje.second.applyDamage(100);
                 bullet->kill();
-
-              }
-
+            }
         }
-        }
-
+    }
 }
 
 GameLoop::~GameLoop() {}

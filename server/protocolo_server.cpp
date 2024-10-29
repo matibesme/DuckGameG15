@@ -8,9 +8,7 @@ ProtocoloServer::ProtocoloServer(Socket socket, bool& dead_connection) :
 
 void ProtocoloServer::sendToClient(const CommandGame& command) {
     try {
-        if (command.type_of_action == S_FULL_GAME_BYTE) {
             sendFullGame(command);
-        }
 
     } catch (const SocketClose& e) {
         std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;

@@ -1,6 +1,6 @@
 #include "gameRunner.h"
 
-GameRunner::GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGameShow>& queue_receiver)
+GameRunner::GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<CommandGame>& queue_receiver)
         : graficos("DUCK GAME", 640, 480),
           gameRenderer(graficos),
           handler(queue_sender),
@@ -10,7 +10,7 @@ GameRunner::GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<Comma
 void GameRunner::run() {
     try {
         Renderer& sdl_renderer = graficos.GetRenderer();
-        CommandGameShow command;
+        CommandGame command;
         std::list<ClientDuck> ducks;
         std::list<Bullet> bullets;
         std::list<Gun> weapons;

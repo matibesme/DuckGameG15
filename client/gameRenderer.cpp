@@ -28,7 +28,7 @@ void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std
     renderer.Present();
 }
 
-void GameRenderer::actualizarElementos(const CommandGameShow& command, std::list<ClientDuck>& ducks,
+void GameRenderer::actualizarElementos(const CommandGame& command, std::list<ClientDuck>& ducks,
                                        std::list<Bullet>& bullets, std::list<Gun>& weapons,
                                        [[maybe_unused]]std::list<Armor>& armors, [[maybe_unused]]std::list<Helmet>& helmets) {
     //PRIMERO ACTUALIZO PATOS
