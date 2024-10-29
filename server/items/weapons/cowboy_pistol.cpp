@@ -4,7 +4,7 @@
 CowboyPistol::CowboyPistol(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
 uint8_t range, uint8_t ammo_quantity, float recoil) : 
     Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
-    bala(S_COWBOY_BULLET,1, 0 ,0 ,5 ,250 ,1){}
+    bala(S_COWBOY_BULLET,1, 0 ,0 ,5 ,250 ,0){}
 
 bool CowboyPistol::isEmptyAmmo() {
     return ammo_quantity == 0;
