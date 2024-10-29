@@ -27,10 +27,10 @@ void GameRunner::run() {
 
         while (true) {
             handler.correrHandlers();
-            if (queue_receiver.try_pop(command)) {
-                gameRenderer.actualizarElementos(command, ducks, bullets, weapons, armors, helmets);
-                gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
-            }
+            command = queue_receiver.pop();
+            gameRenderer.actualizarElementos(command, ducks, bullets, weapons, armors, helmets);
+            gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
+
             SDL_Delay(1);
         }
     } catch (const std::exception& e) {
@@ -40,3 +40,5 @@ void GameRunner::run() {
     graficos.GetRenderer().Clear();
 }
 
+//correr valgrind con
+//valgrind --tool=callgrind --compress-strings=no --dump-line=yes ./build-relwithdebinfo/tarlike x.xoz a ~/Documents/*pdf
