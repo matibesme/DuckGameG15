@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 #include "../weapons/cowboy_pistol.h"
+#include "../weapons/duel_pistol.h"
 
 DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false),
               velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD){}
@@ -20,7 +21,7 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         is_flapping(false)
     {
         // Agregando una nueva CowboyPistol a la lista de armas
-        weapons_list.push_back(std::make_shared<CowboyPistol>(S_COWBOY_GUN, 1, 0, 0, 5, 250, 20, 0));
+        weapons_list.push_back(std::make_shared<DuelPistol>(S_PISTOLA_DUELOS_GUN, 1, 0, 0, 5, 250, 20, 1));
     }
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
@@ -90,8 +91,6 @@ Weapon& DuckPlayer::getWeapon() {
     return *weapons_list.front();
 }
 
-
-
 void DuckPlayer::unequippWeapon() {
     if (is_weapon_equiped) {
         is_weapon_equiped = false;
@@ -113,7 +112,6 @@ void DuckPlayer::applyDamage(uint8_t damage) {
     if (life <= 0) {
         is_alive = false;
     }
-
 }
 
 void DuckPlayer::setFlapping(bool flapping) {

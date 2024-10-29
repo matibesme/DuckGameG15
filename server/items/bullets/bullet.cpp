@@ -35,10 +35,13 @@ void Bullet::executeAction(){
     if (is_alive && range > 0) {
         if (direction == S_RIGTH) {
             x_pos += BULLET_VEL;
+            y_pos -= spread;
         } else if (direction == S_LEFT) {
             x_pos -= BULLET_VEL;
+            y_pos -= spread;
         } else if (direction == S_UP) {
             y_pos -= BULLET_VEL;
+            x_pos -= spread;
         }
         range--;
         if (range == 0) {
