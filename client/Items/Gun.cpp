@@ -72,6 +72,14 @@ void Gun::update(float new_x, float new_y) {
     pos_y = new_y;
 }
 
+float Gun::getPosX() {
+    return pos_x;
+}
+
+float Gun::getPosY() {
+    return pos_y;
+}
+
 void Gun::actualizarTextura(const char*& texture_equipped, const char*& texture_not_equipped) {
     switch (typeOfGun) {
         case C_NOGUN:

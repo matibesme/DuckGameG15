@@ -108,6 +108,8 @@ void GameLoop::weaponComand(uint8_t comando) {
         personaje.setYPos(weapon.getYPos());
         map_bullets.emplace(id_balas, std::move(bullet));
         id_balas++;
+
+
         
     }
 }
@@ -117,6 +119,8 @@ void GameLoop::sendCompleteScene(){
     CommandGame command;
     command.type_of_action = S_FULL_GAME_BYTE;
     command.scene_id = S_SCENE_ID;
+    
+
 
     for (auto& personaje : map_personajes) {
         if (!personaje.second.isAlive()) {
@@ -135,7 +139,7 @@ void GameLoop::sendCompleteScene(){
     }
 
     for (auto& weapon : map_free_weapons) {
-        DTOGuns dto_gun = {weapon.second->getType(), weapon.second->getXPos(), weapon.second->getYPos()};
+        DTOGuns dto_gun = {weapon.second.getType(), weapon.second.getXPos(), weapon.second.getYPos()};
         command.lista_guns.push_back(dto_gun);
     }
 
@@ -151,18 +155,20 @@ void GameLoop::paraCadaPatoAction() {
     }
 }
 
+
 void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
     for (auto& personaje : map_personajes) {
 
         if (personaje.second.isAlive()) {
             if (personaje.second.getXPos() == bullet->getXPos()  ) {
-              //  personaje.second.applyDamage(100);
+                personaje.second.applyDamage(100);
                 bullet->kill();
 
               }
 
         }
-    }
+        }
+
 }
 
 GameLoop::~GameLoop() {}

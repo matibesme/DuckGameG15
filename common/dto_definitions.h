@@ -24,7 +24,6 @@ struct DTOGuns{ //free wapons in the floor
     uint8_t typeOfGun;
     float x_pos;
     float y_pos;
-
 };
 
 struct CommandGame {
