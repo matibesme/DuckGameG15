@@ -131,10 +131,10 @@ uint8_t ClientDuck::getId() const {
     return idDuck;
 }
 
-float ClientDuck::getPosX() {
+int ClientDuck::getPosX() {
     return positionX;
 }
 
-float ClientDuck::getPosY() {
+int ClientDuck::getPosY() {
     return positionY;
 }

@@ -87,5 +87,10 @@ const uint8_t C_HELMET= 0X76;
 const uint8_t WIDTH_HELMET= 60;
 const uint8_t HEIGHT_HELMET= 70;
 
+//escena
+const uint8_t SCENE = 0x0C;
+const int SCENE_WIDTH = 640;
+const int SCENE_HEIGHT = 480;
+
 
 

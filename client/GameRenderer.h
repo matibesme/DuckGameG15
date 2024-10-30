@@ -15,6 +15,7 @@ class GameRenderer {
 private:
     Graficos& graficos;
     Background& background;
+    static SDL2pp::Rect calcularRectanguloDeZoom(std::list<ClientDuck>& ducks);
 
 public:
     explicit GameRenderer(Graficos& graficos, Background& background);

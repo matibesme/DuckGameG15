@@ -3,7 +3,7 @@
 #include <functional>
 
 GameRunner::GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<GameState>& queue_receiver)
-        : graficos("DUCK GAME", 640, 480),
+        : graficos("DUCK GAME", SCENE_WIDTH, SCENE_HEIGHT),
           handler(queue_sender),
           queue_sender(queue_sender),
           queue_receiver(queue_receiver) {}

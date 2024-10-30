@@ -16,7 +16,8 @@ private:
 
 public:
     Background(Graficos& graficos);
-    void draw(SDL2pp::Renderer& renderer);
+    void drawBackGruond(SDL2pp::Renderer& renderer);
+    void drawPlataforms(SDL2pp::Renderer& renderer);
     SDL2pp::Rect rangeOfCollision(SDL2pp::Renderer& renderer);
     Background(Graficos &graficos, std::list<DTOPlataform> lista_plataformas, uint8_t background_id);
     void renderBackground(SDL2pp::Renderer& renderer);

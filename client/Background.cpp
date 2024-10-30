@@ -9,9 +9,11 @@ Background::Background(Graficos& graficos) : background(graficos.LoadTexture(IMA
             platform_base(graficos.LoadTexture(IMAGE_PLATAFORMA_GRANDE)),
             backgroundTexture(Texture(graficos.GetRenderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 640, 480)){}
 
-void Background::draw(SDL2pp::Renderer& renderer){
+void Background::drawBackGruond(SDL2pp::Renderer& renderer){
     renderer.Copy(background);
+}
 
+void Background::drawPlataforms(SDL2pp::Renderer& renderer) {
     SDL2pp::Rect destRect = rangeOfCollision(renderer);
 
     int platformHeight = platform_base.GetHeight();

@@ -1,101 +1,80 @@
 #include <SDL_render.h>
-#include <SDL_image.h>
 #include "GameRenderer.h"
+
+#define CANT_ZOOM_WIDTH 400
+#define CANT_ZOOM_HEIGHT 300
 
 GameRenderer::GameRenderer(Graficos& graficos, Background& background)
         : graficos(graficos), background(background) {}
-/*
-void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
-                           std::list<Gun>& guns, [[maybe_unused]]std::list<Armor>& armors,[[maybe_unused]] std::list<Helmet>& helmets) {
-    renderer.Clear();
 
-    //dibujar sobre una textura del tamñano del mapa le hago un zoom mas un clip
-    //y eso se lo paso al render 64x64
-    //dibujo todo solo muestro un poco
-    // Renderiza el fondo y las plataformas ya cargadas anteriormente
-    // background.renderBackground(renderer);
-    background.draw(renderer);
+#include <algorithm> // para std::min y std::max
 
-    for (auto& duck : ducks) {
-        duck.draw(renderer);
-    }
-    for (auto& bullet : bullets) {
-        bullet.draw(renderer);
-    }
-    for (auto& gun : guns) {
-        gun.draw(false, renderer);
+SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom( std::list<ClientDuck>& ducks) {
+    if (ducks.empty()) {
+        return {0, 0, 0, 0};
     }
 
-    for (auto& armor : armors) {
-        armor.draw(false, renderer);
-    }
-    for (auto& helmet : helmets) {
-        helmet.draw(false, renderer);
-    }
+    // Inicializo valores extremos con el primer pato
+    int minX = ducks.front().getPosX();
+    int maxX = minX;
+    int minY = ducks.front().getPosY();
+    int maxY = minY;
 
-    //dibujo la textura al render y luego present
-    renderer.Present();
-}*/
-
-void GameRenderer::dibujar(Renderer& renderer, [[maybe_unused]] std::list<ClientDuck>& ducks,
-                           [[maybe_unused]] std::list<Bullet>& bullets,
-                           [[maybe_unused]] std::list<Gun>& guns,
-                           [[maybe_unused]] std::list<Armor>& armors,
-                           [[maybe_unused]] std::list<Helmet>& helmets) {
-    // Crear una textura de 640x480
-    SDL2pp::Texture textureDeTodo(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 640, 480);
-
-    // Render apunta a la nueva textura creada
-    renderer.SetTarget(textureDeTodo);
-    // Limpio lo que tenía la textura
-    renderer.Clear();
-
-    // Quiero añadir el fondo y las plataformas a la textura
-    background.draw(renderer);
-    ClientDuck& duckRef = ducks.front();
-
-    for (auto& duck : ducks) {
-        duck.draw(renderer);
+    // Encuentra las posiciones mínimas y máximas de los patos
+    for ( auto& duck : ducks) {
+        minX = std::min(minX, duck.getPosX());
+        maxX = std::max(maxX, duck.getPosX());
+        minY = std::min(minY, duck.getPosY());
+        maxY = std::max(maxY, duck.getPosY());
     }
 
-    // Volver al render por defecto
-    renderer.SetTarget();
+    // Calculo el ancho y alto del rectángulo para cubrir todos los patos
+    int zoomWidth = maxX - minX + DUCK_WIDTH + CANT_ZOOM_WIDTH;
+    int zoomHeight = maxY - minY + DUCK_HEIGHT + CANT_ZOOM_HEIGHT;
 
-    // Limpiar el renderer
-    renderer.Clear();
-
-    /* Definir el área de zoom (puedes ajustar estos valores para elegir una parte aleatoria)
-    int zoomX = 50; // Coordenada X de la parte que quieres mostrar
-    int zoomY = 400; // Coordenada Y de la parte que quieres mostrar
-    int zoomWidth = 200; // Ancho de la parte a mostrar
-    int zoomHeight = 200; // Alto de la parte a mostrar*/
-
-    int zoomX = duckRef.getPosX()- 100 + DUCK_WIDTH / 2;
-    int zoomY = duckRef.getPosY() - 100 + DUCK_HEIGHT / 2;
-    int zoomWidth = 200; // Ancho de la parte a mostrar
-    int zoomHeight = 200; // Alto de la parte a mostrar*
-
-    // srcRect es el rectángulo que se tomará de la textura
-    SDL2pp::Rect srcRect(zoomX, zoomY, zoomWidth, zoomHeight);
-
-    /* Definir rectángulo de destino (toda la ventana)
-    SDL2pp::Rect destRect(0, 0, 640, 480); // Cambiar a 800x600 para llenar la ventana
-
-    // Calcular el factor de escala
-    float scaleX = static_cast<float>(destRect.w) / srcRect.w; // Escala en X
-    float scaleY = static_cast<float>(destRect.h) / srcRect.h; // Escala en Y
-
-    // Asegúrate de que el rectángulo de destino tenga el tamaño adecuado para el zoom
-    destRect.w = static_cast<int>(zoomWidth * scaleX);
-    destRect.h = static_cast<int>(zoomHeight * scaleY);*/
-
-    // Renderizar la textura con zoom, aplicando la escala
-    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>());
-
-    // Presentar el renderizado
-    renderer.Present();
+    return {minX - CANT_ZOOM_WIDTH / 2, minY - CANT_ZOOM_HEIGHT / 2, zoomWidth, zoomHeight};
 }
 
+void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks,
+                           std::list<Bullet>& bullets,
+                           std::list<Gun>& guns,
+                           [[maybe_unused]]std::list<Armor>& armors,
+                           [[maybe_unused]]std::list<Helmet>& helmets) {
+
+    // Limpio el renderizador y dibujar el fondo directamente en la pantalla
+    renderer.SetTarget();
+    renderer.Clear();
+    background.drawBackGruond(renderer);
+
+    // Creo una textura para dibujar todos los objetos
+    SDL2pp::Texture textureDeTodo(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCENE_WIDTH, SCENE_HEIGHT);
+
+    // Habilito blending en la textura
+    textureDeTodo.SetBlendMode(SDL_BLENDMODE_BLEND);
+
+    // Cambio el objetivo de renderizado a textureDeTodo
+    renderer.SetTarget(textureDeTodo);
+    renderer.SetDrawColor(0, 0, 0, 0); // Limpio la textura con un color transparente
+    renderer.Clear();
+
+    // Dibujo los objetos en la textura
+    background.drawPlataforms(renderer);
+    for (auto& duck : ducks) duck.draw(renderer);
+    for (auto& bullet : bullets) bullet.draw(renderer);
+    for (auto& gun : guns) gun.draw(false, renderer);
+
+    // Vuelve al render principal
+    renderer.SetTarget();
+
+    // Defino el rectángulo de zoom para centrarse en la posición deseada
+    SDL2pp::Rect srcRect = calcularRectanguloDeZoom(ducks); // Método que calcula el rectángulo para incluir todos los patos
+    SDL2pp::Rect destRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT); // Rectángulo de destino para la textura, auque inncesario
+
+    // Renderizar la textura con los objetos y zoom, sobre el fondo
+    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>(destRect));
+
+    renderer.Present();
+}
 
 void GameRenderer::actualizarElementos(const GameState& command, std::list<ClientDuck>& ducks,
                                        std::list<Bullet>& bullets, std::list<Gun>& weapons,
