@@ -29,9 +29,8 @@ void GameRunner::run() {
             handler.correrHandlers();
             //command = queue_receiver.pop();
             while(queue_receiver.try_pop(command)) //y nos quedamos con la ultima
-            {
-                actualizar = true;
-            }
+            { actualizar = true; }
+
             if(actualizar){
                 gameRenderer.actualizarElementos(command, ducks, bullets, weapons, armors, helmets);
                 actualizar = false;

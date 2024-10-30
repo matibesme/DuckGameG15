@@ -9,6 +9,8 @@
 #define IMAGE_AMMO_5 DATA_PATH "/ammo5.png"
 #define IMAGE_LASER_AMMO DATA_PATH "/laserAmmo.png"
 #define IMAGE_LASER_AMMO2 DATA_PATH "/laserAmmo2.png"
+#define IMAGE_GRANADA_BULLET DATA_PATH "/grenadeEquipped.png"
+#define IMAGE_BANANA_BULLET DATA_PATH "/bananaEquipped.png"
 
 Bullet::Bullet(uint8_t id, float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t orientacion, uint8_t type) :
           graficos(graficos), idBullet(id),
@@ -66,6 +68,12 @@ void Bullet::actualizarTipo(const char*& texture) {
             break;
         case C_LASER_RIFLE_BULLET:
             texture = IMAGE_LASER_AMMO2;
+            break;
+        case C_GRANADA_BULLET:
+            texture = IMAGE_GRANADA_BULLET;
+            break;
+        case C_BANANA_BULLET:
+            texture = IMAGE_BANANA_BULLET;
             break;
         default:
             break;
