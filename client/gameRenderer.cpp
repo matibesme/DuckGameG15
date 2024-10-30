@@ -1,8 +1,10 @@
+#include <SDL_render.h>
+#include <SDL_image.h>
 #include "GameRenderer.h"
 
 GameRenderer::GameRenderer(Graficos& graficos, Background& background)
         : graficos(graficos), background(background) {}
-
+/*
 void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
                            std::list<Gun>& guns, [[maybe_unused]]std::list<Armor>& armors,[[maybe_unused]] std::list<Helmet>& helmets) {
     renderer.Clear();
@@ -23,17 +25,67 @@ void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std
     for (auto& gun : guns) {
         gun.draw(false, renderer);
     }
-    /*
+
     for (auto& armor : armors) {
         armor.draw(false, renderer);
     }
     for (auto& helmet : helmets) {
         helmet.draw(false, renderer);
-    }*/
+    }
 
     //dibujo la textura al render y luego present
     renderer.Present();
+}*/
+
+void GameRenderer::dibujar(Renderer& renderer, [[maybe_unused]] std::list<ClientDuck>& ducks,
+                           [[maybe_unused]] std::list<Bullet>& bullets,
+                           [[maybe_unused]] std::list<Gun>& guns,
+                           [[maybe_unused]] std::list<Armor>& armors,
+                           [[maybe_unused]] std::list<Helmet>& helmets) {
+    // Crear una textura de 640x480
+    SDL2pp::Texture textureDeTodo(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 640, 480);
+
+    // Render apunta a la nueva textura creada
+    renderer.SetTarget(textureDeTodo);
+    // Limpio lo que tenía la textura
+    renderer.Clear();
+
+    // Quiero añadir el fondo y las plataformas a la textura
+    background.draw(renderer);
+
+    // Volver al render por defecto
+    renderer.SetTarget();
+
+    // Limpiar el renderer
+    renderer.Clear();
+
+    // Definir el área de zoom (puedes ajustar estos valores para elegir una parte aleatoria)
+    int zoomX = 50; // Coordenada X de la parte que quieres mostrar
+    int zoomY = 400; // Coordenada Y de la parte que quieres mostrar
+    int zoomWidth = 200; // Ancho de la parte a mostrar
+    int zoomHeight = 200; // Alto de la parte a mostrar
+
+    // Definir rectángulo de origen (área de zoom)
+    SDL2pp::Rect srcRect(zoomX, zoomY, zoomWidth, zoomHeight);
+
+    // Definir rectángulo de destino (toda la ventana)
+    SDL2pp::Rect destRect(0, 0, 640, 480); // Cambiar a 800x600 para llenar la ventana
+
+    // Calcular el factor de escala
+    float scaleX = static_cast<float>(destRect.w) / srcRect.w; // Escala en X
+    float scaleY = static_cast<float>(destRect.h) / srcRect.h; // Escala en Y
+
+    // Asegúrate de que el rectángulo de destino tenga el tamaño adecuado para el zoom
+    destRect.w = static_cast<int>(zoomWidth * scaleX);
+    destRect.h = static_cast<int>(zoomHeight * scaleY);
+
+    // Renderizar la textura con zoom, aplicando la escala
+    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>(destRect));
+
+    // Presentar el renderizado
+    renderer.Present();
 }
+
 
 void GameRenderer::actualizarElementos(const GameState& command, std::list<ClientDuck>& ducks,
                                        std::list<Bullet>& bullets, std::list<Gun>& weapons,
