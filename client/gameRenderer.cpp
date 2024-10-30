@@ -66,12 +66,14 @@ void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks,
     // Vuelve al render principal
     renderer.SetTarget();
 
+    /* DESCOMENTAR PARA TENER ZOOM
     // Defino el rectángulo de zoom para centrarse en la posición deseada
     SDL2pp::Rect srcRect = calcularRectanguloDeZoom(ducks); // Método que calcula el rectángulo para incluir todos los patos
-    SDL2pp::Rect destRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT); // Rectángulo de destino para la textura, auque inncesario
-
     // Renderizar la textura con los objetos y zoom, sobre el fondo
-    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>(destRect));
+    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>());*/
+
+    //Por ahora no hago zoom
+    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(), SDL2pp::Optional<SDL2pp::Rect>());
 
     renderer.Present();
 }
