@@ -20,6 +20,8 @@ public:
     GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<GameState>& queue_receiver);
 
     void run();
+
+    void delayIfNeeded(std::chrono::high_resolution_clock::time_point& t1, const int delay);
 };
 
 #endif // GAMERUNNER_H
