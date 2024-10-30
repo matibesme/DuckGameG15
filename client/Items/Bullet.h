@@ -10,7 +10,6 @@ private:
     Graficos& graficos;      // Referencia a la clase Graficos
     uint8_t idBullet;        // Identificador de la bala
     float pos_x, pos_y;       // Posición de la bala
-    int height, width;        // Dimensiones de la bala
     uint8_t orientationOfBullet;              // Si la bala está volteada o no
     uint8_t typeOfBullet;                     // Tipo de bala
     void actualizarTipo(const char*& texture);

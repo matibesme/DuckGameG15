@@ -15,7 +15,8 @@ private:
     float pos_x;
     float pos_y;
     void setEquip(bool equip);
-    void actualizarTextura(const char*& texture_equipped, const char*& texture_not_equipped);
+    void actualizarTextura(const char*& texture_equipped, const char*& texture_not_equipped,
+                            int &width, int &height);
 
 public:
     Gun(Graficos& graficos, float pos_x, float pos_y, uint8_t typeOfGun);

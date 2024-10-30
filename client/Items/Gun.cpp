@@ -32,22 +32,30 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
     }
     const char* texture_path_equipped;
     const char* texture_path_not_equipped;
-    actualizarTextura(texture_path_equipped, texture_path_not_equipped);
+    int with = WIDTH_GUN;
+    int height = HEIGHT_GUN;
+    actualizarTextura(texture_path_equipped, texture_path_not_equipped, with, height);
 
     Texture texture_equipped (graficos.LoadTexture(texture_path_equipped));
     Texture texture_not_equipped (graficos.LoadTexture(texture_path_not_equipped));
 
     if(is_equiped){
         //map con typeOfGun a textura
-        if (isFliped)
-            renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 2, pos_y, WIDTH_GUN, HEIGHT_GUN), 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+        if (isFliped) {
+            if( typeOfGun == C_GRANADA_GUN || typeOfGun == C_BANANA_GUN)
+                renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 5, pos_y, with, height), 0.0,
+                              SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+            else
+            renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 2, pos_y, with, height), 0.0,
+                          SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+        }
         else
-            renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x, pos_y, WIDTH_GUN, HEIGHT_GUN));
+            renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x, pos_y, with, height));
     } else{
         if (isFliped)
-            renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 2, pos_y, WIDTH_GUN, HEIGHT_GUN), 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+            renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x, pos_y, with, height), 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
         else
-            renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x, pos_y, WIDTH_GUN, HEIGHT_GUN));
+            renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x, pos_y, with, height));
     }
 }
 
@@ -80,7 +88,7 @@ float Gun::getPosY() {
     return pos_y;
 }
 
-void Gun::actualizarTextura(const char*& texture_equipped, const char*& texture_not_equipped) {
+void Gun::actualizarTextura(const char*& texture_equipped, const char*& texture_not_equipped, int &width, int &height) {
     switch (typeOfGun) {
         case C_NOGUN:
             break;
@@ -111,10 +119,14 @@ void Gun::actualizarTextura(const char*& texture_equipped, const char*& texture_
         case C_GRANADA_GUN:
             texture_equipped = IMAGE_GRANADA_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_GRANADA_GUN;
+            width = WIDTH_GRENADE_BANANA;
+            height = HEIGHT_GRENADE_BANANA;
             break;
         case C_BANANA_GUN:
             texture_equipped = IMAGE_BANANA_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_BANANA_GUN;
+            width = WIDTH_GRENADE_BANANA;
+            height = HEIGHT_GRENADE_BANANA;
             break;
         case C_PEW_PEW_LASER_GUN:
             texture_equipped = IMAGE_PEW_PEW_LASER_GUN_EQUIPPED;

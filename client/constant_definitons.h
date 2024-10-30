@@ -22,7 +22,6 @@ const uint8_t VICTORY_BYTE = 0x22;
 const int DUCK_WIDTH = 50;
 const int DUCK_HEIGHT = 50;
 
-
 //duck movement actions
 const uint8_t MOVEMENT_ACTION = 0x03;
 const uint8_t JUMP = 0x04;
@@ -45,8 +44,10 @@ const float POSICION_INICIAL_X = 0.0f;
 const float POSICION_INICIAL_Y = 386;
 
 //armas action
-constexpr int HEIGHT_GUN= 13;
-constexpr int WIDTH_GUN= 35;
+constexpr int HEIGHT_GUN= 20;
+constexpr int WIDTH_GUN= 40;
+constexpr int HEIGHT_GRENADE_BANANA= 13;
+constexpr int WIDTH_GRENADE_BANANA = 15;
 constexpr uint8_t C_NOGUN= 0X33;
 constexpr uint8_t C_COWBOY_GUN= 0X34;
 constexpr uint8_t C_COWBOY_BULLET= 0x54;
