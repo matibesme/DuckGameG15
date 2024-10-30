@@ -27,7 +27,7 @@ class Bullet: public Objeto {
         bool isAlive();
         void release(float x_pos, float y_pos, uint8_t direction);
         bool randomSpread();
-        void executeAction();
+        virtual void executeAction();
         void kill();
 
 };

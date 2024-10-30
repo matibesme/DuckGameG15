@@ -71,6 +71,7 @@ constexpr uint8_t S_PEW_PEW_LASER_BULLET= 0x62;
 constexpr uint8_t S_LASER_RIFLE_GUN= 0X43;
 constexpr uint8_t S_LASER_RIFLE_BULLET= 0x63;
 
+constexpr uint8_t S_GRANADA_TIME_TO_EXPLODE = 5;
 //duck dimmensions
 constexpr int DUCK_WIDTH = 50;
 constexpr int DUCK_HEIGHT = 50;

@@ -1,0 +1,21 @@
+//
+// Created by matibesme on 29/10/24.
+//
+
+#ifndef GRANADA_BULLET_H
+#define GRANADA_BULLET_H
+#include "bullet.h"
+#include "../../constant_definitons.h"
+
+
+class GranadaBullet : public Bullet {
+     uint8_t time_to_explode;
+     float velocidad;
+public:
+    GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range, float spread);
+    void executeAction() override;
+};
+
+
+
+#endif //GRANADA_BULLET_H

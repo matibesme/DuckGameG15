@@ -7,6 +7,8 @@ target_sources(taller_server
         items/weapons/weapon.cpp
         items/ducks/duck.cpp
         items/objeto.cpp
+        items/bullets/granada_bullet.cpp
+        items/weapons/granada.cpp
     PUBLIC
     # .h files
         items/bullets/bullet.h
@@ -14,4 +16,6 @@ target_sources(taller_server
         items/weapons/weapon.h
         items/ducks/duck.h
         items/objeto.h
+        items/bullets/granada_bullet.h
+        items/weapons/granada.h
 )
