@@ -69,8 +69,9 @@ void ClientDuck::draw(Renderer& renderer) {
         applyColor(renderer);
     }
 
-    // Configuración de rectángulos de destino y fuente
+    // destRect es el rectángulo donde se dibujará el pato
     SDL2pp::Rect destRect((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
+    // srcRect es el rectángulo que se tomará de la textura
     SDL2pp::Rect srcRect(pixelDuckSpriteX, pixelDuckSpriteY, SPRITE_WIDTH, SPRITE_HEIGHT);
 
     // Dibujar el pato con el color modificado y la dirección correspondiente
@@ -128,4 +129,12 @@ bool ClientDuck::checkCollision(SDL2pp::Rect rect) {
 
 uint8_t ClientDuck::getId() const {
     return idDuck;
+}
+
+float ClientDuck::getPosX() {
+    return positionX;
+}
+
+float ClientDuck::getPosY() {
+    return positionY;
 }

@@ -52,6 +52,11 @@ void GameRenderer::dibujar(Renderer& renderer, [[maybe_unused]] std::list<Client
 
     // Quiero añadir el fondo y las plataformas a la textura
     background.draw(renderer);
+    ClientDuck& duckRef = ducks.front();
+
+    for (auto& duck : ducks) {
+        duck.draw(renderer);
+    }
 
     // Volver al render por defecto
     renderer.SetTarget();
@@ -59,16 +64,21 @@ void GameRenderer::dibujar(Renderer& renderer, [[maybe_unused]] std::list<Client
     // Limpiar el renderer
     renderer.Clear();
 
-    // Definir el área de zoom (puedes ajustar estos valores para elegir una parte aleatoria)
+    /* Definir el área de zoom (puedes ajustar estos valores para elegir una parte aleatoria)
     int zoomX = 50; // Coordenada X de la parte que quieres mostrar
     int zoomY = 400; // Coordenada Y de la parte que quieres mostrar
     int zoomWidth = 200; // Ancho de la parte a mostrar
-    int zoomHeight = 200; // Alto de la parte a mostrar
+    int zoomHeight = 200; // Alto de la parte a mostrar*/
 
-    // Definir rectángulo de origen (área de zoom)
+    int zoomX = duckRef.getPosX()- 100 + DUCK_WIDTH / 2;
+    int zoomY = duckRef.getPosY() - 100 + DUCK_HEIGHT / 2;
+    int zoomWidth = 200; // Ancho de la parte a mostrar
+    int zoomHeight = 200; // Alto de la parte a mostrar*
+
+    // srcRect es el rectángulo que se tomará de la textura
     SDL2pp::Rect srcRect(zoomX, zoomY, zoomWidth, zoomHeight);
 
-    // Definir rectángulo de destino (toda la ventana)
+    /* Definir rectángulo de destino (toda la ventana)
     SDL2pp::Rect destRect(0, 0, 640, 480); // Cambiar a 800x600 para llenar la ventana
 
     // Calcular el factor de escala
@@ -77,10 +87,10 @@ void GameRenderer::dibujar(Renderer& renderer, [[maybe_unused]] std::list<Client
 
     // Asegúrate de que el rectángulo de destino tenga el tamaño adecuado para el zoom
     destRect.w = static_cast<int>(zoomWidth * scaleX);
-    destRect.h = static_cast<int>(zoomHeight * scaleY);
+    destRect.h = static_cast<int>(zoomHeight * scaleY);*/
 
     // Renderizar la textura con zoom, aplicando la escala
-    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>(destRect));
+    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>());
 
     // Presentar el renderizado
     renderer.Present();

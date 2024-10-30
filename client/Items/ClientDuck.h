@@ -19,6 +19,8 @@ public:
     void draw(Renderer& renderer);
     bool checkCollision(Rect rect);
     uint8_t getId() const;
+    float getPosX();
+    float getPosY();
 
 private:
     uint8_t idDuck;
