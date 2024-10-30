@@ -9,6 +9,8 @@ target_sources(taller_server
         items/objeto.cpp
         items/bullets/granada_bullet.cpp
         items/weapons/granada.cpp
+        items/weapons/banana.cpp
+        items/bullets/banana_bullet.cpp
     PUBLIC
     # .h files
         items/bullets/bullet.h
@@ -18,4 +20,6 @@ target_sources(taller_server
         items/objeto.h
         items/bullets/granada_bullet.h
         items/weapons/granada.h
+        items/weapons/banana.h
+        items/bullets/banana_bullet.h
 )
