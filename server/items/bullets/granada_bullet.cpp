@@ -15,9 +15,9 @@ void GranadaBullet::executeAction() {
     y_pos -= velocidad;
     velocidad -=GRAVEDAD;
     if (direction == S_RIGTH) {
-      x_pos += 3;
+      x_pos += S_RANGO_X_MEDIO;
     } else if (direction == S_LEFT) {
-      x_pos -= 3;
+      x_pos -= S_RANGO_X_MEDIO;
     }
 
     if (y_pos >= S_POSICION_INICIAL_Y) {
@@ -28,14 +28,13 @@ void GranadaBullet::executeAction() {
 
   }
 
-  if (time_to_explode == 1) {
-
-    explode();
-  } else if (time_to_explode == 0) {
+  if (time_to_explode == 1) explode();
+  else if (time_to_explode == 0) {
     is_alive = false;
     return;
   }
-    time_to_explode--;
+    
+  time_to_explode--;
 
 }
 
