@@ -6,11 +6,9 @@ ProtocoloServer::ProtocoloServer(Socket socket, bool& dead_connection) :
     dead_connection(dead_connection),
     protocolo(socket_server) {}
 
-void ProtocoloServer::sendToClient(const CommandGame& command) {
+void ProtocoloServer::sendToClient(const GameState& command) {
     try {
-        if (command.type_of_action == S_FULL_GAME_BYTE) {
             sendFullGame(command);
-        }
 
     } catch (const SocketClose& e) {
         std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
@@ -20,7 +18,7 @@ void ProtocoloServer::sendToClient(const CommandGame& command) {
     }
 }
 
-void ProtocoloServer::sendFullGame(const CommandGame& command) {
+void ProtocoloServer::sendFullGame(const GameState& command) {
     protocolo.sendByte(S_FULL_GAME_BYTE, dead_connection);
     //ENVIO ESCENA
     protocolo.sendByte(command.scene_id, dead_connection);

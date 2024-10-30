@@ -19,17 +19,20 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
 
 void GameLoop::run() {
     try {
-
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
         /*
         list_free_weapons.emplace_back(CowboyPistol(S_COWBOY_GUN, 1, 100, 100, 10, 10, 10, 10));
         list_free_weapons.emplace_back(DuelPistol(S_PISTOLA_DUELOS_GUN, 2, 200, 200, 10, 10, 10, 10));
         list_free_weapons.emplace_back(Magnum(S_MAGNUM_GUN, 3, 300, 300, 10, 10, 10, 10));
-*/
-    
+         */
 
         while (!end_game) {
+            //hago mover el pato 2 de manera constante hacia la derecha
+            DuckPlayer& personaje = map_personajes[2];
+            personaje.incrementXPos(MOVEMENT_QUANTITY_X);
+            personaje.setTypeOfMoveSprite(S_RIGTH);
+
             CommandClient comando;
             while (queue_comandos.try_pop(comando)) {
                 checkCommand(comando);
@@ -81,17 +84,24 @@ void GameLoop::movementComand(uint8_t comando) {
         personaje.setDirection(S_LEFT);
     } else if (comando==S_JUMP && !personaje.estaSaltando()){
         personaje.setEnSalto(true);
-        personaje.setTypeOfMoveSprite(S_JUMP);
+        //personaje.setTypeOfMoveSprite(S_JUMP);
     } else if (comando==S_JUMP && personaje.getVelocidadY() < 0 ){
         personaje.setFlapping(true);
         personaje.increaseFlappingCounter();
-        personaje.setTypeOfMoveSprite(S_FLAP);
+        //personaje.setTypeOfMoveSprite(S_FLAP);
     } else if (comando==S_DOWN){
         personaje.setTypeOfMoveSprite(S_DOWN);
     }else if (comando == S_STILL_RIGTH){
        personaje.setTypeOfMoveSprite(S_STILL_RIGTH);
     } else if (comando == S_STILL_LEFT){
         personaje.setTypeOfMoveSprite(S_STILL_LEFT);
+    }
+
+    //compruebo si esta saltando o flapeando en caso de que se mueva hacia los costados
+    if(personaje.isFlapping()){
+        personaje.setTypeOfMoveSprite(S_FLAP);
+    }else if(personaje.estaSaltando()){
+        personaje.setTypeOfMoveSprite(S_JUMP);
     }
 
     //sendCompleteScene();  //comento nose si esta bien? tal vez deberia mandar siempre la escena completa
@@ -122,8 +132,7 @@ void GameLoop::weaponComand(uint8_t comando) {
 }
 
 void GameLoop::sendCompleteScene(){
-    CommandGame command;
-    command.type_of_action = S_FULL_GAME_BYTE;
+    GameState command;
     command.scene_id = S_SCENE_ID;
 
     for (auto& personaje : map_personajes) {
@@ -135,7 +144,6 @@ void GameLoop::sendCompleteScene(){
 
 
        command.lista_patos.push_back(dto_duck);
-
     }
     for (auto& bullet : map_bullets) {
         DTOBullet dto_bullet = {bullet.first, bullet.second->getType(), bullet.second->getXPos(), bullet.second->getYPos(), bullet.second->getDirection()};
@@ -147,7 +155,6 @@ void GameLoop::sendCompleteScene(){
         command.lista_guns.push_back(dto_gun);
     }
     queues_map.sendMessagesToQueues(command);
-
 }
 
 void GameLoop::paraCadaPatoAction() {

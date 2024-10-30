@@ -24,7 +24,7 @@ void ThreadCliente::run() {
 }
 
 
-void ThreadCliente::sendAction(const CommandGame& action) { queue_sender.push(action); }
+void ThreadCliente::sendAction(const GameState& action) { queue_sender.push(action); }
 
 uint8_t ThreadCliente::getId() { return id; }
 
@@ -33,7 +33,7 @@ bool ThreadCliente::isDead() { return dead_connection; }
 
 void ThreadCliente::setIsDead() { dead_connection = true; }
 
-BlockingQueue<CommandGame>& ThreadCliente::getQueueSender() { return queue_sender; }
+BlockingQueue<GameState>& ThreadCliente::getQueueSender() { return queue_sender; }
 
 
 void ThreadCliente::delete_client() {

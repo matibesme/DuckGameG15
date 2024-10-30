@@ -1,11 +1,17 @@
 #include "GameRenderer.h"
 
-GameRenderer::GameRenderer(Graficos& graficos)
-        : graficos(graficos), background(graficos) {}
+GameRenderer::GameRenderer(Graficos& graficos, Background& background)
+        : graficos(graficos), background(background) {}
 
 void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
                            std::list<Gun>& guns, [[maybe_unused]]std::list<Armor>& armors,[[maybe_unused]] std::list<Helmet>& helmets) {
     renderer.Clear();
+
+    //dibujar sobre una textura del tamñano del mapa le hago un zoom mas un clip
+    //y eso se lo paso al render 64x64
+    //dibujo todo solo muestro un poco
+    // Renderiza el fondo y las plataformas ya cargadas anteriormente
+    // background.renderBackground(renderer);
     background.draw(renderer);
 
     for (auto& duck : ducks) {
@@ -25,10 +31,11 @@ void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std
         helmet.draw(false, renderer);
     }*/
 
+    //dibujo la textura al render y luego present
     renderer.Present();
 }
 
-void GameRenderer::actualizarElementos(const CommandGameShow& command, std::list<ClientDuck>& ducks,
+void GameRenderer::actualizarElementos(const GameState& command, std::list<ClientDuck>& ducks,
                                        std::list<Bullet>& bullets, std::list<Gun>& weapons,
                                        [[maybe_unused]]std::list<Armor>& armors, [[maybe_unused]]std::list<Helmet>& helmets) {
     //PRIMERO ACTUALIZO PATOS

@@ -18,7 +18,7 @@ private:
     ProtocoloCliente protocolo;
     bool is_socket_close;
     BlockingQueue<uint8_t> queue_sender;
-    BlockingQueue<CommandGameShow> queue_receiver;
+    BlockingQueue<GameState> queue_receiver;
     GameRunner game;
     Sender sender;
     Receiver receiver;

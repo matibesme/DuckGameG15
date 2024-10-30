@@ -13,10 +13,10 @@ class Receiver: public Thread {
 
 private:
     ProtocoloCliente& protocolo;
-    BlockingQueue<CommandGameShow>& queue_receiver;
+    BlockingQueue<GameState>& queue_receiver;
 
 public:
-    Receiver(ProtocoloCliente& protocolo, BlockingQueue<CommandGameShow>& queue_receiver);
+    Receiver(ProtocoloCliente& protocolo, BlockingQueue<GameState>& queue_receiver);
     virtual void run() override;
     virtual ~Receiver();
 };
