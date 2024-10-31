@@ -40,7 +40,6 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
     Texture texture_equipped (graficos.LoadTexture(texture_path_equipped));
     Texture texture_not_equipped (graficos.LoadTexture(texture_path_not_equipped));
 
-    return;
     if(is_equiped){
         //si esta flippeado dibujo a todas por igual
         if (isFliped) {

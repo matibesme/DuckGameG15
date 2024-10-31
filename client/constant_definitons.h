@@ -29,7 +29,6 @@ const int SCENE_HEIGHT = 600;
 const int MAP_HEIGHT = 64 * DUCK_HEIGHT;
 const int MAP_WIDTH = 64 * DUCK_WIDTH;
 
-
 //protocolo
 const uint8_t FIRST_SEND_BYTE = 0x03;
 const uint8_t FIRST_RECIVE_BYTE = 0x06;
