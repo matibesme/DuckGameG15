@@ -124,6 +124,9 @@ void GameLoop::weaponComand(uint8_t comando) {
         weapon.setYPos(personaje.getYPos());
         weapon.setDirection(personaje.getDirection());
         std::unique_ptr<Bullet> bullet = weapon.shoot();
+        if (bullet == nullptr) {
+            return;
+        }
         personaje.setXPos(weapon.getXPos());
         personaje.setYPos(weapon.getYPos());
         map_bullets.emplace(id_balas, std::move(bullet));
@@ -160,7 +163,11 @@ void GameLoop::sendCompleteScene(){
 void GameLoop::paraCadaPatoAction() {
     for (auto& personaje : map_personajes) {
         personaje.second.executeAction();
-
+        if (personaje.second.getWeapon().getType() == S_GRANADA_GUN && personaje.second.getWeapon().isActive()) {
+            std::unique_ptr<Bullet> bullet = personaje.second.getWeapon().shoot();
+            map_bullets.emplace(id_balas, std::move(bullet));
+            id_balas++;
+        }
     }
 }
 

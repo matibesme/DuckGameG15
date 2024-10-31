@@ -4,29 +4,46 @@
 
 #include "granada_bullet.h"
 
-GranadaBullet::GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range, float spread):
-        Bullet(type, id, x_pos, y_pos, damage, range, spread), time_to_explode(S_GRANADA_TIME_TO_EXPLODE), velocidad(VELOCIDAD_INICIAL) {}
+GranadaBullet::GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range, float spread,uint8_t time_to_explode_) :
+        Bullet(type, id, x_pos, y_pos, damage, range, spread), time_to_explode(time_to_explode_), velocidad(VELOCIDAD_INICIAL) , continue_moving(true) {}
 
 
 void GranadaBullet::executeAction() {
 
-  if (is_alive && range > 0) {
-    range--;
+  if (time_to_explode>1 && is_alive && continue_moving) {
+
     y_pos -= velocidad;
     velocidad -=GRAVEDAD;
     if (direction == S_RIGTH) {
-      x_pos += 2;
+      x_pos += S_RANGO_X_MEDIO;
     } else if (direction == S_LEFT) {
-      x_pos -= 2;
+      x_pos -= S_RANGO_X_MEDIO;
     }
 
     if (y_pos >= S_POSICION_INICIAL_Y) {
       y_pos = S_POSICION_INICIAL_Y;
-  
+        continue_moving = false;
     }
-  } else if (time_to_explode > 0) {
-    time_to_explode--;
-  } else {
-    is_alive = false;
+
+
   }
+
+  if (time_to_explode == 1) explode();
+  else if (time_to_explode == 0) {
+    is_alive = false;
+    return;
+  }
+    
+  time_to_explode--;
+
+}
+
+void GranadaBullet::release_granada(float x_pos, float y_pos, uint8_t direction, uint8_t time_to_explode) {
+  release(x_pos, y_pos, direction);
+  this->time_to_explode = time_to_explode;
+}
+
+void GranadaBullet::explode() {
+  //type = S_GRANADA_EXPLOSION;
+
 }
