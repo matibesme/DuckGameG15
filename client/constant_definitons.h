@@ -14,6 +14,7 @@ const uint8_t FIRST_SEND_BYTE = 0x03;
 const uint8_t FIRST_RECIVE_BYTE = 0x06;
 
 //imagen completa
+const uint8_t BACKGROUND_BYTE = 0x19;
 const uint8_t FULL_GAME_BYTE = 0x20;
 const uint8_t END_ROUND_BYTE = 0x21;
 const uint8_t VICTORY_BYTE = 0x22;

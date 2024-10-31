@@ -22,6 +22,7 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
 void GameLoop::run() {
     try {
         loadMap();
+        sendBackground();
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
         /*
@@ -139,7 +140,7 @@ void GameLoop::weaponComand(uint8_t comando) {
 
 void GameLoop::sendCompleteScene(){
     GameState command;
-    command.scene_id = S_SCENE_ID;
+    command.scene_id = S_BACKGROUND_BYTE;
 
     for (auto& personaje : map_personajes) {
         if (!personaje.second.isAlive()) {
@@ -218,5 +219,16 @@ void GameLoop::loadMap() {
     }
 
 }
+
+
+void GameLoop::sendBackground() {
+    GameState command;
+    command.scene_id = S_SCENE_ID;
+    for (auto& platform : list_plataformas) {
+        command.lista_plataformas.push_back(platform);
+    }
+    queues_map.sendMessagesToQueues(command);
+}
+
 
 GameLoop::~GameLoop() {}

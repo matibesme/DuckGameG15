@@ -22,9 +22,8 @@ public:
     
     void sendToClient(const GameState& command);
     void sendFullGame(const GameState& command);
-    /*void sendVictory(const CommandGame& command);
-    void sendEndOfRound(const CommandGame& command);*/
    
+    void sendBackground(const GameState& command);
     CommandClient receiveCommandFromClients();
     void closeSocket();
     ~ProtocoloServer();

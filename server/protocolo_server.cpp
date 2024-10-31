@@ -8,7 +8,12 @@ ProtocoloServer::ProtocoloServer(Socket socket, bool& dead_connection) :
 
 void ProtocoloServer::sendToClient(const GameState& command) {
     try {
-            sendFullGame(command);
+            if (command.scene_id == S_BACKGROUND_BYTE) {
+                sendBackground(command);
+            } else if (command.scene_id == S_FULL_GAME_BYTE) {
+                sendFullGame(command);
+            }
+           
 
     } catch (const SocketClose& e) {
         std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
@@ -19,9 +24,17 @@ void ProtocoloServer::sendToClient(const GameState& command) {
 }
 
 void ProtocoloServer::sendFullGame(const GameState& command) {
+  
     protocolo.sendByte(S_FULL_GAME_BYTE, dead_connection);
-    //ENVIO ESCENA
-    protocolo.sendByte(command.scene_id, dead_connection);
+    for (const DTOPlatform& dto_platform : command.lista_plataformas) {
+        protocolo.sendByte(dto_platform.typeOfPlataform, dead_connection);
+        protocolo.sendFloat(dto_platform.x_pos, dead_connection);
+        protocolo.sendFloat(dto_platform.y_pos, dead_connection);
+        protocolo.sendFloat(dto_platform.width, dead_connection);
+        protocolo.sendFloat(dto_platform.height, dead_connection);
+    }
+
+
     
     //ENVIO DE PERSONAJES
   
@@ -54,6 +67,20 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
         protocolo.sendFloat(gun.y_pos, dead_connection);
     }
 
+}
+
+
+void ProtocoloServer::sendBackground(const GameState& command) {
+    protocolo.sendByte(S_BACKGROUND_BYTE, dead_connection);
+    protocolo.sendByte(command.scene_id, dead_connection);
+    protocolo.sendByte(command.lista_plataformas.size(), dead_connection);
+    for (const DTOPlatform& dto_platform : command.lista_plataformas) {
+        protocolo.sendByte(dto_platform.typeOfPlataform, dead_connection);
+        protocolo.sendFloat(dto_platform.x_pos, dead_connection);
+        protocolo.sendFloat(dto_platform.y_pos, dead_connection);
+        protocolo.sendFloat(dto_platform.width, dead_connection);
+        protocolo.sendFloat(dto_platform.height, dead_connection);
+    }
 }
 
 

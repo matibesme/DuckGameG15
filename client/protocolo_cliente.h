@@ -28,8 +28,6 @@ public:
     void sendInGameToServer(const uint8_t& command);
     GameState reciveFromServer();
     GameState reciveFullGameFromServer();
-    /*CommandEndOfRound reciveEndOfRoundFromServer();
-    CommandVictory reciveVictoryFromServer();*/
-
+    GameState reciveBackgroundFromServer();
     ~ProtocoloCliente();
 };

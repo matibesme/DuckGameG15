@@ -25,6 +25,7 @@ void ProtocoloCliente::sendInGameToServer(const uint8_t& command) {
 GameState ProtocoloCliente::reciveFromServer() {
     try {
         uint8_t firstByte = protocolo.receiveByte(dead_connection);
+        if (firstByte==BACKGROUND_BYTE) return reciveBackgroundFromServer();
         if (firstByte==FULL_GAME_BYTE) return reciveFullGameFromServer();
       
     } catch (const std::exception& e) {
@@ -35,7 +36,7 @@ GameState ProtocoloCliente::reciveFromServer() {
 }
 
 GameState ProtocoloCliente::reciveFullGameFromServer() {
-    uint8_t scene_id = protocolo.receiveByte(dead_connection);
+   
    
     //recivo personajes
     uint8_t patos_quantity = protocolo.receiveByte(dead_connection);
@@ -71,9 +72,26 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
         float y_pos = protocolo.receiveFloat(dead_connection);
         guns.push_back({gun_type, x_pos, y_pos});
     }
+    return {FULL_GAME_BYTE, {}, lista_patos, bullets, guns};
 
-    return {scene_id, lista_patos, bullets, guns};
 }
+
+
+GameState ProtocoloCliente::reciveBackgroundFromServer() {
+    uint8_t background_id = protocolo.receiveByte(dead_connection);
+    uint8_t platforms_quantity = protocolo.receiveByte(dead_connection);
+    std::list<DTOPlatform> lista_plataformas;
+    for (int i = 0; i < platforms_quantity; i++) {
+        uint8_t typeOfPlataform = protocolo.receiveByte(dead_connection);
+        float x_pos = protocolo.receiveFloat(dead_connection);
+        float y_pos = protocolo.receiveFloat(dead_connection);
+        float width = protocolo.receiveFloat(dead_connection);
+        float height = protocolo.receiveFloat(dead_connection);
+        lista_plataformas.push_back({typeOfPlataform, x_pos, y_pos, width, height});
+    }
+    return {background_id, lista_plataformas, {}, {}, {}};
+}
+
 
 
 ProtocoloCliente::~ProtocoloCliente() {}

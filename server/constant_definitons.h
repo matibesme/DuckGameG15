@@ -3,9 +3,11 @@
 
 constexpr char SALIDA = 'q';
 //imagen completa
+constexpr uint8_t S_BACKGROUND_BYTE = 0x19;
 constexpr uint8_t S_FULL_GAME_BYTE = 0x20;
 constexpr uint8_t S_END_ROUND_BYTE = 0x21;
 constexpr uint8_t S_VICTORY_BYTE = 0x22;
+
 
 
 //escenas
