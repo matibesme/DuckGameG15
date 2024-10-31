@@ -12,8 +12,8 @@
 //Tamaños
 const int DUCK_WIDTH = 32;
 const int DUCK_HEIGHT = 32;
-constexpr int HEIGHT_GUN= 10;
-constexpr int WIDTH_GUN= 22;
+constexpr int HEIGHT_GUN= 9;
+constexpr int WIDTH_GUN= 15;
 constexpr int HEIGHT_GRENADE_BANANA= 13;
 constexpr int WIDTH_GRENADE_BANANA = 15;
 constexpr int HEIGHT_GRANADE_EXPLOTION= 40;
