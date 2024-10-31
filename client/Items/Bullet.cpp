@@ -30,16 +30,24 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
 
     Rect area;
     //tipo de area dependiendo de la orientacion y si es bala o granada o banana
-    if((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET) && orientationOfBullet == BULLET_UP){
+    if((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET)
+                                        && orientationOfBullet == BULLET_UP){
+
         area = Rect(pos_x, pos_y, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
+
     } else if((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET)
                                                && orientationOfBullet == BULLET_RIGTH){
-        area = Rect(pos_x + DUCK_WIDTH / 2, pos_y + DUCK_HEIGHT, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
+
+        area = Rect(pos_x + DUCK_WIDTH / 2, pos_y + DUCK_HEIGHT / 1.5, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
+
     } else if ((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET)
                                                  && orientationOfBullet == BULLET_LEFT){
-        area = Rect(pos_x, pos_y + DUCK_HEIGHT, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
+
+        area = Rect(pos_x, pos_y + DUCK_HEIGHT / 1.5, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
+
     } else if (orientationOfBullet == BULLET_UP){
         area = Rect(pos_x, pos_y, HEIGHT_BULLET, WIDTH_BULLET);
+
     } else if(typeOfBullet == C_GRANADA_EXPLOTION){
         explotionSpriteX = (explotionSpriteX + 1);
         // destRect es el rectángulo donde se dibujará la textura
@@ -51,8 +59,10 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
     }
     else if(orientationOfBullet == BULLET_RIGTH){
         area = Rect(pos_x + DUCK_WIDTH, pos_y + DUCK_HEIGHT / 2, WIDTH_BULLET, HEIGHT_BULLET);
+
     } else if(orientationOfBullet == BULLET_LEFT){
         area = Rect(pos_x, pos_y + DUCK_HEIGHT/2, WIDTH_BULLET, HEIGHT_BULLET);
+
     } else {
         return;
     }

@@ -40,20 +40,21 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
     Texture texture_equipped (graficos.LoadTexture(texture_path_equipped));
     Texture texture_not_equipped (graficos.LoadTexture(texture_path_not_equipped));
 
+    return;
     if(is_equiped){
-        //map con typeOfGun a textura
+        //si esta flippeado dibujo a todas por igual
         if (isFliped) {
-            if( typeOfGun == C_GRANADA_GUN || typeOfGun == C_BANANA_GUN)
-                renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 5, pos_y, with, height), 0.0,
-                              SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
-            else
-            renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 2, pos_y, with, height), 0.0,
-                          SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+            renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 2.5, pos_y,
+                                   with, height), 0.0,SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
         }
+        //si no esta flippeado dibujo a las granadas y bananas distinto
+        else if( typeOfGun == C_GRANADA_GUN || typeOfGun == C_BANANA_GUN)
+            renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x + 5, pos_y, with, height));
         else
-            renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x, pos_y, with, height));
+            renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x , pos_y, with, height));
+
     } else{
-        if (isFliped)
+        if (isFliped) //no tendría que usarlo por que estaría en el piso pero por las dudas
             renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x, pos_y, with, height), 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
         else
             renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x, pos_y, with, height));

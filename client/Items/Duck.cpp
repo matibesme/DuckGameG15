@@ -82,10 +82,10 @@ void ClientDuck::draw(Renderer& renderer) {
     }
 
     //dibujo la armadura completa siempre por ahora
-    /*helmet.update(positionX, positionY);
+    helmet.update(positionX, positionY);
     helmet.draw(isFlipped, renderer);
     armor.update(positionX, positionY);
-    armor.draw(isFlipped, renderer);*/
+    armor.draw(isFlipped, renderer);
 
     // Dibujar el arma si está equipada
     if (gun.isEquipped()) {
