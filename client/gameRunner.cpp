@@ -1,9 +1,10 @@
 #include "gameRunner.h"
 #include <chrono>
 #include <functional>
+#define TITULO "DUCK GAME"
 
 GameRunner::GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<GameState>& queue_receiver)
-        : graficos("DUCK GAME", SCENE_WIDTH, SCENE_HEIGHT),
+        : graficos(TITULO, SCENE_WIDTH, SCENE_HEIGHT),
           handler(queue_sender),
           queue_sender(queue_sender),
           queue_receiver(queue_receiver) {}
@@ -37,10 +38,9 @@ void GameRunner::run() {
 
             if(actualizar){
                 gameRenderer.actualizarElementos(command, ducks, bullets, weapons, armors, helmets);
-                gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
                 actualizar = false;
             }
-            //gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
+            gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
 
             //llamo al metodo delay para que no se ejecute mas de 60 veces por segundo
             delayIfNeeded(t1, frameDelay);
