@@ -70,11 +70,13 @@ constexpr uint8_t S_PEW_PEW_LASER_GUN= 0X42;
 constexpr uint8_t S_PEW_PEW_LASER_BULLET= 0x62;
 constexpr uint8_t S_LASER_RIFLE_GUN= 0X43;
 constexpr uint8_t S_LASER_RIFLE_BULLET= 0x63;
+
 //granada
-constexpr uint8_t S_GRANADA_EXPLOSION = 0x64;
-constexpr uint8_t S_GRANADA_TIME_TO_EXPLODE = 240;
+constexpr uint8_t S_GRANADA_EXPLOTION = 0x64;
+constexpr uint8_t S_GRANADA_TIME_TO_EXPLODE = 246;
 constexpr uint8_t S_COUNTER_TO_SHOOT_GRANADA = 1;
-constexpr uint8_t S_RANGO_X_MEDIO =3;
+constexpr float   S_RANGO_X_MEDIO =8;
+
 //duck dimmensions
 constexpr int DUCK_WIDTH = 50;
 constexpr int DUCK_HEIGHT = 50;

@@ -48,6 +48,8 @@ constexpr int HEIGHT_GUN= 20;
 constexpr int WIDTH_GUN= 40;
 constexpr int HEIGHT_GRENADE_BANANA= 13;
 constexpr int WIDTH_GRENADE_BANANA = 15;
+constexpr int HEIGHT_GRANADE_EXPLOTION= 60;
+constexpr int WIDTH_GRANADE_EXPLOTION= 60;
 constexpr uint8_t C_NOGUN= 0X33;
 constexpr uint8_t C_COWBOY_GUN= 0X34;
 constexpr uint8_t C_COWBOY_BULLET= 0x54;
@@ -69,6 +71,7 @@ constexpr uint8_t C_PEW_PEW_LASER_GUN= 0X42;
 constexpr uint8_t C_PEW_PEW_LASER_BULLET= 0x62;
 constexpr uint8_t C_LASER_RIFLE_GUN= 0X43;
 constexpr uint8_t C_LASER_RIFLE_BULLET= 0x63;
+constexpr uint8_t C_GRANADA_EXPLOTION= 0x64;
 
 //bullet action
 constexpr int HEIGHT_BULLET= 5;

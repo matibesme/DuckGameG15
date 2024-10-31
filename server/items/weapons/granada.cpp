@@ -17,7 +17,7 @@ bool Granada::isEmptyAmmo() {
 bool Granada::isActive() {
     if (counter_to_shoot==0){
         time_to_explode--;
-        return time_to_explode == 1;
+        return time_to_explode == 6;
     }
 
     return false;

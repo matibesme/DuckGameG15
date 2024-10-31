@@ -12,6 +12,7 @@ private:
     float pos_x, pos_y;       // Posición de la bala
     uint8_t orientationOfBullet;              // Si la bala está volteada o no
     uint8_t typeOfBullet;                     // Tipo de bala
+    uint8_t explotionSpriteX, explotionSpriteY;  // Sprite de la explosión
     void actualizarTipo(const char*& texture);
 
 public:
