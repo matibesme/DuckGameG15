@@ -14,13 +14,13 @@ void Background::drawBackGruond(SDL2pp::Renderer& renderer){
 }
 
 void Background::drawPlataforms(SDL2pp::Renderer& renderer) {
-    SDL2pp::Rect destRect = rangeOfCollision(renderer);
+    SDL2pp::Rect destRect = plataformaChicaEj(renderer);
 
     int platformHeight = platform_base.GetHeight();
     int platformWidth = platform_base.GetWidth();
 
-    int posX = (renderer.GetOutputWidth() - platformWidth) / 2 - 8;
-    int posY = (renderer.GetOutputHeight() - platformHeight) + 50;
+    int posX = (renderer.GetOutputWidth() - platformWidth) / 2;
+    int posY = 386 + 32; //horrible, me tendrían que pasar todos estos datos del server
 
 
     SDL2pp::Rect destRectBase(posX, posY, platformWidth, platformHeight);
@@ -29,12 +29,12 @@ void Background::drawPlataforms(SDL2pp::Renderer& renderer) {
     renderer.Copy(platform_base, SDL2pp::NullOpt, destRectBase);
 }
 
-SDL2pp::Rect Background::rangeOfCollision(SDL2pp::Renderer& renderer){
+SDL2pp::Rect Background::plataformaChicaEj(SDL2pp::Renderer& renderer){
     int platformHeight = platform.GetHeight();
     int platformWidth = platform.GetWidth();
 
     int posX = (renderer.GetOutputWidth() - platformWidth) / 2;
-    int posY = (renderer.GetOutputHeight() - platformHeight) / 1.5;
+    int posY = 200;
 
     SDL2pp::Rect destRect(posX, posY, platformWidth, platformHeight);
 

@@ -11,9 +11,9 @@ void Armor::draw(bool isFliped, SDL2pp::Renderer& renderer) {
 
     //if (is_equipped) {
         if (isFliped)
-            renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 9, pos_y, WIDTH_ARMOR, HEIGHT_ARMOR), 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+            renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x + DUCK_WIDTH / 9, pos_y, WIDTH_ARMOR, HEIGHT_ARMOR), 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
         else
-            renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 9 , pos_y, WIDTH_ARMOR, HEIGHT_ARMOR));
+            renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x + DUCK_WIDTH * 0.1 , pos_y, WIDTH_ARMOR, HEIGHT_ARMOR));
     //}else{
     //    renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x, pos_y + 20, WIDTH_ARMOR, HEIGHT_ARMOR));
     //}

@@ -33,9 +33,9 @@ void GameLoop::run() {
 
         while (!end_game) {
             //hago mover el pato 2 de manera constante hacia la derecha
-            DuckPlayer& personaje = map_personajes[2];
+            /*DuckPlayer& personaje = map_personajes[2];
             personaje.incrementXPos(MOVEMENT_QUANTITY_X);
-            personaje.setTypeOfMoveSprite(S_RIGTH);
+            personaje.setTypeOfMoveSprite(S_RIGTH);*/
 
             CommandClient comando;
             while (queue_comandos.try_pop(comando)) {

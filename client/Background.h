@@ -12,7 +12,7 @@ private:
     SDL2pp::Texture platform;
     SDL2pp::Texture platform_base;
     SDL2pp::Texture backgroundTexture;
-    void draw2(Graficos& graficos, std::list<DTOPlatform> lista_plataformas, uint8_t background_id);
+    void draw2(Graficos& graficos, std::list<DTOPlataform> lista_plataformas, uint8_t background_id);
 
 public:
     Background(Graficos& graficos);
