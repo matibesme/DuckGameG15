@@ -1,19 +1,20 @@
 #include <SDL_render.h>
 #include "Bullet.h"
 
-#define IMAGE_CHAIN_BULLET DATA_PATH "/chainBullet.png"
-#define IMAGE_AMMO_1 DATA_PATH "/ammo.png"
-#define IMAGE_AMMO_2 DATA_PATH "/ammo2.png"
-#define IMAGE_AMMO_3 DATA_PATH "/ammo3.png"
-#define IMAGE_AMMO_4 DATA_PATH "/ammo4.png"
-#define IMAGE_AMMO_5 DATA_PATH "/ammo5.png"
-#define IMAGE_LASER_AMMO DATA_PATH "/laserAmmo.png"
-#define IMAGE_LASER_AMMO2 DATA_PATH "/laserAmmo2.png"
-#define IMAGE_GRANADA_BULLET DATA_PATH "/grenade.png"
-#define IMAGE_GRANADA_EXPLOTION DATA_PATH "/explode.png"
-#define IMAGE_BANANA_BULLET DATA_PATH "/banana.png"
-#define SPRITE_WIDTH (384/6)
-#define SPRITE_HEIGHT 64
+#define IMAGE_CHAIN_BULLET DATA_PATH "/bullets/chainBullet.png"
+#define IMAGE_AMMO_1 DATA_PATH "/bullets/ammo.png"
+#define IMAGE_AMMO_2 DATA_PATH "/bullets/ammo2.png"
+#define IMAGE_AMMO_3 DATA_PATH "/bullets/ammo3.png"
+#define IMAGE_AMMO_4 DATA_PATH "/bullets/ammo4.png"
+#define IMAGE_AMMO_5 DATA_PATH "/bullets/ammo5.png"
+#define IMAGE_LASER_AMMO DATA_PATH "/bullets/laserAmmo.png"
+#define IMAGE_LASER_AMMO2 DATA_PATH "/bullets/laserAmmo2.png"
+#define IMAGE_GRANADA_BULLET DATA_PATH "/bullets/thrownGranade.png"
+#define IMAGE_GRANADA_EXPLOTION DATA_PATH "/bullets/explode.png"
+#define IMAGE_BANANA_BULLET DATA_PATH "/bullets/banana.png"
+#define IMAGE_BANANA_THROWN DATA_PATH "/bullets/thrownBanana.png"
+#define SPRITE_WIDTH_BULLET (384/6)
+#define SPRITE_HEIGHT_BULLET 64
 
 Bullet::Bullet(uint8_t id, float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t orientacion, uint8_t type) :
         graficos(graficos), idBullet(id),
@@ -44,7 +45,7 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
         // destRect es el rectángulo donde se dibujará la textura
         SDL2pp::Rect destRect((int)pos_x , (int)pos_y + DUCK_HEIGHT / 5, WIDTH_GRANADE_EXPLOTION, HEIGHT_GRANADE_EXPLOTION);
         // srcRect es el rectángulo que se tomará de la textura
-        SDL2pp::Rect srcRect(explotionSpriteX * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
+        SDL2pp::Rect srcRect(explotionSpriteX * SPRITE_WIDTH_BULLET, 0, SPRITE_WIDTH_BULLET, SPRITE_HEIGHT_BULLET);
         renderer.Copy(texture, srcRect, destRect);
         return;
     }

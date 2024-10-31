@@ -10,8 +10,8 @@
 #define PORT 2
 
 //Tamaños
-const int DUCK_WIDTH = 50;
-const int DUCK_HEIGHT = 50;
+const int DUCK_WIDTH = 32;
+const int DUCK_HEIGHT = 32;
 constexpr int HEIGHT_GUN= 20;
 constexpr int WIDTH_GUN= 40;
 constexpr int HEIGHT_GRENADE_BANANA= 13;
@@ -24,8 +24,11 @@ const uint8_t WIDTH_ARMOR= 60;
 const uint8_t HEIGHT_ARMOR= 65;
 const uint8_t WIDTH_HELMET= 60;
 const uint8_t HEIGHT_HELMET= 70;
-const int SCENE_WIDTH = 640;
-const int SCENE_HEIGHT = 480;
+const int SCENE_WIDTH = 800;
+const int SCENE_HEIGHT = 600;
+const int MAP_HEIGHT = 64 * DUCK_HEIGHT;
+const int MAP_WIDTH = 64 * DUCK_WIDTH;
+
 
 //protocolo
 const uint8_t FIRST_SEND_BYTE = 0x03;
