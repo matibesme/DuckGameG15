@@ -106,6 +106,10 @@ if(TALLER_SERVER)
             server/items/weapons/duel_pistol.cpp
             server/items/weapons/magnum.cpp
             server/items/weapons/cowboy_pistol.cpp
+            server/items/weapons/sniper.h
+            server/items/weapons/sniper.cpp
+            server/items/weapons/shotgun.h
+            server/items/weapons/shotgun.cpp
     )
 
     # Incluir el directorio 'server' para los archivos de encabezado (opcional)

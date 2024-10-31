@@ -13,6 +13,12 @@ public:
     bool isEmptyAmmo() override;
 
     std::unique_ptr<Bullet> shoot() override;
+
+    bool isActive() override;
+
+    void setReloadTime(int reload_time) override;
+
+    int getReloadTime() override;
 };
 
 #endif //DUEL_PISTOL_H

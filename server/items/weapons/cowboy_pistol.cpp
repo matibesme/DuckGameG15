@@ -14,7 +14,7 @@ std::unique_ptr<Bullet> CowboyPistol::shoot() {
   
     ammo_quantity--;
   
-    bala.release(x_pos, y_pos, direction);
+    bala.release(x_pos, y_pos, direction, bala.randomSpread());
     
     if (direction == S_RIGTH) {
         setXPos(x_pos - recoil);
@@ -22,5 +22,17 @@ std::unique_ptr<Bullet> CowboyPistol::shoot() {
         setXPos(x_pos + recoil);
     }
     return std::make_unique<Bullet>(bala);
+}
+
+bool CowboyPistol::isActive() {
+    return false;
+}
+
+void CowboyPistol::setReloadTime(int reload_time_) {
+    reload_time = reload_time_;
+}
+
+int CowboyPistol::getReloadTime() {
+    return reload_time;
 }
 

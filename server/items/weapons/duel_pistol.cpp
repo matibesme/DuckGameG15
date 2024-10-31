@@ -12,13 +12,25 @@ bool DuelPistol::isEmptyAmmo() {
 std::unique_ptr<Bullet> DuelPistol::shoot() {
     ammo_quantity--;
   
-    bala.release(x_pos, y_pos, direction);
+    bala.release(x_pos, y_pos, direction, bala.randomSpread());
     if (direction == S_RIGTH) {
         setXPos(x_pos - recoil);
     } else  if (direction == S_LEFT) {
         setXPos(x_pos + recoil);
     }
     return std::make_unique<Bullet>(bala);
+}
+
+bool DuelPistol::isActive() {
+    return false;
+}
+
+void DuelPistol::setReloadTime(int reload_time_) {
+    reload_time = reload_time_;
+}
+
+int DuelPistol::getReloadTime() {
+    return reload_time;
 }
 
 

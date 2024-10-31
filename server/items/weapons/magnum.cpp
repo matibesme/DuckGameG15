@@ -3,7 +3,7 @@
 Magnum::Magnum(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
 uint8_t range, uint8_t ammo_quantity, float recoil) : 
     Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil) ,
-    bala(S_MAGNUM_BULLET, 1, 0, 0, 10, 250, 0.3) {}
+    bala(S_MAGNUM_BULLET, 1, 0, 0, 10, 20, 0.3) {}
 
 bool Magnum::isEmptyAmmo() {
     return ammo_quantity == 0;
@@ -12,7 +12,7 @@ bool Magnum::isEmptyAmmo() {
 std::unique_ptr<Bullet> Magnum::shoot() {
     ammo_quantity--;
 
-    bala.release(x_pos, y_pos, direction);
+    bala.release(x_pos, y_pos, direction, bala.randomSpread());
     if (direction == S_RIGTH) {
         setXPos(x_pos - recoil);
     } else  if (direction == S_LEFT) {
@@ -20,4 +20,17 @@ std::unique_ptr<Bullet> Magnum::shoot() {
     }
     return std::make_unique<Bullet>(bala);
 }
+
+bool Magnum::isActive() {
+    return false;
+}
+
+void Magnum::setReloadTime(int reload_time_) {
+    reload_time = reload_time_;
+}
+
+int Magnum::getReloadTime() {
+    return reload_time;
+}
+
 

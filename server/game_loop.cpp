@@ -123,14 +123,27 @@ void GameLoop::weaponComand(uint8_t comando) {
         weapon.setXPos(personaje.getXPos());
         weapon.setYPos(personaje.getYPos());
         weapon.setDirection(personaje.getDirection());
-        std::unique_ptr<Bullet> bullet = weapon.shoot();
-        if (bullet == nullptr) {
-            return;
+        if (weapon.getType() == S_ESCOPETA_GUN) {
+            for (int i = 0; i < 6; i++) {
+                std::unique_ptr<Bullet> bullet = weapon.shoot();
+                if (bullet == nullptr) {
+                    return;
+                }
+                map_bullets.emplace(id_balas, std::move(bullet));
+                id_balas++;
+            }
+            personaje.setXPos(weapon.getXPos());
+            personaje.setYPos(weapon.getYPos());
+        } else {
+            std::unique_ptr<Bullet> bullet = weapon.shoot();
+            if (bullet == nullptr) {
+                return;
+            }
+            personaje.setXPos(weapon.getXPos());
+            personaje.setYPos(weapon.getYPos());
+            map_bullets.emplace(id_balas, std::move(bullet));
+            id_balas++;
         }
-        personaje.setXPos(weapon.getXPos());
-        personaje.setYPos(weapon.getYPos());
-        map_bullets.emplace(id_balas, std::move(bullet));
-        id_balas++;
     }
 }
 
