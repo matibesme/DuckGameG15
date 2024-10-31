@@ -12,15 +12,14 @@
 #define IMAGE_GRANADA_BULLET DATA_PATH "/grenade.png"
 #define IMAGE_GRANADA_EXPLOTION DATA_PATH "/explode.png"
 #define IMAGE_BANANA_BULLET DATA_PATH "/banana.png"
-#define SPRITE_WIDTH 384/6
+#define SPRITE_WIDTH (384/6)
 #define SPRITE_HEIGHT 64
-
 
 Bullet::Bullet(uint8_t id, float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t orientacion, uint8_t type) :
         graficos(graficos), idBullet(id),
         pos_x(initial_pos_x), pos_y(initial_pos_y),
         orientationOfBullet(orientacion), typeOfBullet(type),
-        explotionSpriteX(-1), explotionSpriteY(0) {}
+        explotionSpriteX(-1){}
 
 void Bullet::draw(SDL2pp::Renderer& renderer) {
 
@@ -29,44 +28,30 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
     Texture texture (graficos.LoadTexture(texture_path));
 
     Rect area;
-    int height, width;        // Dimensiones de la bala
     //tipo de area dependiendo de la orientacion y si es bala o granada o banana
     if((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET) && orientationOfBullet == BULLET_UP){
-        height = HEIGHT_GRENADE_BANANA;
-        width = WIDTH_GRENADE_BANANA;
-        area = Rect(pos_x, pos_y, width, height);
+        area = Rect(pos_x, pos_y, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
     } else if((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET)
                                                && orientationOfBullet == BULLET_RIGTH){
-        height = HEIGHT_GRENADE_BANANA;
-        width = WIDTH_GRENADE_BANANA;
-        area = Rect(pos_x + DUCK_WIDTH / 2, pos_y + DUCK_HEIGHT, width, height);
+        area = Rect(pos_x + DUCK_WIDTH / 2, pos_y + DUCK_HEIGHT, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
     } else if ((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET)
                                                  && orientationOfBullet == BULLET_LEFT){
-        height = HEIGHT_GRENADE_BANANA;
-        width = WIDTH_GRENADE_BANANA;
-        area = Rect(pos_x, pos_y + DUCK_HEIGHT, width, height);
+        area = Rect(pos_x, pos_y + DUCK_HEIGHT, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
     } else if (orientationOfBullet == BULLET_UP){
-        height = HEIGHT_BULLET;
-        width = WIDTH_BULLET;
-        area = Rect(pos_x, pos_y, height, width);
+        area = Rect(pos_x, pos_y, HEIGHT_BULLET, WIDTH_BULLET);
     } else if(typeOfBullet == C_GRANADA_EXPLOTION){
         explotionSpriteX = (explotionSpriteX + 1);
-
         // destRect es el rectángulo donde se dibujará la textura
         SDL2pp::Rect destRect((int)pos_x , (int)pos_y + DUCK_HEIGHT / 5, WIDTH_GRANADE_EXPLOTION, HEIGHT_GRANADE_EXPLOTION);
         // srcRect es el rectángulo que se tomará de la textura
-        SDL2pp::Rect srcRect(explotionSpriteX * SPRITE_WIDTH, explotionSpriteY, SPRITE_WIDTH, SPRITE_HEIGHT);
+        SDL2pp::Rect srcRect(explotionSpriteX * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
         renderer.Copy(texture, srcRect, destRect);
         return;
     }
     else if(orientationOfBullet == BULLET_RIGTH){
-        height = HEIGHT_BULLET;
-        width = WIDTH_BULLET;
-        area = Rect(pos_x + DUCK_WIDTH, pos_y + DUCK_HEIGHT / 2, width, height);
+        area = Rect(pos_x + DUCK_WIDTH, pos_y + DUCK_HEIGHT / 2, WIDTH_BULLET, HEIGHT_BULLET);
     } else if(orientationOfBullet == BULLET_LEFT){
-        height = HEIGHT_BULLET;
-        width = WIDTH_BULLET;
-        area = Rect(pos_x, pos_y + DUCK_HEIGHT/2, width, height);
+        area = Rect(pos_x, pos_y + DUCK_HEIGHT/2, WIDTH_BULLET, HEIGHT_BULLET);
     } else {
         return;
     }
@@ -78,7 +63,6 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
         renderer.Copy(texture, SDL2pp::NullOpt, area);
     else if (orientationOfBullet == BULLET_UP)
         renderer.Copy(texture, SDL2pp::NullOpt, area, 90.0, SDL2pp::NullOpt, SDL_FLIP_NONE);
-
 }
 
 void Bullet::update(const float new_pos_x,const float new_pos_y, const uint8_t type, const uint8_t orientacion) {
@@ -126,7 +110,6 @@ void Bullet::actualizarTipo(const char*& texture) {
         default:
             break;
     }
-
 }
 
 uint8_t Bullet::getId() const {
