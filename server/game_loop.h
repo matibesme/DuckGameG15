@@ -20,6 +20,7 @@
 #include "items/weapons/weapon.h"
 //eliminar dsp
 #include "items/bullets/bullet.h"
+#include <yaml-cpp/yaml.h>
 
 class GameLoop: public Thread {
 
@@ -31,6 +32,8 @@ private:
     std::map<uint8_t,std::unique_ptr<Weapon>> map_free_weapons;
     std::map<uint16_t, std::unique_ptr<Bullet>> map_bullets;
     uint16_t id_balas;
+    std::list<DTOPlatform> list_plataformas;
+
     void paraCadaPatoAction();
 
 public:
@@ -44,5 +47,7 @@ public:
     void saltar();
     void sendCompleteScene();
     void checkCoalition(std::unique_ptr<Bullet>& bullet);
+    //void checkCoalitionWithPlatform(DuckPlayer& personaje);
+    void loadMap();
     virtual ~GameLoop();
 };

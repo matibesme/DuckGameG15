@@ -49,7 +49,7 @@ struct GameAccess {
     uint8_t game_id;
 };
 
-struct DTOPlataform{
+struct DTOPlatform{
     uint8_t typeOfPlataform;
     float x_pos;
     float y_pos;
@@ -59,5 +59,7 @@ struct DTOPlataform{
 
 struct CommandBackGround {
     uint8_t background_id;
-    std::list<DTOPlataform> lista_plataformas;
+    std::list<DTOPlatform> lista_plataformas;
 };
+
+

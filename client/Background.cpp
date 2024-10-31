@@ -41,7 +41,7 @@ SDL2pp::Rect Background::rangeOfCollision(SDL2pp::Renderer& renderer){
     return destRect;
 }
 
-Background::Background(Graficos& graficos_, std::list<DTOPlataform> lista_plataformas, uint8_t background_id)
+Background::Background(Graficos& graficos_, std::list<DTOPlatform> lista_plataformas, uint8_t background_id)
         : background(graficos_.LoadTexture(IMAGE_PAISAJE)),
           platform(graficos_.LoadTexture(IMAGE_PLATAFORMA_CHICA)),
           platform_base(graficos_.LoadTexture(IMAGE_PLATAFORMA_GRANDE)),
@@ -50,7 +50,7 @@ Background::Background(Graficos& graficos_, std::list<DTOPlataform> lista_plataf
     draw2(graficos_, lista_plataformas, background_id);
 }
 
-void Background::draw2(Graficos& graficos, std::list<DTOPlataform> lista_plataformas, uint8_t background_id) {
+void Background::draw2(Graficos& graficos, std::list<DTOPlatform> lista_plataformas, uint8_t background_id) {
     Renderer& renderer = graficos.GetRenderer();
 
     // Establecer la textura como el target del renderer

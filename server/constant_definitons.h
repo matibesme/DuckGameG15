@@ -9,10 +9,6 @@ constexpr uint8_t S_VICTORY_BYTE = 0x22;
 
 
 //escenas
-constexpr float MAP_LIMIT_X= 640;
-constexpr float MAP_LIMIT_Y= 480;
-constexpr uint8_t S_SCENE_ID = 0x02;
-
 //movement actions
 constexpr uint8_t S_MOVEMENT_ACTION = 0x03;
 constexpr uint8_t S_RIGTH = 0x05;
@@ -32,14 +28,6 @@ constexpr float MOVEMENT_QUANTITY_Y= 3;
 constexpr uint8_t ORIENTATION_RIGTH = 0x00;
 constexpr uint8_t ORIENTATION_LEFT = 0x01;
 constexpr uint8_t ORIENTATION_DOWN = 0x02;
-constexpr float S_POSICION_INICIAL_X = 0.0f;
-
-//jump
-constexpr float S_POSICION_INICIAL_Y = 386;
-constexpr float GRAVEDAD = 1;
-constexpr float VELOCIDAD_INICIAL = 15;
-constexpr float GRAVITY_FLAP = 0.001;
-constexpr uint8_t S_CANT_FLAP = 100;
 
 
 //armas action
@@ -73,12 +61,36 @@ constexpr uint8_t S_LASER_RIFLE_BULLET= 0x63;
 
 //granada
 constexpr uint8_t S_GRANADA_EXPLOTION = 0x64;
-constexpr uint8_t S_GRANADA_TIME_TO_EXPLODE = 246;
-constexpr uint8_t S_COUNTER_TO_SHOOT_GRANADA = 1;
-constexpr float   S_RANGO_X_MEDIO =8;
 
 //duck dimmensions
 constexpr int DUCK_WIDTH = 50;
 constexpr int DUCK_HEIGHT = 50;
 
+/////////////editor///////////////
+extern float MAP_LIMIT_X;
+extern float MAP_LIMIT_Y;
+extern uint8_t S_SCENE_ID;
 
+extern float GRAVEDAD;
+extern float VELOCIDAD_INICIAL;
+extern float GRAVITY_FLAP;
+extern uint8_t S_CANT_FLAP;
+
+
+//duck editor
+extern float S_POSICION_INICIAL_X;
+extern float S_POSICION_INICIAL_Y;
+
+extern uint8_t S_LIFE;
+
+
+
+//weapons editor
+extern float S_RESPAWN_WEAPON_X;
+extern float S_RESPAWN_WEAPON_Y;
+
+extern uint8_t S_GRANADA_TIME_TO_EXPLODE;
+extern uint8_t S_COUNTER_TO_SHOOT_GRANADA;
+extern float S_RANGO_X_MEDIO;
+extern float S_RANGO_X_CORTO;
+extern float S_RANGO_X_LARGO;

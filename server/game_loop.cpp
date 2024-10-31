@@ -1,6 +1,7 @@
 #include "game_loop.h"
 #include "items/weapons/cowboy_pistol.h"
 #include <bits/fs_fwd.h>
+#include <bits/fs_path.h>
 #include <items/weapons/duel_pistol.h>
 #include <items/weapons/magnum.h>
 //despues sacar
@@ -14,11 +15,13 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         map_personajes(),
         map_free_weapons(),
         map_bullets(),
-        id_balas(1)
+        id_balas(1),
+        list_plataformas()
         {}
 
 void GameLoop::run() {
     try {
+        loadMap();
         map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
         map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
         /*
@@ -181,6 +184,39 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
             }
         }
     }
+}
+
+//void GameLoop::checkCoalitionWithPlatform(DuckPlayer& personaje) {
+    //for (auto& platform : list_plataformas) {
+        //if (personaje.getXPos() >= platform.x_pos && personaje.getXPos() <= platform.x_pos + platform.width) {
+           // if (personaje.getYPos()+ <= platform.y_pos && personaje.getYPos() <= platform.y_pos + platform.height) {
+                //personaje.setEnSalto(true);
+
+                //personaje.setVelocidadY(0);
+            //}
+        //}
+    //}
+//}
+
+
+void GameLoop::loadMap() {
+
+
+    YAML::Node map = YAML::LoadFile("../server/configuration/map.yaml");
+
+    S_POSICION_INICIAL_X= map["duck"][0]["x"].as<float>();
+    S_POSICION_INICIAL_Y= map["duck"][0]["y"].as<float>();
+    S_LIFE= map["duck"][0]["life"].as<uint8_t>();
+    S_RESPAWN_WEAPON_X= map["respawn_weapons_point"][0]["x"].as<float>();
+    S_RESPAWN_WEAPON_Y= map["respawn_weapons_point"][0]["y"].as<float>();
+
+
+    for (const auto& platform : map["platforms"]) {
+        list_plataformas.emplace_back(DTOPlatform{platform["type"].as<uint8_t>(),
+                                                  platform["x"].as<float>(), platform["y"].as<float>(),
+                                                  platform["width"].as<float>(), platform["height"].as<float>()});
+    }
+
 }
 
 GameLoop::~GameLoop() {}
