@@ -1,13 +1,26 @@
 #include <SDL_render.h>
 #include "GameRenderer.h"
-
+#include <algorithm> // para std::min y std::max
+#define IMAGE_PAISAJE DATA_PATH "/fondo_prueba.jpg"
 #define CANT_ZOOM_WIDTH (10 * DUCK_WIDTH)
 #define CANT_ZOOM_HEIGHT (10 * DUCK_HEIGHT)
 
-GameRenderer::GameRenderer(Graficos& graficos, Background& background)
-        : graficos(graficos), background(background) {}
+GameRenderer::GameRenderer(Graficos& graficos)
+        : graficos(graficos) {}
 
-#include <algorithm> // para std::min y std::max
+void GameRenderer::drawBackground(uint8_t background_id) {
+    Renderer& renderer = graficos.GetRenderer();
+    //creo una textura vacía para dibujar el fondo
+    SDL2pp::Texture background (renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCENE_WIDTH, SCENE_HEIGHT);
+    // Cargar y dibujar el fondo
+    if (background_id == 1) {
+        background = graficos.LoadTexture(IMAGE_PAISAJE);
+    } else {
+        background = graficos.LoadTexture(IMAGE_PAISAJE);
+    }
+    // Copiar el fondo en la textura
+    renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);
+}
 
 SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom( std::list<ClientDuck>& ducks) {
     if (ducks.empty()) {
@@ -35,16 +48,11 @@ SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom( std::list<ClientDuck>& duck
     return {minX - CANT_ZOOM_WIDTH / 2, minY - CANT_ZOOM_HEIGHT / 2, zoomWidth, zoomHeight};
 }
 
-void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks,
-                           std::list<Bullet>& bullets,
-                           std::list<Gun>& guns,
-                           [[maybe_unused]]std::list<Armor>& armors,
-                           [[maybe_unused]]std::list<Helmet>& helmets) {
-
+void GameRenderer::dibujar(Renderer& renderer, GameState& command) {
     // Limpio el renderizador y dibujar el fondo directamente en la pantalla
     renderer.SetTarget();
     renderer.Clear();
-    background.drawBackGruond(renderer);
+    drawBackground(command.backGround_id);
 
     // Creo una textura para dibujar todos los objetos
     SDL2pp::Texture textureDeTodo(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCENE_WIDTH, SCENE_HEIGHT);
@@ -58,7 +66,11 @@ void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks,
     renderer.Clear();
 
     // Dibujo los objetos en la textura
-    background.drawPlataforms(renderer);
+    //plataformas
+    for (auto& platform : command.lista_plataformas) {
+        Platform platforma( platform.x_pos, platform.y_pos, graficos, platform.typeOfPlataform, platform.width, platform.height);
+        platforma.draw();
+    }
     for (auto& duck : ducks) duck.draw(renderer);
     for (auto& bullet : bullets) bullet.draw(renderer);
     for (auto& gun : guns) gun.draw(false, renderer);
@@ -66,20 +78,19 @@ void GameRenderer::dibujar(Renderer& renderer, std::list<ClientDuck>& ducks,
     // Vuelve al render principal
     renderer.SetTarget();
 
-    //DESCOMENTAR PARA TENER ZOOM
+    /*//DESCOMENTAR PARA TENER ZOOM
     // Defino el rectángulo de zoom para centrarse en la posición deseada
     SDL2pp::Rect srcRect = calcularRectanguloDeZoom(ducks); // Método que calcula el rectángulo para incluir todos los patos
     // Renderizar la textura con los objetos y zoom, sobre el fondo
-    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>());
+    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>());*/
 
-    //Por ahora no hago zoomrenderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(), SDL2pp::Optional<SDL2pp::Rect>());
+    //Por ahora no hago zoom
+    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(), SDL2pp::Optional<SDL2pp::Rect>());
 
     renderer.Present();
 }
 
-void GameRenderer::actualizarElementos(const GameState& command, std::list<ClientDuck>& ducks,
-                                       std::list<Bullet>& bullets, std::list<Gun>& weapons,
-                                       [[maybe_unused]]std::list<Armor>& armors, [[maybe_unused]]std::list<Helmet>& helmets) {
+void GameRenderer::actualizarElementos(const GameState& command) {
     //PRIMERO ACTUALIZO PATOS
     // Actualizar y eliminar patos
     for (auto it = ducks.begin(); it != ducks.end();) {
@@ -140,7 +151,7 @@ void GameRenderer::actualizarElementos(const GameState& command, std::list<Clien
     }
 
     //TERCERO ACTUALIZO ARMAS
-    for (auto it = weapons.begin(); it != weapons.end();) {
+    for (auto it = guns.begin(); it != guns.end();) {
         auto weaponInCommand = std::find_if(command.lista_guns.begin(), command.lista_guns.end(),
                                             [it](const DTOGuns& weaponStruct) {
                                                 return weaponStruct.x_pos == it->getPosX() && weaponStruct.y_pos == it->getPosY();
@@ -150,18 +161,18 @@ void GameRenderer::actualizarElementos(const GameState& command, std::list<Clien
             ++it;
         } else {
             // Eliminar si solo está en la lista local
-            it = weapons.erase(it);
+            it = guns.erase(it);
         }
     }
 
     // Agregar armas que están en el comando pero no en la lista local
     for (const auto& weaponStruct : command.lista_guns) {
-        auto it = std::find_if(weapons.begin(), weapons.end(),
+        auto it = std::find_if(guns.begin(), guns.end(),
                                [&weaponStruct](Gun& weapon) {
                                    return weapon.getPosX() == weaponStruct.x_pos && weapon.getPosY() == weaponStruct.y_pos;
                                });
-        if (it == weapons.end()) {
-            weapons.emplace_back(graficos, weaponStruct.x_pos, weaponStruct.y_pos, weaponStruct.typeOfGun);
+        if (it == guns.end()) {
+            guns.emplace_back(graficos, weaponStruct.x_pos, weaponStruct.y_pos, weaponStruct.typeOfGun);
         }
     }
 

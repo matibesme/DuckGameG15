@@ -49,6 +49,5 @@ public:
     void checkCoalition(std::unique_ptr<Bullet>& bullet);
     //void checkCoalitionWithPlatform(DuckPlayer& personaje);
     void loadMap();
-    void sendBackground();
     virtual ~GameLoop();
 };

@@ -25,6 +25,7 @@ struct DTOGuns{ //free wapons in the floor
     float x_pos;
     float y_pos;
 };
+
 struct DTOPlatform{
     uint8_t typeOfPlataform;
     float x_pos;
@@ -34,7 +35,7 @@ struct DTOPlatform{
 };
 
 struct GameState {
-    uint8_t scene_id;
+    uint8_t backGround_id;
     
     std::list<DTOPlatform> lista_plataformas;
     

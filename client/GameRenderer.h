@@ -2,7 +2,7 @@
 #define GAMERENDERER_H
 
 #include "Graficos.h"
-#include "Background.h"
+#include "Items/Platform.h"
 #include "Items/ClientDuck.h"
 #include "Items/Bullet.h"
 #include "Items/Gun.h"
@@ -14,17 +14,22 @@
 class GameRenderer {
 private:
     Graficos& graficos;
-    Background& background;
+    std::list<ClientDuck> ducks;
+    std::list<Bullet> bullets;
+    std::list<Gun> guns;
+    std::list<Armor> armors;
+    std::list<Helmet> helmets;
+    std::list<Platform> platforms;
     static SDL2pp::Rect calcularRectanguloDeZoom(std::list<ClientDuck>& ducks);
+    void drawBackground(uint8_t background_id);
 
 public:
-    explicit GameRenderer(Graficos& graficos, Background& background);
+    explicit GameRenderer(Graficos& graficos);
 
-    void dibujar(Renderer& renderer, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
-                 std::list<Gun>& guns, std::list<Armor>& armors, std::list<Helmet>& helmets);
+    void dibujar(Renderer& renderer, GameState& command);
 
-    void actualizarElementos(const GameState &command, std::list<ClientDuck>& ducks, std::list<Bullet>& bullets,
-                             std::list<Gun>& guns, std::list<Armor>& armors, std::list<Helmet>& helmets);
+
+    void actualizarElementos(const GameState &command);
 
 };
 

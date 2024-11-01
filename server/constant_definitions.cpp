@@ -5,9 +5,6 @@ float MAP_LIMIT_X= 640;
 float MAP_LIMIT_Y= 480;
 uint8_t S_SCENE_ID = 0x02;
 
-
-
-
 float GRAVEDAD = 1;
 float VELOCIDAD_INICIAL = 15;
 float GRAVITY_FLAP = 0.001;

@@ -13,20 +13,12 @@ void GameRunner::run() {
     try {
         Renderer& sdl_renderer = graficos.GetRenderer();
         GameState command;
-        std::list<ClientDuck> ducks;
-        std::list<Bullet> bullets;
-        std::list<Gun> weapons;
-        std::list<Armor> armors;
-        std::list<Helmet> helmets;
 
-        //Para mas adelante cuando me pasen un comando background lo inicialiso aqui y lo paso por parametro
-        //CommandBackGround commandBackground;
-        //queue_receiver.pop(command);
-        //Background background(graficos, commandBackground.lista_plataformas, commandBackground.background_id);
+        command = queue_receiver.pop();
+        //Background background(graficos , command.lista_plataformas, command.backGround_id);
+        GameRenderer gameRenderer(graficos);
 
-        Background background(graficos);
-        GameRenderer gameRenderer(graficos, background);
-        gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
+        gameRenderer.dibujar(sdl_renderer, command);
         bool actualizar = false;
         const int frameDelay = 1000 / 60;
         while (true) {
@@ -37,10 +29,10 @@ void GameRunner::run() {
             { actualizar = true; }
 
             if(actualizar){
-                gameRenderer.actualizarElementos(command, ducks, bullets, weapons, armors, helmets);
+                gameRenderer.actualizarElementos(command);
                 actualizar = false;
             }
-            gameRenderer.dibujar(sdl_renderer, ducks, bullets, weapons, armors, helmets);
+            gameRenderer.dibujar(sdl_renderer, command);
 
             //llamo al metodo delay para que no se ejecute mas de 60 veces por segundo
             delayIfNeeded(t1, frameDelay);
