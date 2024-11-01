@@ -65,8 +65,8 @@ constexpr uint8_t S_LASER_RIFLE_BULLET= 0x63;
 constexpr uint8_t S_GRANADA_EXPLOTION = 0x64;
 
 //duck dimmensions
-constexpr int DUCK_WIDTH = 50;
-constexpr int DUCK_HEIGHT = 50;
+constexpr int _DUCK_WIDTH = 50;
+constexpr int _DUCK_HEIGHT = 50;
 
 /////////////editor///////////////
 extern float MAP_LIMIT_X;

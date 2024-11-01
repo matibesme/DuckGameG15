@@ -21,6 +21,7 @@
 //eliminar dsp
 #include "items/bullets/bullet.h"
 #include <yaml-cpp/yaml.h>
+#include "configuration/load_game.h"
 
 class GameLoop: public Thread {
 
@@ -33,6 +34,7 @@ private:
     std::map<uint16_t, std::unique_ptr<Bullet>> map_bullets;
     uint16_t id_balas;
     std::list<DTOPlatform> list_plataformas;
+    LoadGameFile load_game_config;
 
     void paraCadaPatoAction();
 
@@ -48,6 +50,5 @@ public:
     void sendCompleteScene();
     void checkCoalition(std::unique_ptr<Bullet>& bullet);
     //void checkCoalitionWithPlatform(DuckPlayer& personaje);
-    void loadMap();
     virtual ~GameLoop();
 };

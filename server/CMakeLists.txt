@@ -11,6 +11,7 @@ target_sources(taller_server
         items/weapons/granada.cpp
         items/weapons/banana.cpp
         items/bullets/banana_bullet.cpp
+        configuration/load_game.cpp
     PUBLIC
     # .h files
         items/bullets/bullet.h
@@ -22,4 +23,5 @@ target_sources(taller_server
         items/weapons/granada.h
         items/weapons/banana.h
         items/bullets/banana_bullet.h
+        configuration/load_game.h
 )

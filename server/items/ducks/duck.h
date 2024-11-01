@@ -1,3 +1,4 @@
+#pragma once
 #include <cstdint>
 #include "../../constant_definitons.h"
 #include "../objeto.h"
