@@ -5,47 +5,13 @@
 #define CANT_ZOOM_WIDTH (10 * DUCK_WIDTH)
 #define CANT_ZOOM_HEIGHT (10 * DUCK_HEIGHT)
 
-GameRenderer::GameRenderer(Graficos& graficos)
-        : graficos(graficos) {}
-
-void GameRenderer::drawBackground(uint8_t background_id) {
-    Renderer& renderer = graficos.GetRenderer();
-    //creo una textura vacía para dibujar el fondo
-    SDL2pp::Texture background (renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCENE_WIDTH, SCENE_HEIGHT);
-    // Cargar y dibujar el fondo
-    if (background_id == 1) {
-        background = graficos.LoadTexture(IMAGE_PAISAJE);
-    } else {
-        background = graficos.LoadTexture(IMAGE_PAISAJE);
+GameRenderer::GameRenderer(Graficos& graficos, std::list<DTOPlatform>& platform)
+                : graficos(graficos){
+    // Creo las plataformas por única vez
+    for (auto& platformStruct : platform) {
+        platforms.emplace_back(platformStruct.x_pos, platformStruct.y_pos, graficos,  platformStruct.type,
+                               platformStruct.width, platformStruct.height);
     }
-    // Copiar el fondo en la textura
-    renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);
-}
-
-SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom( std::list<ClientDuck>& ducks) {
-    if (ducks.empty()) {
-        return {0, 0, 0, 0};
-    }
-
-    // Inicializo valores extremos con el primer pato
-    int minX = ducks.front().getPosX();
-    int maxX = minX;
-    int minY = ducks.front().getPosY();
-    int maxY = minY;
-
-    // Encuentra las posiciones mínimas y máximas de los patos
-    for ( auto& duck : ducks) {
-        minX = std::min(minX, duck.getPosX());
-        maxX = std::max(maxX, duck.getPosX());
-        minY = std::min(minY, duck.getPosY());
-        maxY = std::max(maxY, duck.getPosY());
-    }
-
-    // Calculo el ancho y alto del rectángulo para cubrir todos los patos
-    int zoomWidth = maxX - minX + DUCK_WIDTH + CANT_ZOOM_WIDTH;
-    int zoomHeight = maxY - minY + DUCK_HEIGHT + CANT_ZOOM_HEIGHT;
-
-    return {minX - CANT_ZOOM_WIDTH / 2, minY - CANT_ZOOM_HEIGHT / 2, zoomWidth, zoomHeight};
 }
 
 void GameRenderer::dibujar(Renderer& renderer, GameState& command) {
@@ -67,10 +33,7 @@ void GameRenderer::dibujar(Renderer& renderer, GameState& command) {
 
     // Dibujo los objetos en la textura
     //plataformas
-    for (auto& platform : command.lista_plataformas) {
-        Platform platforma( platform.x_pos, platform.y_pos, graficos, platform.typeOfPlataform, platform.width, platform.height);
-        platforma.draw();
-    }
+    for (auto& platform : platforms) platform.draw();
     for (auto& duck : ducks) duck.draw(renderer);
     for (auto& bullet : bullets) bullet.draw(renderer);
     for (auto& gun : guns) gun.draw(false, renderer);
@@ -228,4 +191,46 @@ void GameRenderer::actualizarElementos(const GameState& command) {
             helmets.emplace_back(graficos, helmetStruct.x_pos, helmetStruct.y_pos);
         }
     }*/
+}
+
+void GameRenderer::drawBackground(const uint8_t background_id) {
+    Renderer& renderer = graficos.GetRenderer();
+
+    //creo una textura vacía para dibujar el fondo
+    SDL2pp::Texture background (renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCENE_WIDTH, SCENE_HEIGHT);
+
+    // Cargar y dibujar el fondo
+    if (background_id == 1) {
+        background = graficos.LoadTexture(IMAGE_PAISAJE);
+    } else {
+        background = graficos.LoadTexture(IMAGE_PAISAJE);
+    }
+
+    renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);
+}
+
+SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom( std::list<ClientDuck>& ducks) {
+    if (ducks.empty()) {
+        return {0, 0, 0, 0};
+    }
+
+    // Inicializo valores extremos con el primer pato
+    int minX = ducks.front().getPosX();
+    int maxX = minX;
+    int minY = ducks.front().getPosY();
+    int maxY = minY;
+
+    // Encuentra las posiciones mínimas y máximas de los patos
+    for ( auto& duck : ducks) {
+        minX = std::min(minX, duck.getPosX());
+        maxX = std::max(maxX, duck.getPosX());
+        minY = std::min(minY, duck.getPosY());
+        maxY = std::max(maxY, duck.getPosY());
+    }
+
+    // Calculo el ancho y alto del rectángulo para cubrir todos los patos
+    int zoomWidth = maxX - minX + DUCK_WIDTH + CANT_ZOOM_WIDTH;
+    int zoomHeight = maxY - minY + DUCK_HEIGHT + CANT_ZOOM_HEIGHT;
+
+    return {minX - CANT_ZOOM_WIDTH / 2, minY - CANT_ZOOM_HEIGHT / 2, zoomWidth, zoomHeight};
 }

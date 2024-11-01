@@ -27,7 +27,7 @@ struct DTOGuns{ //free wapons in the floor
 };
 
 struct DTOPlatform{
-    uint8_t typeOfPlataform;
+    uint8_t type;
     float x_pos;
     float y_pos;
     float width;

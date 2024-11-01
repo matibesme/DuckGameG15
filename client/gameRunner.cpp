@@ -15,8 +15,7 @@ void GameRunner::run() {
         GameState command;
 
         command = queue_receiver.pop();
-        //Background background(graficos , command.lista_plataformas, command.backGround_id);
-        GameRenderer gameRenderer(graficos);
+        GameRenderer gameRenderer(graficos, command.lista_plataformas);
 
         gameRenderer.dibujar(sdl_renderer, command);
         bool actualizar = false;

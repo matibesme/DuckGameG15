@@ -22,7 +22,5 @@ void Platform::draw() {
 
     SDL2pp::Rect destRect(pos_x, pos_y, width, height);
     renderer.Copy(platform, SDL2pp::NullOpt, destRect);
-
-
 }
 

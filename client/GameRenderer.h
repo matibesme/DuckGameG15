@@ -21,10 +21,10 @@ private:
     std::list<Helmet> helmets;
     std::list<Platform> platforms;
     static SDL2pp::Rect calcularRectanguloDeZoom(std::list<ClientDuck>& ducks);
-    void drawBackground(uint8_t background_id);
+    void drawBackground(const uint8_t background_id);
 
 public:
-    explicit GameRenderer(Graficos& graficos);
+    explicit GameRenderer(Graficos& graficos, std::list<DTOPlatform>& platforms);
 
     void dibujar(Renderer& renderer, GameState& command);
 

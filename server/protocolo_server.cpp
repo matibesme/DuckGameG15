@@ -26,7 +26,7 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
     protocolo.sendByte(command.lista_plataformas.size(), dead_connection);
 
     for (const DTOPlatform& dto_platform : command.lista_plataformas) {
-        protocolo.sendByte(dto_platform.typeOfPlataform, dead_connection);
+        protocolo.sendByte(dto_platform.type, dead_connection);
         protocolo.sendFloat(dto_platform.x_pos, dead_connection);
         protocolo.sendFloat(dto_platform.y_pos, dead_connection);
         protocolo.sendFloat(dto_platform.width, dead_connection);
