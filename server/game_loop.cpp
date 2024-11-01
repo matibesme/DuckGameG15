@@ -17,7 +17,8 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         map_bullets(),
         id_balas(1),
         list_plataformas(),
-        load_game_config()
+        load_game_config(),
+        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas)
         {}
 
 void GameLoop::run() {
@@ -56,10 +57,9 @@ void GameLoop::run() {
 
 void GameLoop::checkCommand(CommandClient comando) {
     if (comando.type_of_action == S_MOVEMENT_ACTION) {
-        movementComand(comando.type_of_movement);
-
+        duck_action.movementComand(comando.type_of_movement);
     } else if (comando.type_of_action == S_WEAPON_ACTION) {
-        weaponComand(comando.type_of_movement);
+        duck_action.weaponComand(comando.type_of_movement);
     }
 }
 
@@ -75,68 +75,7 @@ void GameLoop::checkBullets() {
     }
 }
 
-void GameLoop::movementComand(uint8_t comando) {
-    DuckPlayer& personaje = map_personajes[1];
 
-    if (comando==S_RIGTH){
-        personaje.incrementXPos(MOVEMENT_QUANTITY_X);
-        personaje.setTypeOfMoveSprite(S_RIGTH);
-        personaje.setDirection(S_RIGTH);
-    } else if (comando==S_LEFT){
-        personaje.incrementXPos(-MOVEMENT_QUANTITY_X);
-        personaje.setTypeOfMoveSprite(S_LEFT);
-        personaje.setDirection(S_LEFT);
-    } else if (comando==S_JUMP && !personaje.estaSaltando()){
-        personaje.setEnSalto(true);
-        //personaje.setTypeOfMoveSprite(S_JUMP);
-    } else if (comando==S_JUMP && personaje.getVelocidadY() < 0 ){
-        personaje.setFlapping(true);
-        personaje.increaseFlappingCounter();
-        //personaje.setTypeOfMoveSprite(S_FLAP);
-    } else if (comando==S_DOWN){
-        personaje.setTypeOfMoveSprite(S_DOWN);
-    }else if (comando == S_STILL_RIGTH){
-       personaje.setTypeOfMoveSprite(S_STILL_RIGTH);
-    } else if (comando == S_STILL_LEFT){
-        personaje.setTypeOfMoveSprite(S_STILL_LEFT);
-    }
-
-    //compruebo si esta saltando o flapeando en caso de que se mueva hacia los costados
-    if(personaje.isFlapping()){
-        personaje.setTypeOfMoveSprite(S_FLAP);
-    }else if(personaje.estaSaltando()){
-        personaje.setTypeOfMoveSprite(S_JUMP);
-    }
-
-
-}
-
-void GameLoop::weaponComand(uint8_t comando) {
-    DuckPlayer& personaje = map_personajes[1];
-    if (comando==S_PICKUP){
-
-    } else if (comando==S_LEAVE_GUN){
-       // personaje.removeWeapon();
-        
-    } else if (comando==S_SHOOT){
-
-        Weapon& weapon = personaje.getWeapon();
-        if (weapon.isEmptyAmmo()){
-            return;
-        }
-        weapon.setXPos(personaje.getXPos());
-        weapon.setYPos(personaje.getYPos());
-        weapon.setDirection(personaje.getDirection());
-        std::unique_ptr<Bullet> bullet = weapon.shoot();
-        if (bullet == nullptr) {
-            return;
-        }
-        personaje.setXPos(weapon.getXPos());
-        personaje.setYPos(weapon.getYPos());
-        map_bullets.emplace(id_balas, std::move(bullet));
-        id_balas++;
-    }
-}
 
 void GameLoop::sendCompleteScene(){
     GameState command;
