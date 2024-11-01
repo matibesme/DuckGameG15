@@ -147,8 +147,6 @@ if(TALLER_EDITOR)
         editor/levelEditor/leveleditor.cpp  
         editor/levelEditor/leveleditor.h
         editor/levelEditor/leveleditor.ui
-        editor/levelEditor/level.h
-        editor/levelEditor/level.cpp
         editor/levelEditor/leveleditorcontroller.cpp
         editor/levelEditor/leveleditorcontroller.h
         editor/levelEditor/mapobject.h
