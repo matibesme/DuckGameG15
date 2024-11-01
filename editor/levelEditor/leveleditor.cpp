@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QDrag>
 #include <QMimeData>
+#include "leveleditorcontroller.h"
 
 LevelEditor::LevelEditor(QWidget *parent)
     : QMainWindow(parent)
@@ -13,8 +14,9 @@ LevelEditor::LevelEditor(QWidget *parent)
 {
     ui->setupUi(this);
     this->setGeometry(0, 0, 640, 480);
-     setContextMenuPolicy(Qt::CustomContextMenu);
-     connect(this, &QMainWindow::customContextMenuRequested, this, &LevelEditor::show_menu_context);
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    controller = new LevelEditorController(this, this);
+    connect(this, &QMainWindow::customContextMenuRequested, this, &LevelEditor::show_menu_context);
 }
 
 void LevelEditor::show_menu_context(const QPoint &pos){
@@ -26,17 +28,36 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         QAction *action_city_background = new QAction("City", this);
         QAction *action_forest_background = new QAction("Forest", this);
         
-        connect(action_city_background, &QAction::triggered, this, &LevelEditor::action_1_handler);
-        connect(action_forest_background, &QAction::triggered, this, &LevelEditor::action_2_handler);
+        connect(action_city_background, &QAction::triggered,  [this, action_city_background]() {
+        controller->set_background(action_city_background->text());
+        });
+        connect(action_forest_background, &QAction::triggered, [this, action_forest_background]() {
+        controller->set_background(action_forest_background->text());
+        });
 
         submenu_backgrounds->addAction(action_city_background);
         submenu_backgrounds->addAction(action_forest_background);
 
         //Lógica del submenu de plataformas.
         QAction *action_industrial_platform = new QAction("Industrial", this);
-        connect(action_industrial_platform, &QAction::triggered, this, &LevelEditor::action_3_handler);
+        connect(action_industrial_platform, &QAction::triggered, [this, action_industrial_platform]() {
+        controller->set_platform(action_industrial_platform->text());
+        });
         submenu_platform->addAction(action_industrial_platform);
 
+        //Lógica del spawn del pato.
+        QAction *action_spawn_duck = new QAction("Spawn", this);
+        connect(action_spawn_duck, &QAction::triggered, [this, action_spawn_duck]() {
+        controller->set_spawn_duck();
+        });
+        menu.addAction(action_spawn_duck);
+
+        //Guardado
+        QAction *action_save = new QAction("Save", this);
+        connect(action_save, &QAction::triggered, [this, action_save]() {
+        controller->set_spawn_duck();
+        });
+        menu.addAction(action_save);
         //Lógica del menu
         menu.addMenu(submenu_backgrounds);
         menu.addMenu(submenu_platform);
@@ -44,57 +65,9 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         menu.exec(mapToGlobal(pos));
 }
 
-void LevelEditor::action_1_handler(){
-    this->setGeometry(0, 0, 640, 480);
-
-    QPalette pal;
-
-    QPixmap fondo("data/city.png");
-
-    QBrush brush(fondo);
-    pal.setBrush(QPalette::Window, brush);
-    this->setPalette(pal);
-    this->setAutoFillBackground(true);
-
-    this->show();
-}
-
-void LevelEditor::action_2_handler(){
-    this->setGeometry(0, 0, 640, 480);
-
-    QPalette pal;
-
-    QPixmap fondo("data/forest.png");
-
-    QBrush brush(fondo);
-    pal.setBrush(QPalette::Window, brush);
-    this->setPalette(pal);
-    this->setAutoFillBackground(true);
-
-    this->show();
-}
-
-void LevelEditor::action_3_handler(){
-    QLabel *platform_label = new QLabel(this);
-    QPixmap platform_industrial("data/plataforma_prueba.png");
-    platform_label->setPixmap(platform_industrial); 
-    platform_label->setGeometry(100, 100, 32, 15);
-    platform_label->setAcceptDrops(true);
-    platform_label->show();
-
-    QDrag *drag = new QDrag(this);
-    QMimeData *mime_data = new QMimeData;
-
-    mime_data->setImageData(platform_industrial.toImage());
-    drag->setMimeData(mime_data);
-    drag->setPixmap(platform_industrial);
-
-    //Qt::DropAction drop_action = drag->exec();
-    
-}
-
 LevelEditor::~LevelEditor()
 {
     delete ui;
+    delete controller;
 }
 

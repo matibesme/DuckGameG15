@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMenu>
+#include "leveleditorcontroller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class LevelEditor; }
@@ -18,12 +19,10 @@ public:
 
 private:
     Ui::LevelEditor *ui;
+    LevelEditorController* controller;
 
 private slots:
     void show_menu_context(const QPoint &pos);
-    void action_1_handler();
-    void action_2_handler();
-    void action_3_handler();
     
 };
 #endif // LEVELEDITOR_H

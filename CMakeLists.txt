@@ -147,6 +147,12 @@ if(TALLER_EDITOR)
         editor/levelEditor/leveleditor.cpp  
         editor/levelEditor/leveleditor.h
         editor/levelEditor/leveleditor.ui
+        editor/levelEditor/level.h
+        editor/levelEditor/level.cpp
+        editor/levelEditor/leveleditorcontroller.cpp
+        editor/levelEditor/leveleditorcontroller.h
+        editor/levelEditor/mapobject.h
+        editor/levelEditor/mapobject.cpp
         editor/levelEditor/main.cpp
     )
 
@@ -167,7 +173,7 @@ if(TALLER_EDITOR)
         endif()
     endif()
 
-    target_link_libraries(taller_editor PRIVATE Qt${QT_VERSION_MAJOR}::Widgets taller_common SDL2pp::SDL2pp)
+    target_link_libraries(taller_editor PRIVATE Qt${QT_VERSION_MAJOR}::Widgets taller_common SDL2pp::SDL2pp yaml-cpp)
 
     set_target_properties(taller_editor PROPERTIES
         MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
