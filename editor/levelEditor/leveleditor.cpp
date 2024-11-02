@@ -22,7 +22,6 @@ LevelEditor::LevelEditor(QWidget *parent)
 void LevelEditor::show_menu_context(const QPoint &pos){
         QMenu menu(this);
         QMenu* submenu_backgrounds = new QMenu("Backgrounds", this);
-        QMenu* submenu_platform = new QMenu("Platform", this);
         QMenu* submenu_armour = new QMenu("Armour", this);
 
         //Lógica de submenu del fondo.
@@ -38,13 +37,6 @@ void LevelEditor::show_menu_context(const QPoint &pos){
 
         submenu_backgrounds->addAction(action_city_background);
         submenu_backgrounds->addAction(action_forest_background);
-
-        //Lógica del submenu de plataformas.
-        QAction *action_industrial_platform = new QAction("Industrial", this);
-        connect(action_industrial_platform, &QAction::triggered, [this, action_industrial_platform]() {
-        controller->set_platform(action_industrial_platform->text());
-        });
-        submenu_platform->addAction(action_industrial_platform);
 
         //Lógica del spawn del pato.
         QAction *action_spawn_duck = new QAction("Spawn", this);
@@ -82,8 +74,8 @@ void LevelEditor::show_menu_context(const QPoint &pos){
 
         //Lógica del menu
         menu.addMenu(submenu_backgrounds);
-        menu.addMenu(submenu_platform);
         menu.addMenu(submenu_armour);
+        add_submenu_platforms(menu);
         add_submenu_weapons(menu);
 
         menu.exec(mapToGlobal(pos));
@@ -153,6 +145,42 @@ void LevelEditor::add_submenu_weapons(QMenu& menu){
     submenu_weapons->addAction(action_sniper_weapon);
 
     menu.addMenu(submenu_weapons);
+}
+
+void LevelEditor::add_submenu_platforms(QMenu& menu){
+    QMenu* submenu_platform = new QMenu("Platform", this);
+
+    QAction *action_industrial_platform = new QAction("Industrial", this);
+    connect(action_industrial_platform, &QAction::triggered, [this, action_industrial_platform]() {
+    controller->set_platform(action_industrial_platform->text());
+    });
+    submenu_platform->addAction(action_industrial_platform);
+
+    QAction *action_Donut_platform = new QAction("Donut", this);
+    connect(action_Donut_platform, &QAction::triggered, [this, action_Donut_platform]() {
+    controller->set_platform(action_Donut_platform->text());
+    });
+    submenu_platform->addAction(action_Donut_platform);
+
+    QAction *action_Nature_platform = new QAction("Nature", this);
+    connect(action_Nature_platform, &QAction::triggered, [this, action_Nature_platform]() {
+    controller->set_platform(action_Nature_platform->text());
+    });
+    submenu_platform->addAction(action_Nature_platform);
+
+    QAction *action_Space_platform = new QAction("Space", this);
+    connect(action_Space_platform, &QAction::triggered, [this, action_Space_platform]() {
+    controller->set_platform(action_Space_platform->text());
+    });
+    submenu_platform->addAction(action_Space_platform);
+
+    QAction *action_Underground_platform = new QAction("Underground", this);
+    connect(action_Underground_platform, &QAction::triggered, [this, action_Underground_platform]() {
+    controller->set_platform(action_Underground_platform->text());
+    });
+    submenu_platform->addAction(action_Underground_platform);
+
+    menu.addMenu(submenu_platform);
 }
 
 LevelEditor::~LevelEditor()
