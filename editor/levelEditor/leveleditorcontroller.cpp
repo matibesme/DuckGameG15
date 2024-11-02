@@ -57,9 +57,16 @@ void LevelEditorController::set_spawn_duck(){
 
 }
 
-/*void LevelEditorController::set_spawn_gun(const QString &gun_type){
+void LevelEditorController::set_spawn_weapon(const QString &gun_type){
+    QString weapon_path = QString::fromStdString(path_maker.get_weapon_path(gun_type.toStdString()));;
 
-}*/
+    QPixmap weapon(weapon_path);
+    MapObject* weapon_item = new MapObject(weapon, gun_type);
+    
+    weapon_item->setPos(100, 100);
+    scene->addItem(weapon_item);
+    weapons.push_back(weapon_item);
+}
 void LevelEditorController::set_spawn_box(){
 
 }
@@ -101,6 +108,24 @@ void LevelEditorController::save_map(){
         out << YAML::Value << duck_spawns.at(i)->pixmap().height();
         out << YAML::Key << "width";
         out << YAML::Value << duck_spawns.at(i)->pixmap().width();
+        out << YAML::EndMap;
+    }
+    out << YAML::EndSeq;
+
+    out << YAML::Key << "weapon spawns";
+    out << YAML::Value << YAML::BeginSeq;
+    for(int i = 0; i < weapons.size(); i++){
+        out << YAML::BeginMap;
+        out << YAML::Key << "pos_x";
+        out << YAML::Value << weapons.at(i)->x();
+        out << YAML::Key << "pos_y";
+        out << YAML::Value << weapons.at(i)->y();
+        out << YAML::Key << "height";
+        out << YAML::Value << weapons.at(i)->pixmap().height();
+        out << YAML::Key << "width";
+        out << YAML::Value << weapons.at(i)->pixmap().width();
+        out << YAML::Key << "type";
+        out << YAML::Value << weapons.at(i)->get_type().toStdString();
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;

@@ -19,7 +19,7 @@ private:
     std::string background_type;
     QList<QGraphicsPixmapItem*> duck_spawns;
     QList<MapObject*> platforms;
-    QList<MapObject*> guns;
+    QList<MapObject*> weapons;
     QList<MapObject*> boxes;
     PathMaker path_maker;
 
@@ -28,7 +28,7 @@ public:
     void set_background(const QString &background_type);
     void set_platform(const QString &platform_type);
     void set_spawn_duck();
-    /*void set_spawn_gun(const QString &gun_type);*/
+    void set_spawn_weapon(const QString &weapon_type);
     void set_spawn_box();
     void save_map();
 };

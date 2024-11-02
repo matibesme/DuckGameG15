@@ -20,6 +20,7 @@ public:
 private:
     Ui::LevelEditor *ui;
     LevelEditorController* controller;
+    void add_submenu_weapons(QMenu& menu);
 
 private slots:
     void show_menu_context(const QPoint &pos);
