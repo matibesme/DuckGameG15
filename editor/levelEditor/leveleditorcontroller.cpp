@@ -1,5 +1,6 @@
 #include "leveleditorcontroller.h"
 #include "mapobject.h"
+#include "pathmaker.h"
 
 #include <QPalette>
 #include <QPixmap>
@@ -22,13 +23,7 @@ LevelEditorController::LevelEditorController(QMainWindow *window, QObject *paren
 }
 
 void LevelEditorController::set_background(const QString &background_name){
-    QString background_path;
-
-    if (background_name.toStdString() == "City") {
-        background_path = "data/city.png";
-    } else if (background_name.toStdString() == "Forest") {
-        background_path = "data/forest.png";
-    }
+    QString background_path = QString::fromStdString(path_maker.get_background_path(background_name.toStdString()));
 
     QPixmap background(background_path);
     scene->setBackgroundBrush(background);
@@ -37,14 +32,10 @@ void LevelEditorController::set_background(const QString &background_name){
 }
 
 void LevelEditorController::set_platform(const QString &platform_type){
-    QString platform_path;
+    QString platform_path = QString::fromStdString(path_maker.get_platform_path(platform_type.toStdString()));;
 
-    if (platform_type.toStdString() == "Industrial") {
-        platform_path = "data/plataforma_prueba.png";
-        
-    }
     QPixmap platform(platform_path);
-    MapObject* platform_item = new MapObject(platform, "Industrial");
+    MapObject* platform_item = new MapObject(platform, platform_type);
     
     platform_item->setPos(100, 100);
     scene->addItem(platform_item);

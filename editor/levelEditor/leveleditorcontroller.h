@@ -1,6 +1,7 @@
 #ifndef LEVEL_EDITOR_CONTROLLER_H
 #define LEVEL_EDITOR_CONTROLLER_H
 #include "mapobject.h"
+#include "pathmaker.h"
 
 #include <QMainWindow>
 #include <QLabel>
@@ -19,6 +20,7 @@ private:
     QList<MapObject*> platforms;
     QList<MapObject*> guns;
     QList<MapObject*> boxes;
+    PathMaker path_maker;
 
 public:
     LevelEditorController(QMainWindow *window, QObject *parent = nullptr);
