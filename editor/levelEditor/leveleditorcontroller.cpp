@@ -71,7 +71,6 @@ void LevelEditorController::save_map(){
 
     out << YAML::Key << "plataforms";
     out << YAML::Value << YAML::BeginSeq;
-    std::cout << "El tamaño de la lista es: " << platforms.size();
     for(int i = 0; i < platforms.size(); i++){
         out << YAML::BeginMap;
         out << YAML::Key << "pos_x";
