@@ -43,6 +43,17 @@ void LevelEditorController::set_platform(const QString &platform_type){
 }
 
 void LevelEditorController::set_spawn_duck(){
+    QString duck_path = "data/whiteDuck.png";
+
+    QRect rect(0, 7, 32, 24);
+    QPixmap sprite(duck_path);
+    QPixmap duck = sprite.copy(rect);
+
+    QGraphicsPixmapItem* duck_spawn = new QGraphicsPixmapItem(duck);
+    duck_spawn->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+    duck_spawn->setPos(100, 100);
+    scene->addItem(duck_spawn);
+    duck_spawns.push_back(duck_spawn);
 
 }
 

@@ -17,6 +17,7 @@ private:
     QGraphicsScene *scene;
     QGraphicsView *view;
     std::string background_type;
+    QList<QGraphicsPixmapItem*> duck_spawns;
     QList<MapObject*> platforms;
     QList<MapObject*> guns;
     QList<MapObject*> boxes;
