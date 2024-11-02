@@ -20,7 +20,8 @@ private:
     QList<QGraphicsPixmapItem*> duck_spawns;
     QList<MapObject*> platforms;
     QList<MapObject*> weapons;
-    QList<MapObject*> boxes;
+    QList<MapObject*> armours;
+    QList<QGraphicsPixmapItem*> boxes;
     PathMaker path_maker;
 
 public:
@@ -29,6 +30,7 @@ public:
     void set_platform(const QString &platform_type);
     void set_spawn_duck();
     void set_spawn_weapon(const QString &weapon_type);
+    void set_spawn_armour(const QString &armour_type);
     void set_spawn_box();
     void save_map();
 };

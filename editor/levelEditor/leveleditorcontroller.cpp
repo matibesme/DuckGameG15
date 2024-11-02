@@ -67,9 +67,29 @@ void LevelEditorController::set_spawn_weapon(const QString &gun_type){
     scene->addItem(weapon_item);
     weapons.push_back(weapon_item);
 }
-void LevelEditorController::set_spawn_box(){
 
+void LevelEditorController::set_spawn_box(){
+    QString box_path = "data/objects/itemBox.png";
+    QPixmap box(box_path);
+
+    QGraphicsPixmapItem* box_spawn = new QGraphicsPixmapItem(box);
+    box_spawn->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+    box_spawn->setPos(100, 100);
+    scene->addItem(box_spawn);
+    boxes.push_back(box_spawn);
 }
+
+void LevelEditorController::set_spawn_armour(const QString &armour_type){
+    QString armour_path = QString::fromStdString(path_maker.get_armour_path(armour_type.toStdString()));;
+
+    QPixmap armour(armour_path);
+    MapObject* armour_item = new MapObject(armour, armour_type);
+    
+    armour_item->setPos(100, 100);
+    scene->addItem(armour_item);
+    armours.push_back(armour_item);
+}
+
 
 void LevelEditorController::save_map(){
     YAML::Emitter out;
@@ -129,7 +149,40 @@ void LevelEditorController::save_map(){
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;
+
+    out << YAML::Key << "box spawns";
+    out << YAML::Value << YAML::BeginSeq;
+    for(int i = 0; i < boxes.size(); i++){
+        out << YAML::BeginMap;
+        out << YAML::Key << "pos_x";
+        out << YAML::Value << boxes.at(i)->x();
+        out << YAML::Key << "pos_y";
+        out << YAML::Value << boxes.at(i)->y();
+        out << YAML::Key << "height";
+        out << YAML::Value << boxes.at(i)->pixmap().height();
+        out << YAML::Key << "width";
+        out << YAML::Value << boxes.at(i)->pixmap().width();
+        out << YAML::EndMap;
+    }
     out << YAML::EndMap;
+
+    out << YAML::Key << "armour spawns";
+    out << YAML::Value << YAML::BeginSeq;
+    for(int i = 0; i < armours.size(); i++){
+        out << YAML::BeginMap;
+        out << YAML::Key << "pos_x";
+        out << YAML::Value << armours.at(i)->x();
+        out << YAML::Key << "pos_y";
+        out << YAML::Value << armours.at(i)->y();
+        out << YAML::Key << "height";
+        out << YAML::Value << armours.at(i)->pixmap().height();
+        out << YAML::Key << "width";
+        out << YAML::Value << armours.at(i)->pixmap().width();
+        out << YAML::Key << "type";
+        out << YAML::Value << armours.at(i)->get_type().toStdString();
+        out << YAML::EndMap;
+    }
+    out << YAML::EndSeq;
 
     std::ofstream fout("a_map.yaml");
     fout << out.c_str();

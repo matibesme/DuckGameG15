@@ -26,4 +26,4 @@ private slots:
     void show_menu_context(const QPoint &pos);
     
 };
-#endif // LEVELEDITOR_H
+#endif

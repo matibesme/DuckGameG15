@@ -23,6 +23,7 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         QMenu menu(this);
         QMenu* submenu_backgrounds = new QMenu("Backgrounds", this);
         QMenu* submenu_platform = new QMenu("Platform", this);
+        QMenu* submenu_armour = new QMenu("Armour", this);
 
         //Lógica de submenu del fondo.
         QAction *action_city_background = new QAction("City", this);
@@ -52,15 +53,37 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         });
         menu.addAction(action_spawn_duck);
 
+        //Lógica de las cajas
+        QAction *action_itemBox_spawn = new QAction("itemBox", this);
+        connect(action_itemBox_spawn, &QAction::triggered, [this, action_itemBox_spawn]() {
+        controller->set_spawn_box();
+        });
+        menu.addAction(action_itemBox_spawn);
+
+        //Lógica del submenu de armaduras.
+        QAction *action_chestplate_armour = new QAction("chestplate", this);
+        connect(action_chestplate_armour, &QAction::triggered, [this, action_chestplate_armour]() {
+        controller->set_spawn_armour(action_chestplate_armour->text());
+        });
+        submenu_armour->addAction(action_chestplate_armour);
+
+        QAction *action_knigthsHelmet_armour = new QAction("knightsHelmet", this);
+        connect(action_knigthsHelmet_armour, &QAction::triggered, [this, action_knigthsHelmet_armour]() {
+        controller->set_spawn_armour(action_knigthsHelmet_armour->text());
+        });
+        submenu_armour->addAction(action_knigthsHelmet_armour);
+
         //Guardado
         QAction *action_save = new QAction("Save", this);
         connect(action_save, &QAction::triggered, [this, action_save]() {
         controller->save_map();
         });
         menu.addAction(action_save);
+
         //Lógica del menu
         menu.addMenu(submenu_backgrounds);
         menu.addMenu(submenu_platform);
+        menu.addMenu(submenu_armour);
         add_submenu_weapons(menu);
 
         menu.exec(mapToGlobal(pos));
