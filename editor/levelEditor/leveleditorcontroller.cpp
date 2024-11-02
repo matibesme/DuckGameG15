@@ -88,6 +88,22 @@ void LevelEditorController::save_map(){
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;
+
+    out << YAML::Key << "duck spawns";
+    out << YAML::Value << YAML::BeginSeq;
+    for(int i = 0; i < duck_spawns.size(); i++){
+        out << YAML::BeginMap;
+        out << YAML::Key << "pos_x";
+        out << YAML::Value << duck_spawns.at(i)->x();
+        out << YAML::Key << "pos_y";
+        out << YAML::Value << duck_spawns.at(i)->y();
+        out << YAML::Key << "height";
+        out << YAML::Value << duck_spawns.at(i)->pixmap().height();
+        out << YAML::Key << "width";
+        out << YAML::Value << duck_spawns.at(i)->pixmap().width();
+        out << YAML::EndMap;
+    }
+    out << YAML::EndSeq;
     out << YAML::EndMap;
 
     std::ofstream fout("a_map.yaml");
