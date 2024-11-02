@@ -55,7 +55,7 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         //Guardado
         QAction *action_save = new QAction("Save", this);
         connect(action_save, &QAction::triggered, [this, action_save]() {
-        controller->set_spawn_duck();
+        controller->save_map();
         });
         menu.addAction(action_save);
         //Lógica del menu

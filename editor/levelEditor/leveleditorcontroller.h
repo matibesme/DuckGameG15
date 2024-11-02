@@ -15,6 +15,7 @@ private:
     QMainWindow* window;
     QGraphicsScene *scene;
     QGraphicsView *view;
+    std::string background_type;
     QList<MapObject*> platforms;
     QList<MapObject*> guns;
     QList<MapObject*> boxes;
@@ -24,7 +25,7 @@ public:
     void set_background(const QString &background_type);
     void set_platform(const QString &platform_type);
     void set_spawn_duck();
-    void set_spawn_gun(const QString &gun_type);
+    /*void set_spawn_gun(const QString &gun_type);*/
     void set_spawn_box();
     void save_map();
 };
