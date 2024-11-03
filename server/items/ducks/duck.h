@@ -36,6 +36,7 @@ class DuckPlayer: public Objeto {
         bool estaSaltando();
 
         float& getVelocidadY();
+        void stopJump(float y_pos_);
         void executeAction();
 
         bool isAlive();

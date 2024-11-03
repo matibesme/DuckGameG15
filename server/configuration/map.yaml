@@ -15,8 +15,8 @@ platforms:
 
 
 duck:
-    - x: 50
-      y: 386
+    - x: 60
+      y: 68
       life: 100
 
 respawn_weapons_point:

@@ -18,14 +18,15 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         id_balas(1),
         list_plataformas(),
         load_game_config(),
-        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas)
+        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas),
+        list_boxes()
         {}
 
 void GameLoop::run() {
     try {
         load_game_config.loadGame(list_plataformas);
         map_personajes.emplace(1, DuckPlayer(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
-        map_personajes.emplace(2, DuckPlayer(2, 2, 100, POSICION_INICIAL_Y));
+
         /*
         list_free_weapons.emplace_back(CowboyPistol(S_COWBOY_GUN, 1, 100, 100, 10, 10, 10, 10));
         list_free_weapons.emplace_back(DuelPistol(S_PISTOLA_DUELOS_GUN, 2, 200, 200, 10, 10, 10, 10));
@@ -105,11 +106,35 @@ void GameLoop::sendCompleteScene(){
         DTOGuns dto_gun = {weapon.second->getType(), weapon.second->getXPos(), weapon.second->getYPos()};
         command.lista_guns.push_back(dto_gun);
     }
+
+    for (auto& box : list_boxes) {
+
+        //command.lista_boxes.push_back();
+    }
     queues_map.sendMessagesToQueues(command);
 }
 
 void GameLoop::paraCadaPatoAction() {
     for (auto& personaje : map_personajes) {
+        bool is_on_platform = false;
+        for (auto& platforms : list_plataformas) {
+            if ( personaje.second.getXPos() >= platforms.x_pos && personaje.second.getXPos()+DUCK_WIDTH <= platforms.x_pos + platforms.width) {
+                if (personaje.second.getYPos() +DUCK_HEIGHT == platforms.y_pos) {
+                    if (personaje.second.estaSaltando() && personaje.second.getVelocidadY() < 0) {
+                        personaje.second.stopJump(platforms.y_pos-DUCK_HEIGHT);
+                        std::cout << "esta en plataforma" << std::endl;
+                    }
+                    is_on_platform = true;
+                    break;
+                }
+            }
+        }
+
+        if (!is_on_platform && !personaje.second.estaSaltando()) {
+            personaje.second.setEnSalto(true);
+            personaje.second.setVelocidadY(0);
+
+        }
         personaje.second.executeAction();
         if (personaje.second.getWeapon().getType() == GRANADA_GUN && personaje.second.getWeapon().isActive()) {
             std::unique_ptr<Bullet> bullet = personaje.second.getWeapon().shoot();
