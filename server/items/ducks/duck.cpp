@@ -55,6 +55,18 @@ float& DuckPlayer::getVelocidadY(){
     return velocidad;
 }
 
+void DuckPlayer::stopJump(float y_pos_ )
+{
+
+        y_pos = y_pos_;
+        saltando = false;
+        is_flapping = false;
+        gravity = GRAVEDAD;
+        velocidad = VELOCIDAD_INICIAL;
+        typeOfMove = (direction == RIGHT) ? STILL_RIGHT : STILL_LEFT;
+
+}
+
 void DuckPlayer::executeAction() {
     if (saltando) {
         if (is_flapping) {
@@ -71,14 +83,13 @@ void DuckPlayer::executeAction() {
         getWeapon().setYPos(y_pos);
         velocidad -= gravity;
 
-        if (y_pos >= POSICION_INICIAL_Y) {
-            y_pos = POSICION_INICIAL_Y;
-            saltando = false;
-            is_flapping = false;
-            gravity = GRAVEDAD;
-            velocidad = VELOCIDAD_INICIAL;
-            typeOfMove = (direction == RIGHT) ? STILL_RIGHT : STILL_LEFT;
+        if (y_pos == MAP_LIMIT_Y) {
+            std::cout << "murio" << std::endl;
+            is_alive = false;
+            stopJump(MAP_LIMIT_Y);
         }
+
+
 
     }
 

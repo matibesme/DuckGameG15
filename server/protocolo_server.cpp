@@ -64,6 +64,14 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
         protocolo.sendFloat(gun.y_pos, dead_connection);
     }
 
+    protocolo.sendByte(command.lista_boxes.size(), dead_connection);
+    for (const DTOBoxes& box : command.lista_boxes) {
+        protocolo.sendByte(box.id, dead_connection);
+        protocolo.sendFloat(box.x_pos, dead_connection);
+        protocolo.sendFloat(box.y_pos, dead_connection);
+        protocolo.sendByte(box.type, dead_connection);
+    }
+
 }
 
 

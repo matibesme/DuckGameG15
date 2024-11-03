@@ -41,18 +41,21 @@ struct DTOBoxes{
     uint8_t type;
 };
 
-struct GameState {
+struct GameState
+{
     uint8_t backGround_id;
     
     std::list<DTOPlatform> lista_plataformas;
 
-    std::list<DTOBoxes> lista_boxes;
+
     
     std::list<DTODuck> lista_patos;
 
     std::list<DTOBullet> lista_balas;
 
     std::list<DTOGuns> lista_guns;
+
+    std::list<DTOBoxes> lista_boxes;
 
 };
 

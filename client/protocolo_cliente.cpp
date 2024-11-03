@@ -85,7 +85,19 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
         float y_pos = protocolo.receiveFloat(dead_connection);
         guns.push_back({gun_type, x_pos, y_pos});
     }
-    return {background_id,lista_plataformas,lista_patos, bullets, guns};
+
+    std::list<DTOBoxes> lista_boxes;
+    uint8_t boxes_quantity = protocolo.receiveByte(dead_connection);
+    for (int i = 0; i < boxes_quantity; i++) {
+        uint8_t id = protocolo.receiveByte(dead_connection);
+        float x_pos = protocolo.receiveFloat(dead_connection);
+        float y_pos = protocolo.receiveFloat(dead_connection);
+        uint8_t type = protocolo.receiveByte(dead_connection);
+        lista_boxes.push_back({id, x_pos, y_pos, type});
+    }
+
+
+    return {background_id,lista_plataformas,lista_patos, bullets, guns, lista_boxes};
 
 }
 
