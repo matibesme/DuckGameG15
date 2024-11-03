@@ -143,23 +143,63 @@ if(TALLER_SERVER)
 endif()
 
 if(TALLER_EDITOR)
-    # HEY!! TODO XXX: Change the name of the executable to the one you like!
-    add_executable(taller_editor)
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)
+    set(CMAKE_AUTOUIC ON)
+    set(CMAKE_AUTOMOC ON)
+    set(CMAKE_AUTORCC ON)
 
-    # Make them depend on taller_common lib
-    add_dependencies(taller_editor taller_common SDL2pp::SDL2pp)
+    find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
-    # Add source files and enable warnings
-    # HEY!! TODO XXX: add more subfolders here
-    add_subdirectory(editor)
+    set(PROJECT_SOURCES
+        editor/levelEditor/leveleditor.cpp  
+        editor/levelEditor/leveleditor.h
+        editor/levelEditor/leveleditor.ui
+        editor/levelEditor/leveleditorcontroller.cpp
+        editor/levelEditor/leveleditorcontroller.h
+        editor/levelEditor/pathmaker.h
+        editor/levelEditor/pathmaker.cpp
+        editor/levelEditor/mapobject.h
+        editor/levelEditor/mapobject.cpp
+        editor/levelEditor/main.cpp
+    )
 
+    if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+        qt_add_executable(taller_editor
+            MANUAL_FINALIZATION
+            ${PROJECT_SOURCES}
+        )
+    else()
+        if(ANDROID)
+            add_library(taller_editor SHARED
+                ${PROJECT_SOURCES}
+            )
+        else()
+            add_executable(taller_editor
+                ${PROJECT_SOURCES}
+            )
+        endif()
+    endif()
+
+    target_link_libraries(taller_editor PRIVATE Qt${QT_VERSION_MAJOR}::Widgets taller_common SDL2pp::SDL2pp yaml-cpp)
+
+    set_target_properties(taller_editor PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE TRUE
+    )
+
+    if(QT_VERSION_MAJOR EQUAL 6)
+        qt_finalize_executable(taller_editor)
+    endif()
+
+    
     set_project_warnings(taller_editor ${TALLER_MAKE_WARNINGS_AS_ERRORS} FALSE)
 
-    # add libSDL2pp's headers
+    
     target_include_directories(taller_editor PRIVATE ${libSDL2pp_SOURCE_DIR})
-
-    # Link the taller_common lib target
-    target_link_libraries(taller_editor taller_common SDL2pp::SDL2pp)
 endif()
 
 
