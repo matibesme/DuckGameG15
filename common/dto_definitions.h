@@ -34,10 +34,19 @@ struct DTOPlatform{
     float height;
 };
 
+struct DTOBoxes{
+    uint8_t id;
+    float x_pos;
+    float y_pos;
+    uint8_t type;
+};
+
 struct GameState {
     uint8_t backGround_id;
     
     std::list<DTOPlatform> lista_plataformas;
+
+    std::list<DTOBoxes> lista_boxes;
     
     std::list<DTODuck> lista_patos;
 

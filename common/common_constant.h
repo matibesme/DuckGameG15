@@ -30,6 +30,8 @@ constexpr int SCENE_WIDTH = 800;
 constexpr int SCENE_HEIGHT = 600;
 constexpr int MAP_HEIGHT = 64 * DUCK_HEIGHT;
 constexpr int MAP_WIDTH = 64 * DUCK_WIDTH;
+constexpr int WIDTH_BOX = 32;
+constexpr int HEIGHT_BOX = 32;
 
 // Protocolo
 constexpr uint8_t FIRST_SEND_BYTE = 0x03;
@@ -97,6 +99,14 @@ constexpr uint8_t NO_ARMOR = 0x73;
 constexpr uint8_t ARMOR = 0x74;
 constexpr uint8_t NO_HELMET = 0x75;
 constexpr uint8_t HELMET = 0x76;
+
+// Plataformas
+constexpr uint8_t TYPE_PLATFORM_DONUT = 0x77;
+constexpr uint8_t TYPE_PLATFORM_INDUSTRIAL = 0x78;
+constexpr uint8_t TYPE_PLATFORM_NATURE = 0x79;
+constexpr uint8_t TYPE_PLATFORM_SPACE = 0x80;
+constexpr uint8_t TYPE_PLATFORM_UNDERGROUND = 0x81;
+
 
 // Constantes adicionales
 constexpr char SALIDA = 'q';
