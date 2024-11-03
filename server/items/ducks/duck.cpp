@@ -57,7 +57,7 @@ float& DuckPlayer::getVelocidadY(){
 
 void DuckPlayer::stopJump(float y_pos_ )
 {
-
+        counter_flapping = 0;
         y_pos = y_pos_;
         saltando = false;
         is_flapping = false;

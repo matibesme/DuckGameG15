@@ -23,6 +23,8 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
 void GameLoop::run() {
     try {
         load_game_config.loadGame(list_plataformas);
+        //imprimir plataformas
+
         map_personajes.emplace(1, DuckPlayer(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
 
         /*
@@ -115,11 +117,11 @@ void GameLoop::sendCompleteScene(){
 void GameLoop::paraCadaPatoAction() {
     for (auto& personaje : map_personajes) {
         bool is_on_platform = false;
-        for (auto& platforms : list_plataformas) {
-            if ( personaje.second.getXPos() >= platforms.x_pos && personaje.second.getXPos()+DUCK_WIDTH <= platforms.x_pos + platforms.width) {
-                if (personaje.second.getYPos() +DUCK_HEIGHT == platforms.y_pos) {
+        for (auto& platform : list_plataformas) {
+            if ( personaje.second.getXPos() >= platform.x_pos && personaje.second.getXPos()+DUCK_WIDTH <= platform.x_pos + platform.width) {
+                if (personaje.second.getYPos() +DUCK_HEIGHT == platform.y_pos) {
                     if (personaje.second.estaSaltando() && personaje.second.getVelocidadY() < 0) {
-                        personaje.second.stopJump(platforms.y_pos-DUCK_HEIGHT);
+                        personaje.second.stopJump(platform.y_pos-DUCK_HEIGHT);
 
                     }
                     is_on_platform = true;
