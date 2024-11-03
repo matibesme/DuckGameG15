@@ -21,7 +21,7 @@ PewPewLaser::PewPewLaser(uint8_t type, uint8_t id, float x_pos, float y_pos, uin
             spread = -maxSpread; // Bala de abajo
         }
 
-        beams_vector.emplace_back(S_ESCOPETA_BULLET, i, 0, 0, damage, range, spread);
+        beams_vector.emplace_back(S_PEW_PEW_LASER_BULLET, i, 0, 0, damage, range, spread);
     }
 
 }
