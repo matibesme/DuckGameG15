@@ -42,7 +42,7 @@ void GameRenderer::dibujar(Renderer& renderer, GameState& command) {
     renderer.Clear();
 
     // Dibujo los objetos en la textura
-    //plataformas
+    for (auto& box : boxes) box.draw(renderer);
     for (auto& platform : platforms) platform.draw();
     for (auto& duck : ducks) duck.draw(renderer);
     for (auto& bullet : bullets) bullet.draw(renderer);
@@ -208,6 +208,35 @@ void GameRenderer::actualizarElementos(const GameState& command) {
             helmets.emplace_back(graficos, helmetStruct.x_pos, helmetStruct.y_pos);
         }
     }*/
+
+    //SEXTO ACTUALIZO CAJAS
+    for (auto it = boxes.begin(); it != boxes.end();) {
+        auto boxInCommand = std::find_if(command.lista_boxes.begin(),
+                                         command.lista_boxes.end(),
+                                            [it](const DTOBoxes& boxStruct) {
+                                                return boxStruct.id == it->getId();
+                                            });
+        if (boxInCommand != command.lista_boxes.end()) {
+            // Actualizar si la caja está en ambas listas
+            ++it;
+        } else {
+            // Eliminar si solo está en la lista local
+            it = boxes.erase(it);
+        }
+    }
+
+    // Agregar cajas que están en el comando pero no en la lista local
+    for (const auto& boxStruct : command.lista_boxes) {
+        auto it = std::find_if(boxes.begin(), boxes.end(),
+                               [&boxStruct](Box& box) {
+                                   return box.getId() == boxStruct.id;
+                               });
+        if (it == boxes.end()) {
+            boxes.emplace_back(boxStruct.id, boxStruct.x_pos, boxStruct.y_pos, graficos);
+        }
+    }
+
+
 }
 
 void GameRenderer::drawBackground(const uint8_t background_id) {

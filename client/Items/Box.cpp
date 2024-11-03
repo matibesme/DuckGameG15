@@ -20,3 +20,7 @@ void Box::draw(SDL2pp::Renderer& renderer) {
 
     renderer.Copy(texture, area, destRect);
 }
+
+uint8_t Box::getId() {
+    return idBox;
+}

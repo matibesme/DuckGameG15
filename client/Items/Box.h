@@ -16,6 +16,9 @@ public:
     // Dibuja la caja en pantalla, si no ha sido destruida
     void draw(SDL2pp::Renderer& renderer);
 
+    // Devuelve el id de la caja
+    uint8_t getId();
+
 private:
     Graficos& graficos;
     uint8_t idBox;
