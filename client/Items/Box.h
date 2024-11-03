@@ -16,6 +16,9 @@ public:
     // Dibuja la caja en pantalla, si no ha sido destruida
     void draw(SDL2pp::Renderer& renderer);
 
+    // Actualiza la posicion de la caja
+    void update(uint8_t type);
+
     // Devuelve el id de la caja
     uint8_t getId();
 
@@ -23,6 +26,7 @@ private:
     Graficos& graficos;
     uint8_t idBox;
     float pos_x, pos_y;
+    uint8_t type;
     bool isDestroyed;
 };
 

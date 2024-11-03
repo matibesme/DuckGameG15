@@ -18,9 +18,7 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         id_balas(1),
         list_plataformas(),
         load_game_config(),
-        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas),
-        list_boxes()
-        {}
+        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas){}
 
 void GameLoop::run() {
     try {
@@ -106,11 +104,11 @@ void GameLoop::sendCompleteScene(){
         DTOGuns dto_gun = {weapon.second->getType(), weapon.second->getXPos(), weapon.second->getYPos()};
         command.lista_guns.push_back(dto_gun);
     }
-
+    /*
     for (auto& box : list_boxes) {
 
-        //command.lista_boxes.push_back();
-    }
+
+    }*/
     queues_map.sendMessagesToQueues(command);
 }
 
@@ -122,7 +120,7 @@ void GameLoop::paraCadaPatoAction() {
                 if (personaje.second.getYPos() +DUCK_HEIGHT == platforms.y_pos) {
                     if (personaje.second.estaSaltando() && personaje.second.getVelocidadY() < 0) {
                         personaje.second.stopJump(platforms.y_pos-DUCK_HEIGHT);
-                        std::cout << "esta en plataforma" << std::endl;
+
                     }
                     is_on_platform = true;
                     break;

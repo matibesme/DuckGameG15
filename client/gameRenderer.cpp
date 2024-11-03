@@ -235,8 +235,6 @@ void GameRenderer::actualizarElementos(const GameState& command) {
             boxes.emplace_back(boxStruct.id, boxStruct.x_pos, boxStruct.y_pos, graficos);
         }
     }
-
-
 }
 
 void GameRenderer::drawBackground(const uint8_t background_id) {

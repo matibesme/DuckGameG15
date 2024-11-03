@@ -6,7 +6,7 @@ LoadGameFile::LoadGameFile() {}
 void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms) {
     
     YAML::Node map = YAML::LoadFile("../server/configuration/map.yaml");
-
+    SCENE_ID=map["scene_id"].as<uint8_t>();
     POSICION_INICIAL_X = map["duck"][0]["x"].as<float>();
     POSICION_INICIAL_Y = map["duck"][0]["y"].as<float>();
     LIFE = map["duck"][0]["life"].as<uint8_t>();

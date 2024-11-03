@@ -2,11 +2,11 @@
 #include "Platform.h"
 #include "../common/common_constant.h"
 
-#define IMAGE_PLATAFORMA_DONUT DATA_PATH "/platform/Donut.png"
-#define IMAGE_PLATAFORMA_INDUSTRIAL DATA_PATH "/platform/Industrial.png"
-#define IMAGE_PLATAFORMA_NATURE DATA_PATH "/platform/Nature.png"
-#define IMAGE_PLATAFORMA_SPACE DATA_PATH "/platform/Space.png"
-#define IMAGE_PLATAFORMA_UNDERGROUND DATA_PATH "/platform/Underground.png"
+#define IMAGE_PLATAFORMA_DONUT DATA_PATH "/platforms/Donut.png"
+#define IMAGE_PLATAFORMA_INDUSTRIAL DATA_PATH "/platforms/Industrial.png"
+#define IMAGE_PLATAFORMA_NATURE DATA_PATH "/platforms/Nature.png"
+#define IMAGE_PLATAFORMA_SPACE DATA_PATH "/platforms/Space.png"
+#define IMAGE_PLATAFORMA_UNDERGROUND DATA_PATH "/platforms/Underground.png"
 
 Platform::Platform( float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t type
                     , float width, float height)

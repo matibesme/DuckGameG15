@@ -1,13 +1,13 @@
-scene_id: 1
+scene_id: 0x90
 
 platforms:
-  - type: 0
+  - type: 0x77
     x: 0
     y: 386
     width: 100
     height: 10
 
-  - type: 0
+  - type: 0x77
     x: 60
     y: 100
     width: 100

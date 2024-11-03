@@ -21,6 +21,10 @@ void Box::draw(SDL2pp::Renderer& renderer) {
     renderer.Copy(texture, area, destRect);
 }
 
+void Box::update(uint8_t type_) {
+    type = type_;
+}
+
 uint8_t Box::getId() {
     return idBox;
 }

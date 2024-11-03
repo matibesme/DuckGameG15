@@ -44,7 +44,7 @@ void DuckPlayer::setTypeOfMoveSprite(uint8_t orientation) {
 }
 
 void DuckPlayer::setEnSalto(bool enSalto) {
-    this->saltando=enSalto;
+    saltando=enSalto;
 }
 
 void DuckPlayer::setVelocidadY(float velocidad_) {
