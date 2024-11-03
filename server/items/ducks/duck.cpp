@@ -79,6 +79,7 @@ void DuckPlayer::executeAction() {
                 typeOfMove= JUMP;
             }
         }
+        std::cout << "posicion y: " << y_pos << std::endl;
         y_pos -= velocidad;
         getWeapon().setYPos(y_pos);
         velocidad -= gravity;

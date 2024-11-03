@@ -119,10 +119,9 @@ void GameLoop::paraCadaPatoAction() {
         bool is_on_platform = false;
         for (auto& platform : list_plataformas) {
             if ( personaje.second.getXPos() >= platform.x_pos && personaje.second.getXPos()+DUCK_WIDTH <= platform.x_pos + platform.width) {
-                if (personaje.second.getYPos() +DUCK_HEIGHT == platform.y_pos) {
-                    if (personaje.second.estaSaltando() && personaje.second.getVelocidadY() < 0) {
+                if (personaje.second.getYPos()+DUCK_HEIGHT==platform.y_pos|| (personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos &&  personaje.second.getYPos()+personaje.second.getVelocidadY() <= platform.y_pos)) {
+                    if (personaje.second.getVelocidadY() < 0) {
                         personaje.second.stopJump(platform.y_pos-DUCK_HEIGHT);
-
                     }
                     is_on_platform = true;
                     break;
