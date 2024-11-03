@@ -110,6 +110,8 @@ if(TALLER_SERVER)
             server/items/weapons/sniper.cpp
             server/items/weapons/shotgun.h
             server/items/weapons/shotgun.cpp
+            server/items/weapons/pewpew_laser.h
+            server/items/weapons/pewpew_laser.cpp
     )
 
     # Incluir el directorio 'server' para los archivos de encabezado (opcional)

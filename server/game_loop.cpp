@@ -134,6 +134,17 @@ void GameLoop::weaponComand(uint8_t comando) {
             }
             personaje.setXPos(weapon.getXPos());
             personaje.setYPos(weapon.getYPos());
+        } else if (weapon.getType() == S_PEW_PEW_LASER_GUN) {
+            for (int i = 0; i < 3; i++) {
+                std::unique_ptr<Bullet> bullet = weapon.shoot();
+                if (bullet == nullptr) {
+                    return;
+                }
+                map_bullets.emplace(id_balas, std::move(bullet));
+                id_balas++;
+            }
+            personaje.setXPos(weapon.getXPos());
+            personaje.setYPos(weapon.getYPos());
         } else {
             std::unique_ptr<Bullet> bullet = weapon.shoot();
             if (bullet == nullptr) {

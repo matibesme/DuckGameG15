@@ -7,6 +7,7 @@
 #include "../weapons/granada.h"
 #include "../weapons/banana.h"
 #include "../weapons/sniper.h"
+#include "items/weapons/pewpew_laser.h"
 #include "items/weapons/shotgun.h"
 
 
@@ -27,7 +28,7 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         is_flapping(false)
     {
         // Agregando una nueva CowboyPistol a la lista de armas
-        weapons_list.push_back(std::make_shared<Granada>(S_GRANADA_GUN, 1, 0, 0, 10, 9, 10, 0));
+        weapons_list.push_back(std::make_shared<PewPewLaser>(S_PEW_PEW_LASER_GUN, 1, 0, 0, 10, 38, 12, 0));
     }
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
