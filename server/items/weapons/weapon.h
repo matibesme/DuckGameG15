@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <list>
 #include "../bullets/bullet.h"
-#include "../../constant_definitons.h"
+#include "../common/common_constant.h"
 #include <memory>
 
 class Weapon : public Objeto {

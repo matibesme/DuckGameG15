@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include "../../constant_definitons.h"
+#include "../common/common_constant.h"
 #include "../objeto.h"
 #include "../weapons/weapon.h"
 #include <list>

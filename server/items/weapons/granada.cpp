@@ -6,9 +6,9 @@
 
 Granada::Granada(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range, uint8_t ammo_quantity, float recoil) :
     Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
-    bala(S_GRANADA_BULLET, 1, 0, 0, 10, 35, 0.3, S_GRANADA_TIME_TO_EXPLODE),
-    counter_to_shoot(S_COUNTER_TO_SHOOT_GRANADA),
-    time_to_explode(S_GRANADA_TIME_TO_EXPLODE) {}
+    bala(GRANADA_BULLET, 1, 0, 0, 10, 35, 0.3, GRANADA_TIME_TO_EXPLODE),
+    counter_to_shoot(COUNTER_TO_SHOOT_GRANADA),
+    time_to_explode(GRANADA_TIME_TO_EXPLODE) {}
 
 bool Granada::isEmptyAmmo() {
     return ammo_quantity == 0;
@@ -35,13 +35,13 @@ std::unique_ptr<Bullet> Granada::shoot() {
     ammo_quantity--;
 
     bala.release_granada(x_pos, y_pos, direction, time_to_explode);
-    if (direction == S_RIGTH) {
+    if (direction == RIGHT) {
         setXPos(x_pos - recoil);
-    } else  if (direction == S_LEFT) {
+    } else  if (direction == LEFT) {
         setXPos(x_pos + recoil);
     }
-    counter_to_shoot = S_COUNTER_TO_SHOOT_GRANADA;
-    time_to_explode = S_GRANADA_TIME_TO_EXPLODE;
+    counter_to_shoot = COUNTER_TO_SHOOT_GRANADA;
+    time_to_explode = GRANADA_TIME_TO_EXPLODE;
     return std::make_unique<GranadaBullet>(bala);
 }
 

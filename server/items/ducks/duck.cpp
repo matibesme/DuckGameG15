@@ -7,13 +7,13 @@
 #include "../weapons/granada.h"
 #include "../weapons/banana.h"
 
-DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(S_STILL_RIGTH), saltando(false),
+DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(STILL_RIGHT), saltando(false),
               velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD){}
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
         is_weapon_equiped(true),
-        typeOfMove(S_STILL_RIGTH),
+        typeOfMove(STILL_RIGHT),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
         life(100),
@@ -24,7 +24,7 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         is_flapping(false)
     {
         // Agregando una nueva CowboyPistol a la lista de armas
-        weapons_list.push_back(std::make_shared<Banana>(S_BANANA_GUN, 1, 0, 0, 5, 250, 20, 2));
+        weapons_list.push_back(std::make_shared<Banana>(BANANA_GUN, 1, 0, 0, 5, 250, 20, 2));
     }
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
@@ -64,20 +64,20 @@ void DuckPlayer::executeAction() {
             if (counter_flapping == 0) {
                 is_flapping = false;
                 gravity = GRAVEDAD;
-                typeOfMove=S_JUMP;
+                typeOfMove= JUMP;
             }
         }
         y_pos -= velocidad;
         getWeapon().setYPos(y_pos);
         velocidad -= gravity;
 
-        if (y_pos >= S_POSICION_INICIAL_Y) {
-            y_pos = S_POSICION_INICIAL_Y;
+        if (y_pos >= POSICION_INICIAL_Y) {
+            y_pos = POSICION_INICIAL_Y;
             saltando = false;
             is_flapping = false;
             gravity = GRAVEDAD;
             velocidad = VELOCIDAD_INICIAL;
-            typeOfMove = (direction == S_RIGTH) ? S_STILL_RIGTH : S_STILL_LEFT;
+            typeOfMove = (direction == RIGHT) ? STILL_RIGHT : STILL_LEFT;
         }
 
     }
@@ -131,7 +131,7 @@ bool DuckPlayer::isFlapping() {
 
 void DuckPlayer::increaseFlappingCounter() {
     if (counter_flapping == 0) {
-        counter_flapping += S_CANT_FLAP;
+        counter_flapping += CANT_FLAP;
         velocidad = -1;
     }
 }

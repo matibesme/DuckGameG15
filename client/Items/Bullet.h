@@ -3,7 +3,7 @@
 
 #include "Graficos.h"
 #include "SDL2pp/SDL2pp.hh"
-#include "constant_definitons.h"
+#include "../common/common_constant.h"
 
 class Bullet {
 private:

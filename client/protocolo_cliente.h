@@ -11,8 +11,7 @@
 #include "../common/protocolo.h"
 #include "../common/socket.h"
 
-
-#include "constant_definitons.h"
+#include "../common/common_constant.h"
 #include <vector>
 
 class ProtocoloCliente {

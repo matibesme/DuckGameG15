@@ -6,7 +6,7 @@
 #define BULLET_H
 #include "../objeto.h"
 #include <cstdint>
-#include "../../constant_definitons.h"
+#include "server_constant.h"
 
 class Bullet: public Objeto {
     protected:

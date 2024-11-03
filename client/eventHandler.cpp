@@ -38,7 +38,7 @@ void EventHandler::correrHandlers() {
                     case SDLK_d:
                     case SDLK_SPACE:
                     case SDLK_s:
-                        queue_sender.push(STILL_RIGTH);
+                        queue_sender.push(STILL_RIGHT);
                         break;
                 }
                 break;
@@ -49,7 +49,7 @@ void EventHandler::correrHandlers() {
     }
 
     if (teclas_presionadas.find(SDLK_d) != teclas_presionadas.end()) {
-        queue_sender.push(RIGTH);
+        queue_sender.push(RIGHT);
     } else if (teclas_presionadas.find(SDLK_a) != teclas_presionadas.end()) {
         queue_sender.push(LEFT);
     }

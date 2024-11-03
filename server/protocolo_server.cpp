@@ -21,7 +21,7 @@ void ProtocoloServer::sendToClient(const GameState& command) {
 
 void ProtocoloServer::sendFullGame(const GameState& command) {
   
-    protocolo.sendByte(S_FULL_GAME_BYTE, dead_connection);
+    protocolo.sendByte(FULL_GAME_BYTE, dead_connection);
     protocolo.sendByte(command.backGround_id, dead_connection);
     protocolo.sendByte(command.lista_plataformas.size(), dead_connection);
 

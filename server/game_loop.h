@@ -14,7 +14,7 @@
 #include "../common/game_exception.h"
 #include "../common/thread.h"
 
-#include "constant_definitons.h"
+#include "../common/common_constant.h"
 #include "protected_queues_map.h"
 #include "items/ducks/duck.h"
 #include "items/weapons/weapon.h"

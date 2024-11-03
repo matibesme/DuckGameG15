@@ -2,7 +2,7 @@
 
 // Constructor
 Objeto::Objeto(uint8_t type, uint8_t id,float x_pos, float y_pos)
-    :type(type), id(id), x_pos(x_pos), y_pos(y_pos), direction(S_RIGTH) {}
+    :type(type), id(id), x_pos(x_pos), y_pos(y_pos), direction(RIGHT) {}
 
 // Métodos getter
 float Objeto::getXPos() const {

@@ -31,10 +31,10 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gu
         isFlipped = true;
     }
 
-    if (typeOfMove != STILL_RIGTH && typeOfMove != STILL_LEFT) {
+    if (typeOfMove != STILL_RIGHT && typeOfMove != STILL_LEFT) {
         numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
 
-        if (typeOfMove == RIGTH) {
+        if (typeOfMove == RIGHT) {
             pixelDuckSpriteX = SPRITE_WIDTH * numSprite;
             pixelDuckSpriteY = SRC_Y_MOVING;
             isFlipped = false;
@@ -46,7 +46,7 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gu
             pixelDuckSpriteY = SRC_Y_JUMPING;
             pixelDuckSpriteX = SPRITE_WIDTH;
 
-        }else if (typeOfMove == FLUP) {
+        }else if (typeOfMove == FLAP) {
             pixelDuckSpriteY = SRC_Y_JUMPING;
             numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES_JUMP;
             // Limitar numSprite entre 3 y 4

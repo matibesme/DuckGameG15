@@ -14,14 +14,14 @@ void GranadaBullet::executeAction() {
 
     y_pos -= velocidad;
     velocidad -=GRAVEDAD;
-    if (direction == S_RIGTH) {
-      x_pos += S_RANGO_X_MEDIO;
-    } else if (direction == S_LEFT) {
-      x_pos -= S_RANGO_X_MEDIO;
+    if (direction == RIGHT) {
+      x_pos += RANGO_X_MEDIO;
+    } else if (direction == LEFT) {
+      x_pos -= RANGO_X_MEDIO;
     }
 
-    if (y_pos >= S_POSICION_INICIAL_Y) {
-      y_pos = S_POSICION_INICIAL_Y;
+    if (y_pos >= POSICION_INICIAL_Y) {
+      y_pos = POSICION_INICIAL_Y;
         continue_moving = false;
     }
 
@@ -44,6 +44,6 @@ void GranadaBullet::release_granada(float x_pos, float y_pos, uint8_t direction,
 }
 
 void GranadaBullet::explode() {
-  type = S_GRANADA_EXPLOTION;
+  type = GRENADE_EXPLOSION;
 
 }

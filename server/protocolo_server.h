@@ -6,7 +6,7 @@
 #include <utility>
 
 #include "../common/dto_definitions.h"
-#include "constant_definitons.h"
+#include "../common/common_constant.h"
 #include "../common/game_exception.h"
 
 #include "../common/protocolo.h"

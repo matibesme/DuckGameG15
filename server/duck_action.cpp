@@ -1,9 +1,7 @@
 //
 // Created by matibesme on 31/10/24.
 //
-
 #include "duck_action.h"
-
 
 DuckAction::DuckAction(std::map<uint8_t, DuckPlayer>& map_personajes,
                        std::map<uint8_t,std::unique_ptr<Weapon>>& map_free_weapons,
@@ -19,17 +17,17 @@ void DuckAction::movementComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
 
     switch (comando) {
-        case S_RIGTH:
+        case RIGHT:
             personaje.incrementXPos(MOVEMENT_QUANTITY_X);
-            personaje.setTypeOfMoveSprite(S_RIGTH);
-            personaje.setDirection(S_RIGTH);
+            personaje.setTypeOfMoveSprite(RIGHT);
+            personaje.setDirection(RIGHT);
             break;
-        case S_LEFT:
+        case LEFT:
             personaje.incrementXPos(-MOVEMENT_QUANTITY_X);
-            personaje.setTypeOfMoveSprite(S_LEFT);
-            personaje.setDirection(S_LEFT);
+            personaje.setTypeOfMoveSprite(LEFT);
+            personaje.setDirection(LEFT);
             break;
-        case S_JUMP:
+        case JUMP:
             if (!personaje.estaSaltando()) {
                 personaje.setEnSalto(true);
             } else if (personaje.getVelocidadY() < 0) {
@@ -37,14 +35,14 @@ void DuckAction::movementComand(uint8_t comando) {
                 personaje.increaseFlappingCounter();
             }
             break;
-        case S_DOWN:
-            personaje.setTypeOfMoveSprite(S_DOWN);
+        case DOWN:
+            personaje.setTypeOfMoveSprite(DOWN);
             break;
-        case S_STILL_RIGTH:
-            personaje.setTypeOfMoveSprite(S_STILL_RIGTH);
+        case STILL_RIGHT:
+            personaje.setTypeOfMoveSprite(STILL_RIGHT);
             break;
-        case S_STILL_LEFT:
-            personaje.setTypeOfMoveSprite(S_STILL_LEFT);
+        case STILL_LEFT:
+            personaje.setTypeOfMoveSprite(STILL_LEFT);
             break;
         default:
             break;
@@ -52,9 +50,9 @@ void DuckAction::movementComand(uint8_t comando) {
 
     // Check if the character is jumping or flapping when moving sideways
     if (personaje.isFlapping()) {
-        personaje.setTypeOfMoveSprite(S_FLAP);
+        personaje.setTypeOfMoveSprite(FLAP);
     } else if (personaje.estaSaltando()) {
-        personaje.setTypeOfMoveSprite(S_JUMP);
+        personaje.setTypeOfMoveSprite(JUMP);
     }
 }
 
@@ -62,13 +60,13 @@ void DuckAction::weaponComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
 
     switch (comando) {
-        case S_PICKUP:
+        case PICKUP:
             // Implement pickup logic here
             break;
-        case S_LEAVE_GUN:
+        case LEAVE_GUN:
             // personaje.removeWeapon();
             break;
-        case S_SHOOT:
+        case SHOOT:
             {
                 Weapon& weapon = personaje.getWeapon();
                 if (weapon.isEmptyAmmo()) {

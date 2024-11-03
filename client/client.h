@@ -6,9 +6,8 @@
 #include <utility>
 
 #include "../common/game_exception.h"
-
-#include "constant_definitons.h"
 #include "protocolo_cliente.h"
+#include "../common/common_constant.h"
 #include "gameRunner.h"
 #include "c_sender.h"
 #include "c_receiver.h"

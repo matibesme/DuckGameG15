@@ -1,4 +1,5 @@
 #include "client.h"
+#define QUEUE_TAMANIO_MAX 1000
 
 Client::Client(const char* host, const char* port):
         protocolo(host, port, is_socket_close), is_socket_close(false), queue_sender(QUEUE_TAMANIO_MAX),

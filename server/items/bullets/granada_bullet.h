@@ -5,8 +5,7 @@
 #ifndef GRANADA_BULLET_H
 #define GRANADA_BULLET_H
 #include "bullet.h"
-#include "../../constant_definitons.h"
-
+#include "../common/common_constant.h"
 
 class GranadaBullet : public Bullet {
 private:

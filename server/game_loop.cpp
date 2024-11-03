@@ -24,8 +24,8 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
 void GameLoop::run() {
     try {
         load_game_config.loadGame(list_plataformas);
-        map_personajes.emplace(1, DuckPlayer(1, 1, S_POSICION_INICIAL_X, S_POSICION_INICIAL_Y));
-        map_personajes.emplace(2, DuckPlayer(2, 2, 100, S_POSICION_INICIAL_Y));
+        map_personajes.emplace(1, DuckPlayer(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
+        map_personajes.emplace(2, DuckPlayer(2, 2, 100, POSICION_INICIAL_Y));
         /*
         list_free_weapons.emplace_back(CowboyPistol(S_COWBOY_GUN, 1, 100, 100, 10, 10, 10, 10));
         list_free_weapons.emplace_back(DuelPistol(S_PISTOLA_DUELOS_GUN, 2, 200, 200, 10, 10, 10, 10));
@@ -56,9 +56,9 @@ void GameLoop::run() {
 }
 
 void GameLoop::checkCommand(CommandClient comando) {
-    if (comando.type_of_action == S_MOVEMENT_ACTION) {
+    if (comando.type_of_action == MOVEMENT_ACTION) {
         duck_action.movementComand(comando.type_of_movement);
-    } else if (comando.type_of_action == S_WEAPON_ACTION) {
+    } else if (comando.type_of_action == WEAPON_ACTION) {
         duck_action.weaponComand(comando.type_of_movement);
     }
 }
@@ -80,7 +80,7 @@ void GameLoop::checkBullets() {
 void GameLoop::sendCompleteScene(){
     GameState command;
 
-    command.backGround_id = S_SCENE_ID;
+    command.backGround_id = SCENE_ID;
 
     for (auto& platform : list_plataformas) {
         command.lista_plataformas.push_back(platform);
@@ -111,7 +111,7 @@ void GameLoop::sendCompleteScene(){
 void GameLoop::paraCadaPatoAction() {
     for (auto& personaje : map_personajes) {
         personaje.second.executeAction();
-        if (personaje.second.getWeapon().getType() == S_GRANADA_GUN && personaje.second.getWeapon().isActive()) {
+        if (personaje.second.getWeapon().getType() == GRANADA_GUN && personaje.second.getWeapon().isActive()) {
             std::unique_ptr<Bullet> bullet = personaje.second.getWeapon().shoot();
             map_bullets.emplace(id_balas, std::move(bullet));
             id_balas++;

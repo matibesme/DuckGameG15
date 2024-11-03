@@ -30,17 +30,17 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
 
     Rect area;
     //tipo de area dependiendo de la orientacion y si es bala o granada o banana
-    if((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET)
+    if((typeOfBullet == GRANADA_BULLET || typeOfBullet == BANANA_BULLET)
                                         && orientationOfBullet == BULLET_UP){
 
         area = Rect(pos_x, pos_y, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
 
-    } else if((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET)
-                                               && orientationOfBullet == BULLET_RIGTH){
+    } else if((typeOfBullet == GRANADA_BULLET || typeOfBullet == BANANA_BULLET)
+                                               && orientationOfBullet == BULLET_RIGHT){
 
         area = Rect(pos_x + DUCK_WIDTH / 2, pos_y + DUCK_HEIGHT / 1.5, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
 
-    } else if ((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET)
+    } else if ((typeOfBullet == GRANADA_BULLET || typeOfBullet == BANANA_BULLET)
                                                  && orientationOfBullet == BULLET_LEFT){
 
         area = Rect(pos_x, pos_y + DUCK_HEIGHT / 1.5, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
@@ -48,16 +48,16 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
     } else if (orientationOfBullet == BULLET_UP){
         area = Rect(pos_x, pos_y, HEIGHT_BULLET, WIDTH_BULLET);
 
-    } else if(typeOfBullet == C_GRANADA_EXPLOTION){
+    } else if(typeOfBullet == GRENADE_EXPLOSION){
         explotionSpriteX = (explotionSpriteX + 1);
         // destRect es el rectángulo donde se dibujará la textura
-        SDL2pp::Rect destRect((int)pos_x , (int)pos_y + DUCK_HEIGHT / 5, WIDTH_GRANADE_EXPLOTION, HEIGHT_GRANADE_EXPLOTION);
+        SDL2pp::Rect destRect((int)pos_x , (int)pos_y + DUCK_HEIGHT / 5, WIDTH_GRENADE_EXPLOTION, HEIGHT_GRENADE_EXPLOTION);
         // srcRect es el rectángulo que se tomará de la textura
         SDL2pp::Rect srcRect(explotionSpriteX * SPRITE_WIDTH_BULLET, 0, SPRITE_WIDTH_BULLET, SPRITE_HEIGHT_BULLET);
         renderer.Copy(texture, srcRect, destRect);
         return;
     }
-    else if(orientationOfBullet == BULLET_RIGTH){
+    else if(orientationOfBullet == BULLET_RIGHT){
         area = Rect(pos_x + DUCK_WIDTH, pos_y + DUCK_HEIGHT / 2, WIDTH_BULLET, HEIGHT_BULLET);
 
     } else if(orientationOfBullet == BULLET_LEFT){
@@ -70,7 +70,7 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
     // Si la orientacion es tanto gira o para arriba o para los costados
     if(orientationOfBullet == BULLET_LEFT)
         renderer.Copy(texture, SDL2pp::NullOpt, area, 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
-    else if (orientationOfBullet == BULLET_RIGTH)
+    else if (orientationOfBullet == BULLET_RIGHT)
         renderer.Copy(texture, SDL2pp::NullOpt, area);
     else if (orientationOfBullet == BULLET_UP)
         renderer.Copy(texture, SDL2pp::NullOpt, area, 90.0, SDL2pp::NullOpt, SDL_FLIP_NONE);
@@ -85,37 +85,37 @@ void Bullet::update(const float new_pos_x,const float new_pos_y, const uint8_t t
 
 void Bullet::actualizarTipo(const char*& texture) {
     switch (typeOfBullet) {
-        case C_COWBOY_BULLET:
+        case COWBOY_BULLET:
             texture = IMAGE_CHAIN_BULLET;
             break;
-        case C_AK47_BULLET:
+        case AK47_BULLET:
             texture = IMAGE_AMMO_1;
             break;
-        case C_PISTOLA_DUELOS_BULLET:
+        case PISTOLA_DUELOS_BULLET:
             texture = IMAGE_AMMO_2;
             break;
-        case C_MAGNUM_BULLET:
+        case MAGNUM_BULLET:
             texture = IMAGE_AMMO_3;
             break;
-        case C_ESCOPETA_BULLET:
+        case ESCOPETA_BULLET:
             texture = IMAGE_AMMO_4;
             break;
-        case C_SNIPER_BULLET:
+        case SNIPER_BULLET:
             texture = IMAGE_AMMO_5;
             break;
-        case C_PEW_PEW_LASER_BULLET:
+        case PEW_PEW_LASER_BULLET:
             texture = IMAGE_LASER_AMMO;
             break;
-        case C_LASER_RIFLE_BULLET:
+        case LASER_RIFLE_BULLET:
             texture = IMAGE_LASER_AMMO2;
             break;
-        case C_GRANADA_BULLET:
+        case GRANADA_BULLET:
             texture = IMAGE_GRANADA_BULLET;
             break;
-        case C_GRANADA_EXPLOTION:
+        case GRENADE_EXPLOSION:
             texture = IMAGE_GRANADA_EXPLOTION;
             break;
-        case C_BANANA_BULLET:
+        case BANANA_BULLET:
             texture = IMAGE_BANANA_BULLET;
             break;
         default:

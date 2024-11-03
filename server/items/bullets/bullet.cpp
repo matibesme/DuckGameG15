@@ -46,13 +46,13 @@ bool Bullet::randomSpread() {
 
 void Bullet::executeAction(){
     if (is_alive && range > 0) {
-        if (direction == S_RIGTH) {
+        if (direction == RIGHT) {
             x_pos += BULLET_VEL;
             spread_direction ? y_pos += spread : y_pos -= spread;
-        } else if (direction == S_LEFT) {
+        } else if (direction == LEFT) {
             x_pos -= BULLET_VEL;
             spread_direction ? y_pos += spread : y_pos -= spread;
-        } else if (direction == S_UP) {
+        } else if (direction == BULLET_UP) {
             y_pos -= BULLET_VEL;
             spread_direction ? x_pos += spread : x_pos -= spread;
         }

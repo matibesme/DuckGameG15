@@ -1,0 +1,106 @@
+#pragma once
+#include <cstdint>
+#include <string>
+
+// Estados de salida
+//constexpr int EXIT_FAILURE = 1;
+//constexpr int EXIT_SUCCESS = 0;
+
+// Argumentos y configuración de red
+constexpr int CANT_ARGUMENTS = 3;
+constexpr int HOST = 1;
+constexpr int PORT = 2;
+
+// Tamaños
+constexpr int DUCK_WIDTH = 32;
+constexpr int DUCK_HEIGHT = 32;
+constexpr int HEIGHT_GUN = 9;
+constexpr int WIDTH_GUN = 15;
+constexpr int HEIGHT_GRENADE_BANANA = 13;
+constexpr int WIDTH_GRENADE_BANANA = 15;
+constexpr int HEIGHT_GRENADE_EXPLOTION = 40;
+constexpr int WIDTH_GRENADE_EXPLOTION = 40;
+constexpr int HEIGHT_BULLET = 3;
+constexpr int WIDTH_BULLET = 3;
+constexpr uint8_t WIDTH_ARMOR = 27;
+constexpr uint8_t HEIGHT_ARMOR = 42;
+constexpr uint8_t WIDTH_HELMET = 39;
+constexpr uint8_t HEIGHT_HELMET = 40;
+constexpr int SCENE_WIDTH = 800;
+constexpr int SCENE_HEIGHT = 600;
+constexpr int MAP_HEIGHT = 64 * DUCK_HEIGHT;
+constexpr int MAP_WIDTH = 64 * DUCK_WIDTH;
+
+// Protocolo
+constexpr uint8_t FIRST_SEND_BYTE = 0x03;
+constexpr uint8_t FIRST_RECEIVE_BYTE = 0x06;
+
+// Imagen completa
+constexpr uint8_t BACKGROUND_BYTE = 0x19;
+constexpr uint8_t FULL_GAME_BYTE = 0x20;
+constexpr uint8_t END_ROUND_BYTE = 0x21;
+constexpr uint8_t VICTORY_BYTE = 0x22;
+
+// Movimientos del pato
+constexpr uint8_t MOVEMENT_ACTION = 0x03;
+constexpr uint8_t JUMP = 0x04;
+constexpr uint8_t RIGHT = 0x05;
+constexpr uint8_t LEFT = 0x06;
+constexpr uint8_t DOWN = 0x07;
+constexpr uint8_t STILL_RIGHT = 0x08;
+constexpr uint8_t STILL_LEFT = 0x09;
+constexpr uint8_t FLAP = 0x10;
+
+// Escenas
+constexpr uint8_t WEAPON_ACTION = 0x08;
+constexpr uint8_t PICKUP = 0x09;
+constexpr uint8_t LEAVE_GUN = 0x0A;
+constexpr uint8_t SHOOT = 0x0B;
+constexpr uint8_t SCENE = 0x0C;
+
+// Orientación de balas
+constexpr uint8_t BULLET_RIGHT = 0x05;
+constexpr uint8_t BULLET_LEFT = 0x06;
+constexpr uint8_t BULLET_UP = 0x50;
+
+// Orientaciones adicionales
+constexpr uint8_t ORIENTATION_RIGHT = 0x00;
+constexpr uint8_t ORIENTATION_LEFT = 0x01;
+constexpr uint8_t ORIENTATION_DOWN = 0x02;
+
+// Acciones de armas
+constexpr uint8_t NOGUN = 0x33;
+constexpr uint8_t COWBOY_GUN = 0x34;
+constexpr uint8_t COWBOY_BULLET = 0x54;
+constexpr uint8_t AK47_GUN = 0x35;
+constexpr uint8_t AK47_BULLET = 0x55;
+constexpr uint8_t PISTOLA_DUELOS_GUN = 0x36;
+constexpr uint8_t PISTOLA_DUELOS_BULLET = 0x56;
+constexpr uint8_t MAGNUM_GUN = 0x37;
+constexpr uint8_t MAGNUM_BULLET = 0x57;
+constexpr uint8_t ESCOPETA_GUN = 0x38;
+constexpr uint8_t ESCOPETA_BULLET = 0x58;
+constexpr uint8_t SNIPER_GUN = 0x39;
+constexpr uint8_t SNIPER_BULLET = 0x59;
+constexpr uint8_t GRANADA_GUN = 0x40;
+constexpr uint8_t GRANADA_BULLET = 0x60;
+constexpr uint8_t BANANA_GUN = 0x41;
+constexpr uint8_t BANANA_BULLET = 0x61;
+constexpr uint8_t PEW_PEW_LASER_GUN = 0x42;
+constexpr uint8_t PEW_PEW_LASER_BULLET = 0x62;
+constexpr uint8_t LASER_RIFLE_GUN = 0x43;
+constexpr uint8_t LASER_RIFLE_BULLET = 0x63;
+constexpr uint8_t GRENADE_EXPLOSION = 0x64;
+
+// Armadura completa
+constexpr uint8_t NO_ARMOR = 0x73;
+constexpr uint8_t ARMOR = 0x74;
+constexpr uint8_t NO_HELMET = 0x75;
+constexpr uint8_t HELMET = 0x76;
+
+// Constantes adicionales
+constexpr char SALIDA = 'q';
+constexpr int QUEUE_TAMANIO_MAX = 100;
+constexpr float BULLET_VEL = 5;
+constexpr float MOVEMENT_QUANTITY_X = 3;
+constexpr float MOVEMENT_QUANTITY_Y = 3;

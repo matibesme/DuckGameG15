@@ -1,6 +1,6 @@
 #include <SDL_render.h>
 #include "Platform.h"
-#include "constant_definitons.h"
+#include "../common/common_constant.h"
 
 #define IMAGE_PLATAFORMA_CHICA DATA_PATH "/plataforma_prueba.png"
 #define IMAGE_PLATAFORMA_GRANDE DATA_PATH "/plataforma_larga_prueba.png"

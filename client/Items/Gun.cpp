@@ -28,7 +28,7 @@ Gun::Gun(Graficos& graficos, float pos_x, float pos_y, uint8_t typeOfGun) :
         pos_x(pos_x), pos_y(pos_y) {}
 
 void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
-    if(typeOfGun == C_NOGUN){
+    if(typeOfGun == NOGUN){
         return;
     }
     const char* texture_path_equipped;
@@ -47,7 +47,7 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
                                    with, height), 0.0,SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
         }
         //si no esta flippeado dibujo a las granadas y bananas distinto
-        else if( typeOfGun == C_GRANADA_GUN || typeOfGun == C_BANANA_GUN)
+        else if( typeOfGun == GRANADA_GUN || typeOfGun == BANANA_GUN)
             renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x + 5, pos_y, with, height));
         else
             renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x , pos_y, with, height));
@@ -61,7 +61,7 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
 }
 
 bool Gun::isEquipped(){
-    return typeOfGun != C_NOGUN && is_equiped;
+    return typeOfGun != NOGUN && is_equiped;
 }
 
 void Gun::setEquip(bool equip){
@@ -70,7 +70,7 @@ void Gun::setEquip(bool equip){
 
 void Gun::setGun(uint8_t gun){
     typeOfGun = gun;
-    if(gun == C_NOGUN)
+    if(gun == NOGUN)
         is_equiped = false;
     else
         is_equiped = true;
@@ -91,49 +91,49 @@ float Gun::getPosY() {
 
 void Gun::actualizarTextura(const char*& texture_equipped, const char*& texture_not_equipped, int &width, int &height) {
     switch (typeOfGun) {
-        case C_NOGUN:
+        case NOGUN:
             break;
-        case C_COWBOY_GUN:
+        case COWBOY_GUN:
             texture_equipped = IMAGE_COWBOY_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_COWBOY_GUN;
             break;
-        case C_AK47_GUN:
+        case AK47_GUN:
             texture_equipped = IMAGE_AK47_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_AK47_GUN;
             break;
-        case C_PISTOLA_DUELOS_GUN:
+        case PISTOLA_DUELOS_GUN:
             texture_equipped = IMAGE_PISTOLA_DUELOS_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_PISTOLA_DUELOS_GUN;
             break;
-        case C_MAGNUM_GUN:
+        case MAGNUM_GUN:
             texture_equipped = IMAGE_MAGNUM_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_MAGNUM_GUN;
             break;
-        case C_ESCOPETA_GUN:
+        case ESCOPETA_GUN:
             texture_equipped = IMAGE_ESCOPETA_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_ESCOPETA_GUN;
             break;
-        case C_SNIPER_GUN:
+        case SNIPER_GUN:
             texture_equipped = IMAGE_SNIPER_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_SNIPER_GUN;
             break;
-        case C_GRANADA_GUN:
+        case GRANADA_GUN:
             texture_equipped = IMAGE_GRANADA_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_GRANADA_GUN;
             width = WIDTH_GRENADE_BANANA;
             height = HEIGHT_GRENADE_BANANA;
             break;
-        case C_BANANA_GUN:
+        case BANANA_GUN:
             texture_equipped = IMAGE_BANANA_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_BANANA_GUN;
             width = WIDTH_GRENADE_BANANA;
             height = HEIGHT_GRENADE_BANANA;
             break;
-        case C_PEW_PEW_LASER_GUN:
+        case PEW_PEW_LASER_GUN:
             texture_equipped = IMAGE_PEW_PEW_LASER_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_PEW_PEW_LASER_GUN;
             break;
-        case C_LASER_RIFLE_GUN:
+        case LASER_RIFLE_GUN:
             texture_equipped = IMAGE_LASER_RIFLE_GUN_EQUIPPED;
             texture_not_equipped = IMAGE_LASER_RIFLE_GUN;
             break;

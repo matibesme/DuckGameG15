@@ -2,7 +2,7 @@
 #define GUN_H
 
 #include "SDL2pp/SDL2pp.hh"
-#include "constant_definitons.h"
+#include "../common/common_constant.h"
 #include "Graficos.h"
 
 using namespace SDL2pp;
