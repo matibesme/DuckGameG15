@@ -52,5 +52,7 @@ void EventHandler::correrHandlers() {
         queue_sender.push(RIGHT);
     } else if (teclas_presionadas.find(SDLK_a) != teclas_presionadas.end()) {
         queue_sender.push(LEFT);
-    }
+    } /*if (teclas_presionadas.find(SDLK_SPACE) != teclas_presionadas.end()) {
+        queue_sender.push(SHOOT);
+    }*/
 }
