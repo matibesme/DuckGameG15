@@ -1,7 +1,11 @@
 #include <SDL_render.h>
 #include "GameRenderer.h"
 #include <algorithm> // para std::min y std::max
-#define IMAGE_PAISAJE DATA_PATH "/cielo_nubes.jpg"
+
+#define IMAGE_CIELO_NUBES DATA_PATH "/cielo_nubes.jpg"
+#define IMAGE_CITY DATA_PATH "/backgrounds/City.png"
+#define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
+
 #define CANT_ZOOM_WIDTH (10 * DUCK_WIDTH)
 #define CANT_ZOOM_HEIGHT (10 * DUCK_HEIGHT)
 
@@ -213,10 +217,12 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
     SDL2pp::Texture background (renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCENE_WIDTH, SCENE_HEIGHT);
 
     // Cargar y dibujar el fondo
-    if (background_id == 1) {
-        background = graficos.LoadTexture(IMAGE_PAISAJE);
-    } else {
-        background = graficos.LoadTexture(IMAGE_PAISAJE);
+    if (background_id == TYPE_BACKGROUND_CIELO_NUBES) {
+        background = graficos.LoadTexture(IMAGE_CIELO_NUBES);
+    } else if (background_id == TYPE_BACKGROUND_CITY) {
+        background = graficos.LoadTexture(IMAGE_CITY);
+    } else if (background_id == TYPE_BACKGROUND_FOREST) {
+        background = graficos.LoadTexture(IMAGE_FOREST);
     }
 
     renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);

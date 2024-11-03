@@ -107,6 +107,10 @@ constexpr uint8_t TYPE_PLATFORM_NATURE = 0x79;
 constexpr uint8_t TYPE_PLATFORM_SPACE = 0x80;
 constexpr uint8_t TYPE_PLATFORM_UNDERGROUND = 0x81;
 
+// Backgrounds
+constexpr uint8_t TYPE_BACKGROUND_CITY = 0x90;
+constexpr uint8_t TYPE_BACKGROUND_FOREST = 0x91;
+constexpr uint8_t TYPE_BACKGROUND_CIELO_NUBES = 0x92;
 
 // Constantes adicionales
 constexpr char SALIDA = 'q';
