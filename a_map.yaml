@@ -1,0 +1,143 @@
+background_type: City
+plataforms:
+  - pos_x: 24
+    pos_y: 213
+    height: 15
+    width: 32
+    type: Industrial
+  - pos_x: 53
+    pos_y: 212
+    height: 15
+    width: 32
+    type: Industrial
+  - pos_x: 170
+    pos_y: 213
+    height: 15
+    width: 32
+    type: Industrial
+  - pos_x: 142
+    pos_y: 213
+    height: 15
+    width: 32
+    type: Industrial
+  - pos_x: 114
+    pos_y: 212
+    height: 15
+    width: 32
+    type: Industrial
+  - pos_x: 83
+    pos_y: 213
+    height: 15
+    width: 32
+    type: Industrial
+  - pos_x: 313
+    pos_y: 461
+    height: 19
+    width: 30
+    type: Donut
+  - pos_x: 340
+    pos_y: 460
+    height: 19
+    width: 30
+    type: Donut
+  - pos_x: 370
+    pos_y: 461
+    height: 19
+    width: 30
+    type: Donut
+  - pos_x: 286
+    pos_y: 216
+    height: 9
+    width: 32
+    type: Underground
+  - pos_x: 317
+    pos_y: 215
+    height: 9
+    width: 32
+    type: Underground
+  - pos_x: 346
+    pos_y: 217
+    height: 9
+    width: 32
+    type: Underground
+  - pos_x: 225
+    pos_y: 139
+    height: 15
+    width: 32
+    type: Industrial
+  - pos_x: 376
+    pos_y: 217
+    height: 9
+    width: 32
+    type: Underground
+  - pos_x: 406
+    pos_y: 216
+    height: 9
+    width: 32
+    type: Underground
+  - pos_x: 215
+    pos_y: 397
+    height: 12
+    width: 32
+    type: Nature
+  - pos_x: 247
+    pos_y: 398
+    height: 12
+    width: 32
+    type: Nature
+  - pos_x: 310
+    pos_y: 333
+    height: 16
+    width: 32
+    type: Space
+  - pos_x: 340
+    pos_y: 333
+    height: 16
+    width: 32
+    type: Space
+  - pos_x: -109
+    pos_y: 249
+    height: 16
+    width: 32
+    type: Space
+  - pos_x: 410
+    pos_y: 291
+    height: 16
+    width: 32
+    type: Space
+  - pos_x: 473
+    pos_y: 270
+    height: 19
+    width: 30
+    type: Donut
+  - pos_x: 503
+    pos_y: 269
+    height: 19
+    width: 30
+    type: Donut
+duck spawns:
+  - pos_x: 21
+    pos_y: 190
+    height: 24
+    width: 32
+weapon spawns:
+  - pos_x: 292
+    pos_y: 202
+    height: 11
+    width: 15
+    type: duelingPistol
+  - pos_x: 476
+    pos_y: 246
+    height: 16
+    width: 30
+    type: laserRifle
+  - pos_x: 330
+    pos_y: 429
+    height: 24
+    width: 20
+    type: grenade
+box spawns:
+  - pos_x: 237
+    pos_y: 377
+    height: 17
+    width: 17
