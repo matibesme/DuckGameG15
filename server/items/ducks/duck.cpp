@@ -79,13 +79,11 @@ void DuckPlayer::executeAction() {
                 typeOfMove= JUMP;
             }
         }
-        std::cout << "posicion y: " << y_pos << std::endl;
         y_pos -= velocidad;
         getWeapon().setYPos(y_pos);
         velocidad -= gravity;
 
-        if (y_pos == MAP_LIMIT_Y) {
-            std::cout << "murio" << std::endl;
+        if (y_pos >= MAP_LIMIT_Y) {
             is_alive = false;
             stopJump(MAP_LIMIT_Y);
         }
@@ -151,6 +149,8 @@ void DuckPlayer::increaseFlappingCounter() {
 void DuckPlayer::setGravity(float gravity_){
     gravity = gravity_;
 }
+
+
 
 
 DuckPlayer::~DuckPlayer() {}

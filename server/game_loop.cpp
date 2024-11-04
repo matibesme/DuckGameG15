@@ -69,8 +69,8 @@ void GameLoop::checkBullets() {
         if (!it->second->isAlive()) {
             it = map_bullets.erase(it);     
         } else {
+            checkCoalition(it->second);
             it->second->executeAction();
-
             ++it;
         }
     }
@@ -144,15 +144,9 @@ void GameLoop::paraCadaPatoAction() {
 }
 
 void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
-    for (auto& personaje : map_personajes) {
-
-        if (personaje.second.isAlive()) {
-            if (personaje.second.getXPos() == bullet->getXPos()) {
-                personaje.second.applyDamage(100);
-                bullet->kill();
-            }
-        }
-    }
+   for (auto& plataform : list_plataformas) {
+        bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos, plataform.width, plataform.height);
+   }
 }
 
 //void GameLoop::checkCoalitionWithPlatform(DuckPlayer& personaje) {

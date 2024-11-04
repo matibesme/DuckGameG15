@@ -63,6 +63,15 @@ void Bullet::executeAction(){
     }
 }
 
+
+void Bullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos, float plat_width, float plat_height) {
+    if (x_pos >= plat_x_pos && x_pos <= plat_x_pos + plat_width)
+    { if (y_pos >= plat_y_pos && y_pos+HEIGHT_BULLET <= plat_y_pos + plat_height) {
+            is_alive = false;
+    }
+    }
+}
+
 void Bullet::kill() {
     is_alive = false;
 }
