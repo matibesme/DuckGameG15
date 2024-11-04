@@ -1,4 +1,4 @@
-background_type: "\x90"
+background_type: "0x90"
 plataforms:
   - pos_x: 0
     pos_y: 207
@@ -126,8 +126,8 @@ plataforms:
     width: 32
     type: "\x80"
 duck spawns:
-  - pos_x: 282
-    pos_y: 245
+  - pos_x: 248
+    pos_y: 392
     height: 24
     width: 32
   - pos_x: 250
@@ -135,7 +135,7 @@ duck spawns:
     height: 24
     width: 32
 weapon spawns:
-  - pos_x: 507
+  - pos_x: 159
     pos_y: 302
     height: 30
     width: 30
