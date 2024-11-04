@@ -20,10 +20,7 @@ void GranadaBullet::executeAction() {
       x_pos -= RANGO_X_MEDIO;
     }
 
-    if (y_pos >= POSICION_INICIAL_Y) {
-      y_pos = POSICION_INICIAL_Y;
-        continue_moving = false;
-    }
+
 
 
   }
@@ -46,4 +43,19 @@ void GranadaBullet::release_granada(float x_pos, float y_pos, uint8_t direction,
 void GranadaBullet::explode() {
   type = GRENADE_EXPLOSION;
 
+}
+
+void GranadaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos, float plat_width, float plat_height) {
+
+  if (continue_moving && x_pos+WIDTH_BULLET >= plat_x_pos && x_pos <= plat_x_pos + plat_width) {
+
+    if (y_pos + HEIGHT_BULLET >= plat_y_pos && y_pos+HEIGHT_BULLET + velocidad <= plat_y_pos) {
+      y_pos = plat_y_pos-HEIGHT_BULLET;
+      continue_moving = false;
+
+    }
+    else if (y_pos+HEIGHT_BULLET > plat_y_pos && y_pos+HEIGHT_BULLET <= plat_y_pos + plat_height) {
+      is_alive = false;
+    }
+  }
 }
