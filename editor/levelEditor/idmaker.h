@@ -4,6 +4,7 @@
 #include <map>
 #include <iostream>
 #include <string>
+#include <cstdint>
 
 class IDMaker{
 
