@@ -44,7 +44,7 @@ void LevelEditorController::set_platform(const QString &platform_type){
 }
 
 void LevelEditorController::set_spawn_duck(){
-    QString duck_path = "data/whiteDuck.png";
+    QString duck_path = QString::fromStdString(std::string(DATA_PATH) + std::string("/whiteDuck.png"));
 
     QRect rect(0, 7, 32, 24);
     QPixmap sprite(duck_path);
@@ -70,7 +70,7 @@ void LevelEditorController::set_spawn_weapon(const QString &gun_type){
 }
 
 void LevelEditorController::set_spawn_box(){
-    QString box_path = "data/objects/itemBox.png";
+    QString box_path = QString::fromStdString(std::string(DATA_PATH) + std::string("/objects/itemBox.png"));
     QPixmap box(box_path);
 
     QGraphicsPixmapItem* box_spawn = new QGraphicsPixmapItem(box);
