@@ -1,5 +1,5 @@
 #include "leveleditor.h"
-#include "./ui_leveleditor.h"
+//#include "./ui_leveleditor.h"
 #include <QMenu>
 #include <QAction>
 #include <QPoint>
@@ -10,9 +10,9 @@
 
 LevelEditor::LevelEditor(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::LevelEditor)
+    //, ui(new Ui::LevelEditor)
 {
-    ui->setupUi(this);
+    //ui->setupUi(this);
     this->setGeometry(0, 0, 640, 480);
     setContextMenuPolicy(Qt::CustomContextMenu);
     controller = new LevelEditorController(this, this);
@@ -83,6 +83,7 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         menu.addMenu(submenu_armour);
         add_submenu_platforms(menu);
         add_submenu_weapons(menu);
+        add_submenu_walls(menu);
 
         menu.exec(mapToGlobal(pos));
 }
@@ -201,9 +202,34 @@ void LevelEditor::add_submenu_platforms(QMenu& menu){
     menu.addMenu(submenu_platform);
 }
 
+void LevelEditor::add_submenu_walls(QMenu& menu){
+    QMenu* submenu_walls = new QMenu("Walls", this);
+
+    QAction *action_donut_wall = new QAction("Donut", this);
+    connect(action_donut_wall, &QAction::triggered, [this, action_donut_wall]() {
+    controller->set_wall(action_donut_wall->text());
+    });
+    submenu_walls->addAction(action_donut_wall);
+
+    QAction *action_nature_wall = new QAction("Nature", this);
+    connect(action_nature_wall, &QAction::triggered, [this, action_nature_wall]() {
+    controller->set_wall(action_nature_wall->text());
+    });
+    submenu_walls->addAction(action_nature_wall);
+
+    QAction *action_underground_wall = new QAction("Underground", this);
+    connect(action_underground_wall, &QAction::triggered, [this, action_underground_wall]() {
+    controller->set_wall(action_underground_wall->text());
+    });
+    submenu_walls->addAction(action_underground_wall);
+
+
+    menu.addMenu(submenu_walls);
+}
+
 LevelEditor::~LevelEditor()
 {
-    delete ui;
+    //delete ui;
     delete controller;
 }
 

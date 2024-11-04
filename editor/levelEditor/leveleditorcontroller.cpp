@@ -92,6 +92,16 @@ void LevelEditorController::set_spawn_armour(const QString &armour_type){
     armours.push_back(armour_item);
 }
 
+void LevelEditorController::set_wall(const QString &wall_type){
+    QString wall_path = QString::fromStdString(path_maker.get_wall_path(wall_type.toStdString()));;
+
+    QPixmap wall(wall_path);
+    MapObject* wall_item = new MapObject(wall, wall_type);
+
+    wall_item->setPos(100, 100);
+    scene->addItem(wall_item);
+    walls.push_back(wall_item);
+}
 
 void LevelEditorController::save_map(){
     YAML::Emitter out;
@@ -114,6 +124,24 @@ void LevelEditorController::save_map(){
         out << YAML::Value << platforms.at(i)->pixmap().width();
         out << YAML::Key << "type";
         out << YAML::Value << id_maker.get_id_platform(platforms.at(i)->get_type().toStdString());
+        out << YAML::EndMap;
+    }
+    out << YAML::EndSeq;
+
+    out << YAML::Key << "walls";
+    out << YAML::Value << YAML::BeginSeq;
+    for(int i = 0; i < walls.size(); i++){
+        out << YAML::BeginMap;
+        out << YAML::Key << "pos_x";
+        out << YAML::Value << walls.at(i)->x();
+        out << YAML::Key << "pos_y";
+        out << YAML::Value << walls.at(i)->y();
+        out << YAML::Key << "height";
+        out << YAML::Value <<  walls.at(i)->pixmap().height();
+        out << YAML::Key << "width";
+        out << YAML::Value << walls.at(i)->pixmap().width();
+        out << YAML::Key << "type";
+        out << YAML::Value << id_maker.get_id_wall(walls.at(i)->get_type().toStdString());
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;

@@ -11,6 +11,7 @@ public:
     std::string get_background_path(std::string background_type);
     std::string get_weapon_path(std::string weapon_type);
     std::string get_armour_path(std::string armour_type);
+    std::string get_wall_path(std::string wall_type);
 };
 
 #endif
