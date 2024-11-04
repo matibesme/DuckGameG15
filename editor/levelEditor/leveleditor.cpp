@@ -27,6 +27,7 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         //Lógica de submenu del fondo.
         QAction *action_city_background = new QAction("City", this);
         QAction *action_forest_background = new QAction("Forest", this);
+        QAction *action_cloudyNight_background = new QAction("Cloudy night", this);
         
         connect(action_city_background, &QAction::triggered,  [this, action_city_background]() {
         controller->set_background(action_city_background->text());
@@ -35,8 +36,13 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         controller->set_background(action_forest_background->text());
         });
 
+        connect(action_cloudyNight_background, &QAction::triggered, [this, action_cloudyNight_background]() {
+        controller->set_background(action_cloudyNight_background->text());
+        });
+
         submenu_backgrounds->addAction(action_city_background);
         submenu_backgrounds->addAction(action_forest_background);
+        submenu_backgrounds->addAction(action_cloudyNight_background);
 
         //Lógica del spawn del pato.
         QAction *action_spawn_duck = new QAction("Spawn", this);
@@ -179,6 +185,18 @@ void LevelEditor::add_submenu_platforms(QMenu& menu){
     controller->set_platform(action_Underground_platform->text());
     });
     submenu_platform->addAction(action_Underground_platform);
+
+    QAction *action_DonutLarga_platform = new QAction("Donut long", this);
+    connect(action_DonutLarga_platform, &QAction::triggered, [this, action_DonutLarga_platform]() {
+    controller->set_platform(action_DonutLarga_platform->text());
+    });
+    submenu_platform->addAction(action_DonutLarga_platform);
+
+    QAction *action_NatureLarga_platform = new QAction("Nature long", this);
+    connect(action_NatureLarga_platform, &QAction::triggered, [this, action_NatureLarga_platform]() {
+    controller->set_platform(action_NatureLarga_platform->text());
+    });
+    submenu_platform->addAction(action_NatureLarga_platform);
 
     menu.addMenu(submenu_platform);
 }

@@ -3,14 +3,18 @@
 #include <utility>
 
 IDMaker::IDMaker(){
+    backgrounds_id.insert(std::pair<std::string, uint8_t>("", 0x00));
     backgrounds_id.insert(std::pair<std::string, uint8_t>("City", 0x90));
     backgrounds_id.insert(std::pair<std::string, uint8_t>("Forest", 0x91));
+    backgrounds_id.insert(std::pair<std::string, uint8_t>("Cloudy night", 0x92));
 
     platforms_id.insert(std::pair<std::string, uint8_t>("Donut", 0x77));
     platforms_id.insert(std::pair<std::string, uint8_t>("Industrial", 0x78));
     platforms_id.insert(std::pair<std::string, uint8_t>("Nature", 0x79));
     platforms_id.insert(std::pair<std::string, uint8_t>("Space", 0x80));
     platforms_id.insert(std::pair<std::string, uint8_t>("Underground", 0x81));
+    platforms_id.insert(std::pair<std::string, uint8_t>("Donut long", 0x82));
+    platforms_id.insert(std::pair<std::string, uint8_t>("Nature long", 0x83));
 
     weapons_id.insert(std::pair<std::string, uint8_t>("ak47", 0x35));
     weapons_id.insert(std::pair<std::string, uint8_t>("banana", 0x41));

@@ -19,6 +19,7 @@ LevelEditorController::LevelEditorController(QMainWindow *window, QObject *paren
 
     view->setGeometry(0, 0, 640, 480);
     scene->setSceneRect(0, 0, 640, 480);
+    std::string background_type("");
     view->setScene(scene);
     view->show();
 }
