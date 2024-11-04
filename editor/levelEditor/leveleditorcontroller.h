@@ -2,6 +2,7 @@
 #define LEVEL_EDITOR_CONTROLLER_H
 #include "mapobject.h"
 #include "pathmaker.h"
+#include "idmaker.h"
 
 #include <QMainWindow>
 #include <QLabel>
@@ -23,6 +24,7 @@ private:
     QList<MapObject*> armours;
     QList<QGraphicsPixmapItem*> boxes;
     PathMaker path_maker;
+    IDMaker id_maker;
 
 public:
     LevelEditorController(QMainWindow *window, QObject *parent = nullptr);

@@ -1,6 +1,7 @@
 #include "leveleditorcontroller.h"
 #include "mapobject.h"
 #include "pathmaker.h"
+#include "idmaker.h"
 
 #include <QPalette>
 #include <QPixmap>
@@ -96,7 +97,7 @@ void LevelEditorController::save_map(){
 
     out << YAML::BeginMap;
     out << YAML::Key << "background_type";
-    out << YAML::Value << background_type;
+    out << YAML::Value << id_maker.get_id_background(background_type);
 
     out << YAML::Key << "plataforms";
     out << YAML::Value << YAML::BeginSeq;
@@ -111,7 +112,7 @@ void LevelEditorController::save_map(){
         out << YAML::Key << "width";
         out << YAML::Value << platforms.at(i)->pixmap().width();
         out << YAML::Key << "type";
-        out << YAML::Value << platforms.at(i)->get_type().toStdString();
+        out << YAML::Value << id_maker.get_id_platform(platforms.at(i)->get_type().toStdString());
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;
@@ -145,7 +146,7 @@ void LevelEditorController::save_map(){
         out << YAML::Key << "width";
         out << YAML::Value << weapons.at(i)->pixmap().width();
         out << YAML::Key << "type";
-        out << YAML::Value << weapons.at(i)->get_type().toStdString();
+        out << YAML::Value << id_maker.get_id_weapon(weapons.at(i)->get_type().toStdString());
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;
@@ -179,7 +180,7 @@ void LevelEditorController::save_map(){
         out << YAML::Key << "width";
         out << YAML::Value << armours.at(i)->pixmap().width();
         out << YAML::Key << "type";
-        out << YAML::Value << armours.at(i)->get_type().toStdString();
+        out << YAML::Value << id_maker.get_id_armour(armours.at(i)->get_type().toStdString());
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;
