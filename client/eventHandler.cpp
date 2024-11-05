@@ -21,9 +21,6 @@ void EventHandler::correrHandlers() {
                         case SDLK_w:
                             queue_sender.push(JUMP);
                             break;
-                        case SDLK_SPACE:
-                            queue_sender.push(SHOOT);
-                            break;
                     }
                 }
                 break;
@@ -36,9 +33,11 @@ void EventHandler::correrHandlers() {
                         queue_sender.push(STILL_LEFT);
                         break;
                     case SDLK_d:
-                    case SDLK_SPACE:
                     case SDLK_s:
                         queue_sender.push(STILL_RIGTH);
+                        break;
+                    case SDLK_SPACE:
+                        queue_sender.push(STOP_SHOOT);
                         break;
                 }
                 break;
@@ -52,5 +51,9 @@ void EventHandler::correrHandlers() {
         queue_sender.push(RIGTH);
     } else if (teclas_presionadas.find(SDLK_a) != teclas_presionadas.end()) {
         queue_sender.push(LEFT);
+    }
+
+    if (teclas_presionadas.find(SDLK_SPACE) != teclas_presionadas.end()) {
+        queue_sender.push(SHOOT);
     }
 }
