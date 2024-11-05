@@ -125,9 +125,20 @@ void GameLoop::paraCadaPatoAction() {
                         personaje.second.stopJump(platform.y_pos-DUCK_HEIGHT);
                     }
                     is_on_platform = true;
-                    break;
                 }
             }
+
+            if (personaje.second.getXPos()+DUCK_WIDTH >= platform.x_pos || personaje.second.getXPos() >= platform.x_pos + platform.width) {
+                if (personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos && personaje.second.getYPos() < platform.y_pos + platform.height) {
+                    if (personaje.second.getXPos()+DUCK_WIDTH >= platform.x_pos) {
+                        personaje.second.setXPos(platform.x_pos - DUCK_WIDTH);
+                    } else {
+                        personaje.second.setXPos(platform.x_pos + platform.width);
+                    }
+                  
+                }
+            }
+
         }
 
         if (!is_on_platform && !personaje.second.estaSaltando()) {

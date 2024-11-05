@@ -34,12 +34,12 @@ void BananaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos, floa
 
   if (continue_moving && x_pos+WIDTH_BULLET >= plat_x_pos && x_pos <= plat_x_pos + plat_width) {
 
-    if (y_pos + HEIGHT_BULLET >= plat_y_pos && y_pos+HEIGHT_BULLET + velocidad <= plat_y_pos) {
-      y_pos = plat_y_pos-HEIGHT_BULLET;
+    if (y_pos + HEIGHT_GUN >= plat_y_pos && y_pos+HEIGHT_GUN + velocidad <= plat_y_pos) {
+      y_pos = plat_y_pos-HEIGHT_GUN;
       continue_moving = false;
 
     }
-    else if (y_pos+HEIGHT_BULLET > plat_y_pos && y_pos+HEIGHT_BULLET <= plat_y_pos + plat_height) {
+    else if (y_pos+HEIGHT_GUN > plat_y_pos && y_pos+HEIGHT_GUN <= plat_y_pos + plat_height) {
       is_alive = false;
     }
   }
