@@ -221,12 +221,13 @@ void LevelEditorController::save_map(){
     out << YAML::EndSeq;
 
     if (ok){
-        if(!text.isEmpty()){
-            std::string file_name = std::string(text.toStdString()) + std::string(".yaml");
+        if(!(text.isEmpty())){
+            std::string file_name = std::string(DATA_PATH) + std::string("/maps/") + std::string(text.toStdString()) + std::string(".yaml");
             std::ofstream fout(file_name);
             fout << out.c_str();
         }else{
-            std::ofstream fout("a_map.yaml");
+            std::string file_name = std::string(DATA_PATH) + std::string("/maps/") + std::string("a_map.yaml");
+            std::ofstream fout(file_name);
             fout << out.c_str();
         }
         
