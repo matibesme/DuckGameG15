@@ -17,6 +17,7 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         map_bullets(),
         id_balas(1),
         list_plataformas(),
+        lista_walls(),
         load_game_config(),
         duck_action(map_personajes, map_free_weapons, map_bullets, id_balas){}
 
