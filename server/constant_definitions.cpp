@@ -23,6 +23,6 @@ float RESPAWN_WEAPON_Y = 0;
 
 uint8_t GRANADA_TIME_TO_EXPLODE = 246;
 uint8_t COUNTER_TO_SHOOT_GRANADA = 1;
-float   RANGO_X_MEDIO =8;
+float   RANGO_X_MEDIO =4;
 float   RANGO_X_CORTO = 4;
 float   RANGO_X_LARGO = 12;
