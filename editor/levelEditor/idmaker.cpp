@@ -3,14 +3,22 @@
 #include <utility>
 
 IDMaker::IDMaker(){
+    backgrounds_id.insert(std::pair<std::string, uint8_t>("", 0x00));
     backgrounds_id.insert(std::pair<std::string, uint8_t>("City", 0x90));
     backgrounds_id.insert(std::pair<std::string, uint8_t>("Forest", 0x91));
+    backgrounds_id.insert(std::pair<std::string, uint8_t>("Cloudy night", 0x92));
 
     platforms_id.insert(std::pair<std::string, uint8_t>("Donut", 0x77));
     platforms_id.insert(std::pair<std::string, uint8_t>("Industrial", 0x78));
     platforms_id.insert(std::pair<std::string, uint8_t>("Nature", 0x79));
     platforms_id.insert(std::pair<std::string, uint8_t>("Space", 0x80));
     platforms_id.insert(std::pair<std::string, uint8_t>("Underground", 0x81));
+    platforms_id.insert(std::pair<std::string, uint8_t>("Donut long", 0x82));
+    platforms_id.insert(std::pair<std::string, uint8_t>("Nature long", 0x83));
+
+    walls_id.insert(std::pair<std::string, uint8_t>("Donut", 0x84));
+    walls_id.insert(std::pair<std::string, uint8_t>("Underground", 0x85));
+    walls_id.insert(std::pair<std::string, uint8_t>("Nature", 0x86));
 
     weapons_id.insert(std::pair<std::string, uint8_t>("ak47", 0x35));
     weapons_id.insert(std::pair<std::string, uint8_t>("banana", 0x41));
@@ -41,4 +49,8 @@ uint8_t IDMaker::get_id_weapon(std::string weapon_name){
 
 uint8_t IDMaker::get_id_armour(std::string armour_name){
     return armours_id.at(armour_name);
+}
+
+uint8_t IDMaker::get_id_wall(std::string wall_name){
+    return walls_id.at(wall_name);
 }

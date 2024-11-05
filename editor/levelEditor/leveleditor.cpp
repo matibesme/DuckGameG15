@@ -1,5 +1,5 @@
 #include "leveleditor.h"
-#include "./ui_leveleditor.h"
+//#include "./ui_leveleditor.h"
 #include <QMenu>
 #include <QAction>
 #include <QPoint>
@@ -10,9 +10,9 @@
 
 LevelEditor::LevelEditor(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::LevelEditor)
+    //, ui(new Ui::LevelEditor)
 {
-    ui->setupUi(this);
+    //ui->setupUi(this);
     this->setGeometry(0, 0, 640, 480);
     setContextMenuPolicy(Qt::CustomContextMenu);
     controller = new LevelEditorController(this, this);
@@ -27,6 +27,7 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         //Lógica de submenu del fondo.
         QAction *action_city_background = new QAction("City", this);
         QAction *action_forest_background = new QAction("Forest", this);
+        QAction *action_cloudyNight_background = new QAction("Cloudy night", this);
         
         connect(action_city_background, &QAction::triggered,  [this, action_city_background]() {
         controller->set_background(action_city_background->text());
@@ -35,8 +36,13 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         controller->set_background(action_forest_background->text());
         });
 
+        connect(action_cloudyNight_background, &QAction::triggered, [this, action_cloudyNight_background]() {
+        controller->set_background(action_cloudyNight_background->text());
+        });
+
         submenu_backgrounds->addAction(action_city_background);
         submenu_backgrounds->addAction(action_forest_background);
+        submenu_backgrounds->addAction(action_cloudyNight_background);
 
         //Lógica del spawn del pato.
         QAction *action_spawn_duck = new QAction("Spawn", this);
@@ -77,6 +83,7 @@ void LevelEditor::show_menu_context(const QPoint &pos){
         menu.addMenu(submenu_armour);
         add_submenu_platforms(menu);
         add_submenu_weapons(menu);
+        add_submenu_walls(menu);
 
         menu.exec(mapToGlobal(pos));
 }
@@ -180,12 +187,49 @@ void LevelEditor::add_submenu_platforms(QMenu& menu){
     });
     submenu_platform->addAction(action_Underground_platform);
 
+    QAction *action_DonutLarga_platform = new QAction("Donut long", this);
+    connect(action_DonutLarga_platform, &QAction::triggered, [this, action_DonutLarga_platform]() {
+    controller->set_platform(action_DonutLarga_platform->text());
+    });
+    submenu_platform->addAction(action_DonutLarga_platform);
+
+    QAction *action_NatureLarga_platform = new QAction("Nature long", this);
+    connect(action_NatureLarga_platform, &QAction::triggered, [this, action_NatureLarga_platform]() {
+    controller->set_platform(action_NatureLarga_platform->text());
+    });
+    submenu_platform->addAction(action_NatureLarga_platform);
+
     menu.addMenu(submenu_platform);
+}
+
+void LevelEditor::add_submenu_walls(QMenu& menu){
+    QMenu* submenu_walls = new QMenu("Walls", this);
+
+    QAction *action_donut_wall = new QAction("Donut", this);
+    connect(action_donut_wall, &QAction::triggered, [this, action_donut_wall]() {
+    controller->set_wall(action_donut_wall->text());
+    });
+    submenu_walls->addAction(action_donut_wall);
+
+    QAction *action_nature_wall = new QAction("Nature", this);
+    connect(action_nature_wall, &QAction::triggered, [this, action_nature_wall]() {
+    controller->set_wall(action_nature_wall->text());
+    });
+    submenu_walls->addAction(action_nature_wall);
+
+    QAction *action_underground_wall = new QAction("Underground", this);
+    connect(action_underground_wall, &QAction::triggered, [this, action_underground_wall]() {
+    controller->set_wall(action_underground_wall->text());
+    });
+    submenu_walls->addAction(action_underground_wall);
+
+
+    menu.addMenu(submenu_walls);
 }
 
 LevelEditor::~LevelEditor()
 {
-    delete ui;
+    //delete ui;
     delete controller;
 }
 

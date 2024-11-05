@@ -9,6 +9,7 @@
 #include <QDrag>
 #include <QMimeData>
 #include <QMainWindow>
+#include <QInputDialog>
 #include <yaml-cpp/yaml.h>
 #include <fstream>
 #include <iostream>
@@ -19,6 +20,7 @@ LevelEditorController::LevelEditorController(QMainWindow *window, QObject *paren
 
     view->setGeometry(0, 0, 640, 480);
     scene->setSceneRect(0, 0, 640, 480);
+    std::string background_type("");
     view->setScene(scene);
     view->show();
 }
@@ -44,7 +46,7 @@ void LevelEditorController::set_platform(const QString &platform_type){
 }
 
 void LevelEditorController::set_spawn_duck(){
-    QString duck_path = "data/whiteDuck.png";
+    QString duck_path = QString::fromStdString(std::string(DATA_PATH) + std::string("/whiteDuck.png"));
 
     QRect rect(0, 7, 32, 24);
     QPixmap sprite(duck_path);
@@ -70,7 +72,7 @@ void LevelEditorController::set_spawn_weapon(const QString &gun_type){
 }
 
 void LevelEditorController::set_spawn_box(){
-    QString box_path = "data/objects/itemBox.png";
+    QString box_path = QString::fromStdString(std::string(DATA_PATH) + std::string("/objects/itemBox.png"));
     QPixmap box(box_path);
 
     QGraphicsPixmapItem* box_spawn = new QGraphicsPixmapItem(box);
@@ -91,8 +93,23 @@ void LevelEditorController::set_spawn_armour(const QString &armour_type){
     armours.push_back(armour_item);
 }
 
+void LevelEditorController::set_wall(const QString &wall_type){
+    QString wall_path = QString::fromStdString(path_maker.get_wall_path(wall_type.toStdString()));;
+
+    QPixmap wall(wall_path);
+    MapObject* wall_item = new MapObject(wall, wall_type);
+
+    wall_item->setPos(100, 100);
+    scene->addItem(wall_item);
+    walls.push_back(wall_item);
+}
 
 void LevelEditorController::save_map(){
+    bool ok;
+    QString text = QInputDialog::getText(window, tr("Nombre del mapa"),
+                                         tr("Ingrese el nombre del mapa"), QLineEdit::Normal,
+                                         "", &ok);
+
     YAML::Emitter out;
 
     out << YAML::BeginMap;
@@ -113,6 +130,24 @@ void LevelEditorController::save_map(){
         out << YAML::Value << platforms.at(i)->pixmap().width();
         out << YAML::Key << "type";
         out << YAML::Value << id_maker.get_id_platform(platforms.at(i)->get_type().toStdString());
+        out << YAML::EndMap;
+    }
+    out << YAML::EndSeq;
+
+    out << YAML::Key << "walls";
+    out << YAML::Value << YAML::BeginSeq;
+    for(int i = 0; i < walls.size(); i++){
+        out << YAML::BeginMap;
+        out << YAML::Key << "pos_x";
+        out << YAML::Value << walls.at(i)->x();
+        out << YAML::Key << "pos_y";
+        out << YAML::Value << walls.at(i)->y();
+        out << YAML::Key << "height";
+        out << YAML::Value <<  walls.at(i)->pixmap().height();
+        out << YAML::Key << "width";
+        out << YAML::Value << walls.at(i)->pixmap().width();
+        out << YAML::Key << "type";
+        out << YAML::Value << id_maker.get_id_wall(walls.at(i)->get_type().toStdString());
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;
@@ -185,6 +220,17 @@ void LevelEditorController::save_map(){
     }
     out << YAML::EndSeq;
 
-    std::ofstream fout("a_map.yaml");
-    fout << out.c_str();
+    if (ok){
+        if(!text.isEmpty()){
+            std::string file_name = std::string(text.toStdString()) + std::string(".yaml");
+            std::ofstream fout(file_name);
+            fout << out.c_str();
+        }else{
+            std::ofstream fout("a_map.yaml");
+            fout << out.c_str();
+        }
+        
+    }
+    
+    
 }
