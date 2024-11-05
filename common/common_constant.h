@@ -60,7 +60,7 @@ constexpr uint8_t STOP_SHOOT = 0x15;
 
 // Escenas
 constexpr uint8_t WEAPON_ACTION = 0x08;
-constexpr uint8_t PICKUP = 0x09;
+constexpr uint8_t PICKUP = 0x12;
 constexpr uint8_t LEAVE_GUN = 0x0A;
 constexpr uint8_t SHOOT = 0x0B;
 constexpr uint8_t SCENE = 0x0C;

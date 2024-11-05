@@ -25,10 +25,10 @@ void EventHandler::correrHandlers() {
                             queue_sender.push(SHOOT);  // Empieza a disparar
                             break;
                         case SDLK_f:
-                            queue_sender.push(DROP_WEAPON);  // Soltar arma
+                            queue_sender.push(LEAVE_GUN);  // Soltar arma
                             break;
                         case SDLK_e:
-                            queue_sender.push(PICK_OBJECT);  // Recoger objeto
+                            queue_sender.push(PICKUP);  // Recoger objeto
                             break;
                         case SDLK_SPACE:
                             queue_sender.push(AIM_UP);  // Apuntar hacia arriba

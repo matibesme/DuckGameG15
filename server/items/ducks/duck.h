@@ -26,9 +26,9 @@ class DuckPlayer: public Objeto {
         uint8_t getTypeOfMoveSprite();
         void incrementXPos(float pos_x) ;
         Weapon& getWeapon();
+        void pickUpWeapon(std::shared_ptr<Weapon> weapon);
 
-        void equippWeapon();
-        void unequippWeapon();
+        bool isWeaponEquipped();
         void setVelocidadY(float velocidad);
 
         void setTypeOfMoveSprite(uint8_t orientation);

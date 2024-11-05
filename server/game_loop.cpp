@@ -5,7 +5,7 @@
 #include <items/weapons/duel_pistol.h>
 #include <items/weapons/magnum.h>
 //despues sacar
-
+#include "items/weapons/banana.h"
 
 GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
                    ProtectedQueuesMap& queues_map):
@@ -17,17 +17,17 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         map_bullets(),
         id_balas(1),
         list_plataformas(),
-
         load_game_config(),
         duck_action(map_personajes, map_free_weapons, map_bullets, id_balas){}
 
 void GameLoop::run() {
     try {
         load_game_config.loadGame(list_plataformas);
-        //imprimir plataformas
+
 
         map_personajes.emplace(1, DuckPlayer(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
 
+        map_free_weapons.emplace(1, std::make_shared<Banana>(BANANA_GUN, 1, RESPAWN_WEAPON_X, RESPAWN_WEAPON_Y, 5, 250, 20, 2));
         /*
         list_free_weapons.emplace_back(CowboyPistol(S_COWBOY_GUN, 1, 100, 100, 10, 10, 10, 10));
         list_free_weapons.emplace_back(DuelPistol(S_PISTOLA_DUELOS_GUN, 2, 200, 200, 10, 10, 10, 10));
@@ -93,8 +93,12 @@ void GameLoop::sendCompleteScene(){
         if (!personaje.second.isAlive()) {
             continue;
         }
+        uint8_t weapon_type = NOGUN;
+        if (personaje.second.isWeaponEquipped()) {
+           weapon_type = personaje.second.getWeapon().getType();
+        }
         DTODuck dto_duck = {personaje.first,personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
-                            personaje.second.getTypeOfMoveSprite(), personaje.second.getWeapon().getType()};
+                            personaje.second.getTypeOfMoveSprite(), weapon_type};
 
 
        command.lista_patos.push_back(dto_duck);
@@ -162,7 +166,10 @@ void GameLoop::paraCadaPatoAction() {
 
         }
         personaje.second.executeAction();
+        if (!personaje.second.isWeaponEquipped()) continue;
+
         if (personaje.second.getWeapon().getType() == GRANADA_GUN && personaje.second.getWeapon().isActive()) {
+
             std::unique_ptr<Bullet> bullet = personaje.second.getWeapon().shoot();
             map_bullets.emplace(id_balas, std::move(bullet));
             id_balas++;
@@ -176,17 +183,6 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
    }
 }
 
-//void GameLoop::checkCoalitionWithPlatform(DuckPlayer& personaje) {
-    //for (auto& platform : list_plataformas) {
-        //if (personaje.getXPos() >= platform.x_pos && personaje.getXPos() <= platform.x_pos + platform.width) {
-           // if (personaje.getYPos()+ <= platform.y_pos && personaje.getYPos() <= platform.y_pos + platform.height) {
-                //personaje.setEnSalto(true);
-
-                //personaje.setVelocidadY(0);
-            //}
-        //}
-    //}
-//}
 
 
 GameLoop::~GameLoop() {}

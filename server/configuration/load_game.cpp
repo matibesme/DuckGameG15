@@ -11,6 +11,9 @@ void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms) {
     POSICION_INICIAL_X=map["duck spawns"][0]["pos_x"].as<float>();
     POSICION_INICIAL_Y=map["duck spawns"][0]["pos_y"].as<float>();
 
+    RESPAWN_WEAPON_X=map["weapon spawns"][0]["pos_x"].as<float>();
+    RESPAWN_WEAPON_Y=map["weapon spawns"][0]["pos_y"].as<float>();
+
     for (const auto& platform : map["plataforms"]) {
 
         DTOPlatform dto_platform={platform["type"].as<uint8_t>(),platform["pos_x"].as<float>(),platform["pos_y"].as<float>(),platform["width"].as<float>(),platform["height"].as<float>()};

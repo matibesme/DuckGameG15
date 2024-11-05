@@ -12,7 +12,7 @@ DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
-        is_weapon_equiped(true),
+        is_weapon_equiped(false),
         typeOfMove(STILL_RIGHT),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
@@ -23,8 +23,7 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         counter_flapping(0),
         is_flapping(false)
     {
-        // Agregando una nueva CowboyPistol a la lista de armas
-        weapons_list.push_back(std::make_shared<Banana>(BANANA_GUN, 1, 0, 0, 5, 250, 20, 2));
+
     }
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
@@ -80,7 +79,9 @@ void DuckPlayer::executeAction() {
             }
         }
         y_pos -= velocidad;
+        if (isWeaponEquipped()){
         getWeapon().setYPos(y_pos);
+        }
         velocidad -= gravity;
 
         if (y_pos >= MAP_LIMIT_Y) {
@@ -108,17 +109,20 @@ Weapon& DuckPlayer::getWeapon() {
     return *weapons_list.front();
 }
 
-void DuckPlayer::unequippWeapon() {
-    if (is_weapon_equiped) {
-        is_weapon_equiped = false;
-    }
+void DuckPlayer::removeWeapon() {
+    weapons_list.pop_back();
+    is_weapon_equiped = false;
 }
 
-void DuckPlayer::equippWeapon() {
-    if (!is_weapon_equiped) {
-        is_weapon_equiped = true;
-    }
+void DuckPlayer::pickUpWeapon(std::shared_ptr<Weapon> weapon) {
+    weapons_list.push_back(weapon);
+    is_weapon_equiped = true;
 }
+
+bool DuckPlayer::isWeaponEquipped() {
+    return is_weapon_equiped;
+}
+
 
 bool DuckPlayer::isAlive() {
     return is_alive;

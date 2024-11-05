@@ -4,7 +4,7 @@
 #include "duck_action.h"
 
 DuckAction::DuckAction(std::map<uint8_t, DuckPlayer>& map_personajes,
-                       std::map<uint8_t,std::unique_ptr<Weapon>>& map_free_weapons,
+                       std::map<uint8_t,std::shared_ptr<Weapon>>& map_free_weapons,
                        std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets,
                        uint16_t& id_balas):
         map_personajes(map_personajes),
@@ -62,9 +62,29 @@ void DuckAction::weaponComand(uint8_t comando) {
     switch (comando) {
         case PICKUP:
             // Implement pickup logic here
+
+                if (personaje.isWeaponEquipped()) {
+                    return;
+                }
+                for (auto& weapon : map_free_weapons) {
+                    if (personaje.getXPos() + DUCK_WIDTH >= weapon.second->getXPos() &&
+                        personaje.getXPos() <= weapon.second->getXPos() +WIDTH_GUN &&
+                        personaje.getYPos() + DUCK_HEIGHT >= weapon.second->getYPos() &&
+                        personaje.getYPos() <= weapon.second->getYPos() + HEIGHT_GUN) {
+
+                        personaje.pickUpWeapon(std::move(weapon.second));
+                        map_free_weapons.erase(weapon.first);
+                        break;
+                    }
+                }
             break;
         case LEAVE_GUN:
-            // personaje.removeWeapon();
+            // Implement leave gun logic here
+            if (!personaje.isWeaponEquipped()) {
+                return;
+            }
+
+            personaje.removeWeapon();
             break;
         case SHOOT:
             {

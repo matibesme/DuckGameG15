@@ -16,12 +16,12 @@
 class DuckAction {
     private:
         std::map<uint8_t, DuckPlayer>& map_personajes;
-        std::map<uint8_t,std::unique_ptr<Weapon>>& map_free_weapons;
+        std::map<uint8_t,std::shared_ptr<Weapon>>& map_free_weapons;
         std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets;
         uint16_t& id_balas;
     public:
     DuckAction(std::map<uint8_t, DuckPlayer>& map_personajes,
-                 std::map<uint8_t,std::unique_ptr<Weapon>>& map_free_weapons,
+                 std::map<uint8_t,std::shared_ptr<Weapon>>& map_free_weapons,
                  std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets,
                  uint16_t& id_balas);
     void movementComand(uint8_t comando);
