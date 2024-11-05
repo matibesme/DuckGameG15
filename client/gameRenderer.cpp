@@ -2,7 +2,7 @@
 #include "GameRenderer.h"
 #include <algorithm> // para std::min y std::max
 
-#define IMAGE_CIELO_NUBES DATA_PATH "/cielo_nubes.jpg"
+#define IMAGE_CIELO_NUBES DATA_PATH "/backgrounds/Cloudy night.png"
 #define IMAGE_CITY DATA_PATH "/backgrounds/City.png"
 #define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
 
@@ -51,14 +51,13 @@ void GameRenderer::dibujar(Renderer& renderer, GameState& command) {
     // Vuelve al render principal
     renderer.SetTarget();
 
-    /*//DESCOMENTAR PARA TENER ZOOM
+    //DESCOMENTAR PARA TENER ZOOM
     // Defino el rectángulo de zoom para centrarse en la posición deseada
     SDL2pp::Rect srcRect = calcularRectanguloDeZoom(ducks); // Método que calcula el rectángulo para incluir todos los patos
     // Renderizar la textura con los objetos y zoom, sobre el fondo
-    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>());*/
+    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>());
 
-    //Por ahora no hago zoom
-    renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(), SDL2pp::Optional<SDL2pp::Rect>());
+    //Por ahora no hago zoom renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(), SDL2pp::Optional<SDL2pp::Rect>());
 
     renderer.Present();
 }
