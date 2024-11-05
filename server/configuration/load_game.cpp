@@ -5,7 +5,7 @@ LoadGameFile::LoadGameFile() {}
 
 void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms) {
     
-    YAML::Node map = YAML::LoadFile("../a_map.yaml");
+    YAML::Node map = YAML::LoadFile("../data/maps/mapa_prueba.yaml");
     SCENE_ID=map["background_type"].as<uint8_t>();
 
     POSICION_INICIAL_X=map["duck spawns"][0]["pos_x"].as<float>();
@@ -18,6 +18,13 @@ void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms) {
         uint8_t type_value = static_cast<uint8_t>(type_str[0]);
         DTOPlatform dto_platform={type_value,platform["pos_x"].as<float>(),platform["pos_y"].as<float>(),platform["width"].as<float>(),platform["height"].as<float>()};
         platforms.push_back(dto_platform);
+    }
+
+    for (const auto& wall: map["walls"]) {
+        std::string type_str = wall["type"].as<std::string>();
+        uint8_t type_value = static_cast<uint8_t>(type_str[0]);
+        DTOPlatform dto_wall={type_value,wall["pos_x"].as<float>(),wall["pos_y"].as<float>(),wall["width"].as<float>(),wall["height"].as<float>()};
+        platforms.push_back(dto_wall);
     }
 
 }

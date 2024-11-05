@@ -1,4 +1,4 @@
-background_type: "\x90"
+background_type: "0x90"
 plataforms:
   - pos_x: 1
     pos_y: 187
@@ -9,33 +9,33 @@ plataforms:
     pos_y: 188
     height: 15
     width: 99
-    type: "\x82"
+    type: "0x82"
   - pos_x: 125
     pos_y: 186
     height: 16
     width: 32
-    type: "\x80"
+    type: "0x80"
   - pos_x: 174
     pos_y: 239
     height: 15
     width: 96
-    type: "\x83"
+    type: "0x83"
   - pos_x: 306
     pos_y: 289
     height: 15
     width: 96
-    type: "\x83"
+    type: "0x83"
 walls:
   - pos_x: 25
     pos_y: 144
     height: 45
     width: 14
-    type: "\x84"
+    type: "0x84"
   - pos_x: 170
     pos_y: 195
     height: 47
     width: 14
-    type: "\x85"
+    type: "0x85"
 duck spawns:
   - pos_x: 86
     pos_y: 162
