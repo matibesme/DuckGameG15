@@ -9,6 +9,7 @@
 #include <QDrag>
 #include <QMimeData>
 #include <QMainWindow>
+#include <QInputDialog>
 #include <yaml-cpp/yaml.h>
 #include <fstream>
 #include <iostream>
@@ -104,6 +105,11 @@ void LevelEditorController::set_wall(const QString &wall_type){
 }
 
 void LevelEditorController::save_map(){
+    bool ok;
+    QString text = QInputDialog::getText(window, tr("Nombre del mapa"),
+                                         tr("Ingrese el nombre del mapa"), QLineEdit::Normal,
+                                         "", &ok);
+
     YAML::Emitter out;
 
     out << YAML::BeginMap;
@@ -214,6 +220,17 @@ void LevelEditorController::save_map(){
     }
     out << YAML::EndSeq;
 
-    std::ofstream fout("a_map.yaml");
-    fout << out.c_str();
+    if (ok){
+        if(!text.isEmpty()){
+            std::string file_name = std::string(text.toStdString()) + std::string(".yaml");
+            std::ofstream fout(file_name);
+            fout << out.c_str();
+        }else{
+            std::ofstream fout("a_map.yaml");
+            fout << out.c_str();
+        }
+        
+    }
+    
+    
 }
