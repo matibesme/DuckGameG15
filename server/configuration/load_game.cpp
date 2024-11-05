@@ -5,7 +5,7 @@ LoadGameFile::LoadGameFile() {}
 
 void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms, std::list<DTOPlatform> &walls) {
     
-    YAML::Node map = YAML::LoadFile("../data/maps/mapa_prueba.yaml");
+    YAML::Node map = YAML::LoadFile("../data/maps/mapa_lindo.yaml");
     SCENE_ID=map["background_type"].as<uint8_t>();
 
     POSICION_INICIAL_X=map["duck spawns"][0]["pos_x"].as<float>();

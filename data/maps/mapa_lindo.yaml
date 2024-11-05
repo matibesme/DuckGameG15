@@ -1,0 +1,47 @@
+background_type: "0x91"
+plataforms:
+  - pos_x: 101
+    pos_y: 123
+    height: 19
+    width: 30
+    type: w
+  - pos_x: 170
+    pos_y: 128
+    height: 15
+    width: 32
+    type: x
+  - pos_x: 124
+    pos_y: 224
+    height: 15
+    width: 99
+    type: "0x82"
+  - pos_x: 275
+    pos_y: 315
+    height: 16
+    width: 32
+    type: "0x80"
+  - pos_x: 39
+    pos_y: 313
+    height: 15
+    width: 96
+    type: "0x83"
+walls:
+  - pos_x: 207
+    pos_y: 181
+    height: 45
+    width: 17
+    type: "0x87"
+  - pos_x: 113
+    pos_y: 189
+    height: 47
+    width: 14
+    type: "0x86"
+duck spawns:
+  - pos_x: 100
+    pos_y: 100
+    height: 24
+    width: 32
+weapon spawns:
+  []
+box spawns:
+  {}
