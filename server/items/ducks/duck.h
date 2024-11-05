@@ -46,8 +46,8 @@ class DuckPlayer: public Objeto {
         void setGravity(float gravity_);
         void increaseFlappingCounter();
 
-        //void setWeapon(Weapon& weapon);
-        void removeWeapon();
+
+        std::shared_ptr<Weapon> removeWeapon();
         ~DuckPlayer();
 
 };

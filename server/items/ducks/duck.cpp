@@ -109,9 +109,18 @@ Weapon& DuckPlayer::getWeapon() {
     return *weapons_list.front();
 }
 
-void DuckPlayer::removeWeapon() {
-    weapons_list.pop_back();
+std::shared_ptr<Weapon> DuckPlayer::removeWeapon() {
+    std::shared_ptr<Weapon> weapon = weapons_list.front();
+    //retrnario si direction es right o left
+    if (direction == RIGHT) {
+        weapon->setXPos(x_pos+WIDTH_GUN );
+    } else {
+        weapon->setXPos(x_pos);
+    }
+
+    weapons_list.pop_front();
     is_weapon_equiped = false;
+    return weapon;
 }
 
 void DuckPlayer::pickUpWeapon(std::shared_ptr<Weapon> weapon) {
