@@ -189,7 +189,4 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
 //}
 
 
-
-
-
 GameLoop::~GameLoop() {}
