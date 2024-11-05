@@ -4,12 +4,12 @@ plataforms:
     pos_y: 123
     height: 19
     width: 30
-    type: w
+    type: "0x82"
   - pos_x: 170
     pos_y: 128
     height: 15
     width: 32
-    type: x
+    type: "0x82"
   - pos_x: 124
     pos_y: 224
     height: 15

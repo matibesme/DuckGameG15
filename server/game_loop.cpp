@@ -85,6 +85,7 @@ void GameLoop::sendCompleteScene(){
     command.backGround_id = SCENE_ID;
 
     for (auto& platform : list_plataformas) {
+        std::cout << "Plataforma: " << platform.type <<  std::endl;
         command.lista_plataformas.push_back(platform);
     }
     for (auto& wall : lista_walls) {
@@ -131,18 +132,14 @@ void GameLoop::paraCadaPatoAction() {
                     is_on_platform = true;
                 }
             }
-    /*
-            if (personaje.second.getXPos()+DUCK_WIDTH >= platform.x_pos || personaje.second.getXPos() >= platform.x_pos + platform.width) {
-                if (personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos+15 && personaje.second.getYPos() < platform.y_pos + platform.height) {
-                    if (personaje.second.getXPos()+DUCK_WIDTH >= platform.x_pos) {
-                        personaje.second.setXPos(platform.x_pos - DUCK_WIDTH);
-                    } else {
-                        personaje.second.setXPos(platform.x_pos + platform.width);
-                    }
+        }
 
+        for (auto &wall : lista_walls) {
+            if (personaje.second.getXPos() + DUCK_WIDTH >= wall.x_pos && personaje.second.getXPos() <= wall.x_pos + wall.width) {
+                if (personaje.second.getYPos() + DUCK_HEIGHT >= wall.y_pos && personaje.second.getYPos() <= wall.y_pos + wall.height) {
+                    personaje.second.stopJump(wall.y_pos - DUCK_HEIGHT);
                 }
-            }*/
-
+            }
         }
 
         if (!is_on_platform && !personaje.second.estaSaltando()) {

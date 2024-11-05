@@ -14,16 +14,14 @@ void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms, std::list<DTOPlat
     std::cout << POSICION_INICIAL_Y << std::endl;
 
     for (const auto& platform : map["plataforms"]) {
-        std::string type_str = platform["type"].as<std::string>();
-        uint8_t type_value = static_cast<uint8_t>(type_str[0]);
-        DTOPlatform dto_platform={type_value,platform["pos_x"].as<float>(),platform["pos_y"].as<float>(),platform["width"].as<float>(),platform["height"].as<float>()};
+
+        DTOPlatform dto_platform={platform["type"].as<uint8_t>(),platform["pos_x"].as<float>(),platform["pos_y"].as<float>(),platform["width"].as<float>(),platform["height"].as<float>()};
         platforms.push_back(dto_platform);
     }
 
     for (const auto& wall : map["walls"]) {
-        std::string type_str = wall["type"].as<std::string>();
-        uint8_t type_value = static_cast<uint8_t>(type_str[0]);
-        DTOPlatform dto_wall={type_value,wall["pos_x"].as<float>(),wall["pos_y"].as<float>(),wall["width"].as<float>(),wall["height"].as<float>()};
+
+        DTOPlatform dto_wall={wall["type"].as<uint8_t>(),wall["pos_x"].as<float>(),wall["pos_y"].as<float>(),wall["width"].as<float>(),wall["height"].as<float>()};
         walls.push_back(dto_wall);
     }
 
