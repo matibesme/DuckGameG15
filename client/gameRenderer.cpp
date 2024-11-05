@@ -59,6 +59,7 @@ void GameRenderer::dibujar(Renderer& renderer, GameState& command) {
 
     //Por ahora no hago zoom renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(), SDL2pp::Optional<SDL2pp::Rect>());
 
+  
     renderer.Present();
 }
 
