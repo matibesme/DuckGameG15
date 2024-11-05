@@ -125,13 +125,16 @@ void GameLoop::paraCadaPatoAction() {
                 if (personaje.second.getYPos()+DUCK_HEIGHT==platform.y_pos|| (personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos &&  personaje.second.getYPos()+personaje.second.getVelocidadY() <= platform.y_pos)) {
                     if (personaje.second.getVelocidadY() < 0) {
                         personaje.second.stopJump(platform.y_pos-DUCK_HEIGHT);
+                    } else
+                    {
+                        personaje.second.setYPos(platform.y_pos - DUCK_HEIGHT);
                     }
                     is_on_platform = true;
                 }
-            } else if (personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos  &&
+            } else if (personaje.second.getYPos() + DUCK_HEIGHT -DUCK_HEIGHT/3> platform.y_pos  &&
         personaje.second.getYPos() < platform.y_pos + platform.height) {
 
-                    
+
 
                 if (personaje.second.getXPos() + DUCK_WIDTH > platform.x_pos &&
                     personaje.second.getXPos() < platform.x_pos &&
@@ -149,6 +152,7 @@ void GameLoop::paraCadaPatoAction() {
                           }
 
         }
+
         }
 
 
