@@ -21,8 +21,17 @@ void EventHandler::correrHandlers() {
                         case SDLK_w:
                             queue_sender.push(JUMP);
                             break;
+                        case SDLK_LSHIFT:
+                            queue_sender.push(SHOOT);  // Empieza a disparar
+                            break;
+                        case SDLK_f:
+                            queue_sender.push(DROP_WEAPON);  // Soltar arma
+                            break;
+                        case SDLK_e:
+                            queue_sender.push(PICK_OBJECT);  // Recoger objeto
+                            break;
                         case SDLK_SPACE:
-                            queue_sender.push(SHOOT);
+                            queue_sender.push(AIM_UP);  // Apuntar hacia arriba
                             break;
                     }
                 }
@@ -36,9 +45,13 @@ void EventHandler::correrHandlers() {
                         queue_sender.push(STILL_LEFT);
                         break;
                     case SDLK_d:
-                    case SDLK_SPACE:
-                    case SDLK_s:
                         queue_sender.push(STILL_RIGHT);
+                        break;
+                    case SDLK_LSHIFT:
+                        queue_sender.push(STOP_SHOOT);  // Detener disparo continuo
+                        break;
+                    case SDLK_SPACE:
+                        queue_sender.push(STOP_AIM_UP);  // Dejar de apuntar arriba
                         break;
                 }
                 break;
@@ -48,11 +61,16 @@ void EventHandler::correrHandlers() {
         }
     }
 
+    // Mover derecha e izquierda con teclas presionadas
     if (teclas_presionadas.find(SDLK_d) != teclas_presionadas.end()) {
         queue_sender.push(RIGHT);
     } else if (teclas_presionadas.find(SDLK_a) != teclas_presionadas.end()) {
         queue_sender.push(LEFT);
-    } /*if (teclas_presionadas.find(SDLK_SPACE) != teclas_presionadas.end()) {
+    }
+
+    // Disparo continuo mientras SPACE esté presionado
+    if (teclas_presionadas.find(SDLK_LSHIFT) != teclas_presionadas.end()) {
         queue_sender.push(SHOOT);
-    }*/
+    }
 }
+

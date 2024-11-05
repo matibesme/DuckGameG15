@@ -85,7 +85,6 @@ void GameLoop::sendCompleteScene(){
     command.backGround_id = SCENE_ID;
 
     for (auto& platform : list_plataformas) {
-        std::cout << "Plataforma: " << platform.type <<  std::endl;
         command.lista_plataformas.push_back(platform);
     }
     for (auto& wall : lista_walls) {
@@ -173,9 +172,6 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
         //}
     //}
 //}
-
-
-
 
 
 GameLoop::~GameLoop() {}
