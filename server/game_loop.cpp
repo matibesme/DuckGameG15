@@ -133,14 +133,14 @@ void GameLoop::paraCadaPatoAction() {
                 }
             }
         }
-
+/*
         for (auto &wall : lista_walls) {
             if (personaje.second.getXPos() + DUCK_WIDTH >= wall.x_pos && personaje.second.getXPos() <= wall.x_pos + wall.width) {
                 if (personaje.second.getYPos() + DUCK_HEIGHT >= wall.y_pos && personaje.second.getYPos() <= wall.y_pos + wall.height) {
                     personaje.second.stopJump(wall.y_pos - DUCK_HEIGHT);
                 }
             }
-        }
+        }*/
 
         if (!is_on_platform && !personaje.second.estaSaltando()) {
             personaje.second.setEnSalto(true);
