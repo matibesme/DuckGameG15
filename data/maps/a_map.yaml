@@ -1,4 +1,4 @@
-background_type: "0x90"
+background_type: 90
 plataforms:
   - pos_x: 0
     pos_y: 207
