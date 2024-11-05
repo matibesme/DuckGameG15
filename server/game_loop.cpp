@@ -17,12 +17,13 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         map_bullets(),
         id_balas(1),
         list_plataformas(),
+        lista_walls(),
         load_game_config(),
         duck_action(map_personajes, map_free_weapons, map_bullets, id_balas){}
 
 void GameLoop::run() {
     try {
-        load_game_config.loadGame(list_plataformas);
+        load_game_config.loadGame(list_plataformas, lista_walls);
         //imprimir plataformas
 
         map_personajes.emplace(1, DuckPlayer(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
@@ -85,6 +86,9 @@ void GameLoop::sendCompleteScene(){
 
     for (auto& platform : list_plataformas) {
         command.lista_plataformas.push_back(platform);
+    }
+    for (auto& wall : lista_walls) {
+        command.lista_plataformas.push_back(wall);
     }
 
     for (auto& personaje : map_personajes) {

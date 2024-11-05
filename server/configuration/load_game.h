@@ -11,5 +11,5 @@ class LoadGameFile {
 
 public:
     LoadGameFile();
-    void loadGame(std::list<DTOPlatform> &platforms);
+    void loadGame(std::list<DTOPlatform> &platforms, std::list<DTOPlatform> &walls);
 };
