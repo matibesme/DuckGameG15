@@ -106,6 +106,14 @@ constexpr uint8_t TYPE_PLATFORM_INDUSTRIAL = 0x78;
 constexpr uint8_t TYPE_PLATFORM_NATURE = 0x79;
 constexpr uint8_t TYPE_PLATFORM_SPACE = 0x80;
 constexpr uint8_t TYPE_PLATFORM_UNDERGROUND = 0x81;
+constexpr uint8_t TYPE_PLATFORM_DONUT_LONG = 0x82;
+constexpr uint8_t TYPE_PLATFORM_NATURE_LONG = 0x83;
+
+
+// Walls
+constexpr uint8_t TYPE_WALL_DONUT = 0x85;
+constexpr uint8_t TYPE_WALL_NATURE = 0x86;
+constexpr uint8_t TYPE_WALL_UNDERGROUND = 0X87;
 
 // Backgrounds
 constexpr uint8_t TYPE_BACKGROUND_CITY = 0x90;

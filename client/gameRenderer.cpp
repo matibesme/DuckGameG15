@@ -2,7 +2,7 @@
 #include "GameRenderer.h"
 #include <algorithm> // para std::min y std::max
 
-#define IMAGE_CIELO_NUBES DATA_PATH "/cielo_nubes.jpg"
+#define IMAGE_CIELO_NUBES DATA_PATH "/backgrounds/Cloudy night.png"
 #define IMAGE_CITY DATA_PATH "/backgrounds/City.png"
 #define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
 
