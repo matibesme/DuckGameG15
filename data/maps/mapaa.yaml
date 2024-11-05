@@ -1,39 +1,59 @@
 background_type: 144
 plataforms:
-  - pos_x: 89
-    pos_y: 170
+  - pos_x: 116
+    pos_y: 194
+    height: 19
+    width: 30
+    type: 119
+  - pos_x: 145
+    pos_y: 192
+    height: 19
+    width: 30
+    type: 119
+  - pos_x: 172
+    pos_y: 186
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 86
+    pos_y: 186
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 199
+    pos_y: 183
     height: 15
-    width: 99
-    type: 130
-  - pos_x: 175
-    pos_y: 272
-    height: 15
-    width: 99
-    type: 130
-  - pos_x: 257
-    pos_y: 367
+    width: 96
+    type: 131
+  - pos_x: 300
+    pos_y: 339
     height: 15
     width: 96
     type: 131
 walls:
-  - pos_x: 179
-    pos_y: 229
+  - pos_x: 287
+    pos_y: 141
     height: 45
     width: 14
     type: 133
-  - pos_x: 343
-    pos_y: 322
+  - pos_x: 388
+    pos_y: 250
     height: 45
-    width: 17
-    type: 135
-  - pos_x: 243
-    pos_y: 336
+    width: 14
+    type: 133
+  - pos_x: 389
+    pos_y: 295
+    height: 45
+    width: 14
+    type: 133
+  - pos_x: 342
+    pos_y: 297
     height: 45
     width: 17
     type: 135
 duck spawns:
-  - pos_x: 113
-    pos_y: 145
+  - pos_x: 89
+    pos_y: 161
     height: 24
     width: 32
 weapon spawns:

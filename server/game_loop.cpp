@@ -17,13 +17,13 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         map_bullets(),
         id_balas(1),
         list_plataformas(),
-        lista_walls(),
+
         load_game_config(),
         duck_action(map_personajes, map_free_weapons, map_bullets, id_balas){}
 
 void GameLoop::run() {
     try {
-        load_game_config.loadGame(list_plataformas, lista_walls);
+        load_game_config.loadGame(list_plataformas);
         //imprimir plataformas
 
         map_personajes.emplace(1, DuckPlayer(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
@@ -87,9 +87,7 @@ void GameLoop::sendCompleteScene(){
     for (auto& platform : list_plataformas) {
         command.lista_plataformas.push_back(platform);
     }
-    for (auto& wall : lista_walls) {
-        command.lista_plataformas.push_back(wall);
-    }
+
 
     for (auto& personaje : map_personajes) {
         if (!personaje.second.isAlive()) {
@@ -130,30 +128,30 @@ void GameLoop::paraCadaPatoAction() {
                     }
                     is_on_platform = true;
                 }
-            }
-        }
+            } else if (personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos  &&
+        personaje.second.getYPos() < platform.y_pos + platform.height) {
 
-        for (auto& wall : lista_walls)
-        {
-            if (personaje.second.getYPos() + DUCK_HEIGHT > wall.y_pos &&
-        personaje.second.getYPos() < wall.y_pos + wall.height) {
-                if (personaje.second.getXPos() + DUCK_WIDTH > wall.x_pos &&
-                    personaje.second.getXPos() < wall.x_pos &&
+                    
+
+                if (personaje.second.getXPos() + DUCK_WIDTH > platform.x_pos &&
+                    personaje.second.getXPos() < platform.x_pos &&
                     personaje.second.getDirection()==RIGHT) {
 
 
-                    personaje.second.setXPos(wall.x_pos - DUCK_WIDTH);
+                    personaje.second.setXPos(platform.x_pos - DUCK_WIDTH);
                     }
 
 
-                else if (personaje.second.getXPos() < wall.x_pos + wall.width &&
-                         personaje.second.getXPos() > wall.x_pos &&
+                else if (personaje.second.getXPos() < platform.x_pos + platform.width &&
+                         personaje.second.getXPos() > platform.x_pos &&
                           personaje.second.getDirection()==LEFT) {
-                    personaje.second.setXPos(wall.x_pos + wall.width);
+                    personaje.second.setXPos(platform.x_pos + platform.width);
                           }
 
-                }
         }
+        }
+
+
         if (!is_on_platform && !personaje.second.estaSaltando()) {
             personaje.second.setEnSalto(true);
             personaje.second.setVelocidadY(0);

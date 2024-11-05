@@ -35,7 +35,7 @@ private:
     std::map<uint16_t, std::unique_ptr<Bullet>> map_bullets;
     uint16_t id_balas;
     std::list<DTOPlatform> list_plataformas;
-    std::list<DTOPlatform> lista_walls;
+
     //std::list<DTOBoxes> list_boxes;
     LoadGameFile load_game_config;
     DuckAction duck_action;
