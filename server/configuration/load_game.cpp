@@ -3,7 +3,7 @@
 
 LoadGameFile::LoadGameFile() {}
 
-void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms, std::list<std::pair<float,float>>& respawn_weapon_points) {
+void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms, std::list<RespawnPoint>& respawn_weapon_points) {
     
     YAML::Node map = YAML::LoadFile("../data/maps/mapaa.yaml");
     SCENE_ID=map["background_type"].as<uint8_t>();
@@ -27,8 +27,8 @@ void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms, std::list<std::pa
     }
 
     for (const auto& weapon : map["weapon spawns"]) {
-        std::pair<float,float> weapon_point={weapon["pos_x"].as<float>(),weapon["pos_y"].as<float>()};
-        respawn_weapon_points.push_back(weapon_point);
+        RespawnPoint respawn_point={weapon["pos_x"].as<float>(),weapon["pos_y"].as<float>(),weapon["type"].as<uint8_t>()};
+        respawn_weapon_points.push_back(respawn_point);
     }
 
 }

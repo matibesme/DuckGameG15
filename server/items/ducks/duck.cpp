@@ -128,11 +128,12 @@ Weapon& DuckPlayer::getWeapon() {
 std::shared_ptr<Weapon> DuckPlayer::removeWeapon() {
     std::shared_ptr<Weapon> weapon = weapons_list.front();
     //retrnario si direction es right o left
-    if (direction == RIGHT) {
+     if (direction == RIGHT) {
         weapon->setXPos(x_pos+WIDTH_GUN );
     } else {
         weapon->setXPos(x_pos);
     }
+    weapon->setYPos(y_pos+DUCK_HEIGHT-HEIGHT_GUN);
 
     weapons_list.pop_front();
     is_weapon_equiped = false;
