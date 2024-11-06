@@ -11,5 +11,5 @@ class LoadGameFile {
 
 public:
     LoadGameFile();
-    void loadGame(std::list<DTOPlatform> &platforms, std::list<std::pair<float,float>>& respawn_weapon_points);
+    void loadGame(std::list<DTOPlatform> &platforms, std::list<RespawnPoint>& respawn_weapon_points);
 };

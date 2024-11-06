@@ -15,6 +15,7 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         map_personajes(),
         respawn_weapon_points(),
         map_free_weapons(),
+        factory_weapons(),
         map_bullets(),
         id_balas(1),
         list_plataformas(),
@@ -28,8 +29,9 @@ void GameLoop::run() {
 
         map_personajes.emplace(1, DuckPlayer(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
         uint8_t id = 0;
-        for (auto& weapon : respawn_weapon_points) {
-            map_free_weapons.emplace(id, std::make_shared<Banana>(BANANA_GUN, 1, weapon.first, weapon.second, 5, 250, 20, 2));
+        for (auto& respawn : respawn_weapon_points) {
+
+            map_free_weapons.emplace(id, factory_weapons.createWeapon(respawn.type, respawn.x_pos, respawn.y_pos));
             id++;
         }
 

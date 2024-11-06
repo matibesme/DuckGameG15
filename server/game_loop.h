@@ -23,6 +23,7 @@
 
 #include "configuration/load_game.h"
 #include "duck_action.h"
+#include "items/weapons/factory_weapons.h"
 
 class GameLoop: public Thread {
 
@@ -31,8 +32,13 @@ private:
     bool& end_game;
     ProtectedQueuesMap& queues_map;
     std::map<uint8_t, DuckPlayer> map_personajes;
-    std::list<std::pair<float,float>> respawn_weapon_points;
+
+//WEAPONS SECTION
+    std::list<RespawnPoint> respawn_weapon_points;
     std::map<uint8_t,std::shared_ptr<Weapon>> map_free_weapons;
+    FactoryWeapons factory_weapons;
+
+
     std::map<uint16_t, std::unique_ptr<Bullet>> map_bullets;
     uint16_t id_balas;
     std::list<DTOPlatform> list_plataformas;

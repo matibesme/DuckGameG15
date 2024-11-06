@@ -79,3 +79,8 @@ struct CommandBackGround {
 };
 
 
+struct RespawnPoint {
+    float x_pos;
+    float y_pos;
+    uint8_t type;
+};
