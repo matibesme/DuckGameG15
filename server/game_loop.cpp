@@ -3,6 +3,8 @@
 #include <bits/fs_fwd.h>
 #include <items/weapons/duel_pistol.h>
 #include <items/weapons/magnum.h>
+
+#include "client/constant_definitons.h"
 //despues sacar
 
 
@@ -108,6 +110,7 @@ void GameLoop::movementComand(uint8_t comando) {
 }
 
 void GameLoop::weaponComand(uint8_t comando) {
+    std::cout << "comando: " << (int)comando << std::endl;
     DuckPlayer& personaje = map_personajes[1];
     if (comando==S_PICKUP){
 
@@ -155,6 +158,9 @@ void GameLoop::weaponComand(uint8_t comando) {
             map_bullets.emplace(id_balas, std::move(bullet));
             id_balas++;
         }
+    } else if (comando==STOP_SHOOT){
+        Weapon& weapon = personaje.getWeapon();
+        weapon.stopShooting();
     }
 }
 

@@ -53,4 +53,8 @@ int Granada::getReloadTime() {
     return reload_time;
 }
 
+void Granada::stopShooting() {
+
+}
+
 

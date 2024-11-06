@@ -28,6 +28,8 @@ public:
     void setReloadTime(int reload_time) override;
 
     int getReloadTime() override;
+
+    void stopShooting() override;
 };
 
 

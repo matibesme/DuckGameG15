@@ -34,17 +34,23 @@ std::unique_ptr<Bullet> PewPewLaser::shoot() {
     if (isEmptyAmmo()) {
         return nullptr;
     }
+    if (bullet_count > 2) {
+        return nullptr;
+    }
     switch (beam_count) {
         case 3:
             beam_count--;
+            bullet_count += 1;
             beams_vector[0].release(x_pos, y_pos, direction, true);
             return std::make_unique<Bullet>(beams_vector[0]);
         case 2:
             beam_count--;
+            bullet_count += 1;
             beams_vector[1].release(x_pos, y_pos, direction, true);
             return std::make_unique<Bullet>(beams_vector[1]);
         case 1:
             beam_count--;
+            bullet_count += 1;
             ammo_quantity--;
             beams_vector[2].release(x_pos, y_pos, direction, true);
             beam_count = BEAM_COUNT;
@@ -67,4 +73,7 @@ int PewPewLaser::getReloadTime() {
     return reload_time;
 }
 
+void PewPewLaser::stopShooting() {
+    bullet_count = 0;
+}
 // Created by ezequiel on 02/11/24

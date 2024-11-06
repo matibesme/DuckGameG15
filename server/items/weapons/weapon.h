@@ -14,6 +14,7 @@ protected:
     uint8_t ammo_quantity;
     float recoil;
     int reload_time;
+    int bullet_count;
 
 public:
     Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range,uint8_t ammo_quantity,float recoil);
@@ -24,6 +25,8 @@ public:
 
     virtual void setReloadTime(int reload_time_) = 0;
     virtual int getReloadTime() = 0;
+
+    virtual void stopShooting() = 0;
 };
 
 #endif //WEAPON_H

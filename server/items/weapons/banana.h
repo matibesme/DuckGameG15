@@ -21,6 +21,7 @@ public:
     std::unique_ptr<Bullet> shoot() override;
     void setReloadTime(int reload_time) override;
     int getReloadTime() override;
+    void stopShooting() override;
 
 
 };

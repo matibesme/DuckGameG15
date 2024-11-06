@@ -7,5 +7,6 @@ Weapon::Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damag
         range(range),
         ammo_quantity(ammo_quantity),
         recoil(recoil),
-        reload_time(0){}
+        reload_time(0),
+        bullet_count(0){}
 

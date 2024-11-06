@@ -26,7 +26,7 @@ public:
 
     int getReloadTime() override;
 
-    void resetSpreadCounter();
+    void stopShooting() override;
 };
 
 #endif //LASER_RIFLE_H

@@ -19,6 +19,7 @@ public:
 
     int getReloadTime() override;
 
+    void stopShooting() override;
 };
 
 

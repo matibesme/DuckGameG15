@@ -29,8 +29,8 @@ SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom( std::list<ClientDuck>& duck
     }
 
     // Calculo el ancho y alto del rectángulo para cubrir todos los patos
-    int zoomWidth = maxX - minX + DUCK_WIDTH + CANT_ZOOM_WIDTH;
-    int zoomHeight = maxY - minY + DUCK_HEIGHT + CANT_ZOOM_HEIGHT;
+    int zoomWidth = maxX - minX + DUCK_WIDTH_CLIENT + CANT_ZOOM_WIDTH;
+    int zoomHeight = maxY - minY + DUCK_HEIGHT_CLIENT + CANT_ZOOM_HEIGHT;
 
     return {minX - CANT_ZOOM_WIDTH / 2, minY - CANT_ZOOM_HEIGHT / 2, zoomWidth, zoomHeight};
 }

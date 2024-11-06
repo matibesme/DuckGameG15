@@ -13,10 +13,17 @@ bool Sniper::isEmptyAmmo() {
 }
 
 std::unique_ptr<Bullet> Sniper::shoot() {
+    if (isEmptyAmmo()) {
+        return nullptr;
+    }
+    if (bullet_count > 0) {
+        return nullptr;
+    }
     if (reload_time != 0) {
         return nullptr;
     }
     ammo_quantity--;
+    bullet_count += 1;
     reload_time = RELOAD_TIME;
     bala.release(x_pos, y_pos, direction, bala.randomSpread());
     if (direction == S_RIGTH) {
@@ -40,3 +47,6 @@ int Sniper::getReloadTime() {
     return reload_time;
 }
 
+void Sniper::stopShooting() {
+    bullet_count = 0;
+}

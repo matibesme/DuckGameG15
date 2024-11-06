@@ -5,7 +5,7 @@ ProtocoloCliente::ProtocoloCliente(const char* host, const char* port, bool& dea
         decode_type_of_action({{RIGTH, MOVEMENT_ACTION}, {LEFT, MOVEMENT_ACTION},
                                {JUMP, MOVEMENT_ACTION}, {DOWN, MOVEMENT_ACTION},
                                {STILL_LEFT,MOVEMENT_ACTION}, {STILL_RIGTH,MOVEMENT_ACTION},
-                               {PICKUP, WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOOT, WEAPON_ACTION}}) {}
+                               {PICKUP, WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOOT, WEAPON_ACTION}, {STOP_SHOOT, WEAPON_ACTION}}) {}
 
 
 

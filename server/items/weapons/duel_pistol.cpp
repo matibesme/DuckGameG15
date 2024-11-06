@@ -10,6 +10,13 @@ bool DuelPistol::isEmptyAmmo() {
 }
 
 std::unique_ptr<Bullet> DuelPistol::shoot() {
+    if (ammo_quantity == 0) {
+        return nullptr;
+    }
+    if (bullet_count > 0) {
+        return nullptr;
+    }
+    bullet_count += 1;
     ammo_quantity--;
   
     bala.release(x_pos, y_pos, direction, bala.randomSpread());
@@ -33,5 +40,8 @@ int DuelPistol::getReloadTime() {
     return reload_time;
 }
 
+void DuelPistol::stopShooting() {
+    bullet_count = 0;
+}
 
 

@@ -43,10 +43,10 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
         //map con typeOfGun a textura
         if (isFliped) {
             if( typeOfGun == C_GRANADA_GUN || typeOfGun == C_BANANA_GUN)
-                renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 5, pos_y, with, height), 0.0,
+                renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH_CLIENT / 5, pos_y, with, height), 0.0,
                               SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
             else
-            renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 2, pos_y, with, height), 0.0,
+            renderer.Copy(texture_not_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH_CLIENT / 2, pos_y, with, height), 0.0,
                           SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
         }
         else

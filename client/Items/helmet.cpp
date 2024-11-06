@@ -11,9 +11,9 @@ void Helmet::draw(bool isFliped, SDL2pp::Renderer& renderer) {
 
     //if (is_equipped) {
         if (isFliped)
-            renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 9, pos_y - DUCK_HEIGHT / 2 , WIDTH_HELMET, HEIGHT_HELMET), 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+            renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH_CLIENT / 9, pos_y - DUCK_HEIGHT_CLIENT / 2 , WIDTH_HELMET, HEIGHT_HELMET), 0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
         else
-            renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 9, pos_y - DUCK_HEIGHT / 2, WIDTH_HELMET, HEIGHT_HELMET));
+            renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH_CLIENT / 9, pos_y - DUCK_HEIGHT_CLIENT / 2, WIDTH_HELMET, HEIGHT_HELMET));
     //}else{
     //    renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x, pos_y + 20, WIDTH_HELMET, HEIGHT_HELMET));
 }

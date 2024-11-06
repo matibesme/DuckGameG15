@@ -33,25 +33,25 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
         area = Rect(pos_x, pos_y, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
     } else if((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET)
                                                && orientationOfBullet == BULLET_RIGTH){
-        area = Rect(pos_x + DUCK_WIDTH / 2, pos_y + DUCK_HEIGHT, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
+        area = Rect(pos_x + DUCK_WIDTH_CLIENT / 2, pos_y + DUCK_HEIGHT_CLIENT, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
     } else if ((typeOfBullet == C_GRANADA_BULLET || typeOfBullet == C_BANANA_BULLET)
                                                  && orientationOfBullet == BULLET_LEFT){
-        area = Rect(pos_x, pos_y + DUCK_HEIGHT, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
+        area = Rect(pos_x, pos_y + DUCK_HEIGHT_CLIENT, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
     } else if (orientationOfBullet == BULLET_UP){
         area = Rect(pos_x, pos_y, HEIGHT_BULLET, WIDTH_BULLET);
     } else if(typeOfBullet == C_GRANADA_EXPLOTION){
         explotionSpriteX = (explotionSpriteX + 1);
         // destRect es el rectángulo donde se dibujará la textura
-        SDL2pp::Rect destRect((int)pos_x , (int)pos_y + DUCK_HEIGHT / 5, WIDTH_GRANADE_EXPLOTION, HEIGHT_GRANADE_EXPLOTION);
+        SDL2pp::Rect destRect((int)pos_x , (int)pos_y + DUCK_HEIGHT_CLIENT / 5, WIDTH_GRANADE_EXPLOTION, HEIGHT_GRANADE_EXPLOTION);
         // srcRect es el rectángulo que se tomará de la textura
         SDL2pp::Rect srcRect(explotionSpriteX * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
         renderer.Copy(texture, srcRect, destRect);
         return;
     }
     else if(orientationOfBullet == BULLET_RIGTH){
-        area = Rect(pos_x + DUCK_WIDTH, pos_y + DUCK_HEIGHT / 2, WIDTH_BULLET, HEIGHT_BULLET);
+        area = Rect(pos_x + DUCK_WIDTH_CLIENT, pos_y + DUCK_HEIGHT_CLIENT / 2, WIDTH_BULLET, HEIGHT_BULLET);
     } else if(orientationOfBullet == BULLET_LEFT){
-        area = Rect(pos_x, pos_y + DUCK_HEIGHT/2, WIDTH_BULLET, HEIGHT_BULLET);
+        area = Rect(pos_x, pos_y + DUCK_HEIGHT_CLIENT/2, WIDTH_BULLET, HEIGHT_BULLET);
     } else {
         return;
     }

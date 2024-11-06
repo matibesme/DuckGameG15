@@ -28,34 +28,45 @@ std::unique_ptr<Bullet> Shotgun::shoot() {
     if (ammo_quantity == 0) {
         return nullptr;
     }
+    if (bullet_count > 5) {
+        return nullptr;
+    }
+
     if (reloading) {
         reloading = false;
         pellet_count = PELLET_COUNT;
         return nullptr;
     }
+
     switch (pellet_count) {
         case 6:
             pellet_count--;
+            bullet_count += 1;
             pellets_vector[0].release(x_pos, y_pos, direction, true);
             return std::make_unique<Bullet>(pellets_vector[0]);
         case 5:
             pellet_count--;
+            bullet_count += 1;
             pellets_vector[1].release(x_pos, y_pos, direction, true);
             return std::make_unique<Bullet>(pellets_vector[1]);
         case 4:
             pellet_count--;
+            bullet_count += 1;
             pellets_vector[2].release(x_pos, y_pos, direction, true);
             return std::make_unique<Bullet>(pellets_vector[2]);
         case 3:
             pellet_count--;
+            bullet_count += 1;
             pellets_vector[3].release(x_pos, y_pos, direction, true);
             return std::make_unique<Bullet>(pellets_vector[3]);
         case 2:
             pellet_count--;
+            bullet_count += 1;
             pellets_vector[4].release(x_pos, y_pos, direction, true);
             return std::make_unique<Bullet>(pellets_vector[4]);
         case 1:
             pellet_count--;
+            bullet_count += 1;
             reloading = true;
             ammo_quantity--;
             pellets_vector[5].release(x_pos, y_pos, direction, true);
@@ -75,6 +86,11 @@ void Shotgun::setReloadTime(int reload_time_) {
 
 int Shotgun::getReloadTime() {
     return reload_time;
+}
+
+void Shotgun::stopShooting() {
+    bullet_count = 0;
+    reloading = 1 - reloading;
 }
 
 

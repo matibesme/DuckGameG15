@@ -45,5 +45,8 @@ int Banana::getReloadTime() {
     return reload_time;
 }
 
+void Banana::stopShooting() {
+
+}
 
 

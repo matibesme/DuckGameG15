@@ -11,7 +11,10 @@ bool CowboyPistol::isEmptyAmmo() {
 }
 
 std::unique_ptr<Bullet> CowboyPistol::shoot() {
-  
+    if (bullet_count > 0) {
+        return nullptr;
+    }
+    bullet_count += 1;
     ammo_quantity--;
   
     bala.release(x_pos, y_pos, direction, bala.randomSpread());
@@ -34,5 +37,9 @@ void CowboyPistol::setReloadTime(int reload_time_) {
 
 int CowboyPistol::getReloadTime() {
     return reload_time;
+}
+
+void CowboyPistol::stopShooting() {
+    bullet_count = 0;
 }
 

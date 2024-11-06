@@ -19,8 +19,8 @@ const uint8_t END_ROUND_BYTE = 0x21;
 const uint8_t VICTORY_BYTE = 0x22;
 
 //duck
-const int DUCK_WIDTH = 50;
-const int DUCK_HEIGHT = 50;
+const int DUCK_WIDTH_CLIENT = 50;
+const int DUCK_HEIGHT_CLIENT = 50;
 
 //duck movement actions
 const uint8_t MOVEMENT_ACTION = 0x03;

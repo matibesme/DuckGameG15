@@ -10,8 +10,14 @@ bool Magnum::isEmptyAmmo() {
 }
 
 std::unique_ptr<Bullet> Magnum::shoot() {
+    if (isEmptyAmmo()) {
+        return nullptr;
+    }
+    if (bullet_count > 0) {
+        return nullptr;
+    }
     ammo_quantity--;
-
+    bullet_count += 1;
     bala.release(x_pos, y_pos, direction, bala.randomSpread());
     if (direction == S_RIGTH) {
         setXPos(x_pos - recoil);
@@ -31,6 +37,10 @@ void Magnum::setReloadTime(int reload_time_) {
 
 int Magnum::getReloadTime() {
     return reload_time;
+}
+
+void Magnum::stopShooting() {
+    bullet_count = 0;
 }
 
 
