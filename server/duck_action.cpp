@@ -2,6 +2,7 @@
 // Created by matibesme on 31/10/24.
 //
 #include "duck_action.h"
+#include <iostream>
 
 DuckAction::DuckAction(std::map<uint8_t, DuckPlayer>& map_personajes,
                        std::map<uint8_t,std::shared_ptr<Weapon>>& map_free_weapons,
@@ -58,7 +59,7 @@ void DuckAction::movementComand(uint8_t comando) {
 
 void DuckAction::weaponComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
-
+    Weapon& weapon = personaje.getWeapon();
     switch (comando) {
         case PICKUP:
             // Implement pickup logic here
@@ -66,14 +67,14 @@ void DuckAction::weaponComand(uint8_t comando) {
                 if (personaje.isWeaponEquipped()) {
                     return;
                 }
-                for (auto& weapon : map_free_weapons) {
-                    if (personaje.getXPos() + DUCK_WIDTH >= weapon.second->getXPos() &&
-                        personaje.getXPos() <= weapon.second->getXPos() +WIDTH_GUN &&
-                        personaje.getYPos() + DUCK_HEIGHT >= weapon.second->getYPos() &&
-                        personaje.getYPos() <= weapon.second->getYPos() + HEIGHT_GUN) {
+                for (auto& free_weapon : map_free_weapons) {
+                    if (personaje.getXPos() + DUCK_WIDTH >= free_weapon.second->getXPos() &&
+                        personaje.getXPos() <= free_weapon.second->getXPos() +WIDTH_GUN &&
+                        personaje.getYPos() + DUCK_HEIGHT >= free_weapon.second->getYPos() &&
+                        personaje.getYPos() <= free_weapon.second->getYPos() + HEIGHT_GUN) {
 
-                        personaje.pickUpWeapon(std::move(weapon.second));
-                        map_free_weapons.erase(weapon.first);
+                        personaje.pickUpWeapon(std::move(free_weapon.second));
+                        map_free_weapons.erase(free_weapon.first);
                         break;
                     }
                 }
@@ -88,16 +89,39 @@ void DuckAction::weaponComand(uint8_t comando) {
             break;
         case SHOOT:
             {
-                if (!personaje.isWeaponEquipped()) {
-                    return;
+            std::cout << "SHOOT" << std::endl;
+            if (weapon.isEmptyAmmo()){
+                return;
+            }
+            std::cout << "SHOOT AFUERA" << std::endl;
+            weapon.setXPos(personaje.getXPos());
+            weapon.setYPos(personaje.getYPos());
+            weapon.setDirection(personaje.getDirection());
+            if (weapon.getType() == ESCOPETA_GUN) {
+                for (int i = 0; i < 6; i++) {
+
+                    std::unique_ptr<Bullet> bullet = weapon.shoot();
+                    if (bullet == nullptr) {
+                        return;
+                    }
+                    map_bullets.emplace(id_balas, std::move(bullet));
+                    id_balas++;
                 }
-                Weapon& weapon = personaje.getWeapon();
-                if (weapon.isEmptyAmmo()) {
-                    return;
+                personaje.setXPos(weapon.getXPos());
+                personaje.setYPos(weapon.getYPos());
+            } else if (weapon.getType() == PEW_PEW_LASER_GUN) {
+                for (int i = 0; i < 3; i++) {
+                    std::unique_ptr<Bullet> bullet = weapon.shoot();
+                    if (bullet == nullptr) {
+                        return;
+                    }
+                    map_bullets.emplace(id_balas, std::move(bullet));
+                    id_balas++;
                 }
-                weapon.setXPos(personaje.getXPos());
-                weapon.setYPos(personaje.getYPos());
-                weapon.setDirection(personaje.getDirection());
+                personaje.setXPos(weapon.getXPos());
+                personaje.setYPos(weapon.getYPos());
+            } else {
+                std::cout << "entro a la balas" << std::endl;
                 std::unique_ptr<Bullet> bullet = weapon.shoot();
                 if (bullet == nullptr) {
                     return;
@@ -107,6 +131,10 @@ void DuckAction::weaponComand(uint8_t comando) {
                 map_bullets.emplace(id_balas, std::move(bullet));
                 id_balas++;
             }
+            }
+            break;
+        case STOP_SHOOT:
+            weapon.stopShooting();
             break;
         default:
             break;

@@ -16,7 +16,7 @@ Shotgun::Shotgun(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t dam
     for (int i = 0; i < PELLET_COUNT; i++) {
         // Calculamos el spread en función de la posición i
         float spread = maxSpread * (halfCount - i) / halfCount;
-        pellets_vector.emplace_back(S_COWBOY_BULLET, i, 0, 0, damage, 250, spread);
+        pellets_vector.emplace_back(COWBOY_BULLET, i, 0, 0, damage, 250, spread);
     }
 }
 

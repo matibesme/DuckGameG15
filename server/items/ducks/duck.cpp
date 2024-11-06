@@ -20,7 +20,7 @@ DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
-        is_weapon_equiped(false),
+        is_weapon_equiped(true),
         typeOfMove(STILL_RIGHT),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
@@ -33,7 +33,7 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
     {
 
         // Agregando una nueva CowboyPistol a la lista de armas
-        weapons_list.push_back(std::make_shared<Ak47>(AK47_GUN, 1, 0, 0, 10, 38, 100, 0));
+        weapons_list.push_back(std::make_shared<CowboyPistol>(COWBOY_GUN, 1, 0, 0, 10, 38, 100, 0));
 
     }
 
