@@ -52,7 +52,7 @@ constexpr uint8_t DOWN = 0x07;
 constexpr uint8_t STILL_RIGHT = 0x08;
 constexpr uint8_t STILL_LEFT = 0x09;
 constexpr uint8_t FLAP = 0x10;
-constexpr uint8_t DROP_WEAPON = 0x11;
+constexpr uint8_t SHOOT = 0x11;
 constexpr uint8_t PICKUP = 0x12;
 constexpr uint8_t AIM_UP = 0x13;
 constexpr uint8_t STOP_AIM_UP = 0x14;
@@ -61,7 +61,7 @@ constexpr uint8_t STOP_SHOOT = 0x15;
 // Escenas
 constexpr uint8_t WEAPON_ACTION = 0x08;
 constexpr uint8_t LEAVE_GUN = 0x0A;
-constexpr uint8_t SHOOT = 0x0B;
+
 constexpr uint8_t SCENE = 0x0C;
 
 // Orientación de balas
