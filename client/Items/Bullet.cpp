@@ -1,7 +1,6 @@
 #include <SDL_render.h>
 #include "Bullet.h"
 
-#define IMAGE_CHAIN_BULLET DATA_PATH "/bullets/chainBullet.png"
 #define IMAGE_AMMO_1 DATA_PATH "/bullets/ammo.png"
 #define IMAGE_AMMO_2 DATA_PATH "/bullets/ammo2.png"
 #define IMAGE_AMMO_3 DATA_PATH "/bullets/ammo3.png"
@@ -86,7 +85,7 @@ void Bullet::update(const float new_pos_x,const float new_pos_y, const uint8_t t
 void Bullet::actualizarTipo(const char*& texture) {
     switch (typeOfBullet) {
         case COWBOY_BULLET:
-            texture = IMAGE_CHAIN_BULLET;
+            texture = IMAGE_AMMO_1;
             break;
         case AK47_BULLET:
             texture = IMAGE_AMMO_1;
