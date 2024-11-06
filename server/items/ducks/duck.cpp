@@ -6,9 +6,17 @@
 #include "../weapons/magnum.h"
 #include "../weapons/granada.h"
 #include "../weapons/banana.h"
+#include "../weapons/sniper.h"
+#include "items/weapons/ak47.h"
+#include "items/weapons/laser_rifle.h"
+#include "items/weapons/pewpew_laser.h"
+#include "items/weapons/shotgun.h"
+
+
 
 DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(STILL_RIGHT), saltando(false),
               velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD){}
+
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
@@ -23,6 +31,9 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         counter_flapping(0),
         is_flapping(false)
     {
+
+        // Agregando una nueva CowboyPistol a la lista de armas
+        weapons_list.push_back(std::make_shared<Ak47>(AK47_GUN, 1, 0, 0, 10, 38, 100, 0));
 
     }
 
@@ -91,6 +102,11 @@ void DuckPlayer::executeAction() {
 
 
 
+    }
+    if (is_weapon_equiped) {
+        if (getWeapon().getReloadTime() != 0) {
+            getWeapon().setReloadTime(getWeapon().getReloadTime() - 1);
+        }
     }
 
 }

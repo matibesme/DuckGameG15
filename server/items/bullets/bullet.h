@@ -22,10 +22,14 @@ class Bullet: public Objeto {
         Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range, float spread);
         uint8_t getDamage();
         uint8_t getRange();
+
         virtual void colisionWithPlatform(float plat_x_pos, float plat_y_pos, float plat_width, float plat_height);
+
+        void setSpread(float spread);
+
         uint8_t getTypeOfBullet();
         bool isAlive();
-        void release(float x_pos, float y_pos, uint8_t direction);
+        void release(float x_pos, float y_pos, uint8_t direction, bool spread_direction);
         bool randomSpread();
         virtual void executeAction();
         void kill();

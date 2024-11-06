@@ -45,4 +45,16 @@ std::unique_ptr<Bullet> Granada::shoot() {
     return std::make_unique<GranadaBullet>(bala);
 }
 
+void Granada::setReloadTime(int reload_time_) {
+    reload_time = reload_time_;
+}
+
+int Granada::getReloadTime() {
+    return reload_time;
+}
+
+void Granada::stopShooting() {
+
+}
+
 

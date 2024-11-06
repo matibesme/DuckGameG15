@@ -4,6 +4,8 @@
 #include <bits/fs_path.h>
 #include <items/weapons/duel_pistol.h>
 #include <items/weapons/magnum.h>
+
+#include "client/constant_definitons.h"
 //despues sacar
 #include "items/weapons/banana.h"
 

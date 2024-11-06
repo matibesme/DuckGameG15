@@ -26,11 +26,11 @@ uint8_t Bullet::getTypeOfBullet() {
     return type;
 }
 
-void Bullet::release(float x_pos, float y_pos, uint8_t direction) {
+void Bullet::release(float x_pos, float y_pos, uint8_t direction,bool spread_direction) {
     this->x_pos = x_pos;
     this->y_pos = y_pos;
     this->direction = direction;
-    randomSpread() ? spread_direction = true : spread_direction = false;
+    this->spread_direction = spread_direction;
 }
 
 bool Bullet::randomSpread() {
@@ -74,4 +74,8 @@ void Bullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos, float plat
 
 void Bullet::kill() {
     is_alive = false;
+}
+
+void Bullet::setSpread(float spread) {
+    this->spread = spread;
 }

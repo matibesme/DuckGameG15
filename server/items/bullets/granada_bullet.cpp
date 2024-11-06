@@ -36,7 +36,7 @@ void GranadaBullet::executeAction() {
 }
 
 void GranadaBullet::release_granada(float x_pos, float y_pos, uint8_t direction, uint8_t time_to_explode_) {
-  release(x_pos, y_pos, direction);
+  release(x_pos, y_pos, direction, 0);
   time_to_explode = time_to_explode_;
 }
 

@@ -15,6 +15,12 @@ public:
     bool isEmptyAmmo() override;
 
     std::unique_ptr<Bullet> shoot() override;
+
+    bool isActive() override;
+
+    void setReloadTime(int reload_time) override;
+    int getReloadTime() override;
+    void stopShooting() override;
 };
 
 #endif //MAGNUM_H

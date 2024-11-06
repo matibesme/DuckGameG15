@@ -15,7 +15,7 @@ const float VERTICAL_CENTER_DIVISOR = 1.1f;
 
 ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped, uint8_t typeOfMove, Graficos& graficos)
         : idDuck(id), positionX(x_pos), positionY(y_pos), graficos(graficos),
-          numSprite(0), gun(graficos, positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2, gunEquipped),
+          numSprite(0), gun(graficos, positionX + (2 * DUCK_WIDTH_CLIENT / 5), positionY + DUCK_HEIGHT_CLIENT / 2, gunEquipped),
           isFlipped(false), typeOfGun(gunEquipped), pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING),
           coloredTexture(nullptr), armor(graficos, positionX , positionY), helmet(graficos, positionX, positionY)
 {
@@ -70,7 +70,7 @@ void ClientDuck::draw(Renderer& renderer) {
     }
 
     // destRect es el rectángulo donde se dibujará el pato
-    SDL2pp::Rect destRect((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
+    SDL2pp::Rect destRect((int)positionX, (int)positionY, DUCK_WIDTH_CLIENT, DUCK_HEIGHT_CLIENT);
     // srcRect es el rectángulo que se tomará de la textura
     SDL2pp::Rect srcRect(pixelDuckSpriteX, pixelDuckSpriteY, SPRITE_WIDTH, SPRITE_HEIGHT);
 
@@ -89,7 +89,7 @@ void ClientDuck::draw(Renderer& renderer) {
 
     // Dibujar el arma si está equipada
     if (gun.isEquipped()) {
-        gun.update(positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2);
+        gun.update(positionX + (2 * DUCK_WIDTH_CLIENT / 5), positionY + DUCK_HEIGHT_CLIENT / 2);
         gun.draw(isFlipped, renderer);
     }
 }
@@ -123,7 +123,7 @@ void ClientDuck::applyColor(Renderer& renderer) {
 
 
 bool ClientDuck::checkCollision(SDL2pp::Rect rect) {
-    Rect rectDuck((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
+    Rect rectDuck((int)positionX, (int)positionY, DUCK_WIDTH_CLIENT, DUCK_HEIGHT_CLIENT);
     return SDL_HasIntersection(&rectDuck, &rect);
 }
 
