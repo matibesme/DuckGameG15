@@ -13,6 +13,7 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         end_game(end_game),
         queues_map(queues_map),
         map_personajes(),
+        respawn_weapon_points(),
         map_free_weapons(),
         map_bullets(),
         id_balas(1),
@@ -22,12 +23,16 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
 
 void GameLoop::run() {
     try {
-        load_game_config.loadGame(list_plataformas);
+        load_game_config.loadGame(list_plataformas, respawn_weapon_points);
 
 
         map_personajes.emplace(1, DuckPlayer(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
+        uint8_t id = 0;
+        for (auto& weapon : respawn_weapon_points) {
+            map_free_weapons.emplace(id, std::make_shared<Banana>(BANANA_GUN, 1, weapon.first, weapon.second, 5, 250, 20, 2));
+            id++;
+        }
 
-        map_free_weapons.emplace(1, std::make_shared<Banana>(BANANA_GUN, 1, RESPAWN_WEAPON_X, RESPAWN_WEAPON_Y, 5, 250, 20, 2));
         /*
         list_free_weapons.emplace_back(CowboyPistol(S_COWBOY_GUN, 1, 100, 100, 10, 10, 10, 10));
         list_free_weapons.emplace_back(DuelPistol(S_PISTOLA_DUELOS_GUN, 2, 200, 200, 10, 10, 10, 10));

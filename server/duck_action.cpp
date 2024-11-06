@@ -83,7 +83,8 @@ void DuckAction::weaponComand(uint8_t comando) {
             if (!personaje.isWeaponEquipped()) {
                 return;
             }
-            map_free_weapons.emplace(1, personaje.removeWeapon());
+
+            map_free_weapons.emplace(map_free_weapons.size() + 1, personaje.removeWeapon());
             break;
         case SHOOT:
             {
