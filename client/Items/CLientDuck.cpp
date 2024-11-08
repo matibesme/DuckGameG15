@@ -37,6 +37,8 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gu
 
     if (helmet_ == HELMET_EQUIPPED) helmetEquipped = true;
     else    helmetEquipped = false;
+    helmetEquipped = true;
+    armorEquipped = true;
 
     if (typeOfMove != STILL_RIGHT && typeOfMove != STILL_LEFT) {
         numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
