@@ -62,6 +62,6 @@ public:
     void saltar();
     void sendCompleteScene();
     void checkCoalition(std::unique_ptr<Bullet>& bullet);
-    //void checkCoalitionWithPlatform(DuckPlayer& personaje);
+    void checkCoalitionDuckPlatform(DuckPlayer& personaje);
     virtual ~GameLoop();
 };

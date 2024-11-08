@@ -125,54 +125,8 @@ void GameLoop::sendCompleteScene(){
 
 void GameLoop::paraCadaPatoAction() {
     for (auto& personaje : map_personajes) {
-        bool is_on_platform = false;
-        for (auto& platform : list_plataformas) {
-            if ( personaje.second.getXPos() +15 >= platform.x_pos && personaje.second.getXPos()+DUCK_WIDTH-15 <= platform.x_pos + platform.width)
-            {
-                if (personaje.second.getYPos()+DUCK_HEIGHT==platform.y_pos|| (personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos &&  personaje.second.getYPos()+personaje.second.getVelocidadY() <= platform.y_pos)) {
-                        if (personaje.second.getVelocidadY() < 0) {
-                            personaje.second.stopJump(platform.y_pos-DUCK_HEIGHT);
-                        } else
-                        {
-                            personaje.second.setYPos(platform.y_pos - DUCK_HEIGHT);
-                        }
-                        is_on_platform = true;
-                } else if (personaje.second.getYPos() <= platform.y_pos + platform.height &&
-                 personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos + platform.height &&
-                 personaje.second.getVelocidadY() > 0) {
-                    personaje.second.setYPos(platform.y_pos + platform.height);
-                    personaje.second.setVelocidadY(0);
-                 }
-            } else if (personaje.second.getYPos() + DUCK_HEIGHT -DUCK_HEIGHT/3> platform.y_pos  &&
-        personaje.second.getYPos() < platform.y_pos + platform.height) {
-
-
-
-                if (personaje.second.getXPos() + DUCK_WIDTH > platform.x_pos &&
-                    personaje.second.getXPos() < platform.x_pos &&
-                    personaje.second.getDirection() == RIGHT) {
-
-
-                    personaje.second.setXPos(platform.x_pos - DUCK_WIDTH);
-                    }
-
-
-                else if (personaje.second.getXPos() < platform.x_pos + platform.width &&
-                         personaje.second.getXPos() > platform.x_pos &&
-                         personaje.second.getDirection() == LEFT) {
-                    personaje.second.setXPos(platform.x_pos + platform.width);
-                          }
-
-        }
-
-        }
-
-
-        if (!is_on_platform && !personaje.second.estaSaltando()) {
-            personaje.second.setEnSalto(true);
-            personaje.second.setVelocidadY(0);
-
-        }
+        
+        checkCoalitionDuckPlatform(personaje.second);
         personaje.second.executeAction();
         if (!personaje.second.isWeaponEquipped()) continue;
 
@@ -191,6 +145,48 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
     }
 
 }
+
+void GameLoop::checkCoalitionDuckPlatform(DuckPlayer& personaje) {
+    bool is_on_platform = false;
+    for (auto& platform : list_plataformas) {
+
+        if (personaje.getXPos() + 15 >= platform.x_pos && personaje.getXPos() + DUCK_WIDTH - 15 <= platform.x_pos + platform.width) {
+        //caso plataformas inferior y superior
+            if (personaje.getYPos() + DUCK_HEIGHT == platform.y_pos || 
+                (personaje.getYPos() + DUCK_HEIGHT > platform.y_pos && personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos)) {
+                if (personaje.getVelocidadY() < 0) {
+                    personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
+                } else {
+                    personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
+                }
+                is_on_platform = true;
+            } else if (personaje.getYPos() <= platform.y_pos + platform.height &&
+                       personaje.getYPos() + DUCK_HEIGHT > platform.y_pos + platform.height &&
+                       personaje.getVelocidadY() > 0) {
+                personaje.setYPos(platform.y_pos + platform.height);
+                personaje.setVelocidadY(0);
+            }
+        } else if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 > platform.y_pos &&
+                   personaje.getYPos() < platform.y_pos + platform.height) {
+        //caso paredes de plataformas
+           if (personaje.getXPos() + DUCK_WIDTH > platform.x_pos &&
+                personaje.getXPos() < platform.x_pos &&
+                personaje.getDirection() == RIGHT) {
+                personaje.setXPos(platform.x_pos - DUCK_WIDTH);
+            } else if (personaje.getXPos() < platform.x_pos + platform.width &&
+                       personaje.getXPos() > platform.x_pos &&
+                       personaje.getDirection() == LEFT) {
+                personaje.setXPos(platform.x_pos + platform.width);
+            }
+        }
+    }
+
+    if (!is_on_platform && !personaje.estaSaltando()) {
+        personaje.setEnSalto(true);
+        personaje.setVelocidadY(0);
+    }
+}
+
 
 
 
