@@ -17,22 +17,22 @@ void EventHandler::correrHandlers() {
                         case SDLK_q:
                             throw std::runtime_error("Termino el juego");
                         case SDLK_s:
-                            queue_sender.push(DOWN_J1);
+                            queue_sender.push(DOWN);
                             break;
                         case SDLK_w:
-                            queue_sender.push(JUMP_J1);
+                            queue_sender.push(JUMP);
                             break;
                         case SDLK_LSHIFT:
-                            queue_sender.push(SHOOT_J1);  // Empieza a disparar
+                            queue_sender.push(SHOOT);  // Empieza a disparar
                             break;
                         case SDLK_f:
-                            queue_sender.push(LEAVE_GUN_J1);  // Soltar arma
+                            queue_sender.push(LEAVE_GUN);  // Soltar arma
                             break;
                         case SDLK_e:
-                            queue_sender.push(PICKUP_J1);  // Recoger objeto
+                            queue_sender.push(PICKUP);  // Recoger objeto
                             break;
                         case SDLK_SPACE:
-                            queue_sender.push(AIM_UP_J1);  // Apuntar hacia arriba
+                            queue_sender.push(AIM_UP);  // Apuntar hacia arriba
                             break;
 
                             // Controles para Jugador 2
@@ -64,16 +64,16 @@ void EventHandler::correrHandlers() {
                 // Controles para Jugador 1
                 switch (key) {
                     case SDLK_a:
-                        queue_sender.push(STILL_LEFT_J1);
+                        queue_sender.push(STILL_LEFT);
                         break;
                     case SDLK_d:
-                        queue_sender.push(STILL_RIGHT_J1);
+                        queue_sender.push(STILL_RIGHT);
                         break;
                     case SDLK_LSHIFT:
-                        queue_sender.push(STOP_SHOOT_J1);  // Detener disparo continuo
+                        queue_sender.push(STOP_SHOOT);  // Detener disparo continuo
                         break;
                     case SDLK_SPACE:
-                        queue_sender.push(STOP_AIM_UP_J1);  // Dejar de apuntar arriba
+                        queue_sender.push(STOP_AIM_UP);  // Dejar de apuntar arriba
                         break;
 
                         // Controles para Jugador 2
@@ -99,9 +99,9 @@ void EventHandler::correrHandlers() {
 
     // Mover derecha e izquierda con teclas presionadas para Jugador 1
     if (teclas_presionadas.find(SDLK_d) != teclas_presionadas.end()) {
-        queue_sender.push(RIGHT_J1);
+        queue_sender.push(RIGHT);
     } else if (teclas_presionadas.find(SDLK_a) != teclas_presionadas.end()) {
-        queue_sender.push(LEFT_J1);
+        queue_sender.push(LEFT);
     }
 
     // Mover derecha e izquierda con teclas presionadas para Jugador 2
@@ -113,7 +113,7 @@ void EventHandler::correrHandlers() {
 
     // Disparo continuo mientras las teclas de disparo estén presionadas
     if (teclas_presionadas.find(SDLK_LSHIFT) != teclas_presionadas.end()) {
-        queue_sender.push(SHOOT_J1);
+        queue_sender.push(SHOOT);
     }
     if (teclas_presionadas.find(SDLK_RSHIFT) != teclas_presionadas.end()) {
         queue_sender.push(SHOOT_J2);
