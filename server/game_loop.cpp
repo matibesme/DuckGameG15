@@ -123,6 +123,16 @@ void GameLoop::sendCompleteScene(){
 
 
     }*/
+
+    for (auto& helmet : map_helmet) {
+
+        command.lista_helemets.push_back(helmet.second);
+    }
+
+    for (auto& armor : map_armor) {
+        command.lista_armors.push_back(armor.second);
+    }
+
     queues_map->sendMessagesToQueues(command);
 }
 

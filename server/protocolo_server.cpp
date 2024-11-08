@@ -74,6 +74,20 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
         protocolo.sendByte(box.type, dead_connection);
     }
 
+    protocolo.sendByte(command.lista_helemets.size(), dead_connection);
+    for (const Protection& helmet : command.lista_helemets) {
+        protocolo.sendByte(helmet.type, dead_connection);
+        protocolo.sendFloat(helmet.x_pos, dead_connection);
+        protocolo.sendFloat(helmet.y_pos, dead_connection);
+    }
+
+    protocolo.sendByte(command.lista_armors.size(), dead_connection);
+    for (const Protection& armor : command.lista_armors) {
+        protocolo.sendByte(armor.type, dead_connection);
+        protocolo.sendFloat(armor.x_pos, dead_connection);
+        protocolo.sendFloat(armor.y_pos, dead_connection);
+    }
+
 }
 
 
