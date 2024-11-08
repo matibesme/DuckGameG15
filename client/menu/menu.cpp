@@ -15,6 +15,7 @@ void Menu::initialize(){
     main_scene = new QGraphicsScene(this);
     make_game_scene = new QGraphicsScene(this);
     join_game_scene = new QGraphicsScene(this);
+    wait_scene = new QGraphicsScene(this);
     view = new QGraphicsView(main_scene, this);
 
     this->setGeometry(0, 0, 800, 600);
@@ -22,6 +23,7 @@ void Menu::initialize(){
     main_scene->setSceneRect(0, 0, 800, 600);
     make_game_scene->setSceneRect(0, 0, 800, 600);
     join_game_scene->setSceneRect(0, 0, 800, 600);
+    wait_scene->setSceneRect(0, 0, 800, 600);
 }
 
 void Menu::show_main_scene(){
@@ -116,9 +118,22 @@ void Menu::show_make_game_scene(){
     QLineEdit* name_player_1 = new QLineEdit();
     layout_name_players->addWidget(name_player_1);
 
-    layout_name_players->addWidget(new QLabel("Enter your name, player 2"));
+    QLabel* label_player_2 = new QLabel("Enter your name, player 2");
+    layout_name_players->addWidget(label_player_2);
     QLineEdit* name_player_2 = new QLineEdit();
     layout_name_players->addWidget(name_player_2);
+
+    QSpacerItem* spacer = new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    layout_name_players->addItem(spacer);
+
+    connect(single_player, &QPushButton::pressed, [=]() {
+        name_player_2->setVisible(false);
+        label_player_2->setVisible(false);
+    });
+    connect(two_players, &QPushButton::pressed, [=]() {
+        name_player_2->setVisible(true);
+        label_player_2->setVisible(true);
+    });
 
     layout_players->addWidget(widget_choose_players);
     layout_players->addWidget(widget_name_players);
@@ -129,14 +144,15 @@ void Menu::show_make_game_scene(){
     QWidget *widget_game = new QWidget;
     QVBoxLayout *layout_game = new QVBoxLayout(widget_game);
 
-    layout_game->addWidget(new QLabel("IP Adress"));
-    QLineEdit* adress = new QLineEdit();
-    layout_game->addWidget(adress);
+    layout_game->addWidget(new QLabel("IP Address"));
+    QLineEdit* address = new QLineEdit();
+    layout_game->addWidget(address);
     layout_game->addWidget(new QLabel("Port"));
     QLineEdit* port = new QLineEdit();
     layout_game->addWidget(port);
     QPushButton* make_game_button = new QPushButton("Make game");
     layout_game->addWidget(make_game_button);
+    connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
     QPushButton* back_button = new QPushButton("Back");
     layout_game->addWidget(back_button);
     connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
@@ -171,9 +187,22 @@ void Menu::show_join_game_scene(){
     QLineEdit* name_player_1 = new QLineEdit();
     layout_name_players->addWidget(name_player_1);
 
-    layout_name_players->addWidget(new QLabel("Enter your name, player 2"));
+    QLabel* label_player_2 = new QLabel("Enter your name, player 2");
+    layout_name_players->addWidget(label_player_2);
     QLineEdit* name_player_2 = new QLineEdit();
     layout_name_players->addWidget(name_player_2);
+
+    QSpacerItem* spacer = new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    layout_name_players->addItem(spacer);
+
+    connect(single_player, &QPushButton::pressed, [=]() {
+        name_player_2->setVisible(false);
+        label_player_2->setVisible(false);
+    });
+    connect(two_players, &QPushButton::pressed, [=]() {
+        name_player_2->setVisible(true);
+        label_player_2->setVisible(true);
+    });
 
     layout_players->addWidget(widget_choose_players);
     layout_players->addWidget(widget_name_players);
@@ -193,6 +222,7 @@ void Menu::show_join_game_scene(){
     layout_games->addWidget(game_options);
     QPushButton* join_game_button = new QPushButton("Join game");
     layout_games->addWidget(join_game_button);
+    connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
     QPushButton* back_button = new QPushButton("Back");
     connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
     layout_games->addWidget(back_button);
@@ -207,8 +237,25 @@ void Menu::show_join_game_scene(){
 
 }
 
-void show_number_players(){
+void Menu::show_number_players(){
 
+}
+
+void Menu::show_wait_scene(){
+    QPixmap initial_background("../../data/menu/Background.jpg");
+    QWidget *widget_wait = new QWidget;
+    QVBoxLayout *layout_wait = new QVBoxLayout(widget_wait);
+    layout_wait->addWidget(new QLabel("Waiting for the game to start"));
+
+    //Esto es solo para el cliente que crea el juego.
+    QPushButton* start_game = new QPushButton("Start game");
+    layout_wait->addWidget(start_game);
+
+    widget_wait->setGeometry(300, 250, 100, 100);
+    wait_scene->addWidget(widget_wait);
+    wait_scene->setBackgroundBrush(initial_background);
+    view->setScene(wait_scene);
+    view->show();
 }
 Menu::~Menu()
 {
