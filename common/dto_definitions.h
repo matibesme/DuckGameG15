@@ -49,8 +49,6 @@ struct GameState
     
     std::list<DTOPlatform> lista_plataformas;
 
-
-    
     std::list<DTODuck> lista_patos;
 
     std::list<DTOBullet> lista_balas;

@@ -17,19 +17,26 @@ ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped
         : idDuck(id), positionX(x_pos), positionY(y_pos), graficos(graficos),
           numSprite(0), gun(graficos, positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2, gunEquipped),
           isFlipped(false), typeOfGun(gunEquipped), pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING),
-          coloredTexture(nullptr), armor(graficos, positionX , positionY), helmet(graficos, positionX, positionY)
-{
-    update(y_pos, x_pos, typeOfMove, gunEquipped);
-}
+          coloredTexture(nullptr), armor(graficos, positionX , positionY), helmet(graficos, positionX, positionY),
+          armorEquipped(false), helmetEquipped(false), isOnGround(false)
+    {
+        update(y_pos, x_pos, typeOfMove, gunEquipped, armorEquipped, helmetEquipped);
+    }
 
-void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped) {
+void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped, uint8_t armor_, uint8_t helmet_) {
+    isOnGround = false;
     positionX = x_pos;
     positionY = y_pos;
     gun.setGun(gunEquipped);
 
-    if(typeOfMove == STILL_LEFT){
-        isFlipped = true;
-    }
+    if(typeOfMove == STILL_LEFT)    isFlipped = true;
+
+    if (armor_ == ARMOR_EQUIPPED)   armorEquipped = true;
+    else armorEquipped = false;
+
+
+    if (helmet_ == HELMET_EQUIPPED) helmetEquipped = true;
+    else    helmetEquipped = false;
 
     if (typeOfMove != STILL_RIGHT && typeOfMove != STILL_LEFT) {
         numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
@@ -56,6 +63,7 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gu
         } else if (typeOfMove == DOWN) {
             pixelDuckSpriteY = SRC_Y_STANDING;
             pixelDuckSpriteX = 0;
+            isOnGround = true;
         }
     } else {
         pixelDuckSpriteX = 0;
@@ -70,7 +78,7 @@ void ClientDuck::draw(Renderer& renderer) {
     }
 
     // destRect es el rectángulo donde se dibujará el pato
-    SDL2pp::Rect destRect((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
+    SDL2pp::Rect destRect((int) positionX, (int) positionY, DUCK_WIDTH, DUCK_HEIGHT);
     // srcRect es el rectángulo que se tomará de la textura
     SDL2pp::Rect srcRect(pixelDuckSpriteX, pixelDuckSpriteY, SPRITE_WIDTH, SPRITE_HEIGHT);
 
@@ -81,12 +89,14 @@ void ClientDuck::draw(Renderer& renderer) {
         renderer.Copy(*coloredTexture, srcRect, destRect);
     }
 
-    //dibujo la armadura completa siempre por ahora
-    helmet.update(positionX, positionY);
-    helmet.draw(isFlipped, renderer);
-    armor.update(positionX, positionY);
-    armor.draw(isFlipped, renderer);
-
+    if (helmetEquipped) {
+        helmet.update(positionX, positionY);
+        helmet.draw(isFlipped, renderer, isOnGround, true);
+    }
+    if (armorEquipped) {
+        armor.update(positionX, positionY);
+        armor.draw(isFlipped, renderer, isOnGround, true);
+    }
     // Dibujar el arma si está equipada
     if (gun.isEquipped()) {
         gun.update(positionX + (2 * DUCK_WIDTH/ 5), positionY + DUCK_HEIGHT / 2);
