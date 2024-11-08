@@ -18,6 +18,7 @@ class LobbyPartidas {
         std::map<uint8_t, std::shared_ptr<BlockingQueue<CommandClient>>> queues_game_loop;
         std::map<uint8_t, uint8_t> id_hoster_partida;
         std::map<uint8_t, bool> end_game;
+        std::map<uint8_t,std::list<uint8_t>> map_id_clientes;
         std::mutex m;
 
     public:

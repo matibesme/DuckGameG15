@@ -28,6 +28,7 @@
 class GameLoop: public Thread {
 
 private:
+    std::list<uint8_t>& list_id_clientes;
     std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;
     bool& end_game;
     std::shared_ptr<ProtectedQueuesMap> queues_map;
@@ -52,7 +53,7 @@ private:
 public:
 
     GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comandos, bool& end_game,
-              std::shared_ptr<ProtectedQueuesMap>& queues_map);
+              std::shared_ptr<ProtectedQueuesMap>& queues_map, std::list<uint8_t>& list_id_clientes);
     virtual void run() override;
     void checkCommand(CommandClient comando);
     void movementComand(uint8_t comando);

@@ -10,7 +10,8 @@
 
 
 GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comandos, bool& end_game,
-                    std::shared_ptr<ProtectedQueuesMap>& queues_map):
+                    std::shared_ptr<ProtectedQueuesMap>& queues_map, std::list<uint8_t>& list_id_clientes):
+        list_id_clientes(list_id_clientes),
         queue_comandos(queue_comandos),
         end_game(end_game),
         queues_map(queues_map),
@@ -29,21 +30,18 @@ void GameLoop::run() {
     try {
         load_game_config.loadGame(list_plataformas, respawn_weapon_points);
 
-
-        map_personajes.emplace(1, DuckPlayer(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
+        for (auto& id : list_id_clientes) {
+            map_personajes.emplace(id+1, DuckPlayer(1, id+1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
+        }
         uint8_t id = 0;
         for (auto& respawn : respawn_weapon_points) {
-
             map_free_weapons.emplace(id, factory_weapons.createWeapon(respawn.type, respawn.x_pos, respawn.y_pos));
             id++;
         }
 
 
         while (!end_game) {
-            //hago mover el pato 2 de manera constante hacia la derecha
-            /*DuckPlayer& personaje = map_personajes[2];
-            personaje.incrementXPos(MOVEMENT_QUANTITY_X);
-            personaje.setTypeOfMoveSprite(S_RIGTH);*/
+
 
             CommandClient comando;
             while (queue_comandos->try_pop(comando)) {
@@ -129,17 +127,22 @@ void GameLoop::paraCadaPatoAction() {
     for (auto& personaje : map_personajes) {
         bool is_on_platform = false;
         for (auto& platform : list_plataformas) {
-            if ( personaje.second.getXPos() +15 >= platform.x_pos && personaje.second.getXPos()+DUCK_WIDTH-15 <= platform.x_pos + platform.width) {
-
+            if ( personaje.second.getXPos() +15 >= platform.x_pos && personaje.second.getXPos()+DUCK_WIDTH-15 <= platform.x_pos + platform.width)
+            {
                 if (personaje.second.getYPos()+DUCK_HEIGHT==platform.y_pos|| (personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos &&  personaje.second.getYPos()+personaje.second.getVelocidadY() <= platform.y_pos)) {
-                    if (personaje.second.getVelocidadY() < 0) {
-                        personaje.second.stopJump(platform.y_pos-DUCK_HEIGHT);
-                    } else
-                    {
-                        personaje.second.setYPos(platform.y_pos - DUCK_HEIGHT);
-                    }
-                    is_on_platform = true;
-                }
+                        if (personaje.second.getVelocidadY() < 0) {
+                            personaje.second.stopJump(platform.y_pos-DUCK_HEIGHT);
+                        } else
+                        {
+                            personaje.second.setYPos(platform.y_pos - DUCK_HEIGHT);
+                        }
+                        is_on_platform = true;
+                } else if (personaje.second.getYPos() <= platform.y_pos + platform.height &&
+                 personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos + platform.height &&
+                 personaje.second.getVelocidadY() > 0) {
+                    personaje.second.setYPos(platform.y_pos + platform.height);
+                    personaje.second.setVelocidadY(0);
+                 }
             } else if (personaje.second.getYPos() + DUCK_HEIGHT -DUCK_HEIGHT/3> platform.y_pos  &&
         personaje.second.getYPos() < platform.y_pos + platform.height) {
 
@@ -186,7 +189,7 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
     for (auto& plataform : list_plataformas) {
         bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos, plataform.width, plataform.height);
     }
-    for (auto& wall )
+
 }
 
 
