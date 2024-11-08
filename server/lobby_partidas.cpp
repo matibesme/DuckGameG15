@@ -14,7 +14,7 @@ std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::addPartida(uint8_t 
     id_hoster_partida[id_client] = id_partida;
     protected_queues_sender[id_partida]->addClient(id_client, *queues_sender[id_client]);
     id_partida++;
-    return queues_game_loop[id_partida];
+    return queues_game_loop[id_partida-1];
 }
 
 std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::joinGame(uint8_t id_partida, uint8_t id_cliente)

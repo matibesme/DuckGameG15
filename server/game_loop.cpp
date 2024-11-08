@@ -37,11 +37,6 @@ void GameLoop::run() {
             id++;
         }
 
-        /*
-        list_free_weapons.emplace_back(CowboyPistol(S_COWBOY_GUN, 1, 100, 100, 10, 10, 10, 10));
-        list_free_weapons.emplace_back(DuelPistol(S_PISTOLA_DUELOS_GUN, 2, 200, 200, 10, 10, 10, 10));
-        list_free_weapons.emplace_back(Magnum(S_MAGNUM_GUN, 3, 300, 300, 10, 10, 10, 10));
-         */
 
         while (!end_game) {
             //hago mover el pato 2 de manera constante hacia la derecha
