@@ -156,11 +156,11 @@ void GameRenderer::actualizarElementos(const GameState& command) {
         }
     }
 
-    /*
+
     //CUARTO ACTUALIZO ARMADURAS
     for (auto it = armors.begin(); it != armors.end();) {
         auto armorInCommand = std::find_if(command.lista_armors.begin(), command.lista_armors.end(),
-                                            [it](const DTOArmor& armorStruct) {
+                                            [it](const Protection& armorStruct) {
                                                 return armorStruct.x_pos == it->getPosX() && armorStruct.y_pos == it->getPosY();
                                             });
         if (armorInCommand != command.lista_armors.end()) {
@@ -186,7 +186,7 @@ void GameRenderer::actualizarElementos(const GameState& command) {
     //QUINTO ACTUALIZO CASCOS
     for (auto it = helmets.begin(); it != helmets.end();) {
         auto helmetInCommand = std::find_if(command.lista_helmets.begin(), command.lista_helmets.end(),
-                                            [it](const DTOHelmet& helmetStruct) {
+                                            [it](const Protection& helmetStruct) {
                                                 return helmetStruct.x_pos == it->getPosX() && helmetStruct.y_pos == it->getPosY();
                                             });
         if (helmetInCommand != command.lista_helmets.end()) {
@@ -207,7 +207,7 @@ void GameRenderer::actualizarElementos(const GameState& command) {
         if (it == helmets.end()) {
             helmets.emplace_back(graficos, helmetStruct.x_pos, helmetStruct.y_pos);
         }
-    }*/
+    }
 
     //SEXTO ACTUALIZO CAJAS
     for (auto it = boxes.begin(); it != boxes.end();) {

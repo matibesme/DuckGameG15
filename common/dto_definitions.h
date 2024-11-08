@@ -63,7 +63,8 @@ struct GameState
 
     std::list<DTOBoxes> lista_boxes;
 
-    std::list<Protection> lista_helemets;
+    std::list<Protection> lista_helmets;
+
     std::list<Protection> lista_armors;
 
 };

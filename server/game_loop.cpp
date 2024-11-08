@@ -126,7 +126,7 @@ void GameLoop::sendCompleteScene(){
 
     for (auto& helmet : map_helmet) {
 
-        command.lista_helemets.push_back(helmet.second);
+        command.lista_helmets.push_back(helmet.second);
     }
 
     for (auto& armor : map_armor) {

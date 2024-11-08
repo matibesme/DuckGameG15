@@ -100,7 +100,7 @@ void ClientDuck::draw(Renderer& renderer) {
         armor.draw(isFlipped, renderer, isOnGround, true);
     }
     // Dibujar el arma si está equipada
-    if (gun.isEquipped()) {
+    if (gun.isEquipped() && !isOnGround) {
         gun.update(positionX + (2 * DUCK_WIDTH/ 5), positionY + DUCK_HEIGHT / 2);
         gun.draw(isFlipped, renderer);
     }
