@@ -43,6 +43,12 @@ struct DTOBoxes{
     uint8_t type;
 };
 
+struct Protection {
+    uint8_t type;
+    float x_pos;
+    float y_pos;
+};
+
 struct GameState
 {
     uint8_t backGround_id;
@@ -56,6 +62,9 @@ struct GameState
     std::list<DTOGuns> lista_guns;
 
     std::list<DTOBoxes> lista_boxes;
+
+    std::list<Protection> lista_helemets;
+    std::list<Protection> lista_armors;
 
 };
 
@@ -89,8 +98,3 @@ struct RespawnPoint {
 
 
 
-struct Protection {
-    uint8_t type;
-    float x_pos;
-    float y_pos;
-};
