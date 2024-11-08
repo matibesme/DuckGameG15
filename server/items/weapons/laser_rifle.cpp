@@ -10,9 +10,9 @@ constexpr int BURST_INTERVAL = 5;
 
 LaserRifle::LaserRifle(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range, uint8_t ammo_quantity, float recoil) :
         Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
-        spread_counter(1),
+        spread_counter(3),
         bullets_vector() {
-    bullets_vector.emplace_back(LASER_RIFLE_BULLET, 1, 0, 0, damage, range, 1);
+    bullets_vector.emplace_back(LASER_RIFLE_BULLET, 1, 0, 0, damage, range, 3);
 }
 
 bool LaserRifle::isEmptyAmmo() {
@@ -52,10 +52,10 @@ int LaserRifle::getReloadTime() {
 }
 
 void LaserRifle::stopShooting() {
-    spread_counter = 1;
+    spread_counter = 3;
     bullet_count = 0;
     bullets_vector.pop_back();
-    bullets_vector.emplace_back(LASER_RIFLE_BULLET, 1, 0, 0, damage, range, 1);
+    bullets_vector.emplace_back(LASER_RIFLE_BULLET, 1, 0, 0, damage, range, spread_counter);
 }
 
 

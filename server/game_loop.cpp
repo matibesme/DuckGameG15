@@ -20,9 +20,10 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         factory_weapons(),
         map_bullets(),
         id_balas(1),
+        id_weapons(),
         list_plataformas(),
         load_game_config(),
-        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas){}
+        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons){}
 
 void GameLoop::run() {
     try {
@@ -146,7 +147,7 @@ void GameLoop::paraCadaPatoAction() {
 
                 if (personaje.second.getXPos() + DUCK_WIDTH > platform.x_pos &&
                     personaje.second.getXPos() < platform.x_pos &&
-                    personaje.second.getDirection()==RIGHT) {
+                    personaje.second.getDirection() == RIGHT) {
 
 
                     personaje.second.setXPos(platform.x_pos - DUCK_WIDTH);
@@ -155,7 +156,7 @@ void GameLoop::paraCadaPatoAction() {
 
                 else if (personaje.second.getXPos() < platform.x_pos + platform.width &&
                          personaje.second.getXPos() > platform.x_pos &&
-                          personaje.second.getDirection()==LEFT) {
+                         personaje.second.getDirection() == LEFT) {
                     personaje.second.setXPos(platform.x_pos + platform.width);
                           }
 
@@ -182,9 +183,10 @@ void GameLoop::paraCadaPatoAction() {
 }
 
 void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
-   for (auto& plataform : list_plataformas) {
+    for (auto& plataform : list_plataformas) {
         bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos, plataform.width, plataform.height);
-   }
+    }
+    for (auto& wall )
 }
 
 
