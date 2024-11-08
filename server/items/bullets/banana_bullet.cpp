@@ -20,9 +20,9 @@ void BananaBullet::executeAction() {
 
     y_pos -= velocidad;
     velocidad -=GRAVEDAD;
-    if (direction == RIGHT) {
+    if (direction == RIGHT_J1) {
       x_pos += RANGO_X_MEDIO;
-    } else if (direction == LEFT) {
+    } else if (direction == LEFT_J1) {
       x_pos -= RANGO_X_MEDIO;
     }
 

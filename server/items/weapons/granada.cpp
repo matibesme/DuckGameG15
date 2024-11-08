@@ -35,9 +35,9 @@ std::unique_ptr<Bullet> Granada::shoot() {
     ammo_quantity--;
 
     bala.release_granada(x_pos, y_pos, direction, time_to_explode);
-    if (direction == RIGHT) {
+    if (direction == RIGHT_J1) {
         setXPos(x_pos - recoil);
-    } else  if (direction == LEFT) {
+    } else  if (direction == LEFT_J1) {
         setXPos(x_pos + recoil);
     }
     counter_to_shoot = COUNTER_TO_SHOOT_GRANADA;

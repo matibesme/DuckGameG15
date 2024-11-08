@@ -19,9 +19,9 @@ std::unique_ptr<Bullet> CowboyPistol::shoot() {
   
     bala.release(x_pos, y_pos, direction, bala.randomSpread());
     
-    if (direction == RIGHT) {
+    if (direction == RIGHT_J1) {
         setXPos(x_pos - recoil);
-    } else  if (direction == LEFT) {
+    } else  if (direction == LEFT_J1) {
         setXPos(x_pos + recoil);
     }
     return std::make_unique<Bullet>(bala);

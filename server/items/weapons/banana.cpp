@@ -27,10 +27,10 @@ std::unique_ptr<Bullet> Banana::shoot() {
 
     ammo_quantity--;
     bala.release(x_pos, y_pos, direction, bala.randomSpread());
-    if (direction == RIGHT) {
+    if (direction == RIGHT_J1) {
 
         setXPos(x_pos - recoil);
-    } else  if (direction == LEFT) {
+    } else  if (direction == LEFT_J1) {
         setXPos(x_pos + recoil);
     }
     counter_to_shoot = COUNTER_TO_SHOOT_GRANADA;

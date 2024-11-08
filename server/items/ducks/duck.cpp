@@ -14,14 +14,14 @@
 
 
 
-DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(STILL_RIGHT), saltando(false),
-              velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD){}
+DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(STILL_RIGHT_J1), saltando(false),
+                          velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true), gravity(GRAVEDAD){}
 
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
         is_weapon_equiped(true),
-        typeOfMove(STILL_RIGHT),
+        typeOfMove(STILL_RIGHT_J1),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
         life(100),
@@ -73,7 +73,7 @@ void DuckPlayer::stopJump(float y_pos_ )
         is_flapping = false;
         gravity = GRAVEDAD;
         velocidad = VELOCIDAD_INICIAL;
-        typeOfMove = (direction == RIGHT) ? STILL_RIGHT : STILL_LEFT;
+        typeOfMove = (direction == RIGHT_J1) ? STILL_RIGHT_J1 : STILL_LEFT_J1;
 
 }
 
@@ -86,7 +86,7 @@ void DuckPlayer::executeAction() {
             if (counter_flapping == 0) {
                 is_flapping = false;
                 gravity = GRAVEDAD;
-                typeOfMove= JUMP;
+                typeOfMove= JUMP_J1;
             }
         }
         y_pos -= velocidad;
@@ -128,7 +128,7 @@ Weapon& DuckPlayer::getWeapon() {
 std::shared_ptr<Weapon> DuckPlayer::removeWeapon() {
     std::shared_ptr<Weapon> weapon = weapons_list.front();
     //retrnario si direction es right o left
-     if (direction == RIGHT) {
+     if (direction == RIGHT_J1) {
         weapon->setXPos(x_pos+WIDTH_GUN );
     } else {
         weapon->setXPos(x_pos);

@@ -2,11 +2,11 @@
 
 ProtocoloCliente::ProtocoloCliente(const char* host, const char* port, bool& dead_connection):
         socket(host, port), dead_connection(dead_connection), protocolo(socket),
-        decode_type_of_action({{RIGHT, MOVEMENT_ACTION}, {LEFT, MOVEMENT_ACTION},
-                               {JUMP, MOVEMENT_ACTION}, {DOWN, MOVEMENT_ACTION},
+        decode_type_of_action({{RIGHT_J1,      MOVEMENT_ACTION}, {LEFT_J1, MOVEMENT_ACTION},
+                               {JUMP_J1,       MOVEMENT_ACTION}, {DOWN_J1, MOVEMENT_ACTION},
 
-                               {STILL_LEFT,MOVEMENT_ACTION}, {STILL_RIGHT,MOVEMENT_ACTION},
-                               {PICKUP, WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOOT, WEAPON_ACTION}, {STOP_SHOOT, WEAPON_ACTION}}) {}
+                               {STILL_LEFT_J1, MOVEMENT_ACTION}, {STILL_RIGHT_J1, MOVEMENT_ACTION},
+                               {PICKUP_J1,     WEAPON_ACTION}, {LEAVE_GUN_J1, WEAPON_ACTION}, {SHOOT_J1, WEAPON_ACTION}, {STOP_SHOOT_J1, WEAPON_ACTION}}) {}
 
 
 

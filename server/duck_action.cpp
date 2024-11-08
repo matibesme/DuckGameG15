@@ -18,17 +18,17 @@ void DuckAction::movementComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
 
     switch (comando) {
-        case RIGHT:
+        case RIGHT_J1:
             personaje.incrementXPos(MOVEMENT_QUANTITY_X);
-            personaje.setTypeOfMoveSprite(RIGHT);
-            personaje.setDirection(RIGHT);
+            personaje.setTypeOfMoveSprite(RIGHT_J1);
+            personaje.setDirection(RIGHT_J1);
             break;
-        case LEFT:
+        case LEFT_J1:
             personaje.incrementXPos(-MOVEMENT_QUANTITY_X);
-            personaje.setTypeOfMoveSprite(LEFT);
-            personaje.setDirection(LEFT);
+            personaje.setTypeOfMoveSprite(LEFT_J1);
+            personaje.setDirection(LEFT_J1);
             break;
-        case JUMP:
+        case JUMP_J1:
             if (!personaje.estaSaltando()) {
                 personaje.setEnSalto(true);
             } else if (personaje.getVelocidadY() < 0) {
@@ -36,14 +36,14 @@ void DuckAction::movementComand(uint8_t comando) {
                 personaje.increaseFlappingCounter();
             }
             break;
-        case DOWN:
-            personaje.setTypeOfMoveSprite(DOWN);
+        case DOWN_J1:
+            personaje.setTypeOfMoveSprite(DOWN_J1);
             break;
-        case STILL_RIGHT:
-            personaje.setTypeOfMoveSprite(STILL_RIGHT);
+        case STILL_RIGHT_J1:
+            personaje.setTypeOfMoveSprite(STILL_RIGHT_J1);
             break;
-        case STILL_LEFT:
-            personaje.setTypeOfMoveSprite(STILL_LEFT);
+        case STILL_LEFT_J1:
+            personaje.setTypeOfMoveSprite(STILL_LEFT_J1);
             break;
         default:
             break;
@@ -51,9 +51,9 @@ void DuckAction::movementComand(uint8_t comando) {
 
     // Check if the character is jumping or flapping when moving sideways
     if (personaje.isFlapping()) {
-        personaje.setTypeOfMoveSprite(FLAP);
+        personaje.setTypeOfMoveSprite(FLAP_J1);
     } else if (personaje.estaSaltando()) {
-        personaje.setTypeOfMoveSprite(JUMP);
+        personaje.setTypeOfMoveSprite(JUMP_J1);
     }
 }
 
@@ -61,7 +61,7 @@ void DuckAction::weaponComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
     Weapon& weapon = personaje.getWeapon();
     switch (comando) {
-        case PICKUP:
+        case PICKUP_J1:
             // Implement pickup logic here
 
                 if (personaje.isWeaponEquipped()) {
@@ -79,7 +79,7 @@ void DuckAction::weaponComand(uint8_t comando) {
                     }
                 }
             break;
-        case LEAVE_GUN:
+        case LEAVE_GUN_J1:
             // Implement leave gun logic here
             if (!personaje.isWeaponEquipped()) {
                 return;
@@ -87,7 +87,7 @@ void DuckAction::weaponComand(uint8_t comando) {
 
             map_free_weapons.emplace(map_free_weapons.size() + 1, personaje.removeWeapon());
             break;
-        case SHOOT:
+        case SHOOT_J1:
             {
             std::cout << "SHOOT" << std::endl;
             if (weapon.isEmptyAmmo()){
@@ -133,7 +133,7 @@ void DuckAction::weaponComand(uint8_t comando) {
             }
             }
             break;
-        case STOP_SHOOT:
+        case STOP_SHOOT_J1:
             weapon.stopShooting();
             break;
         default:
