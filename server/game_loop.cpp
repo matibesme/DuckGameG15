@@ -24,14 +24,17 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         id_weapons(),
         list_plataformas(),
         load_game_config(),
-        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons){}
+        map_helmet(),
+        map_armor(),
+        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons, map_helmet,map_armor)
+        {}
 
 void GameLoop::run() {
     try {
         load_game_config.loadGame(list_plataformas, respawn_weapon_points);
 
         for (auto& id : list_id_clientes) {
-            map_personajes.emplace(id+1, DuckPlayer(1, id+1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
+            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y));
         }
         uint8_t id = 0;
         for (auto& respawn : respawn_weapon_points) {
@@ -101,7 +104,7 @@ void GameLoop::sendCompleteScene(){
            weapon_type = personaje.second.getWeapon().getType();
         }
         DTODuck dto_duck = {personaje.first,personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
-                            personaje.second.getTypeOfMoveSprite(), weapon_type};
+                            personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(),personaje.second.getArmor()};
 
 
        command.lista_patos.push_back(dto_duck);

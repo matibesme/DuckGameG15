@@ -7,7 +7,7 @@ Acceptor::Acceptor(const char* port,bool& close):
         socket_servidor(port),
         lista_clientes(),
         close(close),
-        cantidad_clientes(0),
+        cantidad_clientes(1),
         lobby() {}
 
 

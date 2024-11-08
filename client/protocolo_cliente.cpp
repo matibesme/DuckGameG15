@@ -63,7 +63,9 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
         float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t typeOfMove = protocolo.receiveByte(dead_connection);
         uint8_t typeOfGun = protocolo.receiveByte(dead_connection);
-        lista_patos.push_back({id,personajes_type, x_pos, y_pos, typeOfMove, typeOfGun});
+        uint8_t helmet=protocolo.receiveByte(dead_connection);
+        uint8_t armor=protocolo.receiveByte(dead_connection);
+        lista_patos.push_back({id,personajes_type, x_pos, y_pos, typeOfMove, typeOfGun,helmet,armor});
     }
     //recivo balas
     uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);

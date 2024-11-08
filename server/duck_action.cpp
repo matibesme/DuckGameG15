@@ -7,10 +7,12 @@
 DuckAction::DuckAction(std::map<uint8_t, DuckPlayer>& map_personajes,
                        std::map<uint16_t,std::shared_ptr<Weapon>>& map_free_weapons,
                        std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets,
-                       uint16_t& id_balas, uint16_t& id_weapons):
+                       uint16_t& id_balas, uint16_t& id_weapons, std::map<uint8_t, Protection>& map_helmet, std::map<uint8_t, Protection>& map_armor):
         map_personajes(map_personajes),
         map_free_weapons(map_free_weapons),
         map_bullets(map_bullets),
+        map_helmet(map_helmet),
+        map_armor(map_armor),
         id_balas(id_balas),
         id_weapons(id_weapons){}
 
@@ -64,10 +66,11 @@ void DuckAction::weaponComand(uint8_t comando) {
 
     switch (comando) {
         case PICKUP:
-            if (personaje.isWeaponEquipped()) {
-                return;
-            }
+
             for (auto& free_weapon : map_free_weapons) {
+                if (personaje.isWeaponEquipped()) {
+                    break;
+                }
                 if (personaje.getXPos() + DUCK_WIDTH >= free_weapon.second->getXPos() &&
                     personaje.getXPos() <= free_weapon.second->getXPos() + WIDTH_GUN &&
                     personaje.getYPos() + DUCK_HEIGHT >= free_weapon.second->getYPos() &&
@@ -78,6 +81,36 @@ void DuckAction::weaponComand(uint8_t comando) {
                     break;
                 }
             }
+
+            for (auto& helmet : map_helmet) {
+                if (personaje.getHelmet()!=HELMET)break;
+                if (personaje.getXPos() + DUCK_WIDTH >= helmet.second.y_pos &&
+                    personaje.getXPos() <= helmet.second.x_pos + WIDTH_HELMET &&
+                    personaje.getYPos() + DUCK_HEIGHT >= helmet.second.y_pos &&
+                    personaje.getYPos() <=  helmet.second.x_pos + HEIGHT_HELMET) {
+
+                    personaje.setHelmet(HELMET);
+                    map_helmet.erase(helmet.first);
+
+                    break;
+                }
+            }
+
+        for (auto& armor : map_armor) {
+            if (personaje.getHelmet()!=HELMET)break;
+            if (personaje.getXPos() + DUCK_WIDTH >= armor.second.y_pos &&
+                personaje.getXPos() <= armor.second.x_pos + WIDTH_ARMOR &&
+                personaje.getYPos() + DUCK_HEIGHT >= armor.second.y_pos &&
+                personaje.getYPos() <=  armor.second.x_pos + HEIGHT_ARMOR) {
+
+                personaje.setHelmet(ARMOR);
+                map_armor.erase(armor.first);
+
+                break;
+                }
+        }
+
+
             break;
 
         case LEAVE_GUN:
@@ -86,7 +119,6 @@ void DuckAction::weaponComand(uint8_t comando) {
             }
             map_free_weapons.emplace(id_weapons, personaje.removeWeapon());
              id_weapons++;
-
             break;
 
         case SHOOT: {
