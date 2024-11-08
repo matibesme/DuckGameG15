@@ -15,7 +15,7 @@
 
 
 DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(STILL_RIGHT), saltando(false),
-              velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),gravity(GRAVEDAD){}
+                          velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true), gravity(GRAVEDAD){}
 
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
