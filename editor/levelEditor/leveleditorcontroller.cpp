@@ -200,7 +200,7 @@ void LevelEditorController::save_map(){
         out << YAML::Value << boxes.at(i)->pixmap().width();
         out << YAML::EndMap;
     }
-    out << YAML::EndMap;
+    out << YAML::EndSeq;
 
     out << YAML::Key << "armour spawns";
     out << YAML::Value << YAML::BeginSeq;
@@ -219,6 +219,8 @@ void LevelEditorController::save_map(){
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;
+    out << YAML::EndMap;
+
 
     if (ok){
         if(!(text.isEmpty())){
