@@ -121,12 +121,6 @@ void ClientDuck::applyColor(Renderer& renderer) {
     coloredTexture = std::make_unique<SDL2pp::Texture>(renderer, surface);
 }
 
-
-bool ClientDuck::checkCollision(SDL2pp::Rect rect) {
-    Rect rectDuck((int)positionX, (int)positionY, DUCK_WIDTH, DUCK_HEIGHT);
-    return SDL_HasIntersection(&rectDuck, &rect);
-}
-
 uint8_t ClientDuck::getId() const {
     return idDuck;
 }

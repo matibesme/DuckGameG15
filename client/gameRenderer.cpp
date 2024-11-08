@@ -2,7 +2,7 @@
 #include "GameRenderer.h"
 #include <algorithm> // para std::min y std::max
 
-#define IMAGE_CIELO_NUBES DATA_PATH "/backgrounds/Cloudy night.png"
+#define IMAGE_CLOUDY_NIGHT DATA_PATH "/backgrounds/Cloudy night.png"
 #define IMAGE_CITY DATA_PATH "/backgrounds/City.png"
 #define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
 
@@ -245,7 +245,7 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
 
     // Cargar y dibujar el fondo
     if (background_id == TYPE_BACKGROUND_CIELO_NUBES) {
-        background = graficos.LoadTexture(IMAGE_CIELO_NUBES);
+        background = graficos.LoadTexture(IMAGE_CLOUDY_NIGHT);
     } else if (background_id == TYPE_BACKGROUND_CITY) {
         background = graficos.LoadTexture(IMAGE_CITY);
     } else if (background_id == TYPE_BACKGROUND_FOREST) {

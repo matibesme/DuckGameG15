@@ -17,7 +17,6 @@ public:
                Graficos& graficos);
     void update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped);
     void draw(Renderer& renderer);
-    bool checkCollision(Rect rect);
     uint8_t getId() const;
     int getPosX();
     int getPosY();
