@@ -3,7 +3,6 @@
 
 #include "pewpew_laser.h"
 
-#include "server/constant_definitons.h"
 
 constexpr int BEAM_COUNT = 3;
 

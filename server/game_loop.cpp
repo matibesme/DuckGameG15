@@ -8,8 +8,10 @@
 //despues sacar
 #include "items/weapons/banana.h"
 
-GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
-                   ProtectedQueuesMap& queues_map):
+
+GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comandos, bool& end_game,
+                    std::shared_ptr<ProtectedQueuesMap>& queues_map, std::list<uint8_t>& list_id_clientes):
+        list_id_clientes(list_id_clientes),
         queue_comandos(queue_comandos),
         end_game(end_game),
         queues_map(queues_map),
@@ -19,37 +21,33 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         factory_weapons(),
         map_bullets(),
         id_balas(1),
+        id_weapons(),
         list_plataformas(),
         load_game_config(),
-        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas){}
+        map_helmet(),
+        map_armor(),
+        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons, map_helmet,map_armor)
+        {}
 
 void GameLoop::run() {
     try {
         load_game_config.loadGame(list_plataformas, respawn_weapon_points);
 
-
-        map_personajes.emplace(1, DuckPlayer(1, 1, POSICION_INICIAL_X, POSICION_INICIAL_Y));
+        for (auto& id : list_id_clientes) {
+            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y));
+        }
         uint8_t id = 0;
         for (auto& respawn : respawn_weapon_points) {
-
             map_free_weapons.emplace(id, factory_weapons.createWeapon(respawn.type, respawn.x_pos, respawn.y_pos));
             id++;
         }
 
-        /*
-        list_free_weapons.emplace_back(CowboyPistol(S_COWBOY_GUN, 1, 100, 100, 10, 10, 10, 10));
-        list_free_weapons.emplace_back(DuelPistol(S_PISTOLA_DUELOS_GUN, 2, 200, 200, 10, 10, 10, 10));
-        list_free_weapons.emplace_back(Magnum(S_MAGNUM_GUN, 3, 300, 300, 10, 10, 10, 10));
-         */
 
         while (!end_game) {
-            //hago mover el pato 2 de manera constante hacia la derecha
-            /*DuckPlayer& personaje = map_personajes[2];
-            personaje.incrementXPos(MOVEMENT_QUANTITY_X);
-            personaje.setTypeOfMoveSprite(S_RIGTH);*/
+
 
             CommandClient comando;
-            while (queue_comandos.try_pop(comando)) {
+            while (queue_comandos->try_pop(comando)) {
                 checkCommand(comando);
             }
             paraCadaPatoAction();
@@ -106,7 +104,7 @@ void GameLoop::sendCompleteScene(){
            weapon_type = personaje.second.getWeapon().getType();
         }
         DTODuck dto_duck = {personaje.first,personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
-                            personaje.second.getTypeOfMoveSprite(), weapon_type};
+                            personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(),personaje.second.getArmor()};
 
 
        command.lista_patos.push_back(dto_duck);
@@ -125,54 +123,13 @@ void GameLoop::sendCompleteScene(){
 
 
     }*/
-    queues_map.sendMessagesToQueues(command);
+    queues_map->sendMessagesToQueues(command);
 }
 
 void GameLoop::paraCadaPatoAction() {
     for (auto& personaje : map_personajes) {
-        bool is_on_platform = false;
-        for (auto& platform : list_plataformas) {
-            if ( personaje.second.getXPos() +15 >= platform.x_pos && personaje.second.getXPos()+DUCK_WIDTH-15 <= platform.x_pos + platform.width) {
-
-                if (personaje.second.getYPos()+DUCK_HEIGHT==platform.y_pos|| (personaje.second.getYPos() + DUCK_HEIGHT > platform.y_pos &&  personaje.second.getYPos()+personaje.second.getVelocidadY() <= platform.y_pos)) {
-                    if (personaje.second.getVelocidadY() < 0) {
-                        personaje.second.stopJump(platform.y_pos-DUCK_HEIGHT);
-                    } else
-                    {
-                        personaje.second.setYPos(platform.y_pos - DUCK_HEIGHT);
-                    }
-                    is_on_platform = true;
-                }
-            } else if (personaje.second.getYPos() + DUCK_HEIGHT -DUCK_HEIGHT/3> platform.y_pos  &&
-        personaje.second.getYPos() < platform.y_pos + platform.height) {
-
-
-
-                if (personaje.second.getXPos() + DUCK_WIDTH > platform.x_pos &&
-                    personaje.second.getXPos() < platform.x_pos &&
-                    personaje.second.getDirection() == RIGHT) {
-
-
-                    personaje.second.setXPos(platform.x_pos - DUCK_WIDTH);
-                    }
-
-
-                else if (personaje.second.getXPos() < platform.x_pos + platform.width &&
-                         personaje.second.getXPos() > platform.x_pos &&
-                         personaje.second.getDirection() == LEFT) {
-                    personaje.second.setXPos(platform.x_pos + platform.width);
-                          }
-
-        }
-
-        }
-
-
-        if (!is_on_platform && !personaje.second.estaSaltando()) {
-            personaje.second.setEnSalto(true);
-            personaje.second.setVelocidadY(0);
-
-        }
+        
+        checkCoalitionDuckPlatform(personaje.second);
         personaje.second.executeAction();
         if (!personaje.second.isWeaponEquipped()) continue;
 
@@ -186,10 +143,53 @@ void GameLoop::paraCadaPatoAction() {
 }
 
 void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
-   for (auto& plataform : list_plataformas) {
+    for (auto& plataform : list_plataformas) {
         bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos, plataform.width, plataform.height);
-   }
+    }
+
 }
+
+void GameLoop::checkCoalitionDuckPlatform(DuckPlayer& personaje) {
+    bool is_on_platform = false;
+    for (auto& platform : list_plataformas) {
+
+        if (personaje.getXPos() + 15 >= platform.x_pos && personaje.getXPos() + DUCK_WIDTH - 15 <= platform.x_pos + platform.width) {
+        //caso plataformas inferior y superior
+            if (personaje.getYPos() + DUCK_HEIGHT == platform.y_pos || 
+                (personaje.getYPos() + DUCK_HEIGHT > platform.y_pos && personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos)) {
+                if (personaje.getVelocidadY() < 0) {
+                    personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
+                } else {
+                    personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
+                }
+                is_on_platform = true;
+            } else if (personaje.getYPos() <= platform.y_pos + platform.height &&
+                       personaje.getYPos() + DUCK_HEIGHT > platform.y_pos + platform.height &&
+                       personaje.getVelocidadY() > 0) {
+                personaje.setYPos(platform.y_pos + platform.height);
+                personaje.setVelocidadY(0);
+            }
+        } else if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 > platform.y_pos &&
+                   personaje.getYPos() < platform.y_pos + platform.height) {
+        //caso paredes de plataformas
+           if (personaje.getXPos() + DUCK_WIDTH > platform.x_pos &&
+                personaje.getXPos() < platform.x_pos &&
+                personaje.getDirection() == RIGHT) {
+                personaje.setXPos(platform.x_pos - DUCK_WIDTH);
+            } else if (personaje.getXPos() < platform.x_pos + platform.width &&
+                       personaje.getXPos() > platform.x_pos &&
+                       personaje.getDirection() == LEFT) {
+                personaje.setXPos(platform.x_pos + platform.width);
+            }
+        }
+    }
+
+    if (!is_on_platform && !personaje.estaSaltando()) {
+        personaje.setEnSalto(true);
+        personaje.setVelocidadY(0);
+    }
+}
+
 
 
 

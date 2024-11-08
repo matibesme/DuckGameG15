@@ -1,27 +1,45 @@
 target_sources(taller_server
-    PRIVATE
-    # .cpp files
-    server_main.cpp
+        PRIVATE
+        # .cpp files
+        server_main.cpp
         items/bullets/bullet.cpp
-
         items/weapons/weapon.cpp
+        items/box.cpp
+        items/weapons/ak47.cpp
+        items/weapons/banana.cpp
+        items/weapons/cowboy_pistol.cpp
+        items/weapons/duel_pistol.cpp
+        items/weapons/factory_weapons.cpp
+        items/weapons/granada.cpp
+        items/weapons/laser_rifle.cpp
+        items/weapons/magnum.cpp
+        items/weapons/pewpew_laser.cpp
+        items/weapons/shotgun.cpp
+        items/weapons/sniper.cpp
         items/ducks/duck.cpp
         items/objeto.cpp
         items/bullets/granada_bullet.cpp
-        items/weapons/granada.cpp
-        items/weapons/banana.cpp
         items/bullets/banana_bullet.cpp
         configuration/load_game.cpp
-    PUBLIC
-    # .h files
+        PUBLIC
+        # .h files
         items/bullets/bullet.h
-
         items/weapons/weapon.h
+        items/box.h
+        items/weapons/ak47.h
+        items/weapons/banana.h
+        items/weapons/cowboy_pistol.h
+        items/weapons/duel_pistol.h
+        items/weapons/factory_weapons.h
+        items/weapons/granada.h
+        items/weapons/laser_rifle.h
+        items/weapons/magnum.h
+        items/weapons/pewpew_laser.h
+        items/weapons/shotgun.h
+        items/weapons/sniper.h
         items/ducks/duck.h
         items/objeto.h
         items/bullets/granada_bullet.h
-        items/weapons/granada.h
-        items/weapons/banana.h
         items/bullets/banana_bullet.h
         configuration/load_game.h
 )

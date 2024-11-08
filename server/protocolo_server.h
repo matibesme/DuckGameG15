@@ -25,6 +25,7 @@ public:
    
     void sendBackground(const GameState& command);
     CommandClient receiveCommandFromClients();
+    GameAccess receiveAccessFromClients();
     void closeSocket();
     ~ProtocoloServer();
 };

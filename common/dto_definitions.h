@@ -10,6 +10,8 @@ struct DTODuck{
     float y_pos;
     uint8_t typeOfMove;//right left down jump still
     uint8_t typeOfGun; // nogun, cowboy ...
+    uint8_t helmet;
+    uint8_t armor;
 };
 
 struct DTOBullet{
@@ -67,8 +69,10 @@ struct CommandClient {
 };
 
 struct GameAccess {
-    uint8_t action_type; // new game or join game
+    uint8_t action_type;
     uint8_t game_id;
+   // join game, create game, start game
+
 };
 
 
@@ -83,4 +87,12 @@ struct RespawnPoint {
     float x_pos;
     float y_pos;
     uint8_t type;
+};
+
+
+
+struct Protection {
+    uint8_t type;
+    float x_pos;
+    float y_pos;
 };

@@ -10,13 +10,13 @@ Shotgun::Shotgun(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t dam
         Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
         pellets_vector(),
         pellet_count(PELLET_COUNT) {
-    float maxSpread = 0.3;
+    float maxSpread = 1;
     int halfCount = PELLET_COUNT / 2; // Para dividir el número de balas a cada lado del cero
 
     for (int i = 0; i < PELLET_COUNT; i++) {
         // Calculamos el spread en función de la posición i
         float spread = maxSpread * (halfCount - i) / halfCount;
-        pellets_vector.emplace_back(COWBOY_BULLET, i, 0, 0, damage, 250, spread);
+        pellets_vector.emplace_back(COWBOY_BULLET, i, 0, 0, damage, range, spread);
     }
 }
 

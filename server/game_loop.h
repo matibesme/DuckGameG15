@@ -1,4 +1,4 @@
-
+#pragma once
 #include <chrono>
 #include <iostream>
 #include <list>
@@ -28,29 +28,39 @@
 class GameLoop: public Thread {
 
 private:
-    BlockingQueue<CommandClient>& queue_comandos;
+    std::list<uint8_t>& list_id_clientes;
+    std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;
     bool& end_game;
-    ProtectedQueuesMap& queues_map;
+    std::shared_ptr<ProtectedQueuesMap> queues_map;
     std::map<uint8_t, DuckPlayer> map_personajes;
 
 //WEAPONS SECTION
     std::list<RespawnPoint> respawn_weapon_points;
-    std::map<uint8_t,std::shared_ptr<Weapon>> map_free_weapons;
+    std::map<uint16_t,std::shared_ptr<Weapon>> map_free_weapons;
     FactoryWeapons factory_weapons;
 
 
     std::map<uint16_t, std::unique_ptr<Bullet>> map_bullets;
     uint16_t id_balas;
+    uint16_t id_weapons;
     std::list<DTOPlatform> list_plataformas;
 
     //std::list<DTOBoxes> list_boxes;
     LoadGameFile load_game_config;
+    std::map<uint8_t, Protection> map_helmet;
+    std::map<uint8_t, Protection> map_armor;
     DuckAction duck_action;
+
+
+
+
+
     void paraCadaPatoAction();
 
 public:
-    GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
-             ProtectedQueuesMap& queues_map);
+
+    GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comandos, bool& end_game,
+              std::shared_ptr<ProtectedQueuesMap>& queues_map, std::list<uint8_t>& list_id_clientes);
     virtual void run() override;
     void checkCommand(CommandClient comando);
     void movementComand(uint8_t comando);
@@ -59,6 +69,6 @@ public:
     void saltar();
     void sendCompleteScene();
     void checkCoalition(std::unique_ptr<Bullet>& bullet);
-    //void checkCoalitionWithPlatform(DuckPlayer& personaje);
+    void checkCoalitionDuckPlatform(DuckPlayer& personaje);
     virtual ~GameLoop();
 };

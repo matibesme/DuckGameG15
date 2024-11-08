@@ -20,7 +20,7 @@ DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         : Objeto(type, id, x_pos, y_pos),
-        is_weapon_equiped(true),
+        is_weapon_equiped(false),
         typeOfMove(STILL_RIGHT),
         saltando(false),
         velocidad(VELOCIDAD_INICIAL),
@@ -29,11 +29,10 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         gravity(GRAVEDAD),
         weapons_list(),
         counter_flapping(0),
-        is_flapping(false)
+        is_flapping(false),
+        helmet(NO_HELMET),
+        armor(NO_ARMOR)
     {
-
-        // Agregando una nueva CowboyPistol a la lista de armas
-        weapons_list.push_back(std::make_shared<CowboyPistol>(COWBOY_GUN, 1, 0, 0, 10, 38, 100, 0));
 
     }
 
@@ -178,6 +177,25 @@ void DuckPlayer::increaseFlappingCounter() {
 
 void DuckPlayer::setGravity(float gravity_){
     gravity = gravity_;
+}
+
+void DuckPlayer::setHelmet(uint8_t type)
+{
+    helmet=type;
+}
+
+void DuckPlayer::setArmor(uint8_t type)
+{
+    armor=type;
+}
+
+uint8_t& DuckPlayer::getHelmet()
+{
+    return helmet;
+}
+uint8_t& DuckPlayer::getArmor()
+{
+    return helmet;
 }
 
 

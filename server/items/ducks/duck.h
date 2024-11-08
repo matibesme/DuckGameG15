@@ -18,6 +18,8 @@ class DuckPlayer: public Objeto {
         std::list<std::shared_ptr<Weapon>> weapons_list;
         uint8_t counter_flapping;
         bool is_flapping;
+        uint8_t helmet;
+        uint8_t armor;
 
     public:
         DuckPlayer();
@@ -46,7 +48,10 @@ class DuckPlayer: public Objeto {
         void setGravity(float gravity_);
         void increaseFlappingCounter();
 
-
+        void setHelmet(uint8_t type);
+        void setArmor(uint8_t type);
+        uint8_t& getHelmet();
+        uint8_t& getArmor();
         std::shared_ptr<Weapon> removeWeapon();
         ~DuckPlayer();
 

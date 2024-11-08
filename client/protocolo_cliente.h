@@ -25,6 +25,7 @@ public:
 
    // void sendGameAccessToServer(const GameAccess& game_access);
     void sendInGameToServer(const uint8_t& command);
+    void sendAccesToServer(uint8_t action,uint8_t id);
     GameState reciveFromServer();
     GameState reciveFullGameFromServer();
     GameState reciveBackgroundFromServer();

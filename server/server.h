@@ -1,3 +1,4 @@
+#pragma once
 #include <list>
 
 #include "../common/blocking_queue.h"
@@ -7,7 +8,6 @@
 #include "acceptor.h"
 #include "server_constant.h"
 #include "game_loop.h"
-#include "protected_queues_map.h"
 
 
 class Server {
@@ -15,10 +15,9 @@ class Server {
 
 private:
     bool close;
-    ProtectedQueuesMap map_queues_sender;
-    BlockingQueue<CommandClient> queue_comandos;
+
     Acceptor acceptor;
-    GameLoop game_loop;
+
 
 
 public:

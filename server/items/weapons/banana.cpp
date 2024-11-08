@@ -20,11 +20,14 @@ bool Banana::isActive() {
 
 
 std::unique_ptr<Bullet> Banana::shoot() {
+    if (bullet_count > 0) {
+        return nullptr;
+    }
     if (counter_to_shoot != 0) {
         counter_to_shoot--;
         return nullptr;
     }
-
+    bullet_count += 1;
     ammo_quantity--;
     bala.release(x_pos, y_pos, direction, bala.randomSpread());
     if (direction == RIGHT) {
@@ -46,7 +49,7 @@ int Banana::getReloadTime() {
 }
 
 void Banana::stopShooting() {
-
+    bullet_count = 0;
 }
 
 

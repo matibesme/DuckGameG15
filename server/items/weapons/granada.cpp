@@ -6,7 +6,7 @@
 
 Granada::Granada(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range, uint8_t ammo_quantity, float recoil) :
     Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
-    bala(GRANADA_BULLET, 1, 0, 0, 10, 35, 0.3, GRANADA_TIME_TO_EXPLODE),
+    bala(GRANADA_BULLET, 1, 0, 0, 10, range, 0.3, GRANADA_TIME_TO_EXPLODE),
     counter_to_shoot(COUNTER_TO_SHOOT_GRANADA),
     time_to_explode(GRANADA_TIME_TO_EXPLODE) {}
 
@@ -27,11 +27,14 @@ bool Granada::isActive() {
 
 
 std::unique_ptr<Bullet> Granada::shoot() {
+    if (bullet_count > 0) {
+        return nullptr;
+    }
     if (counter_to_shoot != 0) {
         counter_to_shoot--;
         return nullptr;
     }
-
+    bullet_count += 1;
     ammo_quantity--;
 
     bala.release_granada(x_pos, y_pos, direction, time_to_explode);
@@ -54,7 +57,7 @@ int Granada::getReloadTime() {
 }
 
 void Granada::stopShooting() {
-
+    bullet_count = 0;
 }
 
 

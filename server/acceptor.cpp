@@ -3,14 +3,12 @@
 #include <iostream>
 
 
-Acceptor::Acceptor(const char* port, ProtectedQueuesMap& map_queues_sender,
-                   BlockingQueue<CommandClient>& queue_comandos, bool& close):
+Acceptor::Acceptor(const char* port,bool& close):
         socket_servidor(port),
-        map_queues_sender(map_queues_sender),
         lista_clientes(),
-        queue_comandos(queue_comandos),
         close(close),
-        cantidad_clientes(0) {}
+        cantidad_clientes(1),
+        lobby() {}
 
 
 void Acceptor::run() {
@@ -30,23 +28,23 @@ void Acceptor::run() {
 void Acceptor::accept_new_client() {
     Socket peer = socket_servidor.accept();
 
-    lista_clientes.emplace_back(std::move(peer), queue_comandos, cantidad_clientes);
+    lista_clientes.emplace_back(std::move(peer),cantidad_clientes,lobby);
     ThreadCliente& cliente = lista_clientes.back();
     cliente.start();
     reapDead();
 
-    map_queues_sender.addClient(cantidad_clientes, cliente.getQueueSender());//
+    //map_queues_sender.addClient(cantidad_clientes, cliente.getQueueSender());//
     cantidad_clientes++;
 }
 
 void Acceptor::deleteAClient(ThreadCliente& cliente) {
     cliente.delete_client();
-    map_queues_sender.removeQueue(cliente.getId());
+    lobby.removeQueue(cliente.getId());
 }
 
 
 void Acceptor::reapDead() {
-
+/*
     for (auto it = lista_clientes.begin(); it != lista_clientes.end();) {
         if (it->isDead()) {
             it->join();
@@ -55,7 +53,7 @@ void Acceptor::reapDead() {
         } else {
             ++it;
         }
-    }
+    }*/
 }
 
 
@@ -70,4 +68,5 @@ Acceptor::~Acceptor() {
         deleteAClient(it);
     }
     lista_clientes.clear();
+    lobby.~LobbyPartidas();
 }

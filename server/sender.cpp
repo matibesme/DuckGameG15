@@ -5,14 +5,14 @@
 
 #include "../common/game_exception.h"
 
-Sender::Sender(ProtocoloServer& protocolo, BlockingQueue<GameState>& queue_sender,
+Sender::Sender(ProtocoloServer& protocolo, std::shared_ptr<BlockingQueue<GameState>> queue_sender,
                bool& dead_connection):
         protocolo(protocolo), queue_sender(queue_sender), dead_connection(dead_connection) {}
 
 void Sender::run() {
     try {
         while (!dead_connection) {
-            GameState command = queue_sender.pop();
+            GameState command = queue_sender->pop();
             protocolo.sendToClient(command);
         }
     } catch (const ClosedQueue& e) {

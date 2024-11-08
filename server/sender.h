@@ -12,12 +12,12 @@ class Sender: public Thread {
 
 private:
     ProtocoloServer& protocolo;
-    BlockingQueue<GameState>& queue_sender;
+    std::shared_ptr<BlockingQueue<GameState>> queue_sender;
     bool& dead_connection;
 
 
 public:
-    Sender(ProtocoloServer& protocolo, BlockingQueue<GameState>& queue_sender,
+    Sender(ProtocoloServer& protocolo, std::shared_ptr<BlockingQueue<GameState>> queue_sender,
            bool& dead_connection);
     virtual void run() override;
     virtual ~Sender();

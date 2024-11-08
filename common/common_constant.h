@@ -144,3 +144,9 @@ constexpr int QUEUE_TAMANIO_MAX = 100;
 constexpr float BULLET_VEL = 5;
 constexpr float MOVEMENT_QUANTITY_X = 3;
 constexpr float MOVEMENT_QUANTITY_Y = 3;
+
+
+//  Access to game
+constexpr uint8_t JOIN_GAME = 0xCC;
+constexpr uint8_t CREATE_GAME = 0xDD;
+constexpr uint8_t START_GAME = 0xEE;

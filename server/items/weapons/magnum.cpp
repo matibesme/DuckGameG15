@@ -4,7 +4,7 @@ Magnum::Magnum(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damag
 uint8_t range, uint8_t ammo_quantity, float recoil) : 
     Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil) ,
 
-    bala(MAGNUM_BULLET, 1, 0, 0, 10, 250, 0.3) {}
+    bala(MAGNUM_BULLET, 1, 0, 0, 10, range, 0.3) {}
 
 
 bool Magnum::isEmptyAmmo() {
