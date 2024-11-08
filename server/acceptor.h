@@ -1,6 +1,8 @@
+#pragma once
 #include <list>
 #include <utility>
 
+#include "lobby_partidas.h"
 #include "../common/blocking_queue.h"
 #include "../common/liberror.h"
 #include "../common/socket.h"
@@ -14,16 +16,14 @@ class Acceptor: public Thread {
 
 private:
     Socket socket_servidor;
-    ProtectedQueuesMap& map_queues_sender;
     std::list<ThreadCliente> lista_clientes;
-    BlockingQueue<CommandClient>& queue_comandos;
     bool& close;
     uint8_t cantidad_clientes;
+    LobbyPartidas lobby;
 
 
 public:
-    Acceptor(const char* port, ProtectedQueuesMap& map_queues_sender,
-             BlockingQueue<CommandClient>& queue_comandos, bool& close);  //saco el queue_Sender
+    Acceptor(const char* port, bool& close);  //saco el queue_Sender
     virtual void run() override;
     void accept_new_client();
     void deleteAClient(ThreadCliente& cliente);

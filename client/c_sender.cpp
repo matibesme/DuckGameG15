@@ -8,7 +8,11 @@
 Sender::Sender(ProtocoloCliente &protocolo, BlockingQueue<uint8_t> &queue_sender):
         queue_sender(queue_sender), protocolo(protocolo) {}
 
-void Sender::run() {
+void Sender::run()
+{
+    protocolo.sendAccesToServer(CREATE_GAME, 1);
+    protocolo.sendAccesToServer(START_GAME, 1);
+
     while (_keep_running) {
         try {
             uint8_t command = queue_sender.pop();

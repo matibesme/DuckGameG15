@@ -1,24 +1,76 @@
-/*#include "lobby_partidas.h"
+#include "lobby_partidas.h"
 
+LobbyPartidas::LobbyPartidas(): id_partida(0),partidas(), protected_queues_sender(), queues_sender(), queues_game_loop(), id_hoster_partida(), end_game(), m()
+{
+}
 
-LobbyPartidas::LobbyPartidas(): partidas(), queues_comandos(), maps_queues_sender(),cantidad_partidas(0) {}
+std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::addPartida(uint8_t id_client)
+{
+    std::lock_guard<std::mutex> lock(m);
+    end_game[id_partida] = false;
+    queues_game_loop.emplace(id_partida, std::make_shared<BlockingQueue<CommandClient>>(50));
+    partidas.emplace(id_partida, std::make_unique<GameLoop>(queues_game_loop[id_partida], end_game[id_partida], protected_queues_sender[id_partida]));
+    id_hoster_partida[id_client] = id_partida;
+    protected_queues_sender[id_partida]->addClient(id_client, *queues_sender[id_client]);
+    id_partida++;
+    return queues_game_loop[id_partida];
+}
 
-LobbyPartidas::addGame(uint8_t client_id) {
-    uint16_t id += cantidad_partidas;
-    maps_queues_sender[id] = new ProtectedQueuesMap();
-    maps_queues_sender[id].addClient(client_id, queue_sender);
-    queues_comandos[id] = new BlockingQueue<CommandGame>();
-
-    partidas[id] = new GameLoop(queues_comandos[id], maps_queues_sender[id]);
-  
-    return queues_comandos[id];
+std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::joinGame(uint8_t id_partida, uint8_t id_cliente)
+{
+    std::lock_guard<std::mutex> lock(m);
+    protected_queues_sender[id_partida]->addClient(id_cliente, *queues_sender[id_cliente]);
+    return queues_game_loop[id_partida];
 }
 
 
-LobbyPartidas::joinGame(uint16_t id,client_id) {
-    if (partidas.find(id) == partidas.end()) {
-        throw GameException("Partida no encontrada");
+
+
+bool LobbyPartidas::isHoster(uint8_t id_cliente)
+{
+    return id_hoster_partida.find(id_cliente) != id_hoster_partida.end();
+}
+
+void LobbyPartidas::startGame(uint8_t id_client)
+{
+    std::lock_guard<std::mutex> lock(m);
+    partidas[id_hoster_partida[id_client]]->start();
+}
+
+
+void LobbyPartidas::addQueueSender(uint8_t id_player, std::shared_ptr<BlockingQueue<GameState>> queue)
+{
+    std::lock_guard<std::mutex> lock(m);
+    queues_sender.emplace(id_player, queue);
+}
+
+void LobbyPartidas::removeQueue(uint8_t id)
+{
+    std::lock_guard<std::mutex> lock(m);
+    protected_queues_sender[id]->removeQueue(id);
+}
+
+void LobbyPartidas::removeGame(uint8_t id)
+{
+    std::lock_guard<std::mutex> lock(m);
+    end_game[id] = true;
+    queues_game_loop[id]->close();
+    queues_game_loop.erase(id);
+    partidas[id]->join();
+    partidas.erase(id);
+}
+
+
+
+LobbyPartidas::~LobbyPartidas()
+{
+    for (auto& it: partidas)
+    {
+        end_game[it.first] = true;
+        queues_game_loop[it.first]->close();
+        queues_game_loop.erase(it.first);
+        partidas[it.first]->join();
+        partidas.erase(it.first);
     }
-    maps_queues_sender[id].addClient(client_id, queue_sender);
-    return queues_comandos[id];
-}*/
+
+}

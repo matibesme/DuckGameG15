@@ -92,6 +92,21 @@ CommandClient ProtocoloServer::receiveCommandFromClients() {
     return {0,0};
 }
 
+GameAccess ProtocoloServer::receiveAccessFromClients() {
+    try {
+        uint8_t action_type = protocolo.receiveByte(dead_connection);
+        uint8_t game_id = protocolo.receiveByte(dead_connection);
+        return {action_type, game_id};
+    } catch (const std::exception& e) {
+        dead_connection = true;
+        std::cerr << e.what() << std::endl;
+    }
+    return {0,0};
+}
+
+
+
+
 void ProtocoloServer::closeSocket() {
     try {
         socket_server.shutdown(2);

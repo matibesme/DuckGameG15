@@ -1,4 +1,4 @@
-
+#pragma once
 #include <chrono>
 #include <iostream>
 #include <list>
@@ -28,9 +28,9 @@
 class GameLoop: public Thread {
 
 private:
-    BlockingQueue<CommandClient>& queue_comandos;
+    std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;
     bool& end_game;
-    ProtectedQueuesMap& queues_map;
+    std::shared_ptr<ProtectedQueuesMap> queues_map;
     std::map<uint8_t, DuckPlayer> map_personajes;
 
 //WEAPONS SECTION
@@ -49,8 +49,9 @@ private:
     void paraCadaPatoAction();
 
 public:
-    GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
-             ProtectedQueuesMap& queues_map);
+
+    GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comandos, bool& end_game,
+              std::shared_ptr<ProtectedQueuesMap>& queues_map);
     virtual void run() override;
     void checkCommand(CommandClient comando);
     void movementComand(uint8_t comando);

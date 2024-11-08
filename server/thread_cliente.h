@@ -11,26 +11,28 @@
 #include "receiver.h"
 #include "sender.h"
 #include "../common/dto_definitions.h"
+#include "lobby_partidas.h"
 
 class ThreadCliente: public Thread {
 
 private:
     bool dead_connection;
-    BlockingQueue<CommandClient>& queue_comandos;
-    BlockingQueue<GameState> queue_sender;
+    std::shared_ptr<BlockingQueue<GameState>> queue_sender;
     ProtocoloServer protocolo;
+    uint8_t id;
+    LobbyPartidas& lobby;
     Receiver receiver;
     Sender sender;
-    uint8_t id;
+
 
 public:
-    ThreadCliente(Socket peer, BlockingQueue<CommandClient>& queue_comandos, uint8_t id);
+    ThreadCliente(Socket peer, uint8_t id,LobbyPartidas& lobby);
     virtual void run() override;
     void sendAction(const GameState& action);
     bool isDead();
     void delete_client();
     uint8_t getId();
-    BlockingQueue<GameState>& getQueueSender();
+    std::shared_ptr<BlockingQueue<GameState>>& getQueueSender();
     void setIsDead();
     virtual ~ThreadCliente();
 };

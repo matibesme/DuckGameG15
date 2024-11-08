@@ -8,8 +8,9 @@
 //despues sacar
 #include "items/weapons/banana.h"
 
-GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
-                   ProtectedQueuesMap& queues_map):
+
+GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comandos, bool& end_game,
+                    std::shared_ptr<ProtectedQueuesMap>& queues_map):
         queue_comandos(queue_comandos),
         end_game(end_game),
         queues_map(queues_map),
@@ -49,7 +50,7 @@ void GameLoop::run() {
             personaje.setTypeOfMoveSprite(S_RIGTH);*/
 
             CommandClient comando;
-            while (queue_comandos.try_pop(comando)) {
+            while (queue_comandos->try_pop(comando)) {
                 checkCommand(comando);
             }
             paraCadaPatoAction();
@@ -125,7 +126,7 @@ void GameLoop::sendCompleteScene(){
 
 
     }*/
-    queues_map.sendMessagesToQueues(command);
+    queues_map->sendMessagesToQueues(command);
 }
 
 void GameLoop::paraCadaPatoAction() {

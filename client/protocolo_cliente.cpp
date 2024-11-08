@@ -104,6 +104,17 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
 }
 
 
+void ProtocoloCliente::sendAccesToServer(uint8_t action,uint8_t id) {
+    try {
+        protocolo.sendByte(action,dead_connection);
+        protocolo.sendByte(id,dead_connection);
+    } catch (const SocketClose& e) {
+        std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
+    } catch (const std::exception& e) {
+        dead_connection = true;
+        std::cerr << e.what() << std::endl;
+    }
+}
 
 
 

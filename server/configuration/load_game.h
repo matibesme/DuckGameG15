@@ -1,3 +1,4 @@
+#pragma once
 #include <list>
 #include "../common/common_constant.h"
 #include "../../common/dto_definitions.h"

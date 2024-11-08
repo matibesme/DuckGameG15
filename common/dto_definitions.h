@@ -67,8 +67,10 @@ struct CommandClient {
 };
 
 struct GameAccess {
-    uint8_t action_type; // new game or join game
+    uint8_t action_type;
     uint8_t game_id;
+   // join game, create game, start game
+
 };
 
 
