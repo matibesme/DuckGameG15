@@ -35,12 +35,13 @@ private:
 
 //WEAPONS SECTION
     std::list<RespawnPoint> respawn_weapon_points;
-    std::map<uint8_t,std::shared_ptr<Weapon>> map_free_weapons;
+    std::map<uint16_t,std::shared_ptr<Weapon>> map_free_weapons;
     FactoryWeapons factory_weapons;
 
 
     std::map<uint16_t, std::unique_ptr<Bullet>> map_bullets;
     uint16_t id_balas;
+    uint16_t id_weapons;
     std::list<DTOPlatform> list_plataformas;
 
     //std::list<DTOBoxes> list_boxes;

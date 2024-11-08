@@ -19,9 +19,10 @@ GameLoop::GameLoop(BlockingQueue<CommandClient>& queue_comandos, bool& end_game,
         factory_weapons(),
         map_bullets(),
         id_balas(1),
+        id_weapons(),
         list_plataformas(),
         load_game_config(),
-        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas){}
+        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons){}
 
 void GameLoop::run() {
     try {
@@ -186,9 +187,10 @@ void GameLoop::paraCadaPatoAction() {
 }
 
 void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
-   for (auto& plataform : list_plataformas) {
+    for (auto& plataform : list_plataformas) {
         bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos, plataform.width, plataform.height);
-   }
+    }
+    for (auto& wall )
 }
 
 

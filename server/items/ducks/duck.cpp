@@ -33,7 +33,7 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
     {
 
         // Agregando una nueva CowboyPistol a la lista de armas
-        weapons_list.push_back(std::make_shared<CowboyPistol>(COWBOY_GUN, 1, 0, 0, 10, 38, 100, 0));
+        weapons_list.push_back(std::make_shared<CowboyPistol>(COWBOY_GUN, 1, 0, 0, 10, 2000, 100, 0));
 
     }
 
