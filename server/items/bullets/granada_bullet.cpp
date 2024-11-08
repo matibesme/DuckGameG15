@@ -14,9 +14,9 @@ void GranadaBullet::executeAction() {
 
     y_pos -= velocidad;
     velocidad -=GRAVEDAD;
-    if (direction == RIGHT_J1) {
+    if (direction == RIGHT) {
       x_pos += RANGO_X_MEDIO;
-    } else if (direction == LEFT_J1) {
+    } else if (direction == LEFT) {
       x_pos -= RANGO_X_MEDIO;
     }
 

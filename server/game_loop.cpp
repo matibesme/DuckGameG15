@@ -150,7 +150,7 @@ void GameLoop::paraCadaPatoAction() {
 
                 if (personaje.second.getXPos() + DUCK_WIDTH > platform.x_pos &&
                     personaje.second.getXPos() < platform.x_pos &&
-                    personaje.second.getDirection() == RIGHT_J1) {
+                    personaje.second.getDirection() == RIGHT) {
 
 
                     personaje.second.setXPos(platform.x_pos - DUCK_WIDTH);
@@ -159,7 +159,7 @@ void GameLoop::paraCadaPatoAction() {
 
                 else if (personaje.second.getXPos() < platform.x_pos + platform.width &&
                          personaje.second.getXPos() > platform.x_pos &&
-                         personaje.second.getDirection() == LEFT_J1) {
+                         personaje.second.getDirection() == LEFT) {
                     personaje.second.setXPos(platform.x_pos + platform.width);
                           }
 

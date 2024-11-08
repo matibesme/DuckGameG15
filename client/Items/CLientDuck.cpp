@@ -27,33 +27,33 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gu
     positionY = y_pos;
     gun.setGun(gunEquipped);
 
-    if(typeOfMove == STILL_LEFT_J1){
+    if(typeOfMove == STILL_LEFT){
         isFlipped = true;
     }
 
-    if (typeOfMove != STILL_RIGHT_J1 && typeOfMove != STILL_LEFT_J1) {
+    if (typeOfMove != STILL_RIGHT && typeOfMove != STILL_LEFT) {
         numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES;
 
-        if (typeOfMove == RIGHT_J1) {
+        if (typeOfMove == RIGHT) {
             pixelDuckSpriteX = SPRITE_WIDTH * numSprite;
             pixelDuckSpriteY = SRC_Y_MOVING;
             isFlipped = false;
-        } else if (typeOfMove == LEFT_J1) {
+        } else if (typeOfMove == LEFT) {
             pixelDuckSpriteX = SPRITE_WIDTH * numSprite;
             pixelDuckSpriteY = SRC_Y_MOVING;
             isFlipped = true;
-        } else if (typeOfMove == JUMP_J1) {
+        } else if (typeOfMove == JUMP) {
             pixelDuckSpriteY = SRC_Y_JUMPING;
             pixelDuckSpriteX = SPRITE_WIDTH;
 
-        }else if (typeOfMove == FLAP_J1) {
+        }else if (typeOfMove == FLAP) {
             pixelDuckSpriteY = SRC_Y_JUMPING;
             numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES_JUMP;
             // Limitar numSprite entre 3 y 4
             numSprite = std::clamp(numSprite, 3, 4);
             // Calcular la posición del sprite
             pixelDuckSpriteX = SPRITE_WIDTH * numSprite;
-        } else if (typeOfMove == DOWN_J1) {
+        } else if (typeOfMove == DOWN) {
             pixelDuckSpriteY = SRC_Y_STANDING;
             pixelDuckSpriteX = 0;
         }
