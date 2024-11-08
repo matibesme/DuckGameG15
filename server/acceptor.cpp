@@ -44,7 +44,7 @@ void Acceptor::deleteAClient(ThreadCliente& cliente) {
 
 
 void Acceptor::reapDead() {
-
+/*
     for (auto it = lista_clientes.begin(); it != lista_clientes.end();) {
         if (it->isDead()) {
             it->join();
@@ -53,7 +53,7 @@ void Acceptor::reapDead() {
         } else {
             ++it;
         }
-    }
+    }*/
 }
 
 

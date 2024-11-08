@@ -22,7 +22,7 @@ class LobbyPartidas {
 
     public:
         LobbyPartidas();
-        std::shared_ptr<BlockingQueue<CommandClient>> addPartida(uint8_t id_partida);
+        std::shared_ptr<BlockingQueue<CommandClient>> addPartida(uint8_t id_cliente);
         void removePartida(uint8_t id_partida);
         std::shared_ptr<BlockingQueue<CommandClient>> joinGame(uint8_t id_partida, uint8_t id_cliente);
         void addQueueSender(uint8_t id_player, std::shared_ptr<BlockingQueue<GameState>> queue);

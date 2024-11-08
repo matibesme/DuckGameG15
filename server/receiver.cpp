@@ -21,8 +21,8 @@ void Receiver::run() {
                 queue_comandos = lobby.joinGame(command.game_id, id);
                 in_lobby = false;
             } else if (command.action_type == CREATE_GAME) {
-                lobby.addPartida(command.game_id);
-                queue_comandos = lobby.joinGame(command.game_id, id);
+
+                queue_comandos = lobby.addPartida(id);
                 in_lobby = false;
             }
         }
