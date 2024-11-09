@@ -49,8 +49,8 @@ void Sound::reproducirEfecto(const std::string& archivo) {
   if (!efectoSonido) {
     std::cerr << "Error al cargar efecto de sonido: " << Mix_GetError() << std::endl;
   }else {
-    Mix_VolumeChunk(efectoSonido, 3);
-    Mix_PlayChannel(-1, efectoSonido, 0); // -1 para usar cualquier canal libre
+    Mix_VolumeChunk(efectoSonido, 4);
+    Mix_PlayChannel(-1, efectoSonido, 0);
   }
 }
 
