@@ -53,10 +53,6 @@ private:
     //std::list,std::string> list_colors;
     std::list<std::string> list_colors;
 
-
-
-
-
     void paraCadaPatoAction();
 
 public:

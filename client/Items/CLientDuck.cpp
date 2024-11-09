@@ -14,13 +14,14 @@ const float VERTICAL_CENTER_DIVISOR = 1.1f;
 
 
 ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped, uint8_t typeOfMove,
-                      [[maybe_unused]] std::string color, Graficos& graficos)
+                       std::string color, Graficos& graficos)
         : idDuck(id), positionX(x_pos), positionY(y_pos), graficos(graficos),
           numSprite(0), gun(graficos, positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2, gunEquipped),
           isFlipped(false), typeOfGun(gunEquipped), pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING),
           coloredTexture(nullptr), armor(graficos, positionX , positionY), helmet(graficos, positionX, positionY),
           armorEquipped(false), helmetEquipped(false), isOnGround(false)
     {
+        applyColor(graficos.GetRenderer(), color);
         update(y_pos, x_pos, typeOfMove, gunEquipped, armorEquipped, helmetEquipped, false);
     }
 
@@ -39,6 +40,8 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gu
 
     if (helmet_ == HELMET_EQUIPPED) helmetEquipped = true;
     else    helmetEquipped = false;
+
+    //defino como equipada la armadura y el casco
     helmetEquipped = true;
     armorEquipped = true;
 
@@ -76,11 +79,6 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gu
 }
 
 void ClientDuck::draw(Renderer& renderer) {
-    // Si aún no se ha aplicado el color, llamamos a applyColor
-    if (!coloredTexture) {
-        applyColor(renderer);
-    }
-
     // destRect es el rectángulo donde se dibujará el pato
     SDL2pp::Rect destRect((int) positionX, (int) positionY, DUCK_WIDTH, DUCK_HEIGHT);
     // srcRect es el rectángulo que se tomará de la textura
@@ -108,29 +106,16 @@ void ClientDuck::draw(Renderer& renderer) {
     }
 }
 
-void ClientDuck::applyColor(Renderer& renderer) {
+void ClientDuck::applyColor(Renderer& renderer, const std::string& color) {
     SDL_Surface* loadedSurface = IMG_Load((IMAGE_DUCK));
-
     SDL2pp::Surface surface(loadedSurface);
 
-    Uint32 white = SDL_MapRGB(surface.Get()->format, 255, 255, 255);
-    Uint8 r = 255, g = 255, b = 255;
+    // defino el color del pato
+    auto colorDuck = colorMap[color];
 
-    switch (idDuck % 4) {
-        case 0: r = 255; g = 0; b = 0; break;     // Rojo dominante
-        case 1: r = 0; g = 0; b = 255; break;     // Azul dominante
-        case 2: r = 139; g = 69; b = 19; break;   // Marrón dominante
-        case 3: r = 138; g = 43; b = 226; break;  // Violeta dominante
-    }
-
-    for (int y = 0; y < surface.Get()->h; ++y) {
-        for (int x = 0; x < surface.Get()->w; ++x) {
-            Uint32* pixel = (Uint32*)((Uint8*)surface.Get()->pixels + y * surface.Get()->pitch + x * surface.Get()->format->BytesPerPixel);
-            if (*pixel == white) {
-                *pixel = SDL_MapRGB(surface.Get()->format, r, g, b);
-            }
-        }
-    }
+    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0, 0));
+    SDL_SetSurfaceColorMod(loadedSurface, colorDuck.r, colorDuck.g, colorDuck.b);
+    SDL_SetSurfaceAlphaMod(loadedSurface, colorDuck.a);
 
     coloredTexture = std::make_unique<SDL2pp::Texture>(renderer, surface);
 }
