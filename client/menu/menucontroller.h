@@ -1,5 +1,6 @@
 #ifndef MENUCONTROLLER_H
 #define MENUCONTROLLER_H
+#include <cstdint>
 #include <iostream>
 #include <vector>
 

@@ -64,12 +64,14 @@ if(TALLER_CLIENT)
     add_executable(taller_client)
     find_package(SDL2_image REQUIRED)
     find_package(SDL2_mixer REQUIRED)
+    find_package(Qt5Widgets CONFIG REQUIRED)
     add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
 
     # Incluir directorios 'client' y 'common' para los archivos de encabezado
     include_directories(${CMAKE_SOURCE_DIR}/client)
     include_directories(${CMAKE_SOURCE_DIR}/common)
     include_directories(${CMAKE_SOURCE_DIR}/client/items)
+    include_directories(${CMAKE_SOURCE_DIR}/client/menu)
 
 
     # Incluir automáticamente todos los archivos .cpp y .h de las carpetas 'client' y 'common'
@@ -96,7 +98,7 @@ if(TALLER_CLIENT)
     target_include_directories(taller_client PRIVATE ${libSDL2pp_SOURCE_DIR})
 
     # Enlazar la biblioteca común y SDL2pp al ejecutable del cliente
-    target_link_libraries(taller_client taller_common SDL2pp::SDL2pp SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer)
+    target_link_libraries(taller_client taller_common SDL2pp::SDL2pp SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer Qt5::Widgets)
 endif()
 
 if(TALLER_SERVER)
