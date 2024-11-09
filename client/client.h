@@ -1,3 +1,5 @@
+#ifndef CLIENT_H
+#define CLIENT_H
 
 #include <fstream>
 #include <iostream>
@@ -27,3 +29,5 @@ public:
     void execute();         
     ~Client();
 };
+
+#endif

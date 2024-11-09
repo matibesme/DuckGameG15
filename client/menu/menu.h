@@ -23,7 +23,7 @@ private:
     void show_wait_scene();
 
 public:
-    Menu(QWidget *parent = nullptr);
+    Menu(MenuController* menu_controller, QWidget *parent = nullptr);
     ~Menu();
 };
 #endif // MENU_H

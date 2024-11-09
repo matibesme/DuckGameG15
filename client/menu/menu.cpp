@@ -1,14 +1,15 @@
 #include "menu.h"
 #include "menucontroller.h"
 
+#include <iostream>
 #include <QtWidgets>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-Menu::Menu(QWidget *parent)
-    : QMainWindow(parent)
+Menu::Menu(MenuController* menu_controller, QWidget *parent)
+    :  QMainWindow(parent), menu_controller(menu_controller)
 {
-    menu_controller = new MenuController();
+    //menu_controller = new MenuController();
     initialize();
     show_main_scene();
 }
@@ -30,7 +31,9 @@ void Menu::initialize(){
 
 void Menu::show_main_scene(){
 
-    QPixmap initial_background("../../data/menu/Background.jpg");
+    std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
+    QString path_image = QString::fromStdString(path);
+    QPixmap initial_background(path_image);
     QPushButton* make_game = new QPushButton("Make game");
     make_game->setGeometry(325, 400, 150, 45);
     make_game->setStyleSheet(
@@ -105,7 +108,9 @@ void Menu::show_main_scene(){
 }
 
 void Menu::show_make_game_scene(){
-    QPixmap initial_background("../../data/menu/Background.jpg");
+    std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
+    QString path_image = QString::fromStdString(path);
+    QPixmap initial_background(path_image);
 
     //Columna 1
     QWidget *widget_players = new QWidget;
@@ -160,7 +165,8 @@ void Menu::show_make_game_scene(){
     layout_game->addWidget(port);*/
     QPushButton* make_game_button = new QPushButton("Make game");
     layout_game->addWidget(make_game_button);
-    connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    //connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    connect(make_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
     QPushButton* back_button = new QPushButton("Back");
     layout_game->addWidget(back_button);
     connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
@@ -174,7 +180,9 @@ void Menu::show_make_game_scene(){
 }
 
 void Menu::show_join_game_scene(){
-    QPixmap initial_background("../../data/menu/Background.jpg");
+    std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
+    QString path_image = QString::fromStdString(path);
+    QPixmap initial_background(path_image);
 
     //Columna 1
     QWidget *widget_players = new QWidget;
@@ -230,7 +238,8 @@ void Menu::show_join_game_scene(){
     layout_games->addWidget(game_options);
     QPushButton* join_game_button = new QPushButton("Join game");
     layout_games->addWidget(join_game_button);
-    connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    //connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    connect(join_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
     QPushButton* back_button = new QPushButton("Back");
     connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
     layout_games->addWidget(back_button);
@@ -250,7 +259,9 @@ void Menu::show_number_players(){
 }
 
 void Menu::show_wait_scene(){
-    QPixmap initial_background("../../data/menu/Background.jpg");
+    std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
+    QString path_image = QString::fromStdString(path);
+    QPixmap initial_background(path_image);
     QWidget *widget_wait = new QWidget;
     QVBoxLayout *layout_wait = new QVBoxLayout(widget_wait);
     layout_wait->addWidget(new QLabel("Waiting for the game to start"));
@@ -267,6 +278,5 @@ void Menu::show_wait_scene(){
 }
 Menu::~Menu()
 {
-  delete menu_controller;
 }
 

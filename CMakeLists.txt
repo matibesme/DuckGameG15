@@ -60,6 +60,9 @@ endif()
 # Program section
 # ---------------
 if(TALLER_CLIENT)
+    set(CMAKE_AUTOUIC ON)
+    set(CMAKE_AUTOMOC ON)
+    set(CMAKE_AUTORCC ON)
     # Cambiar el nombre del ejecutable si es necesario
     add_executable(taller_client)
     find_package(SDL2_image REQUIRED)
