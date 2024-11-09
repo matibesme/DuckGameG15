@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "menucontroller.h"
 
 #include <QtWidgets>
 #include <QHBoxLayout>
@@ -7,6 +8,7 @@
 Menu::Menu(QWidget *parent)
     : QMainWindow(parent)
 {
+    menu_controller = new MenuController();
     initialize();
     show_main_scene();
 }
@@ -49,6 +51,9 @@ void Menu::show_main_scene(){
                 "}"
                 );
     connect(make_game, &QPushButton::pressed, this, &Menu::show_make_game_scene);
+    connect(make_game, &QPushButton::pressed, [this, make_game](){
+        menu_controller->set_type_game(0);
+    });
     QPushButton* join_game = new QPushButton("Join game");
     join_game->setGeometry(325, 450, 150, 45);
     join_game->setStyleSheet(
@@ -69,6 +74,9 @@ void Menu::show_main_scene(){
                 "}"
                 );
     connect(join_game, &QPushButton::pressed, this, &Menu::show_join_game_scene);
+    connect(join_game, &QPushButton::pressed, [this, make_game](){
+        menu_controller->set_type_game(1);
+    });
     QPushButton* quit = new QPushButton("Quit");
     quit->setGeometry(350, 500, 100, 45);
     quit->setStyleSheet(
@@ -259,5 +267,6 @@ void Menu::show_wait_scene(){
 }
 Menu::~Menu()
 {
+  delete menu_controller;
 }
 
