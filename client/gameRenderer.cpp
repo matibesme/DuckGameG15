@@ -91,7 +91,7 @@ void GameRenderer::actualizarElementos(const GameState& command) {
                                });
         if (it == ducks.end()) {
             ducks.emplace_back(duckStruct.id, duckStruct.x_pos, duckStruct.y_pos, duckStruct.typeOfGun,
-                               duckStruct.typeOfMove, graficos);
+                               duckStruct.typeOfMove, duckStruct.color, graficos);
         }
     }
 

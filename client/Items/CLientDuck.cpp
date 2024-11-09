@@ -13,7 +13,8 @@ const int SPRITE_HEIGHT = 24;
 const float VERTICAL_CENTER_DIVISOR = 1.1f;
 
 
-ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped, uint8_t typeOfMove, Graficos& graficos)
+ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped, uint8_t typeOfMove,
+                      [[maybe_unused]] std::string color, Graficos& graficos)
         : idDuck(id), positionX(x_pos), positionY(y_pos), graficos(graficos),
           numSprite(0), gun(graficos, positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2, gunEquipped),
           isFlipped(false), typeOfGun(gunEquipped), pixelDuckSpriteX(0), pixelDuckSpriteY(SRC_Y_MOVING),
