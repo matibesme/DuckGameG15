@@ -58,7 +58,7 @@ GameState ProtocoloCliente::reciveFullGameFromServer()
     std::list<DTODuck> lista_patos;
     for (int i = 0; i < patos_quantity; i++) {
         uint8_t id = protocolo.receiveByte(dead_connection);
-        uint8_t personajes_type = protocolo.receiveByte(dead_connection);
+        std::string personajes_type = protocolo.receiveString(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t typeOfMove = protocolo.receiveByte(dead_connection);

@@ -5,7 +5,7 @@
 
 struct DTODuck{
     uint8_t id;
-    uint8_t personajes_type;
+    std::string color;
     float x_pos;
     float y_pos;
     uint8_t typeOfMove;//right left down jump still

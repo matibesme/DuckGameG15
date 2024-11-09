@@ -38,7 +38,7 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
     protocolo.sendByte(command.lista_patos.size(), dead_connection);
     for (const DTODuck& dto_duck : command.lista_patos) {
         protocolo.sendByte(dto_duck.id, dead_connection);
-        protocolo.sendByte(dto_duck.personajes_type, dead_connection);
+        protocolo.sendString(dto_duck.color, dead_connection);
         protocolo.sendFloat(dto_duck.x_pos, dead_connection);
         protocolo.sendFloat(dto_duck.y_pos, dead_connection);
         protocolo.sendByte(dto_duck.typeOfMove, dead_connection);
