@@ -63,6 +63,7 @@ if(TALLER_CLIENT)
     # Cambiar el nombre del ejecutable si es necesario
     add_executable(taller_client)
     find_package(SDL2_image REQUIRED)
+    find_package(SDL2_mixer REQUIRED)
     add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
 
     # Incluir directorios 'client' y 'common' para los archivos de encabezado
@@ -95,7 +96,7 @@ if(TALLER_CLIENT)
     target_include_directories(taller_client PRIVATE ${libSDL2pp_SOURCE_DIR})
 
     # Enlazar la biblioteca común y SDL2pp al ejecutable del cliente
-    target_link_libraries(taller_client taller_common SDL2pp::SDL2pp SDL2_image::SDL2_image)
+    target_link_libraries(taller_client taller_common SDL2pp::SDL2pp SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer)
 endif()
 
 if(TALLER_SERVER)

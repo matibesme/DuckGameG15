@@ -36,7 +36,7 @@ void GameLoop::run() {
         int i = 0;
         for (auto& id : list_id_clientes) {
             
-            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y,color[i]));
+            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y, "red"));
             i++; 
         }
         uint8_t id = 0;
@@ -129,7 +129,7 @@ void GameLoop::sendCompleteScene(){
 
     for (auto& helmet : map_helmet) {
 
-        command.lista_helemets.push_back(helmet.second);
+        command.lista_helmets.push_back(helmet.second);
     }
 
     for (auto& armor : map_armor) {

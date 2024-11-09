@@ -22,8 +22,8 @@ constexpr int HEIGHT_GRENADE_EXPLOTION = 40;
 constexpr int WIDTH_GRENADE_EXPLOTION = 40;
 constexpr int HEIGHT_BULLET = 3;
 constexpr int WIDTH_BULLET = 3;
-constexpr uint8_t WIDTH_ARMOR = 27;
-constexpr uint8_t HEIGHT_ARMOR = 42;
+constexpr uint8_t WIDTH_ARMOR = 24;
+constexpr uint8_t HEIGHT_ARMOR = 38;
 constexpr uint8_t WIDTH_HELMET = 39;
 constexpr uint8_t HEIGHT_HELMET = 40;
 constexpr int SCENE_WIDTH = 800;
@@ -114,9 +114,9 @@ constexpr uint8_t GRENADE_EXPLOSION = 0x64;
 
 // Armadura completa
 constexpr uint8_t NO_ARMOR = 0x73;
-constexpr uint8_t ARMOR = 0x74;
+constexpr uint8_t ARMOR_EQUIPPED = 0x74;
 constexpr uint8_t NO_HELMET = 0x75;
-constexpr uint8_t HELMET = 0x76;
+constexpr uint8_t HELMET_EQUIPPED = 0x76;
 
 // Plataformas
 constexpr uint8_t TYPE_PLATFORM_DONUT = 0x77;

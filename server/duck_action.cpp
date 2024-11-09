@@ -83,13 +83,13 @@ void DuckAction::weaponComand(uint8_t comando) {
             }
 
             for (auto& helmet : map_helmet) {
-                if (personaje.getHelmet()!=HELMET)break;
+                if (personaje.getHelmet() != HELMET_EQUIPPED)break;
                 if (personaje.getXPos() + DUCK_WIDTH >= helmet.second.y_pos &&
                     personaje.getXPos() <= helmet.second.x_pos + WIDTH_HELMET &&
                     personaje.getYPos() + DUCK_HEIGHT >= helmet.second.y_pos &&
                     personaje.getYPos() <=  helmet.second.x_pos + HEIGHT_HELMET) {
 
-                    personaje.setHelmet(HELMET);
+                    personaje.setHelmet(HELMET_EQUIPPED);
                     map_helmet.erase(helmet.first);
 
                     break;
@@ -97,13 +97,13 @@ void DuckAction::weaponComand(uint8_t comando) {
             }
 
         for (auto& armor : map_armor) {
-            if (personaje.getHelmet()!=HELMET)break;
+            if (personaje.getHelmet() != HELMET_EQUIPPED)break;
             if (personaje.getXPos() + DUCK_WIDTH >= armor.second.y_pos &&
                 personaje.getXPos() <= armor.second.x_pos + WIDTH_ARMOR &&
                 personaje.getYPos() + DUCK_HEIGHT >= armor.second.y_pos &&
                 personaje.getYPos() <=  armor.second.x_pos + HEIGHT_ARMOR) {
 
-                personaje.setHelmet(ARMOR);
+                personaje.setHelmet(ARMOR_EQUIPPED);
                 map_armor.erase(armor.first);
 
                 break;

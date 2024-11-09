@@ -4,6 +4,7 @@
 #include "Graficos.h"
 #include "SDL2pp/SDL2pp.hh"
 #include "../common/common_constant.h"
+#include "../sound.h"
 
 class Bullet {
 private:
@@ -12,8 +13,11 @@ private:
     float pos_x, pos_y;       // Posición de la bala
     uint8_t orientationOfBullet;              // Si la bala está volteada o no
     uint8_t typeOfBullet;                     // Tipo de bala
-    uint8_t explotionSpriteX;  // Sprite de la explosión
+    int explosionSpriteX;  // Sprite de la explosión
+    int iteracion;         // Iteración de la bala
+    Sound sound;           // Sonido de la bala
     void actualizarTipo(const char*& texture);
+    void reproducirSonido();
 
 public:
     // Constructor

@@ -17,10 +17,7 @@ private:
 
 public:
     Armor(Graficos& graficos, float pos_x, float pos_y);
-    void draw(bool isFliped, SDL2pp::Renderer& renderer);
-    bool isEquipped();
-    void equip();
-    void unequip();
+    void draw(bool isFliped, SDL2pp::Renderer& renderer, bool isOnGround, bool isOnDuck);
     void update(float new_x, float new_y);
 
     float getPosX();

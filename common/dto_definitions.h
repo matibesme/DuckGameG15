@@ -55,8 +55,6 @@ struct GameState
     
     std::list<DTOPlatform> lista_plataformas;
 
-
-    
     std::list<DTODuck> lista_patos;
 
     std::list<DTOBullet> lista_balas;
@@ -65,7 +63,8 @@ struct GameState
 
     std::list<DTOBoxes> lista_boxes;
 
-    std::list<Protection> lista_helemets;
+    std::list<Protection> lista_helmets;
+
     std::list<Protection> lista_armors;
 
 };

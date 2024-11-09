@@ -14,8 +14,8 @@ void Receiver::run() {
             std::cerr << e.what() << '\n';
             _keep_running = false;
         } catch (...) {
-            std::cerr << "Error desconocido.\n";
-            _keep_running = false;
+          std::cerr << "Error desconocido.\n";
+          _keep_running = false;
         }
     }
     queue_receiver.close();

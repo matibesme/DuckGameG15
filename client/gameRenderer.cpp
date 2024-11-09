@@ -2,7 +2,7 @@
 #include "GameRenderer.h"
 #include <algorithm> // para std::min y std::max
 
-#define IMAGE_CIELO_NUBES DATA_PATH "/backgrounds/Cloudy night.png"
+#define IMAGE_CLOUDY_NIGHT DATA_PATH "/backgrounds/Cloudy night.png"
 #define IMAGE_CITY DATA_PATH "/backgrounds/City.png"
 #define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
 
@@ -75,7 +75,7 @@ void GameRenderer::actualizarElementos(const GameState& command) {
         if (duckInCommand != command.lista_patos.end()) {
             // Actualizar si el pato está en ambas listas
             it->update(duckInCommand->y_pos, duckInCommand->x_pos, duckInCommand->typeOfMove,
-                       duckInCommand->typeOfGun);
+                       duckInCommand->typeOfGun, duckInCommand->helmet, duckInCommand->armor, false); //Paso en false porque no esta mirando para arriba
             ++it;
         } else {
             // Eliminar si solo está en la lista local
@@ -91,29 +91,11 @@ void GameRenderer::actualizarElementos(const GameState& command) {
                                });
         if (it == ducks.end()) {
             ducks.emplace_back(duckStruct.id, duckStruct.x_pos, duckStruct.y_pos, duckStruct.typeOfGun,
-                               duckStruct.typeOfMove, graficos);
+                               duckStruct.typeOfMove, duckStruct.color, graficos);
         }
     }
 
     //SEGUNDO ACTUALIZO BALAS
-    // Actualizar y eliminar balas
-    for (auto it = bullets.begin(); it != bullets.end();) {
-        auto bulletInCommand = std::find_if(command.lista_balas.begin(),
-                                            command.lista_balas.end(),
-                                            [it](const DTOBullet& bulletStruct) {
-                                                return bulletStruct.id == it->getId();
-                                            });
-        if (bulletInCommand != command.lista_balas.end()) {
-            // Actualizar si la bala está en ambas listas
-            it->update(bulletInCommand->x_pos, bulletInCommand->y_pos, bulletInCommand->typeOfBullet,
-                       bulletInCommand->orientation);
-            ++it;
-        } else {
-            // Eliminar si solo está en la lista local
-            it = bullets.erase(it);
-        }
-    }
-
     // Agregar balas que están en el comando pero no en la lista local
     for (const auto& bulletStruct : command.lista_balas) {
         auto it = std::find_if(bullets.begin(), bullets.end(),
@@ -125,6 +107,24 @@ void GameRenderer::actualizarElementos(const GameState& command) {
                                  bulletStruct.orientation,
                                  bulletStruct.typeOfBullet);
         }
+    }
+
+    // Actualizar y eliminar balas
+    for (auto it = bullets.begin(); it != bullets.end();) {
+      auto bulletInCommand = std::find_if(command.lista_balas.begin(),
+                                          command.lista_balas.end(),
+                                          [it](const DTOBullet& bulletStruct) {
+                                            return bulletStruct.id == it->getId();
+                                          });
+      if (bulletInCommand != command.lista_balas.end()) {
+        // Actualizar si la bala está en ambas listas
+        it->update(bulletInCommand->x_pos, bulletInCommand->y_pos, bulletInCommand->typeOfBullet,
+                   bulletInCommand->orientation);
+        ++it;
+      } else {
+        // Eliminar si solo está en la lista local
+        it = bullets.erase(it);
+      }
     }
 
     //TERCERO ACTUALIZO ARMAS
@@ -156,11 +156,11 @@ void GameRenderer::actualizarElementos(const GameState& command) {
         }
     }
 
-    /*
+
     //CUARTO ACTUALIZO ARMADURAS
     for (auto it = armors.begin(); it != armors.end();) {
         auto armorInCommand = std::find_if(command.lista_armors.begin(), command.lista_armors.end(),
-                                            [it](const DTOArmor& armorStruct) {
+                                            [it](const Protection& armorStruct) {
                                                 return armorStruct.x_pos == it->getPosX() && armorStruct.y_pos == it->getPosY();
                                             });
         if (armorInCommand != command.lista_armors.end()) {
@@ -186,7 +186,7 @@ void GameRenderer::actualizarElementos(const GameState& command) {
     //QUINTO ACTUALIZO CASCOS
     for (auto it = helmets.begin(); it != helmets.end();) {
         auto helmetInCommand = std::find_if(command.lista_helmets.begin(), command.lista_helmets.end(),
-                                            [it](const DTOHelmet& helmetStruct) {
+                                            [it](const Protection& helmetStruct) {
                                                 return helmetStruct.x_pos == it->getPosX() && helmetStruct.y_pos == it->getPosY();
                                             });
         if (helmetInCommand != command.lista_helmets.end()) {
@@ -207,7 +207,7 @@ void GameRenderer::actualizarElementos(const GameState& command) {
         if (it == helmets.end()) {
             helmets.emplace_back(graficos, helmetStruct.x_pos, helmetStruct.y_pos);
         }
-    }*/
+    }
 
     //SEXTO ACTUALIZO CAJAS
     for (auto it = boxes.begin(); it != boxes.end();) {
@@ -245,7 +245,7 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
 
     // Cargar y dibujar el fondo
     if (background_id == TYPE_BACKGROUND_CIELO_NUBES) {
-        background = graficos.LoadTexture(IMAGE_CIELO_NUBES);
+        background = graficos.LoadTexture(IMAGE_CLOUDY_NIGHT);
     } else if (background_id == TYPE_BACKGROUND_CITY) {
         background = graficos.LoadTexture(IMAGE_CITY);
     } else if (background_id == TYPE_BACKGROUND_FOREST) {
