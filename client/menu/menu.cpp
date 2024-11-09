@@ -152,12 +152,12 @@ void Menu::show_make_game_scene(){
     QWidget *widget_game = new QWidget;
     QVBoxLayout *layout_game = new QVBoxLayout(widget_game);
 
-    layout_game->addWidget(new QLabel("IP Address"));
+    /*layout_game->addWidget(new QLabel("IP Address"));
     QLineEdit* address = new QLineEdit();
     layout_game->addWidget(address);
     layout_game->addWidget(new QLabel("Port"));
     QLineEdit* port = new QLineEdit();
-    layout_game->addWidget(port);
+    layout_game->addWidget(port);*/
     QPushButton* make_game_button = new QPushButton("Make game");
     layout_game->addWidget(make_game_button);
     connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);

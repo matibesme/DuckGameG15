@@ -18,6 +18,8 @@ set(PROJECT_SOURCES
         main.cpp
         menu.cpp
         menu.h
+        menucontroller.cpp
+        menucontroller.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

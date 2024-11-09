@@ -4,7 +4,7 @@ MenuController::MenuController(){
 
 }
 
-void MenuController::set_type_game([[maybe_unused]]uint8_t type_game){
+void MenuController::set_type_game(uint8_t type_game){
 
 }
 
@@ -17,6 +17,6 @@ void MenuController::start_game(){
 */
 }
 
-void MenuController::set_number_players([[maybe_unused]]uint8_t number_players){
+void MenuController::set_number_players(uint8_t number_players){
 
 }
