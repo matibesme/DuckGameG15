@@ -146,7 +146,12 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
     for (auto& plataform : list_plataformas) {
         bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos, plataform.width, plataform.height);
     }
-
+    for (auto& character : map_personajes) {
+        bool colision = bullet->colisionWithDuck(character.second.getXPos(), character.second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
+        if (colision) {
+            character.second.applyDamage(bullet->getDamage());
+        }
+    }
 }
 
 void GameLoop::checkCoalitionDuckPlatform(DuckPlayer& personaje) {

@@ -24,6 +24,7 @@ class Bullet: public Objeto {
         uint8_t getRange();
 
         virtual void colisionWithPlatform(float plat_x_pos, float plat_y_pos, float plat_width, float plat_height);
+        virtual bool colisionWithDuck(float duck_x_pos, float duck_y_pos, float duck_width, float duck_height);
 
         void setSpread(float spread);
 
@@ -32,6 +33,7 @@ class Bullet: public Objeto {
         void release(float x_pos, float y_pos, uint8_t direction, bool spread_direction);
         bool randomSpread();
         virtual void executeAction();
+        void changeDirection();
         void kill();
 
 };

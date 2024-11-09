@@ -68,7 +68,13 @@ void Bullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos, float plat
     if (is_alive) {
         if (x_pos >= plat_x_pos && x_pos <= plat_x_pos + plat_width) {
             if (y_pos >= plat_y_pos && y_pos <= plat_y_pos + plat_height) {
-                is_alive = false;
+
+                if (type == LASER_RIFLE_BULLET) {
+                    changeDirection();
+                } else {
+                    kill();
+                }
+
             }
         }
     }
@@ -80,4 +86,24 @@ void Bullet::kill() {
 
 void Bullet::setSpread(float spread) {
     this->spread = spread;
+}
+
+void Bullet::changeDirection() {
+    if (direction == RIGHT) {
+        direction = LEFT;
+    } else {
+        direction = RIGHT;
+    }
+}
+
+bool Bullet::colisionWithDuck(float duck_x_pos, float duck_y_pos, float duck_width, float duck_height) {
+    if (is_alive) {
+        if (x_pos >= duck_x_pos && x_pos <= duck_x_pos + duck_width) {
+            if (y_pos >= duck_y_pos && y_pos <= duck_y_pos + duck_height) {
+                kill();
+                return true;
+            }
+        }
+    }
+    return false;
 }

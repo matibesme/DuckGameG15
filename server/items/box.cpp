@@ -1,59 +1,53 @@
 //
 // Created by ezequiel on 07/11/24.
 //
-/*
+
 #include "box.h"
+#include "weapons/factory_weapons.h"
+#include <cstdlib>
+#include <ctime>
 
-
-
-Box::Box(uint8_t type, uint8_t id, float x_pos, float y_pos, int health) :
+/*
+Box::Box(uint8_t type, uint8_t id, float x_pos, float y_pos, int health, std::map<uint16_t,std::shared_ptr<Weapon>>& map_free_weapons) :
         Objeto(type, id, x_pos, y_pos),
         health(health),
-        content(std::monostate()) {
-    generateRandomContent();
-}
-
-void Box::generateRandomContent() {
-    // Semilla para el generador de números aleatorios
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(1, 4);
-
-    int random_choice = dist(gen);
-    switch (random_choice) {
-        case 1:
-            content = std::make_unique<Weapon>(/);
-        break;
-        case 2:
-            content = std::make_unique<Armor>();
-        break;
-        case 3:
-            content = std::make_unique<Helmet>();
-        break;
-        case 4:
-            content = std::make_unique<Explosive>();
-        break;
-        default:
-            content = std::monostate(); // Caja vacía
-        break;
-    }
-}
+        map_free_weapons(map_free_weapons) {}
 
 void Box::takeDamage(int damage) {
-    health -= damage;
+        health -= damage;
+        if (isDestroyed()) {
+            generateRandomContent();
+        }
 }
 
 bool Box::isDestroyed() const {
     return health <= 0;
 }
 
-std::variant<std::monostate, std::unique_ptr<Weapon>, std::unique_ptr<Armor>,
-                 std::unique_ptr<Helmet>, std::unique_ptr<Explosive>>& Box::getContent() {
-    if (isDestroyed()) {
-        return content;
-    } else {
-        return std::monostate(); // Si la caja no está destruida, no tiene contenido accesible
+void Box::generateRandomContent() {
+    std::srand(std::time(0));
+    int random_number = std::rand() % 5 + 1;
+    FactoryWeapons factory_weapons;
+    switch (random_number) {
+        case 1:
+
+            break;
+        case 2:
+            std::shared_ptr<Weapon> weapon = factory_weapons.generateRandomWeapon(x_pos, y_pos);
+        map_free_weapons.emplace(1, weapon);
+        break;
+        case 3:
+            // Agregar armadura
+                break;
+        case 4:
+            // Agregar casco
+                break;
+        case 5:
+            std::shared_ptr<Weapon> granada = std::make_shared<Granada>(GRANADA_GUN, 1, x_pos, y_pos, 10, 38, 100, 0);
+
+
+
+
     }
 }
-
 */
