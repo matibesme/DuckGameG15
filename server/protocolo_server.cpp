@@ -38,7 +38,7 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
     protocolo.sendByte(command.lista_patos.size(), dead_connection);
     for (const DTODuck& dto_duck : command.lista_patos) {
         protocolo.sendByte(dto_duck.id, dead_connection);
-        protocolo.sendByte(dto_duck.personajes_type, dead_connection);
+        protocolo.sendString(dto_duck.color, dead_connection);
         protocolo.sendFloat(dto_duck.x_pos, dead_connection);
         protocolo.sendFloat(dto_duck.y_pos, dead_connection);
         protocolo.sendByte(dto_duck.typeOfMove, dead_connection);
@@ -72,6 +72,20 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
         protocolo.sendFloat(box.x_pos, dead_connection);
         protocolo.sendFloat(box.y_pos, dead_connection);
         protocolo.sendByte(box.type, dead_connection);
+    }
+
+    protocolo.sendByte(command.lista_helemets.size(), dead_connection);
+    for (const Protection& helmet : command.lista_helemets) {
+        protocolo.sendByte(helmet.type, dead_connection);
+        protocolo.sendFloat(helmet.x_pos, dead_connection);
+        protocolo.sendFloat(helmet.y_pos, dead_connection);
+    }
+
+    protocolo.sendByte(command.lista_armors.size(), dead_connection);
+    for (const Protection& armor : command.lista_armors) {
+        protocolo.sendByte(armor.type, dead_connection);
+        protocolo.sendFloat(armor.x_pos, dead_connection);
+        protocolo.sendFloat(armor.y_pos, dead_connection);
     }
 
 }

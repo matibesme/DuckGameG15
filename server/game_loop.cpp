@@ -26,15 +26,18 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         load_game_config(),
         map_helmet(),
         map_armor(),
-        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons, map_helmet,map_armor)
+        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons, map_helmet,map_armor),
+        list_colors({"red","blue","green","yellow","pink","purple","orange","brown","black","white"})
         {}
 
 void GameLoop::run() {
     try {
         load_game_config.loadGame(list_plataformas, respawn_weapon_points);
-
+        int i = 0;
         for (auto& id : list_id_clientes) {
-            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y));
+            
+            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y,color[i]));
+            i++; 
         }
         uint8_t id = 0;
         for (auto& respawn : respawn_weapon_points) {
@@ -103,7 +106,7 @@ void GameLoop::sendCompleteScene(){
         if (personaje.second.isWeaponEquipped()) {
            weapon_type = personaje.second.getWeapon().getType();
         }
-        DTODuck dto_duck = {personaje.first,personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
+        DTODuck dto_duck = {personaje.first,personaje.second.getColor(), personaje.second.getXPos(), personaje.second.getYPos(),
                             personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(),personaje.second.getArmor()};
 
 
@@ -123,6 +126,16 @@ void GameLoop::sendCompleteScene(){
 
 
     }*/
+
+    for (auto& helmet : map_helmet) {
+
+        command.lista_helemets.push_back(helmet.second);
+    }
+
+    for (auto& armor : map_armor) {
+        command.lista_armors.push_back(armor.second);
+    }
+
     queues_map->sendMessagesToQueues(command);
 }
 

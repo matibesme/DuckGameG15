@@ -1,11 +1,34 @@
 #include "load_game.h"
 #include <iostream>
+#include <filesystem>
+#include <vector>
+#include <random>
 
 LoadGameFile::LoadGameFile() {}
 
 void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms, std::list<RespawnPoint>& respawn_weapon_points) {
     
-    YAML::Node map = YAML::LoadFile("../data/maps/mapaa.yaml");
+    
+
+    const std::string directory_path = "../data/maps";
+    std::vector<std::string> files;
+    for (const auto & entry : std::filesystem::directory_iterator(directory_path)) {
+        if (entry.path().extension() == ".yaml"){
+        files.push_back(entry.path().string());
+        }
+    }
+
+    if (files.empty()){
+        throw std::runtime_error("No hay archivos de mapas en el directorio");
+    }
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, files.size()-1);
+    std::string random_map = files[dis(gen)];
+
+    YAML::Node map = YAML::LoadFile(random_map);
+
     SCENE_ID=map["background_type"].as<uint8_t>();
 
     POSICION_INICIAL_X=map["duck spawns"][0]["pos_x"].as<float>();

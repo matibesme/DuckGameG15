@@ -37,8 +37,8 @@ GameState ProtocoloCliente::reciveFromServer() {
     throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
 
-GameState ProtocoloCliente::reciveFullGameFromServer() {
-
+GameState ProtocoloCliente::reciveFullGameFromServer()
+{
     uint8_t background_id = protocolo.receiveByte(dead_connection);
 
     //recivo plataformas
@@ -58,7 +58,7 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
     std::list<DTODuck> lista_patos;
     for (int i = 0; i < patos_quantity; i++) {
         uint8_t id = protocolo.receiveByte(dead_connection);
-        uint8_t personajes_type = protocolo.receiveByte(dead_connection);
+        std::string personajes_type = protocolo.receiveString(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t typeOfMove = protocolo.receiveByte(dead_connection);
@@ -100,8 +100,26 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
         lista_boxes.push_back({id, x_pos, y_pos, type});
     }
 
+    uint8_t helmets_quantity = protocolo.receiveByte(dead_connection);
+    std::list<Protection> lista_helemets;
+    for (int i = 0; i < helmets_quantity; i++) {
+        uint8_t type = protocolo.receiveByte(dead_connection);
+        float x_pos = protocolo.receiveFloat(dead_connection);
+        float y_pos = protocolo.receiveFloat(dead_connection);
+        lista_helemets.push_back({type, x_pos, y_pos});
+    }
 
-    return {background_id,lista_plataformas,lista_patos, bullets, guns, lista_boxes};
+    uint8_t armors_quantity = protocolo.receiveByte(dead_connection);
+    std::list<Protection> lista_armors;
+    for (int i = 0; i < armors_quantity; i++) {
+        uint8_t type = protocolo.receiveByte(dead_connection);
+        float x_pos = protocolo.receiveFloat(dead_connection);
+        float y_pos = protocolo.receiveFloat(dead_connection);
+        lista_armors.push_back({type, x_pos, y_pos});
+    }
+
+
+    return {background_id,lista_plataformas,lista_patos, bullets, guns, lista_boxes, lista_helemets, lista_armors};
 
 }
 
