@@ -50,7 +50,8 @@ private:
     std::map<uint8_t, Protection> map_helmet;
     std::map<uint8_t, Protection> map_armor;
     DuckAction duck_action;
-    std::list,std::string> list_colors;
+    //std::list,std::string> list_colors;
+    std::list<std::string> list_colors;
 
 
 
