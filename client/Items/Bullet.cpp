@@ -15,11 +15,24 @@
 #define SPRITE_WIDTH_BULLET (384/6)
 #define SPRITE_HEIGHT_BULLET 64
 
+#define SOUND_COWBOY DATA_PATH "/sound/SFX/pistol.wav"
+#define SOUND_AK47 DATA_PATH "/sound/SFX/netGunFire.wav"
+#define SOUND_PISTOLA DATA_PATH "/sound/SFX/pistol.wav"
+#define SOUND_MAGNUM DATA_PATH "/sound/SFX/magShot.wav"
+#define SOUND_ESCOPETA DATA_PATH "/sound/SFX/shotgunFire.wav"
+#define SOUND_SNIPER DATA_PATH "/sound/SFX/sniper.wav"
+#define SOUND_LASER DATA_PATH "/sound/SFX/laserRifle.wav"
+#define SOUND_GRANADA DATA_PATH "/sound/SFX/grenadeFire.wav"
+
+
 Bullet::Bullet(uint8_t id, float initial_pos_x, float initial_pos_y, Graficos& graficos, uint8_t orientacion, uint8_t type) :
         graficos(graficos), idBullet(id),
         pos_x(initial_pos_x), pos_y(initial_pos_y),
         orientationOfBullet(orientacion), typeOfBullet(type),
-        explotionSpriteX(-1){}
+        explotionSpriteX(-1)
+{
+  reproducirSonido();
+}
 
 void Bullet::draw(SDL2pp::Renderer& renderer) {
 
@@ -49,6 +62,7 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
 
     } else if(typeOfBullet == GRENADE_EXPLOSION){
         explotionSpriteX = (explotionSpriteX + 1);
+        if(explotionSpriteX == 0) reproducirSonido();
         // destRect es el rectángulo donde se dibujará la textura
         SDL2pp::Rect destRect((int)pos_x , (int)pos_y + DUCK_HEIGHT / 5, WIDTH_GRENADE_EXPLOTION, HEIGHT_GRENADE_EXPLOTION);
         // srcRect es el rectángulo que se tomará de la textura
@@ -116,6 +130,42 @@ void Bullet::actualizarTipo(const char*& texture) {
             break;
         case BANANA_BULLET:
             texture = IMAGE_BANANA_BULLET;
+            break;
+        default:
+            break;
+    }
+}
+
+void Bullet::reproducirSonido() {
+  Sound sound;
+  sound.inicializar();
+    switch (typeOfBullet) {
+        case COWBOY_BULLET:
+          sound.reproducirEfecto(SOUND_COWBOY);
+            break;
+        case AK47_BULLET:
+            sound.reproducirEfecto(SOUND_AK47);
+            break;
+        case PISTOLA_DUELOS_BULLET:
+                sound.reproducirEfecto(SOUND_PISTOLA);
+                break;
+        case MAGNUM_BULLET:
+                sound.reproducirEfecto(SOUND_MAGNUM);
+                break;
+        case ESCOPETA_BULLET:
+                sound.reproducirEfecto(SOUND_ESCOPETA);
+            break;
+        case SNIPER_BULLET:
+                sound.reproducirEfecto(SOUND_SNIPER);
+            break;
+        case PEW_PEW_LASER_BULLET:
+                sound.reproducirEfecto(SOUND_LASER);
+            break;
+        case LASER_RIFLE_BULLET:
+                sound.reproducirEfecto(SOUND_LASER);
+            break;
+        case GRENADE_EXPLOSION:
+                sound.reproducirEfecto(SOUND_GRANADA);
             break;
         default:
             break;

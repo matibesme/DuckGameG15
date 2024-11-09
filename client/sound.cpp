@@ -31,7 +31,7 @@ void Sound::cargarMusica(const std::string& archivo) {
 // Reproducir música
 void Sound::reproducirMusica(int repeticion) {
   if (musicaFondo) {
-    Mix_VolumeMusic(1);
+    Mix_VolumeMusic(1); // Volumen a la mitad
     Mix_PlayMusic(musicaFondo, repeticion);
   } else {
     std::cerr << "No se ha cargado música para reproducir" << std::endl;
@@ -44,19 +44,13 @@ void Sound::detenerMusica() {
 }
 
 // Cargar efecto de sonido
-void Sound::cargarEfecto(const std::string& archivo) {
+void Sound::reproducirEfecto(const std::string& archivo) {
   efectoSonido = Mix_LoadWAV(archivo.c_str());
   if (!efectoSonido) {
     std::cerr << "Error al cargar efecto de sonido: " << Mix_GetError() << std::endl;
-  }
-}
-
-// Reproducir efecto de sonido
-void Sound::reproducirEfecto() {
-  if (efectoSonido) {
+  }else {
+    Mix_VolumeChunk(efectoSonido, 3);
     Mix_PlayChannel(-1, efectoSonido, 0); // -1 para usar cualquier canal libre
-  } else {
-    std::cerr << "No se ha cargado efecto de sonido para reproducir" << std::endl;
   }
 }
 

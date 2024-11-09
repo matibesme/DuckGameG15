@@ -15,8 +15,7 @@ public:
   void cargarMusica(const std::string& archivo);
   void reproducirMusica(int repeticion = -1);  // -1 para repetir indefinidamente
   void detenerMusica();
-  void cargarEfecto(const std::string& archivo);
-  void reproducirEfecto();
+  void reproducirEfecto(const std::string& archivo);
   void limpiar();
 
 private:
