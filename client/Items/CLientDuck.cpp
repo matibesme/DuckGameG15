@@ -20,14 +20,15 @@ ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped
           coloredTexture(nullptr), armor(graficos, positionX , positionY), helmet(graficos, positionX, positionY),
           armorEquipped(false), helmetEquipped(false), isOnGround(false)
     {
-        update(y_pos, x_pos, typeOfMove, gunEquipped, armorEquipped, helmetEquipped);
+        update(y_pos, x_pos, typeOfMove, gunEquipped, armorEquipped, helmetEquipped, false);
     }
 
-void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped, uint8_t armor_, uint8_t helmet_) {
+void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped,
+                            uint8_t armor_, uint8_t helmet_, bool lookingUp) {
     isOnGround = false;
     positionX = x_pos;
     positionY = y_pos;
-    gun.setGun(gunEquipped);
+    gun.setGun(gunEquipped, lookingUp);
 
     if(typeOfMove == STILL_LEFT)    isFlipped = true;
 

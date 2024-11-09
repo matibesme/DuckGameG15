@@ -25,7 +25,7 @@
 
 Gun::Gun(Graficos& graficos, float pos_x, float pos_y, uint8_t typeOfGun) :
         graficos(graficos), typeOfGun(typeOfGun), is_equiped(false),
-        pos_x(pos_x), pos_y(pos_y) {}
+        pos_x(pos_x), pos_y(pos_y), lookingUp(false) {}
 
 void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
     if(typeOfGun == NOGUN){
@@ -43,8 +43,17 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer& renderer){
     if(is_equiped){
         //si esta flippeado dibujo a todas por igual
         if (isFliped) {
-            renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 2.5, pos_y,
+          if (lookingUp){
+              renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 2.5, pos_y - DUCK_HEIGHT / 2.5,
+                                           with, height), 90.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+          }
+          else
+              renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x - DUCK_WIDTH / 2.5, pos_y,
                                    with, height), 0.0,SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+        }
+        else if(lookingUp){
+            renderer.Copy(texture_equipped, SDL2pp::NullOpt, Rect(pos_x + 3, pos_y - DUCK_HEIGHT / 2.5,
+                                   with, height), 90.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
         }
         //si no esta flippeado dibujo a las granadas y bananas distinto
         else if( typeOfGun == GRANADA_GUN || typeOfGun == BANANA_GUN)
@@ -68,12 +77,13 @@ void Gun::setEquip(bool equip){
     is_equiped = equip;
 }
 
-void Gun::setGun(uint8_t gun){
+void Gun::setGun(uint8_t gun, bool look_up){
     typeOfGun = gun;
     if(gun == NOGUN)
         is_equiped = false;
     else
         is_equiped = true;
+    lookingUp = look_up;
 }
 
 void Gun::update(float new_x, float new_y) {
