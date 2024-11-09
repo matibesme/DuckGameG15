@@ -1,12 +1,12 @@
 #ifndef BOX_H
 #define BOX_H
 
-#include <cstdint>
+#include "Graficos.h"
+#include "sound.h"
 #include <SDL2pp/Renderer.hh>
-#include "Graficos.h"
 #include <SDL_render.h>
+#include <cstdint>
 #include <random>
-#include "Graficos.h"
 
 class Box {
 public:
@@ -26,8 +26,10 @@ private:
     Graficos& graficos;
     uint8_t idBox;
     float pos_x, pos_y;
-    uint8_t type;
-    bool isDestroyed;
+    uint8_t typeOfAction;
+    int explosionSpriteX;
+    Sound sound;
+    void reproducirSonido();
 };
 
 #endif
