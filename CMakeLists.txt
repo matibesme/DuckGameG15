@@ -60,30 +60,80 @@ endif()
 # Program section
 # ---------------
 if(TALLER_CLIENT)
-    # HEY!! TODO XXX: Change the name of the executable to the one you like!
+    # Cambiar el nombre del ejecutable si es necesario
     add_executable(taller_client)
+    find_package(SDL2_image REQUIRED)
+    find_package(SDL2_mixer REQUIRED)
+    add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
 
-    # Make them depend on taller_common lib
+    # Incluir directorios 'client' y 'common' para los archivos de encabezado
+    include_directories(${CMAKE_SOURCE_DIR}/client)
+    include_directories(${CMAKE_SOURCE_DIR}/common)
+    include_directories(${CMAKE_SOURCE_DIR}/client/items)
+
+
+    # Incluir automáticamente todos los archivos .cpp y .h de las carpetas 'client' y 'common'
+    file(GLOB_RECURSE CLIENT_SOURCES
+            "${CMAKE_SOURCE_DIR}/client/*.cpp"
+            "${CMAKE_SOURCE_DIR}/client/*.h"
+    )
+
+    file(GLOB COMMON_SOURCES
+            "${CMAKE_SOURCE_DIR}/common/*.cpp"
+            "${CMAKE_SOURCE_DIR}/common/*.h"
+    )
+
+    # Agregar los archivos fuentes de 'client' y 'common' al ejecutable
+    target_sources(taller_client PRIVATE ${CLIENT_SOURCES} ${COMMON_SOURCES})
+
+    # Hacer que dependa de la biblioteca común y SDL2pp
     add_dependencies(taller_client taller_common SDL2pp::SDL2pp)
 
-    # Add source files and enable warnings
-    # HEY!! TODO XXX: add more subfolders here
-    add_subdirectory(client)
-
+    # Añadir advertencias al proyecto
     set_project_warnings(taller_client ${TALLER_MAKE_WARNINGS_AS_ERRORS} FALSE)
 
-    # add libSDL2pp's headers
+    # Incluir las cabeceras de la biblioteca libSDL2pp
     target_include_directories(taller_client PRIVATE ${libSDL2pp_SOURCE_DIR})
 
-    # Link the taller_common lib target
-    target_link_libraries(taller_client taller_common SDL2pp::SDL2pp)
+    # Enlazar la biblioteca común y SDL2pp al ejecutable del cliente
+    target_link_libraries(taller_client taller_common SDL2pp::SDL2pp SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer)
 endif()
 
 if(TALLER_SERVER)
-    # HEY!! TODO XXX: Change the name of the executable to the one you like!
-    add_executable(taller_server)
+    # Cambiar el nombre del ejecutable si es necesario
+    add_executable(taller_server
+            server
+            server/items/weapons/cowboy_pistol.h
+            server/items/weapons/duel_pistol.cpp
+            server/items/weapons/magnum.cpp
+            server/items/weapons/cowboy_pistol.cpp
+            server/duck_action.cpp
+            server/items/weapons/factory_weapons.cpp
+            server/items/weapons/factory_weapons.h
+            server/items/box.h
+            server/items/box.cpp
+    )
 
-    # Make them depend on taller_common lib
+    # Incluir el directorio 'server' para los archivos de encabezado (opcional)
+    include_directories(${CMAKE_SOURCE_DIR}/server)
+    include_directories(${CMAKE_SOURCE_DIR}/common)
+
+
+    # Incluir automáticamente todos los archivos .cpp y .h de la carpeta 'server'
+    file(GLOB SERVER_SOURCES
+            "${CMAKE_SOURCE_DIR}/server/*.cpp"
+            "${CMAKE_SOURCE_DIR}/server/*.h"
+    )
+
+    file(GLOB COMMON_SOURCES
+            "${CMAKE_SOURCE_DIR}/common/*.cpp"
+            "${CMAKE_SOURCE_DIR}/common/*.h"
+    )
+
+    # Agregar los archivos fuentes al ejecutable
+    target_sources(taller_server PRIVATE ${SERVER_SOURCES} ${COMMON_SOURCES})
+
+    # Hacer que dependa de la biblioteca común
     add_dependencies(taller_server taller_common)
 
     # Add source files and enable warnings
@@ -92,28 +142,71 @@ if(TALLER_SERVER)
 
     set_project_warnings(taller_server ${TALLER_MAKE_WARNINGS_AS_ERRORS} FALSE)
 
+
     # Link the taller_common lib target
-    target_link_libraries(taller_server taller_common)
+    target_link_libraries(taller_server taller_common yaml-cpp)
 endif()
 
 if(TALLER_EDITOR)
-    # HEY!! TODO XXX: Change the name of the executable to the one you like!
-    add_executable(taller_editor)
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)
+    set(CMAKE_AUTOUIC ON)
+    set(CMAKE_AUTOMOC ON)
+    set(CMAKE_AUTORCC ON)
 
-    # Make them depend on taller_common lib
-    add_dependencies(taller_editor taller_common SDL2pp::SDL2pp)
+    find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
-    # Add source files and enable warnings
-    # HEY!! TODO XXX: add more subfolders here
-    add_subdirectory(editor)
+    set(PROJECT_SOURCES
+        editor/levelEditor/leveleditor.cpp  
+        editor/levelEditor/leveleditor.h
+        editor/levelEditor/leveleditor.ui
+        editor/levelEditor/leveleditorcontroller.cpp
+        editor/levelEditor/leveleditorcontroller.h
+        editor/levelEditor/pathmaker.h
+        editor/levelEditor/pathmaker.cpp
+        editor/levelEditor/idmaker.h
+        editor/levelEditor/idmaker.cpp
+        editor/levelEditor/mapobject.h
+        editor/levelEditor/mapobject.cpp
+        editor/levelEditor/main.cpp
+    )
 
+    if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+        qt_add_executable(taller_editor
+            MANUAL_FINALIZATION
+            ${PROJECT_SOURCES}
+        )
+    else()
+        if(ANDROID)
+            add_library(taller_editor SHARED
+                ${PROJECT_SOURCES}
+            )
+        else()
+            add_executable(taller_editor
+                ${PROJECT_SOURCES}
+            )
+        endif()
+    endif()
+
+    target_link_libraries(taller_editor PRIVATE Qt${QT_VERSION_MAJOR}::Widgets taller_common SDL2pp::SDL2pp yaml-cpp)
+
+    set_target_properties(taller_editor PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE TRUE
+    )
+
+    if(QT_VERSION_MAJOR EQUAL 6)
+        qt_finalize_executable(taller_editor)
+    endif()
+
+    
     set_project_warnings(taller_editor ${TALLER_MAKE_WARNINGS_AS_ERRORS} FALSE)
 
-    # add libSDL2pp's headers
+    
     target_include_directories(taller_editor PRIVATE ${libSDL2pp_SOURCE_DIR})
-
-    # Link the taller_common lib target
-    target_link_libraries(taller_editor taller_common SDL2pp::SDL2pp)
 endif()
 
 
