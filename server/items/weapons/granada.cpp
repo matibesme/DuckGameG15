@@ -36,8 +36,11 @@ std::unique_ptr<Bullet> Granada::shoot() {
     }
     bullet_count += 1;
     ammo_quantity--;
-
-    bala.release_granada(x_pos, y_pos, direction, time_to_explode);
+    if (direction == RIGHT) {
+        bala.release_granada(x_pos + DUCK_WIDTH + WIDTH_BULLET , y_pos + (DUCK_HEIGHT/2) , direction, time_to_explode);
+    } else if (direction == LEFT) {
+        bala.release_granada(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, time_to_explode);
+    }
     if (direction == RIGHT) {
         setXPos(x_pos - recoil);
     } else  if (direction == LEFT) {
