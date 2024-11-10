@@ -30,6 +30,7 @@ public:
     void createGame();
     void startGame();
     void joinGame(uint8_t idPartida);
+    std::list<uint8_t>  updateGame(uint8_t key);
     ~Client();
 };
 
