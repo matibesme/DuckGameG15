@@ -16,6 +16,7 @@ class FactoryWeapons {
 public:
     FactoryWeapons();
     std::shared_ptr<Weapon> createWeapon(uint8_t type, float x_pos, float y_pos);
+    std::shared_ptr<Weapon> generateRandomWeapon(float pos_x, float pos_y);
 
 };
 

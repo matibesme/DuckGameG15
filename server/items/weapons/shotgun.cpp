@@ -42,34 +42,59 @@ std::unique_ptr<Bullet> Shotgun::shoot() {
         case 6:
             pellet_count--;
             bullet_count += 1;
-            pellets_vector[0].release(x_pos, y_pos, direction, true);
+            if (direction == RIGHT) {
+                pellets_vector[0].release(x_pos + DUCK_WIDTH / 2, y_pos , direction, true);
+            } else if (direction == LEFT) {
+                pellets_vector[0].release(x_pos, y_pos, direction, true);
+            }
+
             return std::make_unique<Bullet>(pellets_vector[0]);
         case 5:
             pellet_count--;
             bullet_count += 1;
-            pellets_vector[1].release(x_pos, y_pos, direction, true);
+            if (direction == RIGHT) {
+                pellets_vector[1].release(x_pos + DUCK_WIDTH / 2, y_pos , direction, true);
+            } else if (direction == LEFT) {
+                pellets_vector[1].release(x_pos, y_pos, direction, true);
+            }
             return std::make_unique<Bullet>(pellets_vector[1]);
         case 4:
             pellet_count--;
             bullet_count += 1;
-            pellets_vector[2].release(x_pos, y_pos, direction, true);
+            if (direction == RIGHT) {
+                pellets_vector[2].release(x_pos + DUCK_WIDTH / 2, y_pos , direction, true);
+            } else if (direction == LEFT) {
+                pellets_vector[2].release(x_pos, y_pos, direction, true);
+            }
             return std::make_unique<Bullet>(pellets_vector[2]);
         case 3:
             pellet_count--;
             bullet_count += 1;
-            pellets_vector[3].release(x_pos, y_pos, direction, true);
+            if (direction == RIGHT) {
+                pellets_vector[3].release(x_pos + DUCK_WIDTH / 2, y_pos , direction, true);
+            } else if (direction == LEFT) {
+                pellets_vector[3].release(x_pos, y_pos, direction, true);
+            }
             return std::make_unique<Bullet>(pellets_vector[3]);
         case 2:
             pellet_count--;
             bullet_count += 1;
-            pellets_vector[4].release(x_pos, y_pos, direction, true);
+            if (direction == RIGHT) {
+                pellets_vector[4].release(x_pos + DUCK_WIDTH / 2, y_pos , direction, true);
+            } else if (direction == LEFT) {
+                pellets_vector[4].release(x_pos, y_pos, direction, true);
+            }
             return std::make_unique<Bullet>(pellets_vector[4]);
         case 1:
             pellet_count--;
             bullet_count += 1;
             reloading = true;
             ammo_quantity--;
-            pellets_vector[5].release(x_pos, y_pos, direction, true);
+            if (direction == RIGHT) {
+                pellets_vector[5].release(x_pos + DUCK_WIDTH / 2, y_pos , direction, true);
+            } else if (direction == LEFT) {
+                pellets_vector[5].release(x_pos, y_pos, direction, true);
+            }
             return std::make_unique<Bullet>(pellets_vector[5]);
         default:
             return nullptr;

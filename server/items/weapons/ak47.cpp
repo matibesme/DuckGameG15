@@ -29,7 +29,11 @@ std::unique_ptr<Bullet> Ak47::shoot() {
     ammo_quantity--;
     bullet_count += 1;
     Bullet actual_bullet = bullets_vector[0];
-    actual_bullet.release(x_pos, y_pos, direction, true);
+    if (direction == RIGHT) {
+        actual_bullet.release(x_pos + DUCK_WIDTH / 2, y_pos , direction, true);
+    } else if (direction == LEFT) {
+        actual_bullet.release(x_pos, y_pos, direction, true);
+    }
     if (spread_counter > MAX_SPREAD_COUNTER) {
         spread_counter -= 0.1;;
     }

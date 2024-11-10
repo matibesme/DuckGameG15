@@ -122,6 +122,9 @@ void DuckAction::weaponComand(uint8_t comando) {
             break;
 
         case SHOOT: {
+            if (!personaje.isWeaponEquipped()) {
+                return;
+            }
             if (weapon.isEmptyAmmo()) {
                 return;
             }
