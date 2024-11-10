@@ -24,6 +24,7 @@ public:
     
 public slots:
     void start();
+    void join(uint8_t id_game);
 };
 
 #endif // MENUCONTROLLER_H

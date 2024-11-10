@@ -165,11 +165,7 @@ void Menu::show_make_game_scene(){
     layout_game->addWidget(port);*/
     QPushButton* make_game_button = new QPushButton("Make game");
     layout_game->addWidget(make_game_button);
-    connect(make_game_button, &QPushButton::clicked, this, [this]() {
-        this->close();
-        emit start();
-    });
-    //connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
     //connect(make_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
     QPushButton* back_button = new QPushButton("Back");
     layout_game->addWidget(back_button);
@@ -240,14 +236,17 @@ void Menu::show_join_game_scene(){
     game_options->addItem("Partida3");
     layout_games->addWidget(new QLabel("Select a game:"));
     layout_games->addWidget(game_options);
+    QPushButton* update_button = new QPushButton("Update games");
+    layout_games->addWidget(update_button);
     QPushButton* join_game_button = new QPushButton("Join game");
     layout_games->addWidget(join_game_button);
+        connect(join_game_button, &QPushButton::clicked, this, [this]() {
+        this->close();
+        emit join(3);
+    });
     //connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
     /*connect(join_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);*/
-    connect(join_game_button, &QPushButton::clicked, this, [this]() {
-        this->close();
-        emit start();
-    });
+
     QPushButton* back_button = new QPushButton("Back");
     connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
     layout_games->addWidget(back_button);
@@ -262,10 +261,6 @@ void Menu::show_join_game_scene(){
 
 }
 
-void Menu::show_number_players(){
-
-}
-
 void Menu::show_wait_scene(){
     std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
     QString path_image = QString::fromStdString(path);
@@ -274,9 +269,12 @@ void Menu::show_wait_scene(){
     QVBoxLayout *layout_wait = new QVBoxLayout(widget_wait);
     layout_wait->addWidget(new QLabel("Waiting for the game to start"));
 
-    //Esto es solo para el cliente que crea el juego.
     QPushButton* start_game = new QPushButton("Start game");
     layout_wait->addWidget(start_game);
+    connect(start_game, &QPushButton::clicked, this, [this]() {
+        this->close();
+        emit start();
+    });
 
     widget_wait->setGeometry(300, 250, 100, 100);
     wait_scene->addWidget(widget_wait);
