@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <ctime>
 
-
+/*
 Box::Box(uint8_t type, uint8_t id, float x_pos, float y_pos, int health,
     std::map<uint16_t,std::shared_ptr<Weapon>>& map_free_weapons, std::map<uint8_t, Protection>& map_armor, std::map<uint8_t, Protection>& map_helmet,
     std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets, uint16_t& id_balas, uint16_t& id_weapons):
@@ -58,3 +58,4 @@ void Box::generateRandomContent() {
     }
 }
 
+*/

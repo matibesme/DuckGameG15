@@ -108,7 +108,7 @@ void GameLoop::sendCompleteScene(){
            weapon_type = personaje.second.getWeapon().getType();
         }
         DTODuck dto_duck = {personaje.first,personaje.second.getColor(), personaje.second.getXPos(), personaje.second.getYPos(),
-                            personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(), personaje.second.getArmor()};
+                            personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(), personaje.second.getArmor(), personaje.second.isAimingUp()};
 
 
        command.lista_patos.push_back(dto_duck);
