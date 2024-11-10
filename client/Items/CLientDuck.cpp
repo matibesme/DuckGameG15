@@ -26,7 +26,7 @@ ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped
     }
 
 void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped,
-                            uint8_t armor_, uint8_t helmet_, bool lookingUp) {
+                            uint8_t armor_, uint8_t helmet_, bool lookingUp, uint8_t orientacion) {
     isOnGround = false;
     positionX = x_pos;
     positionY = y_pos;
@@ -52,10 +52,15 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gu
             pixelDuckSpriteY = SRC_Y_MOVING;
             isFlipped = true;
         } else if (typeOfMove == JUMP) {
+            if(orientacion == RIGHT) isFlipped = false;
+            else isFlipped = true;
+
             pixelDuckSpriteY = SRC_Y_JUMPING;
             pixelDuckSpriteX = SPRITE_WIDTH;
 
         }else if (typeOfMove == FLAP) {
+            if (orientacion == RIGHT) isFlipped = false;
+            else isFlipped = true;
             pixelDuckSpriteY = SRC_Y_JUMPING;
             numSprite = (SDL_GetTicks() / SPRITE_ANIMATION_RATE) % MAX_SPRITE_FRAMES_JUMP;
             // Limitar numSprite entre 3 y 4

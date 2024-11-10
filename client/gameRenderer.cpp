@@ -75,7 +75,8 @@ void GameRenderer::actualizarElementos(const GameState& command) {
         if (duckInCommand != command.lista_patos.end()) {
             // Actualizar si el pato está en ambas listas
             it->update(duckInCommand->y_pos, duckInCommand->x_pos, duckInCommand->typeOfMove,
-                       duckInCommand->typeOfGun,  duckInCommand->armor, duckInCommand->helmet, duckInCommand->is_aiming_up); //Paso en false porque no esta mirando para arriba
+                       duckInCommand->typeOfGun,  duckInCommand->armor, duckInCommand->helmet,
+                       duckInCommand->is_aiming_up, duckInCommand->orientation);
             ++it;
         } else {
             // Eliminar si solo está en la lista local

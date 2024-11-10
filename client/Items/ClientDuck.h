@@ -17,7 +17,7 @@ public:
     ClientDuck(uint8_t id, float initial_pos_x, float initial_pos_y, uint8_t typeOfGun, uint8_t typeOfMove,
                 std::string color, Graficos& graficos);
     void update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped, uint8_t armor,
-                uint8_t helmet, bool lookingUp);
+                uint8_t helmet, bool lookingUp, uint8_t orientation);
     void draw(Renderer& renderer);
     uint8_t getId() const;
     int getPosX();
