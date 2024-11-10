@@ -24,6 +24,11 @@ std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::addPartida(uint8_t 
 std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::joinGame(uint8_t id_partida, uint8_t id_cliente)
 {
     std::lock_guard<std::mutex> lock(m);
+    if (partidas_sin_arrancar.find(id_partida) == partidas_sin_arrancar.end())
+    {
+      return nullptr;
+    }
+
     protected_queues_sender[id_partida]->addClient(id_cliente, *queues_sender[id_cliente]);
     map_id_clientes[id_partida].push_back(id_cliente);
     return queues_game_loop[id_partida];

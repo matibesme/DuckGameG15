@@ -19,6 +19,9 @@ void Receiver::run() {
             GameAccess command = protocolo.receiveAccessFromClients();
             if (command.action_type == JOIN_GAME) {
                 queue_comandos = lobby.joinGame(command.game_id, id);
+                if (queue_comandos == nullptr) {
+                    continue;
+                }
                 in_lobby = false;
             } else if (command.action_type == CREATE_GAME) {
 

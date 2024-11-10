@@ -41,17 +41,17 @@ void Boxes::generateRandomContent() {
         case 1:
             break;
         case 2:
-            map_free_weapons.emplace(id_weapons++, factory_weapons.generateRandomWeapon(x_pos, y_pos));
+            map_free_weapons.emplace(id_weapons++, factory_weapons.generateRandomWeapon(x_pos, y_pos+HEIGHT_BOX-HEIGHT_GUN));
             break;
         case 3:
-            map_armor.emplace(id_armors++, Protection{ARMOR_EQUIPPED , x_pos, y_pos});
+            map_armor.emplace(id_armors++, Protection{ARMOR_EQUIPPED , x_pos, y_pos+HEIGHT_BOX-HEIGHT_ARMOR});
             break;
         case 4:
-            map_helmet.emplace(id_helemets++, Protection{HELMET_EQUIPPED, x_pos, y_pos});
+            map_helmet.emplace(id_helemets++, Protection{HELMET_EQUIPPED, x_pos, y_pos+HEIGHT_BOX-HEIGHT_HELMET});
             break;
         case 5:
 
-            map_bullets.emplace(id_balas++, std::move(factory_weapons.createWeapon(GRANADA_GUN, x_pos, y_pos)->shoot()));
+            map_bullets.emplace(id_balas++, std::move(factory_weapons.createWeapon(GRANADA_GUN,x_pos, y_pos+HEIGHT_BOX-HEIGHT_GUN)->shoot()));
         default:
             break;
 

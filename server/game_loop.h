@@ -50,7 +50,6 @@ private:
     uint16_t id_armors;
     std::list<DTOPlatform> list_plataformas;
 
-    std::vector<std::shared_ptr<Boxes>> vector_boxes;
 
 
     //std::list<DTOBoxes> list_boxes;

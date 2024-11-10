@@ -26,7 +26,6 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         id_helmets(0),
         id_armors(0),
         list_plataformas(),
-        vector_boxes(),
         map_helmet(),
         map_armor(),
         duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons, map_helmet,map_armor),
@@ -164,12 +163,21 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
         bool colision = bullet->colisionWithDuck(character.second.getXPos(), character.second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
         if (colision) {
             character.second.applyDamage(bullet->getDamage());
+            return;
         }
     }
-    for (auto& box : vector_boxes) {
-        bool colision = bullet->colisionWithBox(box->getXPos(), box->getYPos(), WIDTH_BOX, HEIGHT_BOX);
+    for (auto it = list_boxes.begin(); it != list_boxes.end(); ) {
+        bool colision = bullet->colisionWithBox(it->getXPos(), it->getYPos(), WIDTH_BOX, HEIGHT_BOX);
         if (colision) {
-            //box->takeDamage(bullet->getDamage());
+            it->takeDamage(bullet->getDamage());
+            if (it->isDestroyed()) {
+                it = list_boxes.erase(it);
+                break;
+            } else {
+                ++it;
+            }
+        } else {
+            ++it;
         }
     }
 }
