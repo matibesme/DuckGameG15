@@ -1,13 +1,13 @@
 #include "menu.h"
-#include "menucontroller.h"
+//#include "menucontroller.h"
 
 #include <iostream>
 #include <QtWidgets>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-Menu::Menu(MenuController* menu_controller, QWidget *parent)
-    :  QMainWindow(parent), menu_controller(menu_controller)
+Menu::Menu(QWidget *parent)
+    :  QMainWindow(parent)
 {
     //menu_controller = new MenuController();
     initialize();
@@ -54,9 +54,9 @@ void Menu::show_main_scene(){
                 "}"
                 );
     connect(make_game, &QPushButton::pressed, this, &Menu::show_make_game_scene);
-    connect(make_game, &QPushButton::pressed, [this, make_game](){
+    /*connect(make_game, &QPushButton::pressed, [this, make_game](){
         menu_controller->set_type_game(0);
-    });
+    });*/
     QPushButton* join_game = new QPushButton("Join game");
     join_game->setGeometry(325, 450, 150, 45);
     join_game->setStyleSheet(
@@ -77,9 +77,9 @@ void Menu::show_main_scene(){
                 "}"
                 );
     connect(join_game, &QPushButton::pressed, this, &Menu::show_join_game_scene);
-    connect(join_game, &QPushButton::pressed, [this, make_game](){
+    /*connect(join_game, &QPushButton::pressed, [this, make_game](){
         menu_controller->set_type_game(1);
-    });
+    });*/
     QPushButton* quit = new QPushButton("Quit");
     quit->setGeometry(350, 500, 100, 45);
     quit->setStyleSheet(
@@ -165,8 +165,12 @@ void Menu::show_make_game_scene(){
     layout_game->addWidget(port);*/
     QPushButton* make_game_button = new QPushButton("Make game");
     layout_game->addWidget(make_game_button);
+    connect(make_game_button, &QPushButton::clicked, this, [this]() {
+        this->close();
+        emit start();
+    });
     //connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
-    connect(make_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
+    //connect(make_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
     QPushButton* back_button = new QPushButton("Back");
     layout_game->addWidget(back_button);
     connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
@@ -239,7 +243,11 @@ void Menu::show_join_game_scene(){
     QPushButton* join_game_button = new QPushButton("Join game");
     layout_games->addWidget(join_game_button);
     //connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
-    connect(join_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
+    /*connect(join_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);*/
+    connect(join_game_button, &QPushButton::clicked, this, [this]() {
+        this->close();
+        emit start();
+    });
     QPushButton* back_button = new QPushButton("Back");
     connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
     layout_games->addWidget(back_button);
