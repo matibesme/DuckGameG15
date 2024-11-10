@@ -1,5 +1,7 @@
 #include "sound.h"
 
+#define MAXIMO_SONIDOS 5
+
 // Constructor y destructor
 Sound::Sound() {
   if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
@@ -43,14 +45,23 @@ void Sound::detenerMusica() {
   Mix_HaltMusic();
 }
 
-// Cargar efecto de sonido
+void Sound::ajustarVolumenEfectos() {
+  int canalesActivos = Mix_Playing(-1);  // -1 para verificar todos los canales.
+  if (canalesActivos > MAXIMO_SONIDOS) {
+    Mix_Volume(-1, MIX_MAX_VOLUME / 2);  // Bajar volumen a la mitad
+  } else {
+    Mix_Volume(-1, MIX_MAX_VOLUME);  // Volumen normal
+  }
+}
+
 void Sound::reproducirEfecto(const std::string& archivo) {
+  ajustarVolumenEfectos();  // Ajusta el volumen basado en la cantidad de sonidos activos
   efectoSonido = Mix_LoadWAV(archivo.c_str());
   if (!efectoSonido) {
     std::cerr << "Error al cargar efecto de sonido: " << Mix_GetError() << std::endl;
-  }else {
-    Mix_VolumeChunk(efectoSonido, 4);
-    Mix_PlayChannel(-1, efectoSonido, 0);
+  } else {
+    Mix_VolumeChunk(efectoSonido, MIX_MAX_VOLUME);  // Establece volumen al máximo inicialmente
+    Mix_PlayChannel(-1, efectoSonido, 0);  // Usa un canal libre (-1) y reproduce el sonido
   }
 }
 
