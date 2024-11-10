@@ -1,9 +1,12 @@
 #ifndef EVENTHANDLER_H
 #define EVENTHANDLER_H
 
-#include <SDL2/SDL.h>
 #include <unordered_set>
+
+#include <SDL2/SDL.h>
+
 #include "common/blocking_queue.h"
+
 #include "protocolo_cliente.h"
 
 class EventHandler {
@@ -17,4 +20,4 @@ public:
     void correrHandlers();
 };
 
-#endif // EVENTHANDLER_H
+#endif  // EVENTHANDLER_H

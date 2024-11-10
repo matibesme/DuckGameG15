@@ -3,7 +3,7 @@
 
 #include <string>
 
-class PathMaker{
+class PathMaker {
 
 public:
     PathMaker();

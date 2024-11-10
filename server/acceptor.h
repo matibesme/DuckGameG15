@@ -2,12 +2,12 @@
 #include <list>
 #include <utility>
 
-#include "lobby_partidas.h"
 #include "../common/blocking_queue.h"
 #include "../common/liberror.h"
 #include "../common/socket.h"
 #include "../common/thread.h"
 
+#include "lobby_partidas.h"
 #include "protected_queues_map.h"
 #include "thread_cliente.h"
 
@@ -23,7 +23,7 @@ private:
 
 
 public:
-    Acceptor(const char* port, bool& close);  //saco el queue_Sender
+    Acceptor(const char* port, bool& close);  // saco el queue_Sender
     virtual void run() override;
     void accept_new_client();
     void deleteAClient(ThreadCliente& cliente);

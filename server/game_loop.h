@@ -3,29 +3,27 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <memory>
 #include <string>
 #include <thread>
 #include <vector>
-#include <memory>
 
 #include "../common/blocking_queue.h"
-
+#include "../common/common_constant.h"
 #include "../common/dto_definitions.h"
 #include "../common/game_exception.h"
 #include "../common/thread.h"
-
-#include "../common/common_constant.h"
-#include "protected_queues_map.h"
 #include "items/ducks/duck.h"
 #include "items/weapons/weapon.h"
-//eliminar dsp
-#include "items/bullets/bullet.h"
 
+#include "protected_queues_map.h"
+// eliminar dsp
 #include "configuration/load_game.h"
-#include "duck_action.h"
+#include "items/boxes.h"
+#include "items/bullets/bullet.h"
 #include "items/weapons/factory_weapons.h"
 
-#include "items/boxes.h"
+#include "duck_action.h"
 
 class GameLoop: public Thread {
 
@@ -36,9 +34,9 @@ private:
     std::shared_ptr<ProtectedQueuesMap> queues_map;
     std::map<uint8_t, DuckPlayer> map_personajes;
 
-//WEAPONS SECTION
+    // WEAPONS SECTION
     std::list<RespawnPoint> respawn_weapon_points;
-    std::map<uint16_t,std::shared_ptr<Weapon>> map_free_weapons;
+    std::map<uint16_t, std::shared_ptr<Weapon>> map_free_weapons;
     std::list<Boxes> list_boxes;
     FactoryWeapons factory_weapons;
 
@@ -53,20 +51,19 @@ private:
     std::vector<std::shared_ptr<Boxes>> vector_boxes;
 
 
-    //std::list<DTOBoxes> list_boxes;
+    // std::list<DTOBoxes> list_boxes;
 
     std::map<uint16_t, Protection> map_helmet;
     std::map<uint16_t, Protection> map_armor;
     DuckAction duck_action;
-    //std::list,std::string> list_colors;
+    // std::list,std::string> list_colors;
     std::list<std::string> list_colors;
     LoadGameFile load_game_config;
     void paraCadaPatoAction();
 
 public:
-
-    GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comandos, bool& end_game,
-              std::shared_ptr<ProtectedQueuesMap>& queues_map, std::list<uint8_t>& list_id_clientes);
+    GameLoop(std::shared_ptr<BlockingQueue<CommandClient>>& queue_comandos, bool& end_game,
+             std::shared_ptr<ProtectedQueuesMap>& queues_map, std::list<uint8_t>& list_id_clientes);
     virtual void run() override;
     void checkCommand(CommandClient comando);
     void movementComand(uint8_t comando);

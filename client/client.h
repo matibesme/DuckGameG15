@@ -7,12 +7,13 @@
 #include <string>
 #include <utility>
 
-#include "../common/game_exception.h"
-#include "protocolo_cliente.h"
 #include "../common/common_constant.h"
-#include "gameRunner.h"
-#include "c_sender.h"
+#include "../common/game_exception.h"
+
 #include "c_receiver.h"
+#include "c_sender.h"
+#include "gameRunner.h"
+#include "protocolo_cliente.h"
 
 class Client {
 private:
@@ -30,7 +31,7 @@ public:
     void createGame();
     void startGame();
     void joinGame(uint8_t idPartida);
-    std::list<uint8_t>  updateGame(uint8_t key);
+    std::list<uint8_t> updateGame(uint8_t key);
     ~Client();
 };
 

@@ -1,8 +1,9 @@
 #ifndef HELMET_H
 #define HELMET_H
 
-#include "SDL2pp/SDL2pp.hh"
 #include "../common/common_constant.h"
+#include "SDL2pp/SDL2pp.hh"
+
 #include "Graficos.h"
 
 using namespace SDL2pp;

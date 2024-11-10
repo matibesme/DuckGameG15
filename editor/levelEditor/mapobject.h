@@ -1,20 +1,20 @@
 #ifndef MAP_OBJECT_H
 #define MAP_OBJECT_H
 
-#include <QMainWindow>
-#include <QLabel>
+#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QGraphicsPixmapItem>
+#include <QLabel>
 #include <QList>
+#include <QMainWindow>
 
-class MapObject : public QGraphicsPixmapItem {
+class MapObject: public QGraphicsPixmapItem {
 public:
-    MapObject(const QPixmap &pixmap, const QString &type, QGraphicsItem *parent = nullptr);
+    MapObject(const QPixmap& pixmap, const QString& type, QGraphicsItem* parent = nullptr);
     QString get_type();
 
 private:
-    QString type; 
+    QString type;
 };
 
 #endif

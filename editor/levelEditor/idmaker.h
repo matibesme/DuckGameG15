@@ -1,12 +1,12 @@
 #ifndef ID_MAKER_H
 #define ID_MAKER_H
 
-#include <map>
-#include <iostream>
-#include <string>
 #include <cstdint>
+#include <iostream>
+#include <map>
+#include <string>
 
-class IDMaker{
+class IDMaker {
 
 private:
     std::map<std::string, int> backgrounds_id;

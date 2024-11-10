@@ -5,11 +5,10 @@
 
 #include "../common/game_exception.h"
 
-Sender::Sender(ProtocoloCliente &protocolo, BlockingQueue<uint8_t> &queue_sender):
+Sender::Sender(ProtocoloCliente& protocolo, BlockingQueue<uint8_t>& queue_sender):
         queue_sender(queue_sender), protocolo(protocolo) {}
 
-void Sender::run()
-{
+void Sender::run() {
 
     while (_keep_running) {
         try {

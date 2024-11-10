@@ -1,7 +1,7 @@
 #include "protocolo.h"
 
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
 Protocolo::Protocolo(Socket& socket_servidor): socket_servidor(socket_servidor) {}
 

@@ -11,7 +11,7 @@ extern uint8_t CANT_FLAP;
 
 // Posición inicial del pato
 extern float POSICION_INICIAL_X;
-extern float POSICION_INICIAL_Y ;
+extern float POSICION_INICIAL_Y;
 
 // Armas en el editor
 extern float RESPAWN_WEAPON_X;

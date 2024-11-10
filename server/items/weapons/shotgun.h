@@ -5,10 +5,11 @@
 #ifndef SHOTGUN_H
 #define SHOTGUN_H
 
-#include "weapon.h"
 #include <vector>
 
-class Shotgun : public Weapon {
+#include "weapon.h"
+
+class Shotgun: public Weapon {
 
 private:
     std::vector<Bullet> pellets_vector;
@@ -16,9 +17,8 @@ private:
     bool reloading;
 
 public:
-
-    Shotgun(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
-            uint8_t range, uint8_t ammo_quantity, float recoil);
+    Shotgun(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range,
+            uint8_t ammo_quantity, float recoil);
 
     bool isEmptyAmmo() override;
 
@@ -33,4 +33,4 @@ public:
     void stopShooting() override;
 };
 
-#endif //SHOTGUN_H
+#endif  // SHOTGUN_H

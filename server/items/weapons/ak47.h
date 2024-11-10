@@ -4,17 +4,18 @@
 
 #ifndef AK47_H
 #define AK47_H
-#include "weapon.h"
 #include <vector>
 
-class Ak47 : public Weapon {
+#include "weapon.h"
+
+class Ak47: public Weapon {
 private:
     float spread_counter;
     std::vector<Bullet> bullets_vector;
 
 public:
-    Ak47(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
-         uint8_t range, uint8_t ammo_quantity, float recoil);
+    Ak47(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range,
+         uint8_t ammo_quantity, float recoil);
 
     bool isEmptyAmmo() override;
 
@@ -29,4 +30,4 @@ public:
     void stopShooting() override;
 };
 
-#endif //AK47_H
+#endif  // AK47_H

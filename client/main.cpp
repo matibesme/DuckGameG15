@@ -1,11 +1,12 @@
+#include <QApplication>
 #include <exception>
 #include <iostream>
-#include <QApplication>
+
+#include "../common/common_constant.h"
+#include "menu/menu.h"
+#include "menu/menucontroller.h"
 
 #include "client.h"
-#include "../common/common_constant.h"
-#include "menu/menucontroller.h"
-#include "menu/menu.h"
 
 
 int main(int argc, char* argv[]) {
@@ -21,7 +22,7 @@ int main(int argc, char* argv[]) {
         Client client(host, port);
         MenuController menu_controller(client, argc, argv);
         menu_controller.start_game();
-        
+
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << '\n';
         return EXIT_FAILURE;

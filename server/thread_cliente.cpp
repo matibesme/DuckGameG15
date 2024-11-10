@@ -10,8 +10,7 @@ ThreadCliente::ThreadCliente(Socket peer, uint8_t id, LobbyPartidas& lobby):
         id(id),
         lobby(lobby),
         receiver(protocolo, dead_connection, id, lobby),
-        sender(protocolo, queue_sender, dead_connection)
-         {}
+        sender(protocolo, queue_sender, dead_connection) {}
 
 
 void ThreadCliente::run() {

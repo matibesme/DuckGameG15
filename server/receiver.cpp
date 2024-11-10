@@ -3,15 +3,15 @@
 //#include "../common/liberror.h"
 
 
-Receiver::Receiver(ProtocoloServer& protocolo, bool& dead_connection,  uint8_t id_, LobbyPartidas& lobby):
+Receiver::Receiver(ProtocoloServer& protocolo, bool& dead_connection, uint8_t id_,
+                   LobbyPartidas& lobby):
         protocolo(protocolo),
         dead_connection(dead_connection),
         in_lobby(true),
         start_game(false),
         queue_comandos(),
         id(id_),
-        lobby(lobby)
-        {}
+        lobby(lobby) {}
 
 void Receiver::run() {
     try {
@@ -25,15 +25,13 @@ void Receiver::run() {
                 queue_comandos = lobby.addPartida(id);
                 in_lobby = false;
             } else if (command.action_type == LISTAR_PARTIDAS) {
-               std::map<uint8_t, uint8_t>& partidas = lobby.getIdPartidas();
+                std::map<uint8_t, uint8_t>& partidas = lobby.getIdPartidas();
                 protocolo.sendActiveGames(partidas);
-
             }
         }
 
         if (lobby.isHoster(id)) {
-            while (!start_game)
-            {
+            while (!start_game) {
                 GameAccess command = protocolo.receiveAccessFromClients();
                 if (command.action_type == START_GAME) {
                     lobby.startGame(id);
@@ -41,7 +39,6 @@ void Receiver::run() {
                 }
             }
         }
-
 
 
         while (!dead_connection) {

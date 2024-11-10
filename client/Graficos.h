@@ -18,4 +18,4 @@ private:
     Renderer renderer;
 };
 
-#endif // GRAPHICS_H
+#endif  // GRAPHICS_H

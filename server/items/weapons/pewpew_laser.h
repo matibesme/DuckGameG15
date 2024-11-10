@@ -5,8 +5,9 @@
 #ifndef PEWPEW_LASER_H
 #define PEWPEW_LASER_H
 
-#include "weapon.h"
 #include <vector>
+
+#include "weapon.h"
 
 class PewPewLaser: public Weapon {
 private:
@@ -14,9 +15,8 @@ private:
     int beam_count;
 
 public:
-
-    PewPewLaser(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
-                uint8_t range, uint8_t ammo_quantity, float recoil);
+    PewPewLaser(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range,
+                uint8_t ammo_quantity, float recoil);
 
 
     bool isEmptyAmmo() override;
@@ -33,4 +33,4 @@ public:
 };
 
 
-#endif //PEWPEW_LASER_H
+#endif  // PEWPEW_LASER_H

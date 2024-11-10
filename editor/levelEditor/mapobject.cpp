@@ -1,17 +1,15 @@
 #include "mapobject.h"
 
-#include <QMainWindow>
-#include <QLabel>
+#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QGraphicsPixmapItem>
+#include <QLabel>
 #include <QList>
+#include <QMainWindow>
 
-MapObject::MapObject(const QPixmap &pixmap, const QString &type, QGraphicsItem *parent)
-        : QGraphicsPixmapItem(pixmap, parent), type(type) {
-        setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+MapObject::MapObject(const QPixmap& pixmap, const QString& type, QGraphicsItem* parent):
+        QGraphicsPixmapItem(pixmap, parent), type(type) {
+    setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 }
 
-QString MapObject::get_type(){
-    return this->type;
-}
+QString MapObject::get_type() { return this->type; }

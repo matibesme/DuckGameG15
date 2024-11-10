@@ -1,12 +1,14 @@
 #ifndef BOX_H
 #define BOX_H
 
-#include "Graficos.h"
-#include "sound.h"
-#include <SDL2pp/Renderer.hh>
-#include <SDL_render.h>
 #include <cstdint>
 #include <random>
+
+#include <SDL2pp/Renderer.hh>
+#include <SDL_render.h>
+
+#include "Graficos.h"
+#include "sound.h"
 
 class Box {
 public:

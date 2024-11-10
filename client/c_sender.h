@@ -11,10 +11,11 @@
 class Sender: public Thread {
 
 private:
-    BlockingQueue<uint8_t> &queue_sender;
-    ProtocoloCliente &protocolo;
+    BlockingQueue<uint8_t>& queue_sender;
+    ProtocoloCliente& protocolo;
+
 public:
-    Sender(ProtocoloCliente &protocolo, BlockingQueue<uint8_t> &queue_sender);
+    Sender(ProtocoloCliente& protocolo, BlockingQueue<uint8_t>& queue_sender);
     virtual void run() override;
     virtual ~Sender();
 };

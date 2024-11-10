@@ -1,7 +1,6 @@
 #include "EventHandler.h"
 
-EventHandler::EventHandler(BlockingQueue<uint8_t>& queue_sender)
-        : queue_sender(queue_sender) {}
+EventHandler::EventHandler(BlockingQueue<uint8_t>& queue_sender): queue_sender(queue_sender) {}
 
 void EventHandler::correrHandlers() {
     SDL_Event event;
@@ -119,4 +118,3 @@ void EventHandler::correrHandlers() {
         queue_sender.push(SHOOT_J2);
     }
 }
-

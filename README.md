@@ -46,3 +46,8 @@ en los tps individuales, recaps y hands-on.
 ```
 sudo apt-get install libyaml-cpp-dev
 ```
+
+**Correr los pre-commits**
+```
+pre-commit run --all-files
+```

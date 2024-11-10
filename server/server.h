@@ -6,8 +6,8 @@
 #include "../common/thread.h"
 
 #include "acceptor.h"
-#include "server_constant.h"
 #include "game_loop.h"
+#include "server_constant.h"
 
 
 class Server {
@@ -17,7 +17,6 @@ private:
     bool close;
 
     Acceptor acceptor;
-
 
 
 public:

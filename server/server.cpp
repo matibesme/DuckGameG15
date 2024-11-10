@@ -1,9 +1,7 @@
 #include "server.h"
 
 
-Server::Server(const char* port):
-        close(false),
-        acceptor(port, close) {}
+Server::Server(const char* port): close(false), acceptor(port, close) {}
 
 
 void Server::run() {
@@ -21,7 +19,8 @@ void Server::run() {
 
     } /*catch (const std::exception& e) {
         std::cerr << e.what() << "Error en el socket, mirar servidor" << std::endl;
-    }*/ catch (const std::exception& e) {
+    }*/
+    catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
 }

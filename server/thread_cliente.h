@@ -8,10 +8,9 @@
 #include "../common/socket.h"
 #include "../common/thread.h"
 
+#include "lobby_partidas.h"
 #include "receiver.h"
 #include "sender.h"
-#include "../common/dto_definitions.h"
-#include "lobby_partidas.h"
 
 class ThreadCliente: public Thread {
 
@@ -26,7 +25,7 @@ private:
 
 
 public:
-    ThreadCliente(Socket peer, uint8_t id,LobbyPartidas& lobby);
+    ThreadCliente(Socket peer, uint8_t id, LobbyPartidas& lobby);
     virtual void run() override;
     void sendAction(const GameState& action);
     bool isDead();

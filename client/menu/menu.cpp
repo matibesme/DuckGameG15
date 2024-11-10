@@ -1,20 +1,18 @@
 #include "menu.h"
 //#include "menucontroller.h"
 
-#include <iostream>
-#include <QtWidgets>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QtWidgets>
+#include <iostream>
 
-Menu::Menu(QWidget *parent)
-    :  QMainWindow(parent)
-{
-    //menu_controller = new MenuController();
+Menu::Menu(QWidget* parent): QMainWindow(parent) {
+    // menu_controller = new MenuController();
     initialize();
     show_main_scene();
 }
 
-void Menu::initialize(){
+void Menu::initialize() {
     main_scene = new QGraphicsScene(this);
     make_game_scene = new QGraphicsScene(this);
     join_game_scene = new QGraphicsScene(this);
@@ -29,76 +27,70 @@ void Menu::initialize(){
     wait_scene->setSceneRect(0, 0, 800, 600);
 }
 
-void Menu::show_main_scene(){
+void Menu::show_main_scene() {
 
     std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
     QString path_image = QString::fromStdString(path);
     QPixmap initial_background(path_image);
     QPushButton* make_game = new QPushButton("Make game");
     make_game->setGeometry(325, 400, 150, 45);
-    make_game->setStyleSheet(
-                "QPushButton {"
-                "   background-color: #404040;"
-                "   color: white;"
-                "   border-radius: 1px;"
-                "   padding: 10px"
-                "}"
-                "QPushButton:hover {"
-                "   background-color: #ffffff;"
-                "    color: black;"
-                "   border-radius: 1px;"
-                "}"
-                "QPushButton:pressed {"
-                "   background-color: #c7c7c7;"
-                "   color: black;"
-                "}"
-                );
+    make_game->setStyleSheet("QPushButton {"
+                             "   background-color: #404040;"
+                             "   color: white;"
+                             "   border-radius: 1px;"
+                             "   padding: 10px"
+                             "}"
+                             "QPushButton:hover {"
+                             "   background-color: #ffffff;"
+                             "    color: black;"
+                             "   border-radius: 1px;"
+                             "}"
+                             "QPushButton:pressed {"
+                             "   background-color: #c7c7c7;"
+                             "   color: black;"
+                             "}");
     connect(make_game, &QPushButton::pressed, this, &Menu::show_make_game_scene);
     /*connect(make_game, &QPushButton::pressed, [this, make_game](){
         menu_controller->set_type_game(0);
     });*/
     QPushButton* join_game = new QPushButton("Join game");
     join_game->setGeometry(325, 450, 150, 45);
-    join_game->setStyleSheet(
-                "QPushButton {"
-                "   background-color: #404040;"
-                "   color: white;"
-                "   border-radius: 5px;"
-                "padding: 10px"
-                "}"
-                "QPushButton:hover {"
-                "   background-color: #ffffff;"
-                "    color: black;"
-                "   border-radius: 1px;"
-                "}"
-                "QPushButton:pressed {"
-                "   background-color: #c7c7c7;"
-                "   color: black;"
-                "}"
-                );
+    join_game->setStyleSheet("QPushButton {"
+                             "   background-color: #404040;"
+                             "   color: white;"
+                             "   border-radius: 5px;"
+                             "padding: 10px"
+                             "}"
+                             "QPushButton:hover {"
+                             "   background-color: #ffffff;"
+                             "    color: black;"
+                             "   border-radius: 1px;"
+                             "}"
+                             "QPushButton:pressed {"
+                             "   background-color: #c7c7c7;"
+                             "   color: black;"
+                             "}");
     connect(join_game, &QPushButton::pressed, this, &Menu::show_join_game_scene);
     /*connect(join_game, &QPushButton::pressed, [this, make_game](){
         menu_controller->set_type_game(1);
     });*/
     QPushButton* quit = new QPushButton("Quit");
     quit->setGeometry(350, 500, 100, 45);
-    quit->setStyleSheet(
-                "QPushButton {"
-                "   background-color: #404040;"
-                "   color: white;"
-                "   border-radius: 5px;"
-                "padding: 10px"
-                "}"
-                "QPushButton:hover {"
-                "   background-color: #ffffff;"
-                "    color: black;"
-                "   border-radius: 1px;"
-                "}"
-                "QPushButton:pressed {"
-                "   background-color: #c7c7c7;"
-                "   color: black;"
-                "}"
-                );
+    quit->setStyleSheet("QPushButton {"
+                        "   background-color: #404040;"
+                        "   color: white;"
+                        "   border-radius: 5px;"
+                        "padding: 10px"
+                        "}"
+                        "QPushButton:hover {"
+                        "   background-color: #ffffff;"
+                        "    color: black;"
+                        "   border-radius: 1px;"
+                        "}"
+                        "QPushButton:pressed {"
+                        "   background-color: #c7c7c7;"
+                        "   color: black;"
+                        "}");
     main_scene->setBackgroundBrush(initial_background);
     main_scene->addWidget(make_game);
     main_scene->addWidget(join_game);
@@ -107,20 +99,20 @@ void Menu::show_main_scene(){
     view->show();
 }
 
-void Menu::show_make_game_scene(){
+void Menu::show_make_game_scene() {
     std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
     QString path_image = QString::fromStdString(path);
     QPixmap initial_background(path_image);
 
-    //Columna 1
-    QWidget *widget_players = new QWidget;
-    QVBoxLayout *layout_players = new QVBoxLayout(widget_players);
+    // Columna 1
+    QWidget* widget_players = new QWidget;
+    QVBoxLayout* layout_players = new QVBoxLayout(widget_players);
 
-    QWidget *widget_choose_players = new QWidget;
-    QHBoxLayout *layout_choose_players = new QHBoxLayout(widget_choose_players);
+    QWidget* widget_choose_players = new QWidget;
+    QHBoxLayout* layout_choose_players = new QHBoxLayout(widget_choose_players);
 
-    QWidget *widget_name_players = new QWidget;
-    QVBoxLayout *layout_name_players = new QVBoxLayout(widget_name_players);
+    QWidget* widget_name_players = new QWidget;
+    QVBoxLayout* layout_name_players = new QVBoxLayout(widget_name_players);
 
     QPushButton* single_player = new QPushButton("Single player");
     QPushButton* two_players = new QPushButton("Two players");
@@ -153,9 +145,9 @@ void Menu::show_make_game_scene(){
 
     widget_players->setGeometry(150, 200, 200, 100);
 
-    //Columna 2
-    QWidget *widget_game = new QWidget;
-    QVBoxLayout *layout_game = new QVBoxLayout(widget_game);
+    // Columna 2
+    QWidget* widget_game = new QWidget;
+    QVBoxLayout* layout_game = new QVBoxLayout(widget_game);
 
     /*layout_game->addWidget(new QLabel("IP Address"));
     QLineEdit* address = new QLineEdit();
@@ -166,7 +158,8 @@ void Menu::show_make_game_scene(){
     QPushButton* make_game_button = new QPushButton("Make game");
     layout_game->addWidget(make_game_button);
     connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
-    //connect(make_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
+    // connect(make_game_button, &QPushButton::pressed, menu_controller,
+    // &MenuController::start_game);
     QPushButton* back_button = new QPushButton("Back");
     layout_game->addWidget(back_button);
     connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
@@ -179,20 +172,20 @@ void Menu::show_make_game_scene(){
     view->show();
 }
 
-void Menu::show_join_game_scene(){
+void Menu::show_join_game_scene() {
     std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
     QString path_image = QString::fromStdString(path);
     QPixmap initial_background(path_image);
 
-    //Columna 1
-    QWidget *widget_players = new QWidget;
-    QVBoxLayout *layout_players = new QVBoxLayout(widget_players);
+    // Columna 1
+    QWidget* widget_players = new QWidget;
+    QVBoxLayout* layout_players = new QVBoxLayout(widget_players);
 
-    QWidget *widget_choose_players = new QWidget;
-    QHBoxLayout *layout_choose_players = new QHBoxLayout(widget_choose_players);
+    QWidget* widget_choose_players = new QWidget;
+    QHBoxLayout* layout_choose_players = new QHBoxLayout(widget_choose_players);
 
-    QWidget *widget_name_players = new QWidget;
-    QVBoxLayout *layout_name_players = new QVBoxLayout(widget_name_players);
+    QWidget* widget_name_players = new QWidget;
+    QVBoxLayout* layout_name_players = new QVBoxLayout(widget_name_players);
 
     QPushButton* single_player = new QPushButton("Single player");
     QPushButton* two_players = new QPushButton("Two players");
@@ -225,12 +218,12 @@ void Menu::show_join_game_scene(){
 
     widget_players->setGeometry(150, 200, 200, 100);
 
-    //Columna 2
-    QWidget *widget_games = new QWidget;
-    QVBoxLayout *layout_games = new QVBoxLayout(widget_games);
+    // Columna 2
+    QWidget* widget_games = new QWidget;
+    QVBoxLayout* layout_games = new QVBoxLayout(widget_games);
 
 
-    QComboBox *game_options = new QComboBox();
+    QComboBox* game_options = new QComboBox();
     game_options->addItem("Partida1");
     game_options->addItem("Partida2");
     game_options->addItem("Partida3");
@@ -240,12 +233,13 @@ void Menu::show_join_game_scene(){
     layout_games->addWidget(update_button);
     QPushButton* join_game_button = new QPushButton("Join game");
     layout_games->addWidget(join_game_button);
-        connect(join_game_button, &QPushButton::clicked, this, [this]() {
+    connect(join_game_button, &QPushButton::clicked, this, [this]() {
         this->close();
         emit join(3);
     });
-    //connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
-    /*connect(join_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);*/
+    // connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    /*connect(join_game_button, &QPushButton::pressed, menu_controller,
+     * &MenuController::start_game);*/
 
     QPushButton* back_button = new QPushButton("Back");
     connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
@@ -258,15 +252,14 @@ void Menu::show_join_game_scene(){
     join_game_scene->setBackgroundBrush(initial_background);
     view->setScene(join_game_scene);
     view->show();
-
 }
 
-void Menu::show_wait_scene(){
+void Menu::show_wait_scene() {
     std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
     QString path_image = QString::fromStdString(path);
     QPixmap initial_background(path_image);
-    QWidget *widget_wait = new QWidget;
-    QVBoxLayout *layout_wait = new QVBoxLayout(widget_wait);
+    QWidget* widget_wait = new QWidget;
+    QVBoxLayout* layout_wait = new QVBoxLayout(widget_wait);
     layout_wait->addWidget(new QLabel("Waiting for the game to start"));
 
     QPushButton* start_game = new QPushButton("Start game");
@@ -282,7 +275,4 @@ void Menu::show_wait_scene(){
     view->setScene(wait_scene);
     view->show();
 }
-Menu::~Menu()
-{
-}
-
+Menu::~Menu() {}

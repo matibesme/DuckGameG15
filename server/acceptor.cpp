@@ -3,12 +3,8 @@
 #include <iostream>
 
 
-Acceptor::Acceptor(const char* port,bool& close):
-        socket_servidor(port),
-        lista_clientes(),
-        close(close),
-        cantidad_clientes(1),
-        lobby() {}
+Acceptor::Acceptor(const char* port, bool& close):
+        socket_servidor(port), lista_clientes(), close(close), cantidad_clientes(1), lobby() {}
 
 
 void Acceptor::run() {
@@ -28,12 +24,12 @@ void Acceptor::run() {
 void Acceptor::accept_new_client() {
     Socket peer = socket_servidor.accept();
 
-    lista_clientes.emplace_back(std::move(peer),cantidad_clientes,lobby);
+    lista_clientes.emplace_back(std::move(peer), cantidad_clientes, lobby);
     ThreadCliente& cliente = lista_clientes.back();
     cliente.start();
     reapDead();
 
-    //map_queues_sender.addClient(cantidad_clientes, cliente.getQueueSender());//
+    // map_queues_sender.addClient(cantidad_clientes, cliente.getQueueSender());//
     cantidad_clientes++;
 }
 
@@ -44,16 +40,16 @@ void Acceptor::deleteAClient(ThreadCliente& cliente) {
 
 
 void Acceptor::reapDead() {
-/*
-    for (auto it = lista_clientes.begin(); it != lista_clientes.end();) {
-        if (it->isDead()) {
-            it->join();
-            deleteAClient(*it);
-            lista_clientes.erase(it);
-        } else {
-            ++it;
-        }
-    }*/
+    /*
+        for (auto it = lista_clientes.begin(); it != lista_clientes.end();) {
+            if (it->isDead()) {
+                it->join();
+                deleteAClient(*it);
+                lista_clientes.erase(it);
+            } else {
+                ++it;
+            }
+        }*/
 }
 
 

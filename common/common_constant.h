@@ -3,8 +3,8 @@
 #include <string>
 
 // Estados de salida
-//constexpr int EXIT_FAILURE = 1;
-//constexpr int EXIT_SUCCESS = 0;
+// constexpr int EXIT_FAILURE = 1;
+// constexpr int EXIT_SUCCESS = 0;
 
 // Argumentos y configuración de red
 constexpr int CANT_ARGUMENTS = 3;
@@ -140,8 +140,8 @@ constexpr uint8_t TYPE_BACKGROUND_FOREST = 0x91;
 constexpr uint8_t TYPE_BACKGROUND_CIELO_NUBES = 0x92;
 
 
-//BOXES
-constexpr uint8_t TYPE_BOX=0X21;
+// BOXES
+constexpr uint8_t TYPE_BOX = 0X21;
 // Constantes adicionales
 constexpr char SALIDA = 'q';
 constexpr int QUEUE_TAMANIO_MAX = 100;

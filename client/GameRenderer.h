@@ -1,16 +1,18 @@
 #ifndef GAMERENDERER_H
 #define GAMERENDERER_H
 
-#include "Graficos.h"
-#include "Items/Platform.h"
-#include "Items/ClientDuck.h"
-#include "Items/Bullet.h"
-#include "Items/Gun.h"
-#include "Items/helmet.h"
-#include "Items/armor.h"
-#include "dto_definitions.h"
-#include "Items/Box.h"
 #include <list>
+
+#include "Items/Box.h"
+#include "Items/Bullet.h"
+#include "Items/ClientDuck.h"
+#include "Items/Gun.h"
+#include "Items/Platform.h"
+#include "Items/armor.h"
+#include "Items/helmet.h"
+
+#include "Graficos.h"
+#include "dto_definitions.h"
 
 class GameRenderer {
 private:
@@ -26,13 +28,13 @@ private:
     void drawBackground(const uint8_t background_id);
 
 public:
-    explicit GameRenderer(Graficos& graficos, std::list<DTOPlatform>& platforms, std::list<DTOBoxes>& boxes);
+    explicit GameRenderer(Graficos& graficos, std::list<DTOPlatform>& platforms,
+                          std::list<DTOBoxes>& boxes);
 
     void dibujar(Renderer& renderer, GameState& command);
 
 
-    void actualizarElementos(const GameState &command);
-
+    void actualizarElementos(const GameState& command);
 };
 
-#endif // GAMERENDERER_H
+#endif  // GAMERENDERER_H

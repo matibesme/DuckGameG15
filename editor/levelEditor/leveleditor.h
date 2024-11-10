@@ -3,29 +3,30 @@
 
 #include <QMainWindow>
 #include <QMenu>
+
 #include "leveleditorcontroller.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class LevelEditor; }
+namespace Ui {
+class LevelEditor;
+}
 QT_END_NAMESPACE
 
-class LevelEditor : public QMainWindow
-{
+class LevelEditor: public QMainWindow {
     Q_OBJECT
 
 public:
-    LevelEditor(QWidget *parent = nullptr);
+    LevelEditor(QWidget* parent = nullptr);
     ~LevelEditor();
 
 private:
-    //Ui::LevelEditor *ui;
+    // Ui::LevelEditor *ui;
     LevelEditorController* controller;
     void add_submenu_weapons(QMenu& menu);
     void add_submenu_platforms(QMenu& menu);
     void add_submenu_walls(QMenu& menu);
 
 private slots:
-    void show_menu_context(const QPoint &pos);
-    
+    void show_menu_context(const QPoint& pos);
 };
 #endif
