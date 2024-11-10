@@ -22,7 +22,7 @@ ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos, uint8_t gunEquipped
           armorEquipped(false), helmetEquipped(false), isOnGround(false)
     {
         applyColor(graficos.GetRenderer(), color);
-        update(y_pos, x_pos, typeOfMove, gunEquipped, armorEquipped, helmetEquipped, false);
+        update(y_pos, x_pos, typeOfMove, gunEquipped, armorEquipped, helmetEquipped, false, RIGHT);
     }
 
 void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped,
