@@ -61,111 +61,92 @@ void DuckAction::movementComand(uint8_t comando) {
 }
 
 void DuckAction::weaponComand(uint8_t comando) {
-    DuckPlayer& personaje = map_personajes[1];
-    Weapon& weapon = personaje.getWeapon();
+  DuckPlayer& personaje = map_personajes[1];
+  Weapon& weapon = personaje.getWeapon();
+  bool pick = false;
 
-    switch (comando) {
-        case PICKUP:
+  switch (comando) {
+  case PICKUP: {
+    for (auto &free_weapon : map_free_weapons) {
+      if (personaje.isWeaponEquipped()) {
+        pick = true;
+        break;
+      }
+      if (personaje.getXPos() + DUCK_WIDTH >= free_weapon.second->getXPos() &&
+          personaje.getXPos() <= free_weapon.second->getXPos() + WIDTH_GUN &&
+          personaje.getYPos() + DUCK_HEIGHT >= free_weapon.second->getYPos() &&
+          personaje.getYPos() <= free_weapon.second->getYPos() + HEIGHT_GUN) {
 
-            for (auto& free_weapon : map_free_weapons) {
-                if (personaje.isWeaponEquipped()) {
-                    break;
-                }
-                if (personaje.getXPos() + DUCK_WIDTH >= free_weapon.second->getXPos() &&
-                    personaje.getXPos() <= free_weapon.second->getXPos() + WIDTH_GUN &&
-                    personaje.getYPos() + DUCK_HEIGHT >= free_weapon.second->getYPos() &&
-                    personaje.getYPos() <= free_weapon.second->getYPos() + HEIGHT_GUN) {
-
-                    personaje.pickUpWeapon(std::move(free_weapon.second));
-                    map_free_weapons.erase(free_weapon.first);
-                    break;
-                }
-            }
-
-            for (auto& helmet : map_helmet) {
-                if (personaje.getHelmet() != HELMET_EQUIPPED)break;
-                if (personaje.getXPos() + DUCK_WIDTH >= helmet.second.y_pos &&
-                    personaje.getXPos() <= helmet.second.x_pos + WIDTH_HELMET &&
-                    personaje.getYPos() + DUCK_HEIGHT >= helmet.second.y_pos &&
-                    personaje.getYPos() <=  helmet.second.x_pos + HEIGHT_HELMET) {
-
-                    personaje.setHelmet(HELMET_EQUIPPED);
-                    map_helmet.erase(helmet.first);
-
-                    break;
-                }
-            }
-
-        for (auto& armor : map_armor) {
-            if (personaje.getHelmet() != HELMET_EQUIPPED)break;
-            if (personaje.getXPos() + DUCK_WIDTH >= armor.second.y_pos &&
-                personaje.getXPos() <= armor.second.x_pos + WIDTH_ARMOR &&
-                personaje.getYPos() + DUCK_HEIGHT >= armor.second.y_pos &&
-                personaje.getYPos() <=  armor.second.x_pos + HEIGHT_ARMOR) {
-
-                personaje.setHelmet(ARMOR_EQUIPPED);
-                map_armor.erase(armor.first);
-
-                break;
-                }
-        }
-
-
-            break;
-
-        case LEAVE_GUN:
-            if (!personaje.isWeaponEquipped()) {
-                return;
-            }
-            map_free_weapons.emplace(id_weapons, personaje.removeWeapon());
-            id_weapons++;
-            break;
-
-        case SHOOT: {
-            if (!personaje.isWeaponEquipped()) {
-                return;
-            }
-            if (weapon.isEmptyAmmo()) {
-                return;
-            }
-            weapon.setXPos(personaje.getXPos());
-            weapon.setYPos(personaje.getYPos());
-            weapon.setDirection(personaje.getDirection());
-
-            int bullet_count = 1;
-            if (weapon.getType() == ESCOPETA_GUN) {
-                bullet_count = 6;
-            } else if (weapon.getType() == PEW_PEW_LASER_GUN) {
-                bullet_count = 3;
-            }
-
-            for (int i = 0; i < bullet_count; i++) {
-                std::unique_ptr<Bullet> bullet = weapon.shoot();
-                if (!bullet) {
-                    return;
-                }
-                map_bullets.emplace(id_balas++, std::move(bullet));
-            }
-
-            personaje.setXPos(weapon.getXPos());
-            personaje.setYPos(weapon.getYPos());
-            break;
-        }
-
-        case STOP_SHOOT:
-            weapon.stopShooting();
-            break;
-
-        case AIM_UP:
-            personaje.aimUp();
-            break;
-
-        case STOP_AIM_UP:
-            personaje.stopAimUp();
-            break;
-
-        default:
-            break;
+        personaje.pickUpWeapon(std::move(free_weapon.second));
+        map_free_weapons.erase(free_weapon.first);
+        pick = true;
+        break;
+      }
     }
+    if (pick) return;
+
+    for (auto &helmet : map_helmet) {
+      if (personaje.getHelmet() == HELMET_EQUIPPED) break;
+      if (personaje.getXPos() + DUCK_WIDTH >= helmet.second.y_pos &&
+          personaje.getXPos() <= helmet.second.x_pos + WIDTH_HELMET &&
+          personaje.getYPos() + DUCK_HEIGHT >= helmet.second.y_pos &&
+          personaje.getYPos() <= helmet.second.x_pos + HEIGHT_HELMET) {
+
+        personaje.setHelmet(HELMET_EQUIPPED);
+        map_helmet.erase(helmet.first);
+        pick = true;
+        break;
+      }
+    }
+
+    if (pick) return;
+
+    for (auto &armor : map_armor) {
+      if (personaje.getArmor() == ARMOR_EQUIPPED) break;
+      if (personaje.getXPos() + DUCK_WIDTH >= armor.second.y_pos &&
+          personaje.getXPos() <= armor.second.x_pos + WIDTH_ARMOR &&
+          personaje.getYPos() + DUCK_HEIGHT >= armor.second.y_pos &&
+          personaje.getYPos() <= armor.second.x_pos + HEIGHT_ARMOR) {
+
+        personaje.setArmor(ARMOR_EQUIPPED);
+        map_armor.erase(armor.first);
+        break;
+      }
+    }
+    break;
+  }
+
+  case LEAVE_GUN: {
+    if (!personaje.isWeaponEquipped()) return;
+    map_free_weapons.emplace(id_weapons++, personaje.removeWeapon());
+    break;
+  }
+
+  case SHOOT: {
+    if (!personaje.isWeaponEquipped() || weapon.isEmptyAmmo()) return;
+    weapon.setXPos(personaje.getXPos());
+    weapon.setYPos(personaje.getYPos());
+    weapon.setDirection(personaje.getDirection());
+
+    int bullet_count = (weapon.getType() == ESCOPETA_GUN) ? 6 :
+                       (weapon.getType() == PEW_PEW_LASER_GUN) ? 3 : 1;
+
+    for (int i = 0; i < bullet_count; ++i) {
+      std::unique_ptr<Bullet> bullet = weapon.shoot();
+      if (!bullet) return;
+      map_bullets.emplace(id_balas++, std::move(bullet));
+    }
+    personaje.setXPos(weapon.getXPos());
+    personaje.setYPos(weapon.getYPos());
+    break;
+  }
+
+  case STOP_SHOOT:
+    weapon.stopShooting();
+    break;
+
+  default:
+    break;
+  }
 }
 

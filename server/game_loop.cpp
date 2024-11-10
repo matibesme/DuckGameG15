@@ -33,10 +33,7 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
 
 void GameLoop::run() {
     try {
-        load_game_config.loadGame(list_plataformas, respawn_weapon_points);
-        id_armors = map_armor.size();
-        id_helmets = map_helmet.size();
-
+        load_game_config.loadGame(list_plataformas, respawn_weapon_points, map_armor,map_helmet);
         int i = 0;
         for (auto& id : list_id_clientes) {
             
@@ -111,7 +108,7 @@ void GameLoop::sendCompleteScene(){
            weapon_type = personaje.second.getWeapon().getType();
         }
         DTODuck dto_duck = {personaje.first,personaje.second.getColor(), personaje.second.getXPos(), personaje.second.getYPos(),
-                            personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(),personaje.second.getArmor(), personaje.second.isAimingUp()};
+                            personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(), personaje.second.getArmor()};
 
 
        command.lista_patos.push_back(dto_duck);

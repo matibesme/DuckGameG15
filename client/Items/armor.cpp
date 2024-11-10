@@ -29,7 +29,7 @@ void Armor::draw(bool isFliped, SDL2pp::Renderer& renderer, bool isOnGround, boo
                               Rect(pos_x + DUCK_WIDTH * 0.15, pos_y + 3, WIDTH_ARMOR, HEIGHT_ARMOR));
         }
     }else{
-        renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x, pos_y, WIDTH_ARMOR, HEIGHT_ARMOR));
+        renderer.Copy(texture, SDL2pp::NullOpt, Rect(pos_x, pos_y, WIDTH_ARMOR * 2, HEIGHT_ARMOR));
     }
 }
 

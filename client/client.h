@@ -1,3 +1,5 @@
+#ifndef CLIENT_H
+#define CLIENT_H
 
 #include <fstream>
 #include <iostream>
@@ -24,6 +26,11 @@ private:
 
 public:
     Client(const char* host, const char* port);
-    void execute();         
+    void execute();
+    void createGame();
+    void startGame();
+    void joinGame(uint8_t idPartida);
     ~Client();
 };
+
+#endif

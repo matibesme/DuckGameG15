@@ -10,8 +10,6 @@ Sender::Sender(ProtocoloCliente &protocolo, BlockingQueue<uint8_t> &queue_sender
 
 void Sender::run()
 {
-    protocolo.sendAccesToServer(CREATE_GAME, 1);
-    protocolo.sendAccesToServer(START_GAME, 1);
 
     while (_keep_running) {
         try {
