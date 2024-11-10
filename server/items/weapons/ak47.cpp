@@ -18,7 +18,8 @@ bool Ak47::isEmptyAmmo() {
     return ammo_quantity == 0;
 }
 
-std::unique_ptr<Bullet> Ak47::shoot() {
+std::unique_ptr<Bullet> Ak47::shoot(bool is_aiming_up) {
+    (void)is_aiming_up;
     if (isEmptyAmmo()) {
         return nullptr;
     }

@@ -26,7 +26,8 @@ bool Granada::isActive() {
 
 
 
-std::unique_ptr<Bullet> Granada::shoot() {
+std::unique_ptr<Bullet> Granada::shoot(bool is_aiming_up) {
+    (void)is_aiming_up;
     if (bullet_count > 0) {
         return nullptr;
     }

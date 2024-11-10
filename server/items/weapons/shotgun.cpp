@@ -24,7 +24,8 @@ bool Shotgun::isEmptyAmmo() {
     return ammo_quantity == 0;
 }
 
-std::unique_ptr<Bullet> Shotgun::shoot() {
+std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
+    (void)is_aiming_up;
     if (ammo_quantity == 0) {
         return nullptr;
     }

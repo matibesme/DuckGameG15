@@ -135,7 +135,7 @@ void DuckAction::weaponComand(uint8_t comando) {
                        (weapon.getType() == PEW_PEW_LASER_GUN) ? 3 : 1;
 
             for (int i = 0; i < bullet_count; ++i) {
-            std::unique_ptr<Bullet> bullet = weapon.shoot();
+            std::unique_ptr<Bullet> bullet = weapon.shoot(personaje.isAimingUp());
             if (!bullet) return;
             map_bullets.emplace(id_balas++, std::move(bullet));
             }
