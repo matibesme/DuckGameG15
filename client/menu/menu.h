@@ -3,6 +3,11 @@
 //#include "menucontroller.h"
 #include <QMainWindow>
 #include <QGraphicsView>
+#include <list>
+#include <map>
+#include <iostream>
+#include <QtWidgets>
+#include <QMap>
 
 class Menu : public QMainWindow
 {
@@ -13,7 +18,8 @@ private:
     QGraphicsScene* make_game_scene;
     QGraphicsScene* join_game_scene;
     QGraphicsScene* wait_scene;
-    //MenuController* menu_controller;
+    QComboBox* game_options;
+    QMap<QString, uint8_t> active_games;
 
     void initialize();
     void show_main_scene();
@@ -23,10 +29,12 @@ private:
 
 public:
     Menu(QWidget *parent = nullptr);
+    void show_update_games(std::list<uint8_t> active_games);
     ~Menu();
 
 signals:
     void start();
     void join(uint8_t id_game);
+    void update_games(Menu& menu);
 };
 #endif // MENU_H
