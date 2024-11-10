@@ -11,6 +11,7 @@ public:
     Renderer& GetRenderer();
     Texture LoadTexture(const char* path);
     void Clear();
+    void show_window();
 
 private:
     Window window;

@@ -1,8 +1,11 @@
 #include <exception>
 #include <iostream>
+#include <QApplication>
 
 #include "client.h"
 #include "../common/common_constant.h"
+#include "menu/menucontroller.h"
+#include "menu/menu.h"
 
 
 int main(int argc, char* argv[]) {
@@ -16,7 +19,12 @@ int main(int argc, char* argv[]) {
         const char* port = argv[PORT];
 
         Client client(host, port);
-        client.execute();
+        MenuController menu_controller(client);
+        QApplication a(argc, argv);
+        Menu w(&menu_controller);
+        w.show();
+        a.exec();
+        //client.execute();
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << '\n';
         return EXIT_FAILURE;
