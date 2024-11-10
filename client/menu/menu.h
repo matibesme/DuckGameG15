@@ -1,6 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
-#include "menucontroller.h"
+//#include "menucontroller.h"
 #include <QMainWindow>
 #include <QGraphicsView>
 
@@ -13,7 +13,7 @@ private:
     QGraphicsScene* make_game_scene;
     QGraphicsScene* join_game_scene;
     QGraphicsScene* wait_scene;
-    MenuController* menu_controller;
+    //MenuController* menu_controller;
 
     void initialize();
     void show_main_scene();
@@ -23,7 +23,10 @@ private:
     void show_wait_scene();
 
 public:
-    Menu(MenuController* menu_controller, QWidget *parent = nullptr);
+    Menu(QWidget *parent = nullptr);
     ~Menu();
+
+signals:
+    void start();
 };
 #endif // MENU_H
