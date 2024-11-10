@@ -24,6 +24,8 @@ public:
     std::string receiveString(bool& is_socket_close);
     void sendFloat(float float_to_send, bool& is_socket_close);
     float receiveFloat(bool& is_socket_close);
+    void sendBool(bool bool_to_send, bool& is_socket_close);
+    bool receiveBool(bool& is_socket_close);
 
 
     ~Protocolo();

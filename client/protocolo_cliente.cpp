@@ -6,7 +6,8 @@ ProtocoloCliente::ProtocoloCliente(const char* host, const char* port, bool& dea
                                {JUMP,       MOVEMENT_ACTION}, {DOWN, MOVEMENT_ACTION},
 
                                {STILL_LEFT, MOVEMENT_ACTION}, {STILL_RIGHT, MOVEMENT_ACTION},
-                               {PICKUP,     WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOOT, WEAPON_ACTION}, {STOP_SHOOT, WEAPON_ACTION}}) {}
+                               {PICKUP,     WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION},
+            {SHOOT, WEAPON_ACTION}, {STOP_SHOOT, WEAPON_ACTION}, {AIM_UP, WEAPON_ACTION}, {STOP_AIM_UP, WEAPON_ACTION}}) {}
 
 
 
@@ -65,7 +66,8 @@ GameState ProtocoloCliente::reciveFullGameFromServer()
         uint8_t typeOfGun = protocolo.receiveByte(dead_connection);
         uint8_t helmet=protocolo.receiveByte(dead_connection);
         uint8_t armor=protocolo.receiveByte(dead_connection);
-        lista_patos.push_back({id,personajes_type, x_pos, y_pos, typeOfMove, typeOfGun,helmet,armor});
+        bool is_aiming_up = protocolo.receiveBool(dead_connection);
+        lista_patos.push_back({id,personajes_type, x_pos, y_pos, typeOfMove, typeOfGun,helmet,armor, is_aiming_up});
     }
     //recivo balas
     uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);

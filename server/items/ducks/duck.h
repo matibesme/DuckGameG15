@@ -21,6 +21,7 @@ class DuckPlayer: public Objeto {
         uint8_t helmet;
         uint8_t armor;
         std::string color;
+        bool is_aiming_up;
 
     public:
         // Constructors
@@ -48,6 +49,7 @@ class DuckPlayer: public Objeto {
         void setHelmet(uint8_t type);
         void setArmor(uint8_t type);
 
+
         // Actions
         void incrementXPos(float pos_x);
         void pickUpWeapon(std::shared_ptr<Weapon> weapon);
@@ -56,6 +58,9 @@ class DuckPlayer: public Objeto {
         void applyDamage(uint8_t damage);
         void increaseFlappingCounter();
         std::shared_ptr<Weapon> removeWeapon();
+        void aimUp();
+        bool isAimingUp();
+        void stopAimUp();
 
         // Destructor
         ~DuckPlayer();

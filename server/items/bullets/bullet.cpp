@@ -55,6 +55,9 @@ void Bullet::executeAction(){
         } else if (direction == BULLET_UP) {
             y_pos -= BULLET_VEL;
             spread_direction ? x_pos += spread : x_pos -= spread;
+        } else if (direction == DOWN) {
+            y_pos += BULLET_VEL;
+            spread_direction ? x_pos += spread : x_pos -= spread;
         }
         range--;
         if (range == 0) {
@@ -91,8 +94,12 @@ void Bullet::setSpread(float spread) {
 void Bullet::changeDirection() {
     if (direction == RIGHT) {
         direction = LEFT;
-    } else {
+    } else if (direction == LEFT) {
         direction = RIGHT;
+    } else if (direction == BULLET_UP) {
+        direction = DOWN;
+    } else if (direction == DOWN) {
+        direction = BULLET_UP;
     }
 }
 
@@ -100,6 +107,18 @@ bool Bullet::colisionWithDuck(float duck_x_pos, float duck_y_pos, float duck_wid
     if (is_alive) {
         if (x_pos >= duck_x_pos && x_pos <= duck_x_pos + duck_width) {
             if (y_pos >= duck_y_pos && y_pos <= duck_y_pos + duck_height) {
+                kill();
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Bullet::colisionWithBox(float box_x_pos, float box_y_pos, float box_width, float box_height) {
+    if (is_alive) {
+        if (x_pos >= box_x_pos && x_pos <= box_x_pos + box_width) {
+            if (y_pos >= box_y_pos && y_pos <= box_y_pos + box_height) {
                 kill();
                 return true;
             }

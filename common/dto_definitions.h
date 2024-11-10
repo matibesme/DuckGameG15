@@ -12,6 +12,7 @@ struct DTODuck{
     uint8_t typeOfGun; // nogun, cowboy ...
     uint8_t helmet;
     uint8_t armor;
+    bool is_aiming_up;
 };
 
 struct DTOBullet{

@@ -20,6 +20,8 @@ std::unique_ptr<Bullet> CowboyPistol::shoot() {
         bala.release(x_pos + DUCK_WIDTH / 2, y_pos , direction, bala.randomSpread());
     } else if (direction == LEFT) {
         bala.release(x_pos, y_pos, direction, bala.randomSpread());
+    } else if (direction == BULLET_UP) {
+        bala.release(x_pos, y_pos, direction, bala.randomSpread());
     }
 
     if (direction == RIGHT) {

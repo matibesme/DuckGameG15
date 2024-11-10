@@ -21,8 +21,9 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         factory_weapons(),
         map_bullets(),
         id_balas(1),
-        id_weapons(),
+        id_weapons(1),
         list_plataformas(),
+        vector_boxes(),
         load_game_config(),
         map_helmet(),
         map_armor(),
@@ -44,7 +45,7 @@ void GameLoop::run() {
             map_free_weapons.emplace(id, factory_weapons.createWeapon(respawn.type, respawn.x_pos, respawn.y_pos));
             id++;
         }
-
+        id_weapons = map_free_weapons.size();
 
         while (!end_game) {
 
@@ -163,6 +164,12 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
         bool colision = bullet->colisionWithDuck(character.second.getXPos(), character.second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
         if (colision) {
             character.second.applyDamage(bullet->getDamage());
+        }
+    }
+    for (auto& box : vector_boxes) {
+        bool colision = bullet->colisionWithBox(box->getXPos(), box->getYPos(), WIDTH_BOX, HEIGHT_BOX);
+        if (colision) {
+            //box->takeDamage(bullet->getDamage());
         }
     }
 }
