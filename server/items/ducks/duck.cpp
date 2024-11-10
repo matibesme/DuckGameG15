@@ -189,7 +189,7 @@ uint8_t& DuckPlayer::getHelmet()
 }
 uint8_t& DuckPlayer::getArmor()
 {
-    return helmet;
+    return armor;
 }
 
 std::string& DuckPlayer::getColor()
