@@ -6,7 +6,7 @@
 
 LoadGameFile::LoadGameFile() {}
 
-void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms, std::list<RespawnPoint>& respawn_weapon_points) {
+void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms, std::list<RespawnPoint>& respawn_weapon_points,std::map<uint8_t, Protection>& map_helmet,std::map<uint8_t, Protection>& map_armor){
     
     
 
@@ -34,8 +34,6 @@ void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms, std::list<Respawn
     POSICION_INICIAL_X=map["duck spawns"][0]["pos_x"].as<float>();
     POSICION_INICIAL_Y=map["duck spawns"][0]["pos_y"].as<float>();
 
-    RESPAWN_WEAPON_X=map["weapon spawns"][0]["pos_x"].as<float>();
-    RESPAWN_WEAPON_Y=map["weapon spawns"][0]["pos_y"].as<float>();
 
     for (const auto& platform : map["plataforms"]) {
 
@@ -53,5 +51,17 @@ void LoadGameFile::loadGame(std::list<DTOPlatform> &platforms, std::list<Respawn
         RespawnPoint respawn_point={weapon["pos_x"].as<float>(),weapon["pos_y"].as<float>(),weapon["type"].as<uint8_t>()};
         respawn_weapon_points.push_back(respawn_point);
     }
+
+    for (const auto& armour : map["armour spawns"]) {
+      Protection protection_point={armour["type"].as<uint8_t>(),armour["pos_x"].as<float>(),armour["pos_y"].as<float>()};
+      if (protection_point.type == HELMET_EQUIPPED) {
+        map_helmet.emplace(map_helmet.size(), protection_point);
+      } else{
+        map_armor.emplace(map_armor.size(), protection_point);
+      }
+    }
+
+
+
 
 }

@@ -47,6 +47,8 @@ void GameRenderer::dibujar(Renderer& renderer, GameState& command) {
     for (auto& duck : ducks) duck.draw(renderer);
     for (auto& bullet : bullets) bullet.draw(renderer);
     for (auto& gun : guns) gun.draw(false, renderer);
+    for (auto& armor : armors) armor.draw(false, renderer, false, false);
+    for (auto& helmet : helmets) helmet.draw(false, renderer, false, false);
 
     // Vuelve al render principal
     renderer.SetTarget();
