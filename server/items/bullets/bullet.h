@@ -25,6 +25,7 @@ class Bullet: public Objeto {
 
         virtual void colisionWithPlatform(float plat_x_pos, float plat_y_pos, float plat_width, float plat_height);
         virtual bool colisionWithDuck(float duck_x_pos, float duck_y_pos, float duck_width, float duck_height);
+        virtual bool colisionWithBox(float box_x_pos, float box_y_pos, float box_width, float box_height);
 
         void setSpread(float spread);
 

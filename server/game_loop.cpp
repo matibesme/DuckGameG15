@@ -21,8 +21,9 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         factory_weapons(),
         map_bullets(),
         id_balas(1),
-        id_weapons(),
+        id_weapons(1),
         list_plataformas(),
+        vector_boxes(),
         load_game_config(),
         map_helmet(),
         map_armor(),
@@ -33,6 +34,9 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
 void GameLoop::run() {
     try {
         load_game_config.loadGame(list_plataformas, respawn_weapon_points);
+        id_armors = map_armor.size();
+        id_helmets = map_helmet.size();
+
         int i = 0;
         for (auto& id : list_id_clientes) {
             
@@ -44,7 +48,7 @@ void GameLoop::run() {
             map_free_weapons.emplace(id, factory_weapons.createWeapon(respawn.type, respawn.x_pos, respawn.y_pos));
             id++;
         }
-
+        id_weapons = map_free_weapons.size();
 
         while (!end_game) {
 
@@ -107,7 +111,7 @@ void GameLoop::sendCompleteScene(){
            weapon_type = personaje.second.getWeapon().getType();
         }
         DTODuck dto_duck = {personaje.first,personaje.second.getColor(), personaje.second.getXPos(), personaje.second.getYPos(),
-                            personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(),personaje.second.getArmor()};
+                            personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(),personaje.second.getArmor(), personaje.second.isAimingUp()};
 
 
        command.lista_patos.push_back(dto_duck);
@@ -163,6 +167,12 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
         bool colision = bullet->colisionWithDuck(character.second.getXPos(), character.second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
         if (colision) {
             character.second.applyDamage(bullet->getDamage());
+        }
+    }
+    for (auto& box : vector_boxes) {
+        bool colision = bullet->colisionWithBox(box->getXPos(), box->getYPos(), WIDTH_BOX, HEIGHT_BOX);
+        if (colision) {
+            //box->takeDamage(bullet->getDamage());
         }
     }
 }

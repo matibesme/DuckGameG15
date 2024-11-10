@@ -45,6 +45,7 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
         protocolo.sendByte(dto_duck.typeOfGun, dead_connection);
         protocolo.sendByte(dto_duck.helmet, dead_connection);
         protocolo.sendByte(dto_duck.armor, dead_connection);
+        protocolo.sendBool(dto_duck.is_aiming_up, dead_connection);
     }
 
     //ENVIO DE BALAS

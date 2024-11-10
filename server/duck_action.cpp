@@ -118,7 +118,7 @@ void DuckAction::weaponComand(uint8_t comando) {
                 return;
             }
             map_free_weapons.emplace(id_weapons, personaje.removeWeapon());
-             id_weapons++;
+            id_weapons++;
             break;
 
         case SHOOT: {
@@ -154,6 +154,14 @@ void DuckAction::weaponComand(uint8_t comando) {
 
         case STOP_SHOOT:
             weapon.stopShooting();
+            break;
+
+        case AIM_UP:
+            personaje.aimUp();
+            break;
+
+        case STOP_AIM_UP:
+            personaje.stopAimUp();
             break;
 
         default:

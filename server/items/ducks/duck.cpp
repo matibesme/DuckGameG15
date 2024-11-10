@@ -32,9 +32,8 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos, std::
         is_flapping(false),
         helmet(NO_HELMET),
         armor(NO_ARMOR),
-        color(color_)
-
-    {}
+        color(color_),
+        is_aiming_up(false) {}
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
     return typeOfMove;
@@ -198,6 +197,20 @@ std::string& DuckPlayer::getColor()
     return color;
 }
 
+bool DuckPlayer::isAimingUp() {
+    return is_aiming_up;
+}
+
+
+void DuckPlayer::aimUp() {
+    if (isWeaponEquipped() && !isAimingUp()) {
+        is_aiming_up = true;
+    }
+}
+
+void DuckPlayer::stopAimUp() {
+    is_aiming_up = false;
+}
 
 
 DuckPlayer::~DuckPlayer() {}

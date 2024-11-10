@@ -78,4 +78,17 @@ float Protocolo::receiveFloat(bool& is_socket_close) {
     return float_received;
 }
 
+void Protocolo::sendBool(bool bool_to_send, bool& is_socket_close) {
+    uint8_t byte = bool_to_send;
+    socket_servidor.sendall(&byte, 1, &is_socket_close);
+    checkSocketClose(is_socket_close);
+}
+
+bool Protocolo::receiveBool(bool& is_socket_close) {
+    uint8_t byte;
+    socket_servidor.recvall(&byte, 1, &is_socket_close);
+    return byte;
+}
+
+
 Protocolo::~Protocolo() {}
