@@ -90,6 +90,23 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
 
 }
 
+void ProtocoloServer::sendActiveGames(const std::map<uint8_t, uint8_t>& games) {
+    try
+    {
+        protocolo.sendByte(ACTIVE_GAMES_BYTE, dead_connection);
+        protocolo.sendByte(games.size(), dead_connection);
+        for (const auto& game : games) {
+            protocolo.sendByte(game.first, dead_connection);
+
+        }
+    }catch (const std::exception& e) {
+        dead_connection = true;
+        std::cerr << e.what() << std::endl;
+    }
+}
+
+
+
 
 
 

@@ -24,6 +24,10 @@ void Receiver::run() {
 
                 queue_comandos = lobby.addPartida(id);
                 in_lobby = false;
+            } else if (command.action_type == LISTAR_PARTIDAS) {
+               std::map<uint8_t, uint8_t>& partidas = lobby.getIdPartidas();
+                protocolo.sendActiveGames(partidas);
+
             }
         }
 

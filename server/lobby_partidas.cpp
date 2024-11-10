@@ -2,7 +2,7 @@
 
 LobbyPartidas::LobbyPartidas(): id_partida(0),partidas(), protected_queues_sender(), queues_sender(),
     queues_game_loop(), id_hoster_partida(), end_game(),
-    map_id_clientes(), m()
+    map_id_clientes(), partidas_sin_arrancar(), m()
 {
 }
 
@@ -16,6 +16,7 @@ std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::addPartida(uint8_t 
     id_hoster_partida[id_client] = id_partida;
     protected_queues_sender[id_partida]->addClient(id_client, *queues_sender[id_client]);
     map_id_clientes[id_partida].push_back(id_client);
+    partidas_sin_arrancar.emplace(id_partida, id_client);
     id_partida++;
     return queues_game_loop[id_partida-1];
 }
@@ -40,6 +41,7 @@ void LobbyPartidas::startGame(uint8_t id_client)
 {
     std::lock_guard<std::mutex> lock(m);
     partidas[id_hoster_partida[id_client]]->start();
+    partidas_sin_arrancar.erase(id_hoster_partida[id_client]);
 }
 
 
@@ -65,6 +67,12 @@ void LobbyPartidas::removeGame(uint8_t id)
     partidas.erase(id);
 }
 
+std::map<uint8_t, uint8_t>& LobbyPartidas::getIdPartidas()
+{
+    std::lock_guard<std::mutex> lock(m);
+    return partidas_sin_arrancar;
+
+}
 
 
 LobbyPartidas::~LobbyPartidas()

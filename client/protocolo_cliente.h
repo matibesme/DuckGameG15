@@ -29,5 +29,6 @@ public:
     GameState reciveFromServer();
     GameState reciveFullGameFromServer();
     GameState reciveBackgroundFromServer();
+    std::list<uint8_t> reciveActiveGamesFromServer();
     ~ProtocoloCliente();
 };
