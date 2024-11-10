@@ -222,46 +222,48 @@ if(TALLER_TESTS)
     # Let's use google test
     include(FetchContent)
     FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+            googletest
+            URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
     )
 
     # For Windows: Prevent overriding the parent project's compiler/linker settings
-    # (borrowed from https://google.github.io/googletest/quickstart-cmake.html)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
     include(GoogleTest)
 
     # target for testing
-    # HEY!! TODO XXX: Change the name of the executable to the one you like!
     add_executable(taller_tests)
 
-    # HEY!! TODO XXX: I'm assuming that the code under testing is in taller_common
-    # Change this if you have to.
+    # Assume the code under testing is in taller_common
     add_dependencies(taller_tests taller_common)
 
     # Say where to find the xoz headers
-    # HEY!! TODO XXX: add more subfolders here
     target_include_directories(taller_tests PUBLIC .)
 
-    # Add the source files to the taller_tests target
-    # HEY!! TODO XXX: add more subfolders here
-    add_subdirectory(tests/)
+    # Add the source files for client and server
+    target_sources(taller_tests PRIVATE
+            client/protocolo_cliente.cpp
+            server/protocolo_server.cpp
+    )
+
+    # Add the test folder with all its content
+    # Include all files in the tests folder
+    file(GLOB_RECURSE TEST_SOURCES "tests/*.cpp")
+    target_sources(taller_tests PRIVATE ${TEST_SOURCES})
 
     # Set the compiler warnings to the tests target (but be a little lesser strict)
     set_project_warnings(taller_tests ${TALLER_MAKE_WARNINGS_AS_ERRORS} TRUE)
 
     # Say where googletest headers can be found
     target_include_directories(taller_tests
-        PUBLIC
-        ${gtest_SOURCE_DIR}/include
-        ${gmock_SOURCE_DIR}/include
-        )
+            PUBLIC
+            ${gtest_SOURCE_DIR}/include
+            ${gmock_SOURCE_DIR}/include
+    )
 
-    # HEY!! TODO XXX: I'm assuming that the code under testing is in taller_common
-    # Change this if you have to.
+    # Link the libraries (make sure to link your common code and googletest)
     target_link_libraries(taller_tests
-        taller_common
-        GTest::gtest_main
+            taller_common
+            GTest::gtest_main
     )
 endif()
