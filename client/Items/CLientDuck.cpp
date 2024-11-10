@@ -34,7 +34,7 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gu
 
     if(typeOfMove == STILL_LEFT)    isFlipped = true;
 
-    if (armor_ == ARMOR_EQUIPPED)   armorEquipped = true;
+    if (armor_ == ARMOR_EQUIPPED) armorEquipped = true;
     else armorEquipped = false;
 
     if (helmet_ == HELMET_EQUIPPED) helmetEquipped = true;
