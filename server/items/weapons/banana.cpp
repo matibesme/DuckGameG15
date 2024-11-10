@@ -29,7 +29,11 @@ std::unique_ptr<Bullet> Banana::shoot() {
     }
     bullet_count += 1;
     ammo_quantity--;
-    bala.release(x_pos, y_pos, direction, bala.randomSpread());
+    if (direction == RIGHT) {
+        bala.release(x_pos + DUCK_WIDTH + WIDTH_BULLET , y_pos + (DUCK_HEIGHT/2) , direction, bala.randomSpread());
+    } else if (direction == LEFT) {
+        bala.release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, bala.randomSpread());
+    }
     if (direction == RIGHT) {
 
         setXPos(x_pos - recoil);
