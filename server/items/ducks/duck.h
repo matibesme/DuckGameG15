@@ -20,39 +20,49 @@ class DuckPlayer: public Objeto {
         bool is_flapping;
         uint8_t helmet;
         uint8_t armor;
+        std::string color;
+        bool is_aiming_up;
 
     public:
+        // Constructors
         DuckPlayer();
-        DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos);
+        DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos, std::string color_);
 
+        // Getters
         uint8_t getTypeOfMoveSprite();
-        void incrementXPos(float pos_x) ;
         Weapon& getWeapon();
-        void pickUpWeapon(std::shared_ptr<Weapon> weapon);
-
         bool isWeaponEquipped();
-        void setVelocidadY(float velocidad);
-
-        void setTypeOfMoveSprite(uint8_t orientation);
-        void setEnSalto(bool enSalto);
         bool estaSaltando();
-
-        float& getVelocidadY();
-        void stopJump(float y_pos_);
-        void executeAction();
-
         bool isAlive();
-        void applyDamage(uint8_t damage);
-        void setFlapping(bool flapping);
         bool isFlapping();
-        void setGravity(float gravity_);
-        void increaseFlappingCounter();
-
-        void setHelmet(uint8_t type);
-        void setArmor(uint8_t type);
         uint8_t& getHelmet();
         uint8_t& getArmor();
+        std::string& getColor();
+        float& getVelocidadY();
+
+        // Setters
+        void setVelocidadY(float velocidad);
+        void setTypeOfMoveSprite(uint8_t orientation);
+        void setEnSalto(bool enSalto);
+        void setFlapping(bool flapping);
+        void setGravity(float gravity_);
+        void setHelmet(uint8_t type);
+        void setArmor(uint8_t type);
+
+
+        // Actions
+        void incrementXPos(float pos_x);
+        void pickUpWeapon(std::shared_ptr<Weapon> weapon);
+        void stopJump(float y_pos_);
+        void executeAction();
+        void applyDamage(uint8_t damage);
+        void increaseFlappingCounter();
         std::shared_ptr<Weapon> removeWeapon();
+        void aimUp();
+        bool isAimingUp();
+        void stopAimUp();
+
+        // Destructor
         ~DuckPlayer();
 
 };

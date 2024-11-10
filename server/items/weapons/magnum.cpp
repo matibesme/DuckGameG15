@@ -20,7 +20,12 @@ std::unique_ptr<Bullet> Magnum::shoot() {
     }
     ammo_quantity--;
     bullet_count += 1;
-    bala.release(x_pos, y_pos, direction, bala.randomSpread());
+    if (direction == RIGHT) {
+        bala.release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, bala.randomSpread());
+    } else if (direction == LEFT) {
+        bala.release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, bala.randomSpread());
+    }
+
     if (direction == RIGHT) {
 
         setXPos(x_pos - recoil);

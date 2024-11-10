@@ -26,7 +26,7 @@
 
 
 Bullet::Bullet(uint8_t id, float initial_pos_x, float initial_pos_y, Graficos& graficos,
-               uint8_t orientacion,uint8_t type) :
+               uint8_t orientacion, uint8_t type) :
         graficos(graficos), idBullet(id),
         pos_x(initial_pos_x), pos_y(initial_pos_y),
         orientationOfBullet(orientacion), typeOfBullet(type),
@@ -44,43 +44,20 @@ void Bullet::draw(SDL2pp::Renderer& renderer) {
 
     Rect area;
     //tipo de area dependiendo de la orientacion y si es bala o granada o banana
-    if((typeOfBullet == GRANADA_BULLET || typeOfBullet == BANANA_BULLET)
-                                        && orientationOfBullet == BULLET_UP){
+    if(typeOfBullet == GRANADA_BULLET || typeOfBullet == BANANA_BULLET)
+      area = Rect(pos_x, pos_y, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
 
-        area = Rect(pos_x, pos_y, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
-
-    } else if((typeOfBullet == GRANADA_BULLET || typeOfBullet == BANANA_BULLET)
-                                               && orientationOfBullet == BULLET_RIGHT){
-
-        area = Rect(pos_x + DUCK_WIDTH / 2, pos_y, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
-
-    } else if ((typeOfBullet == GRANADA_BULLET || typeOfBullet == BANANA_BULLET)
-                                                 && orientationOfBullet == BULLET_LEFT){
-
-        area = Rect(pos_x, pos_y, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
-
-    } else if (orientationOfBullet == BULLET_UP){
-        area = Rect(pos_x, pos_y, HEIGHT_BULLET, WIDTH_BULLET);
-
-    } else if(typeOfBullet == GRENADE_EXPLOSION){
-      explosionSpriteX = (explosionSpriteX + 1);
+    else if(typeOfBullet == GRENADE_EXPLOSION){
+        explosionSpriteX = (explosionSpriteX + 1);
         if(explosionSpriteX == 0) reproducirSonido();
         // destRect es el rectángulo donde se dibujará la textura
-        SDL2pp::Rect destRect((int)pos_x , (int)pos_y + DUCK_HEIGHT / 5, WIDTH_GRENADE_EXPLOTION, HEIGHT_GRENADE_EXPLOTION);
+        SDL2pp::Rect destRect((int)pos_x , (int)pos_y, WIDTH_GRENADE_EXPLOTION, HEIGHT_GRENADE_EXPLOTION);
         // srcRect es el rectángulo que se tomará de la textura
         SDL2pp::Rect srcRect(explosionSpriteX * SPRITE_WIDTH_BULLET, 0, SPRITE_WIDTH_BULLET, SPRITE_HEIGHT_BULLET);
         renderer.Copy(texture, srcRect, destRect);
         return;
     }
-    else if(orientationOfBullet == BULLET_RIGHT){
-        area = Rect(pos_x + DUCK_WIDTH, pos_y + DUCK_HEIGHT / 2, WIDTH_BULLET, HEIGHT_BULLET);
-
-    } else if(orientationOfBullet == BULLET_LEFT){
-        area = Rect(pos_x, pos_y + DUCK_HEIGHT/2, WIDTH_BULLET, HEIGHT_BULLET);
-
-    } else {
-        return;
-    }
+    else area = Rect(pos_x, pos_y, WIDTH_BULLET, HEIGHT_BULLET);
 
     // Si la orientacion es tanto para arriba o para los costados
     if(orientationOfBullet == BULLET_LEFT)

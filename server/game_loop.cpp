@@ -21,27 +21,31 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         factory_weapons(),
         map_bullets(),
         id_balas(1),
-        id_weapons(),
+        id_weapons(1),
         list_plataformas(),
+        vector_boxes(),
         load_game_config(),
         map_helmet(),
         map_armor(),
-        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons, map_helmet,map_armor)
+        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons, map_helmet,map_armor),
+        list_colors({"red","blue","green","yellow","pink","purple","orange","brown","black","white"})
         {}
 
 void GameLoop::run() {
     try {
-        load_game_config.loadGame(list_plataformas, respawn_weapon_points);
-
+        load_game_config.loadGame(list_plataformas, respawn_weapon_points, map_armor,map_helmet);
+        int i = 0;
         for (auto& id : list_id_clientes) {
-            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y));
+            
+            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y, "red"));
+            i++; 
         }
         uint8_t id = 0;
         for (auto& respawn : respawn_weapon_points) {
             map_free_weapons.emplace(id, factory_weapons.createWeapon(respawn.type, respawn.x_pos, respawn.y_pos));
             id++;
         }
-
+        id_weapons = map_free_weapons.size();
 
         while (!end_game) {
 
@@ -103,8 +107,8 @@ void GameLoop::sendCompleteScene(){
         if (personaje.second.isWeaponEquipped()) {
            weapon_type = personaje.second.getWeapon().getType();
         }
-        DTODuck dto_duck = {personaje.first,personaje.second.getType(), personaje.second.getXPos(), personaje.second.getYPos(),
-                            personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(),personaje.second.getArmor()};
+        DTODuck dto_duck = {personaje.first,personaje.second.getColor(), personaje.second.getXPos(), personaje.second.getYPos(),
+                                personaje.second.getTypeOfMoveSprite(), weapon_type, personaje.second.getHelmet(), personaje.second.getArmor(), personaje.second.isAimingUp(), personaje.second.getDirection()};
 
 
        command.lista_patos.push_back(dto_duck);
@@ -156,7 +160,18 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
     for (auto& plataform : list_plataformas) {
         bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos, plataform.width, plataform.height);
     }
-
+    for (auto& character : map_personajes) {
+        bool colision = bullet->colisionWithDuck(character.second.getXPos(), character.second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
+        if (colision) {
+            character.second.applyDamage(bullet->getDamage());
+        }
+    }
+    for (auto& box : vector_boxes) {
+        bool colision = bullet->colisionWithBox(box->getXPos(), box->getYPos(), WIDTH_BOX, HEIGHT_BOX);
+        if (colision) {
+            //box->takeDamage(bullet->getDamage());
+        }
+    }
 }
 
 void GameLoop::checkCoalitionDuckPlatform(DuckPlayer& personaje) {

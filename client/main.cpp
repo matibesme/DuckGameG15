@@ -21,11 +21,7 @@ int main(int argc, char* argv[]) {
         Client client(host, port);
         MenuController menu_controller(client, argc, argv);
         menu_controller.start_game();
-        /*QApplication a(argc, argv);
-        Menu w;
-        w.show();
-        a.exec();*/
-        //client.execute();
+        
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << '\n';
         return EXIT_FAILURE;

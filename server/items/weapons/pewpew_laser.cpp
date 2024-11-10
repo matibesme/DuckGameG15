@@ -40,18 +40,30 @@ std::unique_ptr<Bullet> PewPewLaser::shoot() {
         case 3:
             beam_count--;
             bullet_count += 1;
-            beams_vector[0].release(x_pos, y_pos, direction, true);
+            if (direction == RIGHT) {
+                beams_vector[0].release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, true);
+            } else if (direction == LEFT) {
+                beams_vector[0].release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, true);
+            }
             return std::make_unique<Bullet>(beams_vector[0]);
         case 2:
             beam_count--;
             bullet_count += 1;
-            beams_vector[1].release(x_pos, y_pos, direction, true);
+            if (direction == RIGHT) {
+                beams_vector[1].release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, true);
+            } else if (direction == LEFT) {
+                beams_vector[1].release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, true);
+            }
             return std::make_unique<Bullet>(beams_vector[1]);
         case 1:
             beam_count--;
             bullet_count += 1;
             ammo_quantity--;
-            beams_vector[2].release(x_pos, y_pos, direction, true);
+            if (direction == RIGHT) {
+                beams_vector[2].release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, true);
+            } else if (direction == LEFT) {
+                beams_vector[2].release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, true);
+            }
             beam_count = BEAM_COUNT;
             return std::make_unique<Bullet>(beams_vector[2]);
         default:

@@ -6,7 +6,8 @@ ProtocoloCliente::ProtocoloCliente(const char* host, const char* port, bool& dea
                                {JUMP,       MOVEMENT_ACTION}, {DOWN, MOVEMENT_ACTION},
 
                                {STILL_LEFT, MOVEMENT_ACTION}, {STILL_RIGHT, MOVEMENT_ACTION},
-                               {PICKUP,     WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION}, {SHOOT, WEAPON_ACTION}, {STOP_SHOOT, WEAPON_ACTION}}) {}
+                               {PICKUP,     WEAPON_ACTION}, {LEAVE_GUN, WEAPON_ACTION},
+            {SHOOT, WEAPON_ACTION}, {STOP_SHOOT, WEAPON_ACTION}, {AIM_UP, WEAPON_ACTION}, {STOP_AIM_UP, WEAPON_ACTION}}) {}
 
 
 
@@ -58,14 +59,16 @@ GameState ProtocoloCliente::reciveFullGameFromServer()
     std::list<DTODuck> lista_patos;
     for (int i = 0; i < patos_quantity; i++) {
         uint8_t id = protocolo.receiveByte(dead_connection);
-        uint8_t personajes_type = protocolo.receiveByte(dead_connection);
+        std::string personajes_type = protocolo.receiveString(dead_connection);
         float x_pos = protocolo.receiveFloat(dead_connection);
         float y_pos = protocolo.receiveFloat(dead_connection);
         uint8_t typeOfMove = protocolo.receiveByte(dead_connection);
         uint8_t typeOfGun = protocolo.receiveByte(dead_connection);
         uint8_t helmet=protocolo.receiveByte(dead_connection);
         uint8_t armor=protocolo.receiveByte(dead_connection);
-        lista_patos.push_back({id,personajes_type, x_pos, y_pos, typeOfMove, typeOfGun,helmet,armor});
+        bool is_aiming_up = protocolo.receiveBool(dead_connection);
+        uint8_t direction = protocolo.receiveByte(dead_connection);
+        lista_patos.push_back({id,personajes_type, x_pos, y_pos, typeOfMove, typeOfGun,helmet,armor, is_aiming_up, direction});
     }
     //recivo balas
     uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);
@@ -134,6 +137,25 @@ void ProtocoloCliente::sendAccesToServer(uint8_t action,uint8_t id) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;
     }
+}
+
+std::list<uint8_t> ProtocoloCliente::reciveActiveGamesFromServer() {
+    try {
+        uint8_t firstByte = protocolo.receiveByte(dead_connection);
+        if (firstByte == ACTIVE_GAMES_BYTE) {
+            uint8_t games_quantity = protocolo.receiveByte(dead_connection);
+            std::list<uint8_t> games;
+            for (int i = 0; i < games_quantity; i++) {
+                uint8_t game_id = protocolo.receiveByte(dead_connection);
+                games.push_back(game_id);
+            }
+            return games;
+        }
+    } catch (const std::exception& e) {
+        dead_connection = true;
+        std::cerr << e.what() << std::endl;
+    }
+    throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
 
 

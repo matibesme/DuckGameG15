@@ -38,13 +38,15 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
     protocolo.sendByte(command.lista_patos.size(), dead_connection);
     for (const DTODuck& dto_duck : command.lista_patos) {
         protocolo.sendByte(dto_duck.id, dead_connection);
-        protocolo.sendByte(dto_duck.personajes_type, dead_connection);
+        protocolo.sendString(dto_duck.color, dead_connection);
         protocolo.sendFloat(dto_duck.x_pos, dead_connection);
         protocolo.sendFloat(dto_duck.y_pos, dead_connection);
         protocolo.sendByte(dto_duck.typeOfMove, dead_connection);
         protocolo.sendByte(dto_duck.typeOfGun, dead_connection);
         protocolo.sendByte(dto_duck.helmet, dead_connection);
         protocolo.sendByte(dto_duck.armor, dead_connection);
+        protocolo.sendBool(dto_duck.is_aiming_up, dead_connection);
+        protocolo.sendByte(dto_duck.direction, dead_connection);
     }
 
     //ENVIO DE BALAS
@@ -89,6 +91,23 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
     }
 
 }
+
+void ProtocoloServer::sendActiveGames(const std::map<uint8_t, uint8_t>& games) {
+    try
+    {
+        protocolo.sendByte(ACTIVE_GAMES_BYTE, dead_connection);
+        protocolo.sendByte(games.size(), dead_connection);
+        for (const auto& game : games) {
+            protocolo.sendByte(game.first, dead_connection);
+
+        }
+    }catch (const std::exception& e) {
+        dead_connection = true;
+        std::cerr << e.what() << std::endl;
+    }
+}
+
+
 
 
 

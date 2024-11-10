@@ -5,13 +5,15 @@
 
 struct DTODuck{
     uint8_t id;
-    uint8_t personajes_type;
+    std::string color;
     float x_pos;
     float y_pos;
     uint8_t typeOfMove;//right left down jump still
     uint8_t typeOfGun; // nogun, cowboy ...
     uint8_t helmet;
     uint8_t armor;
+    bool is_aiming_up;
+    uint8_t direction;
 };
 
 struct DTOBullet{

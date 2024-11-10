@@ -21,7 +21,7 @@ void Protocolo::sendShort(uint16_t short_to_send, bool& is_socket_close) {
     checkSocketClose(is_socket_close);
 }
 
-void Protocolo::sendPlayerName(const std::string& player_name, bool& is_socket_close) {
+void Protocolo::sendString(const std::string& player_name, bool& is_socket_close) {
     uint16_t tam_player_name = htons(player_name.size());
     socket_servidor.sendall(reinterpret_cast<void*>(&tam_player_name), 2, &is_socket_close);
     socket_servidor.sendall(player_name.data(), player_name.size(), &is_socket_close);
@@ -41,7 +41,7 @@ uint16_t Protocolo::receiveShort(bool& is_socket_close) {
     socket_servidor.recvall(&short_received, 2, &is_socket_close);
     return ntohs(short_received);
 }
-std::string Protocolo::receivePlayerName(bool& is_socket_close) {
+std::string Protocolo::receiveString(bool& is_socket_close) {
     uint16_t tam_player_name;
     socket_servidor.recvall(reinterpret_cast<void*>(&tam_player_name), 2, &is_socket_close);
     uint16_t tam_player_name_bg =
@@ -77,5 +77,18 @@ float Protocolo::receiveFloat(bool& is_socket_close) {
 
     return float_received;
 }
+
+void Protocolo::sendBool(bool bool_to_send, bool& is_socket_close) {
+    uint8_t byte = bool_to_send;
+    socket_servidor.sendall(&byte, 1, &is_socket_close);
+    checkSocketClose(is_socket_close);
+}
+
+bool Protocolo::receiveBool(bool& is_socket_close) {
+    uint8_t byte;
+    socket_servidor.recvall(&byte, 1, &is_socket_close);
+    return byte;
+}
+
 
 Protocolo::~Protocolo() {}

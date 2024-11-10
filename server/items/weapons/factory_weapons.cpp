@@ -15,6 +15,9 @@
 #include "magnum.h"
 #include "common_constant.h"
 
+#include <cstdlib> // Para rand() y srand()
+#include <ctime>   // Para time()
+
 
 
 FactoryWeapons::FactoryWeapons() {}
@@ -45,5 +48,48 @@ std::shared_ptr<Weapon> FactoryWeapons::createWeapon(uint8_t type, float x, floa
 
         default:
             return nullptr;
+    }
+}
+
+std::shared_ptr<Weapon> FactoryWeapons::generateRandomWeapon(float pos_x, float pos_y) {
+    std::srand(std::time(nullptr));
+
+    // Generar un número aleatorio correspondiente a los tipos de armas
+    int random_number = std::rand() % 10; // Hay 10 tipos de armas (0 a 9)
+
+    switch (random_number) {
+        case 0:
+            return createWeapon(GRANADA_GUN, pos_x, pos_y);
+            break;
+        case 1:
+            return createWeapon(BANANA_GUN, pos_x, pos_y);
+            break;
+        case 2:
+            return createWeapon(AK47_GUN, pos_x, pos_y);
+            break;
+        case 3:
+            return createWeapon(LASER_RIFLE_GUN, pos_x, pos_y);
+            break;
+        case 4:
+            return createWeapon(PEW_PEW_LASER_GUN, pos_x, pos_y);
+            break;
+        case 5:
+            return createWeapon(ESCOPETA_GUN, pos_x, pos_y);
+            break;
+        case 6:
+            return createWeapon(SNIPER_GUN, pos_x, pos_y);
+            break;
+        case 7:
+            return createWeapon(COWBOY_GUN, pos_x, pos_y);
+            break;
+        case 8:
+            return createWeapon(PISTOLA_DUELOS_GUN, pos_x, pos_y);
+            break;
+        case 9:
+             return createWeapon(MAGNUM_GUN, pos_x, pos_y);
+            break;
+        default:
+            return nullptr;
+            break;
     }
 }

@@ -47,6 +47,8 @@ void GameRenderer::dibujar(Renderer& renderer, GameState& command) {
     for (auto& duck : ducks) duck.draw(renderer);
     for (auto& bullet : bullets) bullet.draw(renderer);
     for (auto& gun : guns) gun.draw(false, renderer);
+    for (auto& armor : armors) armor.draw(false, renderer, false, false);
+    for (auto& helmet : helmets) helmet.draw(false, renderer, false, false);
 
     // Vuelve al render principal
     renderer.SetTarget();
@@ -58,8 +60,6 @@ void GameRenderer::dibujar(Renderer& renderer, GameState& command) {
     renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect), SDL2pp::Optional<SDL2pp::Rect>());
 
     //Por ahora no hago zoom renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(), SDL2pp::Optional<SDL2pp::Rect>());
-
-  
     renderer.Present();
 }
 
@@ -75,7 +75,8 @@ void GameRenderer::actualizarElementos(const GameState& command) {
         if (duckInCommand != command.lista_patos.end()) {
             // Actualizar si el pato está en ambas listas
             it->update(duckInCommand->y_pos, duckInCommand->x_pos, duckInCommand->typeOfMove,
-                       duckInCommand->typeOfGun, duckInCommand->helmet, duckInCommand->armor);
+                       duckInCommand->typeOfGun,  duckInCommand->armor, duckInCommand->helmet,
+                       duckInCommand->is_aiming_up, duckInCommand->direction);
             ++it;
         } else {
             // Eliminar si solo está en la lista local
@@ -91,7 +92,7 @@ void GameRenderer::actualizarElementos(const GameState& command) {
                                });
         if (it == ducks.end()) {
             ducks.emplace_back(duckStruct.id, duckStruct.x_pos, duckStruct.y_pos, duckStruct.typeOfGun,
-                               duckStruct.typeOfMove, graficos);
+                               duckStruct.typeOfMove, duckStruct.color, graficos);
         }
     }
 

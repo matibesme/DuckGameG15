@@ -18,7 +18,7 @@ DuckPlayer::DuckPlayer(): Objeto(0,0,0,0), is_weapon_equiped(false), typeOfMove(
                           velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true), gravity(GRAVEDAD){}
 
 
-DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
+DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos, std::string color_)
         : Objeto(type, id, x_pos, y_pos),
         is_weapon_equiped(false),
         typeOfMove(STILL_RIGHT),
@@ -31,10 +31,9 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos)
         counter_flapping(0),
         is_flapping(false),
         helmet(NO_HELMET),
-        armor(NO_ARMOR)
-    {
-
-    }
+        armor(NO_ARMOR),
+        color(color_),
+        is_aiming_up(false) {}
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() {
     return typeOfMove;
@@ -113,12 +112,7 @@ void DuckPlayer::executeAction() {
 bool DuckPlayer::estaSaltando() {
     return this->saltando;
 }
-/*
-void DuckPlayer::setWeapon(Weapon& weapon) {
-    
-    weapons_list.push_back(std::make_shared<Weapon>(weapon));
-    
-}*/
+
 
 Weapon& DuckPlayer::getWeapon() {
     return *weapons_list.front();
@@ -195,10 +189,28 @@ uint8_t& DuckPlayer::getHelmet()
 }
 uint8_t& DuckPlayer::getArmor()
 {
-    return helmet;
+    return armor;
+}
+
+std::string& DuckPlayer::getColor()
+{
+    return color;
+}
+
+bool DuckPlayer::isAimingUp() {
+    return is_aiming_up;
 }
 
 
+void DuckPlayer::aimUp() {
+    if (isWeaponEquipped() && !isAimingUp()) {
+        is_aiming_up = true;
+    }
+}
+
+void DuckPlayer::stopAimUp() {
+    is_aiming_up = false;
+}
 
 
 DuckPlayer::~DuckPlayer() {}

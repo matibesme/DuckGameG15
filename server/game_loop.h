@@ -25,6 +25,8 @@
 #include "duck_action.h"
 #include "items/weapons/factory_weapons.h"
 
+#include "items/box.h"
+
 class GameLoop: public Thread {
 
 private:
@@ -45,15 +47,19 @@ private:
     uint16_t id_weapons;
     std::list<DTOPlatform> list_plataformas;
 
+    std::vector<std::shared_ptr<Box>> vector_boxes;
+    uint16_t id_boxes;
+
+    uint16_t id_helmets;
+    uint16_t id_armors;
+
     //std::list<DTOBoxes> list_boxes;
     LoadGameFile load_game_config;
     std::map<uint8_t, Protection> map_helmet;
     std::map<uint8_t, Protection> map_armor;
     DuckAction duck_action;
-
-
-
-
+    //std::list,std::string> list_colors;
+    std::list<std::string> list_colors;
 
     void paraCadaPatoAction();
 

@@ -11,6 +11,7 @@
 
 #include "../common/protocolo.h"
 #include "../common/socket.h"
+#include <map>
 
 class ProtocoloServer {
     Socket socket_server;
@@ -22,10 +23,11 @@ public:
     
     void sendToClient(const GameState& command);
     void sendFullGame(const GameState& command);
-   
+    void sendActiveGames(const std::map<uint8_t, uint8_t>& games);
     void sendBackground(const GameState& command);
     CommandClient receiveCommandFromClients();
     GameAccess receiveAccessFromClients();
+
     void closeSocket();
     ~ProtocoloServer();
 };

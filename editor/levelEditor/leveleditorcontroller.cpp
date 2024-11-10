@@ -200,7 +200,7 @@ void LevelEditorController::save_map(){
         out << YAML::Value << boxes.at(i)->pixmap().width();
         out << YAML::EndMap;
     }
-    out << YAML::EndMap;
+    out << YAML::EndSeq;
 
     out << YAML::Key << "armour spawns";
     out << YAML::Value << YAML::BeginSeq;
@@ -219,6 +219,8 @@ void LevelEditorController::save_map(){
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;
+    out << YAML::EndMap;
+
 
     if (ok){
         if(!(text.isEmpty())){
@@ -226,9 +228,7 @@ void LevelEditorController::save_map(){
             std::ofstream fout(file_name);
             fout << out.c_str();
         }else{
-            std::string file_name = std::string(DATA_PATH) + std::string("/maps/") + std::string("a_map.yaml");
-            std::ofstream fout(file_name);
-            fout << out.c_str();
+           return;
         }
         
     }

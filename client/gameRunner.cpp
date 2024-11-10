@@ -12,7 +12,7 @@ GameRunner::GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<GameS
 
 void GameRunner::run() {
     try {
-        graficos.show_window();
+      graficos.show_window();
       reproducirMusica();
 
       Renderer& sdl_renderer = graficos.GetRenderer();
