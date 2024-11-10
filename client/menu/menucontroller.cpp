@@ -16,6 +16,7 @@ void MenuController::start_game(){
     Menu w;
     w.show();
     connect(&w, &Menu::start, this, &MenuController::start);
+    connect(&w, &Menu::join, this, &MenuController::join);
     a.exec();
     client.execute();
 }
@@ -29,6 +30,13 @@ void MenuController::start(){
     QCoreApplication::quit();
     client.createGame();
     client.startGame();
+}
+
+void MenuController::join(uint8_t id_game){
+    QCoreApplication::quit();
+    //Esto es para que no me tire unused parameter
+    std::cout << (int)id_game << std::endl;
+    //client.joinGame(id_game);
 }
 
 MenuController::~MenuController(){

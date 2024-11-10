@@ -19,7 +19,6 @@ private:
     void show_main_scene();
     void show_make_game_scene();
     void show_join_game_scene();
-    void show_number_players();
     void show_wait_scene();
 
 public:
@@ -28,5 +27,6 @@ public:
 
 signals:
     void start();
+    void join(uint8_t id_game);
 };
 #endif // MENU_H

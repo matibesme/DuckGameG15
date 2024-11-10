@@ -236,9 +236,15 @@ void Menu::show_join_game_scene(){
     game_options->addItem("Partida3");
     layout_games->addWidget(new QLabel("Select a game:"));
     layout_games->addWidget(game_options);
+    QPushButton* update_button = new QPushButton("Update games");
+    layout_games->addWidget(update_button);
     QPushButton* join_game_button = new QPushButton("Join game");
     layout_games->addWidget(join_game_button);
-    connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+        connect(join_game_button, &QPushButton::clicked, this, [this]() {
+        this->close();
+        emit join(3);
+    });
+    //connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
     /*connect(join_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);*/
 
     QPushButton* back_button = new QPushButton("Back");
@@ -255,10 +261,6 @@ void Menu::show_join_game_scene(){
 
 }
 
-void Menu::show_number_players(){
-
-}
-
 void Menu::show_wait_scene(){
     std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
     QString path_image = QString::fromStdString(path);
@@ -267,7 +269,6 @@ void Menu::show_wait_scene(){
     QVBoxLayout *layout_wait = new QVBoxLayout(widget_wait);
     layout_wait->addWidget(new QLabel("Waiting for the game to start"));
 
-    //Esto es solo para el cliente que crea el juego.
     QPushButton* start_game = new QPushButton("Start game");
     layout_wait->addWidget(start_game);
     connect(start_game, &QPushButton::clicked, this, [this]() {
