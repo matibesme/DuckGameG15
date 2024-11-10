@@ -62,7 +62,7 @@ void DuckAction::movementComand(uint8_t comando) {
 
 void DuckAction::weaponComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
-    Weapon& weapon = personaje.getWeapon();
+
     bool pick = false;
 
     switch (comando) {
@@ -86,32 +86,33 @@ void DuckAction::weaponComand(uint8_t comando) {
             if (pick) return;
 
             for (auto &helmet : map_helmet) {
-            if (personaje.getHelmet() == HELMET_EQUIPPED) break;
-            if (personaje.getXPos() + DUCK_WIDTH >= helmet.second.y_pos &&
-                personaje.getXPos() <= helmet.second.x_pos + WIDTH_HELMET &&
-                personaje.getYPos() + DUCK_HEIGHT >= helmet.second.y_pos &&
-                personaje.getYPos() <= helmet.second.x_pos + HEIGHT_HELMET) {
+                if (personaje.getHelmet() == HELMET_EQUIPPED) break;
+                if (personaje.getXPos() + DUCK_WIDTH >= helmet.second.x_pos &&
+                    personaje.getXPos() <= helmet.second.x_pos + WIDTH_HELMET &&
+                    personaje.getYPos() + DUCK_HEIGHT >= helmet.second.y_pos &&
+                    personaje.getYPos() <= helmet.second.y_pos + HEIGHT_HELMET) {
 
-                personaje.setHelmet(HELMET_EQUIPPED);
-                map_helmet.erase(helmet.first);
-                pick = true;
-                break;
-            }
+                    personaje.setHelmet(HELMET_EQUIPPED);
+                    map_helmet.erase(helmet.first);
+                    pick = true;
+                    break;
+                }
             }
 
             if (pick) return;
 
             for (auto &armor : map_armor) {
-            if (personaje.getArmor() == ARMOR_EQUIPPED) break;
-            if (personaje.getXPos() + DUCK_WIDTH >= armor.second.y_pos &&
-                personaje.getXPos() <= armor.second.x_pos + WIDTH_ARMOR &&
-                personaje.getYPos() + DUCK_HEIGHT >= armor.second.y_pos &&
-                personaje.getYPos() <= armor.second.x_pos + HEIGHT_ARMOR) {
+                if (personaje.getArmor() == ARMOR_EQUIPPED) break;
+                if (personaje.getXPos() + DUCK_WIDTH >= armor.second.x_pos &&
+                     personaje.getXPos() <= armor.second.x_pos + WIDTH_ARMOR &&
+                     personaje.getYPos() + DUCK_HEIGHT >= armor.second.y_pos &&
+                     personaje.getYPos() <= armor.second.y_pos + HEIGHT_ARMOR) {
 
-                personaje.setArmor(ARMOR_EQUIPPED);
-                map_armor.erase(armor.first);
-                break;
-            }
+                    personaje.setArmor(ARMOR_EQUIPPED);
+                    map_armor.erase(armor.first);
+                    pick = true;
+                    break;
+                }
             }
             break;
         }
@@ -123,7 +124,9 @@ void DuckAction::weaponComand(uint8_t comando) {
         }
 
         case SHOOT: {
-            if (!personaje.isWeaponEquipped() || weapon.isEmptyAmmo()) return;
+            if (!personaje.isWeaponEquipped()) return;
+                Weapon& weapon = personaje.getWeapon();
+                if (weapon.isEmptyAmmo()) return;
             weapon.setXPos(personaje.getXPos());
             weapon.setYPos(personaje.getYPos());
             weapon.setDirection(personaje.getDirection());
@@ -142,7 +145,9 @@ void DuckAction::weaponComand(uint8_t comando) {
         }
 
         case STOP_SHOOT:
-            weapon.stopShooting();
+            if (!personaje.isWeaponEquipped()) return;
+            personaje.getWeapon().stopShooting();
+
             break;
         case AIM_UP:
             personaje.aimUp();
