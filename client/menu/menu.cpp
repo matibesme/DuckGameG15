@@ -165,11 +165,7 @@ void Menu::show_make_game_scene(){
     layout_game->addWidget(port);*/
     QPushButton* make_game_button = new QPushButton("Make game");
     layout_game->addWidget(make_game_button);
-    connect(make_game_button, &QPushButton::clicked, this, [this]() {
-        this->close();
-        emit start();
-    });
-    //connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
     //connect(make_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
     QPushButton* back_button = new QPushButton("Back");
     layout_game->addWidget(back_button);
@@ -242,12 +238,9 @@ void Menu::show_join_game_scene(){
     layout_games->addWidget(game_options);
     QPushButton* join_game_button = new QPushButton("Join game");
     layout_games->addWidget(join_game_button);
-    //connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
     /*connect(join_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);*/
-    connect(join_game_button, &QPushButton::clicked, this, [this]() {
-        this->close();
-        emit start();
-    });
+
     QPushButton* back_button = new QPushButton("Back");
     connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
     layout_games->addWidget(back_button);
@@ -277,6 +270,10 @@ void Menu::show_wait_scene(){
     //Esto es solo para el cliente que crea el juego.
     QPushButton* start_game = new QPushButton("Start game");
     layout_wait->addWidget(start_game);
+    connect(start_game, &QPushButton::clicked, this, [this]() {
+        this->close();
+        emit start();
+    });
 
     widget_wait->setGeometry(300, 250, 100, 100);
     wait_scene->addWidget(widget_wait);
