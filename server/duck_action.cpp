@@ -62,7 +62,7 @@ void DuckAction::movementComand(uint8_t comando) {
 
 void DuckAction::weaponComand(uint8_t comando) {
     DuckPlayer& personaje = map_personajes[1];
-    Weapon& weapon = personaje.getWeapon();
+
     bool pick = false;
 
     switch (comando) {
@@ -123,7 +123,9 @@ void DuckAction::weaponComand(uint8_t comando) {
         }
 
         case SHOOT: {
-            if (!personaje.isWeaponEquipped() || weapon.isEmptyAmmo()) return;
+            if (!personaje.isWeaponEquipped()) return;
+                Weapon& weapon = personaje.getWeapon();
+                if (weapon.isEmptyAmmo()) return;
             weapon.setXPos(personaje.getXPos());
             weapon.setYPos(personaje.getYPos());
             weapon.setDirection(personaje.getDirection());
@@ -142,7 +144,9 @@ void DuckAction::weaponComand(uint8_t comando) {
         }
 
         case STOP_SHOOT:
-            weapon.stopShooting();
+            if (!personaje.isWeaponEquipped()) return;
+            personaje.getWeapon().stopShooting();
+
             break;
         case AIM_UP:
             personaje.aimUp();
