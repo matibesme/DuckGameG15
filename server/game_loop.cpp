@@ -20,32 +20,31 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         map_free_weapons(),
         factory_weapons(),
         map_bullets(),
-        id_balas(1),
-        id_weapons(1),
+        id_balas(0),
+        id_weapons(0),
+        id_boxes(0),
+        id_helmets(0),
+        id_armors(0),
         list_plataformas(),
         vector_boxes(),
-        load_game_config(),
         map_helmet(),
         map_armor(),
         duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons, map_helmet,map_armor),
-        list_colors({"red","blue","green","yellow","pink","purple","orange","brown","black","white"})
+        list_colors({"red","blue","green","yellow","pink","purple","orange","brown","black","white"}),
+        load_game_config(factory_weapons, list_plataformas, respawn_weapon_points, map_helmet, map_armor,
+            id_weapons, id_helmets, id_armors, id_boxes,map_free_weapons, list_boxes, map_bullets, id_balas)
         {}
 
 void GameLoop::run() {
     try {
-        load_game_config.loadGame(list_plataformas, respawn_weapon_points, map_armor,map_helmet);
+        load_game_config.loadGame();
         int i = 0;
         for (auto& id : list_id_clientes) {
             
             map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y, "red"));
             i++; 
         }
-        uint8_t id = 0;
-        for (auto& respawn : respawn_weapon_points) {
-            map_free_weapons.emplace(id, factory_weapons.createWeapon(respawn.type, respawn.x_pos, respawn.y_pos));
-            id++;
-        }
-        id_weapons = map_free_weapons.size();
+
 
         while (!end_game) {
 
@@ -122,11 +121,12 @@ void GameLoop::sendCompleteScene(){
         DTOGuns dto_gun = {weapon.second->getType(), weapon.second->getXPos(), weapon.second->getYPos()};
         command.lista_guns.push_back(dto_gun);
     }
-    /*
+
     for (auto& box : list_boxes) {
+        DTOBoxes dto_box = {box.getId(), box.getXPos(), box.getYPos()};
+        command.lista_boxes.push_back(dto_box);
 
-
-    }*/
+    }
 
     for (auto& helmet : map_helmet) {
 

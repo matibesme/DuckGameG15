@@ -4,7 +4,7 @@ target_sources(taller_server
         server_main.cpp
         items/bullets/bullet.cpp
         items/weapons/weapon.cpp
-        items/box.cpp
+        items/boxes.cpp
         items/weapons/ak47.cpp
         items/weapons/banana.cpp
         items/weapons/cowboy_pistol.cpp
@@ -25,7 +25,7 @@ target_sources(taller_server
         # .h files
         items/bullets/bullet.h
         items/weapons/weapon.h
-        items/box.h
+        items/boxes.h
         items/weapons/ak47.h
         items/weapons/banana.h
         items/weapons/cowboy_pistol.h
