@@ -30,8 +30,8 @@ constexpr int SCENE_WIDTH = 800;
 constexpr int SCENE_HEIGHT = 600;
 constexpr int MAP_HEIGHT = 64 * DUCK_HEIGHT;
 constexpr int MAP_WIDTH = 64 * DUCK_WIDTH;
-constexpr int WIDTH_BOX = 32;
-constexpr int HEIGHT_BOX = 32;
+constexpr int WIDTH_BOX = 17;
+constexpr int HEIGHT_BOX = 20;
 
 // Protocolo
 constexpr uint8_t FIRST_SEND_BYTE = 0x03;
