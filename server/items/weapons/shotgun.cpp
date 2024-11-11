@@ -25,7 +25,7 @@ bool Shotgun::isEmptyAmmo() {
 }
 
 std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
-    (void)is_aiming_up;
+
     if (ammo_quantity == 0) {
         return nullptr;
     }
@@ -43,7 +43,11 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
         case 6:
             pellet_count--;
             bullet_count += 1;
-            if (direction == RIGHT) {
+            if (is_aiming_up and direction == RIGHT) {
+                pellets_vector[0].release(x_pos + DUCK_WIDTH - WIDTH_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (is_aiming_up and direction == LEFT){
+                pellets_vector[0].release(x_pos + HEIGHT_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (direction == RIGHT) {
                 pellets_vector[0].release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, true);
             } else if (direction == LEFT) {
                 pellets_vector[0].release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, true);
@@ -53,7 +57,11 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
         case 5:
             pellet_count--;
             bullet_count += 1;
-            if (direction == RIGHT) {
+            if (is_aiming_up and direction == RIGHT) {
+                pellets_vector[1].release(x_pos + DUCK_WIDTH - WIDTH_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (is_aiming_up and direction == LEFT){
+                pellets_vector[1].release(x_pos + HEIGHT_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (direction == RIGHT) {
                 pellets_vector[1].release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, true);
             } else if (direction == LEFT) {
                 pellets_vector[1].release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, true);
@@ -62,7 +70,11 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
         case 4:
             pellet_count--;
             bullet_count += 1;
-            if (direction == RIGHT) {
+            if (is_aiming_up and direction == RIGHT) {
+                pellets_vector[2].release(x_pos + DUCK_WIDTH - WIDTH_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (is_aiming_up and direction == LEFT){
+                pellets_vector[2].release(x_pos + HEIGHT_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (direction == RIGHT) {
                 pellets_vector[2].release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, true);
             } else if (direction == LEFT) {
                 pellets_vector[2].release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, true);
@@ -71,7 +83,11 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
         case 3:
             pellet_count--;
             bullet_count += 1;
-            if (direction == RIGHT) {
+            if (is_aiming_up and direction == RIGHT) {
+                pellets_vector[3].release(x_pos + DUCK_WIDTH - WIDTH_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (is_aiming_up and direction == LEFT){
+                pellets_vector[3].release(x_pos + HEIGHT_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (direction == RIGHT) {
                 pellets_vector[3].release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, true);
             } else if (direction == LEFT) {
                 pellets_vector[3].release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, true);
@@ -80,7 +96,11 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
         case 2:
             pellet_count--;
             bullet_count += 1;
-            if (direction == RIGHT) {
+            if (is_aiming_up and direction == RIGHT) {
+                pellets_vector[4].release(x_pos + DUCK_WIDTH - WIDTH_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (is_aiming_up and direction == LEFT){
+                pellets_vector[4].release(x_pos + HEIGHT_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (direction == RIGHT) {
                 pellets_vector[4].release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, true);
             } else if (direction == LEFT) {
                 pellets_vector[4].release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, true);
@@ -91,7 +111,11 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
             bullet_count += 1;
             reloading = true;
             ammo_quantity--;
-            if (direction == RIGHT) {
+            if (is_aiming_up and direction == RIGHT) {
+                pellets_vector[5].release(x_pos + DUCK_WIDTH - WIDTH_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (is_aiming_up and direction == LEFT){
+                pellets_vector[5].release(x_pos + HEIGHT_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, true);
+            } else if (direction == RIGHT) {
                 pellets_vector[5].release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, true);
             } else if (direction == LEFT) {
                 pellets_vector[5].release(x_pos-WIDTH_BULLET, y_pos+ (DUCK_HEIGHT/2), direction, true);

@@ -16,8 +16,10 @@ std::unique_ptr<Bullet> CowboyPistol::shoot(bool is_aiming_up) {
     }
     bullet_count += 1;
     ammo_quantity--;
-    if (is_aiming_up) {
+    if (is_aiming_up and direction == RIGHT) {
         bala.release(x_pos + DUCK_WIDTH - WIDTH_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, bala.randomSpread());
+    } else if (is_aiming_up and direction == LEFT){
+        bala.release(x_pos + HEIGHT_GUN/2, y_pos - WIDTH_BULLET , BULLET_UP, bala.randomSpread());
     } else if (direction == RIGHT) {
         bala.release(x_pos + DUCK_WIDTH+ WIDTH_BULLET, y_pos + (DUCK_HEIGHT/2) , direction, bala.randomSpread());
     } else if (direction == LEFT) {
