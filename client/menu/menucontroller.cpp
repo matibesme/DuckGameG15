@@ -35,6 +35,8 @@ void MenuController::start(){
 
 void MenuController::join(uint8_t id_game){
     QCoreApplication::quit();
+    //Código para probar.
+    //std::cout << "El id game es: " << (int) id_game << std::endl;
     client.joinGame(id_game);
 }
 

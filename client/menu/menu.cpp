@@ -243,7 +243,7 @@ void Menu::show_join_game_scene(){
     layout_games->addWidget(join_game_button);
     connect(join_game_button, &QPushButton::clicked, this, [this]() {
         this->close();
-        emit join(3);
+        emit join(active_games.take(game_options->currentText()));
     });
     //connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
     /*connect(join_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);*/
