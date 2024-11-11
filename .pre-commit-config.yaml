@@ -30,4 +30,4 @@ repos:
         files: ^(.*[.]cpp|.*[.]h)$
         exclude: ^extlib/
         args: ["--style=file", "-i"]
-        enabled: false
+    enabled: false

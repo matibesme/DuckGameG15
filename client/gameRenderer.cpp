@@ -8,8 +8,8 @@
 #define IMAGE_CITY DATA_PATH "/backgrounds/City.png"
 #define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
 
-#define CANT_ZOOM_WIDTH (10 * DUCK_WIDTH)
-#define CANT_ZOOM_HEIGHT (10 * DUCK_HEIGHT)
+#define CANT_ZOOM_WIDTH (7 * DUCK_WIDTH)
+#define CANT_ZOOM_HEIGHT (15 * DUCK_HEIGHT)
 
 GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform,
                            std::list<DTOBoxes> &box)
