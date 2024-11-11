@@ -55,7 +55,7 @@ void Menu::show_main_scene(){
                 "   color: black;"
                 "}"
                 );
-    connect(make_game, &QPushButton::pressed, this, &Menu::show_make_game_scene);
+    connect(make_game, &QPushButton::clicked, this, &Menu::show_make_game_scene);
     /*connect(make_game, &QPushButton::pressed, [this, make_game](){
         menu_controller->set_type_game(0);
     });*/
@@ -78,7 +78,7 @@ void Menu::show_main_scene(){
                 "   color: black;"
                 "}"
                 );
-    connect(join_game, &QPushButton::pressed, this, &Menu::show_join_game_scene);
+    connect(join_game, &QPushButton::clicked, this, &Menu::show_join_game_scene);
     /*connect(join_game, &QPushButton::pressed, [this, make_game](){
         menu_controller->set_type_game(1);
     });*/
@@ -141,11 +141,11 @@ void Menu::show_make_game_scene(){
     QSpacerItem* spacer = new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
     layout_name_players->addItem(spacer);
 
-    connect(single_player, &QPushButton::pressed, [=]() {
+    connect(single_player, &QPushButton::clicked, [=]() {
         name_player_2->setVisible(false);
         label_player_2->setVisible(false);
     });
-    connect(two_players, &QPushButton::pressed, [=]() {
+    connect(two_players, &QPushButton::clicked, [=]() {
         name_player_2->setVisible(true);
         label_player_2->setVisible(true);
     });
@@ -167,11 +167,14 @@ void Menu::show_make_game_scene(){
     layout_game->addWidget(port);*/
     QPushButton* make_game_button = new QPushButton("Make game");
     layout_game->addWidget(make_game_button);
-    connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    connect(make_game_button, &QPushButton::clicked, this, &Menu::show_wait_scene);
+    connect(make_game_button, &QPushButton::clicked, this, [this]() {
+        emit create();
+    });
     //connect(make_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
     QPushButton* back_button = new QPushButton("Back");
     layout_game->addWidget(back_button);
-    connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
+    connect(back_button, &QPushButton::clicked, this, &Menu::show_main_scene);
     widget_game->setGeometry(400, 200, 200, 100);
 
     make_game_scene->addWidget(widget_players);
@@ -213,11 +216,11 @@ void Menu::show_join_game_scene(){
     QSpacerItem* spacer = new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
     layout_name_players->addItem(spacer);
 
-    connect(single_player, &QPushButton::pressed, [=]() {
+    connect(single_player, &QPushButton::clicked, [=]() {
         name_player_2->setVisible(false);
         label_player_2->setVisible(false);
     });
-    connect(two_players, &QPushButton::pressed, [=]() {
+    connect(two_players, &QPushButton::clicked, [=]() {
         name_player_2->setVisible(true);
         label_player_2->setVisible(true);
     });
@@ -249,7 +252,7 @@ void Menu::show_join_game_scene(){
     /*connect(join_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);*/
 
     QPushButton* back_button = new QPushButton("Back");
-    connect(back_button, &QPushButton::pressed, this, &Menu::show_main_scene);
+    connect(back_button, &QPushButton::clicked, this, &Menu::show_main_scene);
     layout_games->addWidget(back_button);
 
     widget_games->setGeometry(400, 200, 200, 100);
