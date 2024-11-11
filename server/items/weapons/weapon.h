@@ -1,12 +1,11 @@
 #ifndef WEAPON_H
 #define WEAPON_H
-#include <cstdint>
-#include <list>
-#include <memory>
-
 #include "../bullets/bullet.h"
 #include "../common/common_constant.h"
 #include "../objeto.h"
+#include <cstdint>
+#include <list>
+#include <memory>
 
 class Weapon : public Objeto {
 protected:

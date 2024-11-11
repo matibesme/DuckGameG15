@@ -1,12 +1,11 @@
 #pragma once
-#include <list>
-
-#include <yaml-cpp/yaml.h>
-
 #include "../../common/dto_definitions.h"
 #include "../common/common_constant.h"
 #include "../items/ducks/duck.h"
 #include "../items/weapons/weapon.h"
+#include <list>
+#include <yaml-cpp/yaml.h>
+
 #include "items/boxes.h"
 #include "items/weapons/factory_weapons.h"
 

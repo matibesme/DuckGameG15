@@ -1,8 +1,7 @@
 #include "menucontroller.h"
+#include "menu.h"
 
 #include <QApplication>
-
-#include "menu.h"
 
 MenuController::MenuController(Client &client, int argc, char **argv,
                                QObject *parent)
@@ -30,29 +29,17 @@ void MenuController::set_number_players(uint8_t number_players_) {
 
 void MenuController::create() { client.createGame(); }
 
-// handler de make Game
 void MenuController::start() {
   QCoreApplication::quit();
-  client.createGame();
   client.startGame();
 }
 
 void MenuController::join(uint8_t id_game) {
   QCoreApplication::quit();
-  // Código para probar.
-  // std::cout << "El id game es: " << (int) id_game << std::endl;
   client.joinGame(id_game);
 }
 
 void MenuController::update_games(Menu &menu) {
-  // Codigo para probar.
-  /*std::list<uint8_t> lista_prueba;
-  lista_prueba.emplace_back(45);
-  lista_prueba.emplace_back(23);
-  lista_prueba.emplace_back(12);
-  lista_prueba.emplace_back(4);
-  lista_prueba.emplace_back(110);
-  menu.show_update_games(lista_prueba);*/
   menu.show_update_games(client.updateGame(0));
 }
 

@@ -1,7 +1,6 @@
 #pragma once
 #include <cstdint>
 #include <iostream>
-#include <map>
 #include <ostream>
 #include <string>
 #include <utility>
@@ -9,8 +8,10 @@
 #include "../common/common_constant.h"
 #include "../common/dto_definitions.h"
 #include "../common/game_exception.h"
+
 #include "../common/protocolo.h"
 #include "../common/socket.h"
+#include <map>
 
 class ProtocoloServer {
   Socket socket_server;

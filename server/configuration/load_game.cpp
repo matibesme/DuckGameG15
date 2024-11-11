@@ -1,5 +1,4 @@
 #include "load_game.h"
-
 #include <filesystem>
 #include <iostream>
 #include <random>

@@ -28,7 +28,6 @@ PewPewLaser::PewPewLaser(uint8_t type, uint8_t id, float x_pos, float y_pos,
 bool PewPewLaser::isEmptyAmmo() { return ammo_quantity == 0; }
 
 std::unique_ptr<Bullet> PewPewLaser::shoot(bool is_aiming_up) {
-  (void)is_aiming_up;
   if (isEmptyAmmo()) {
     return nullptr;
   }
@@ -39,7 +38,13 @@ std::unique_ptr<Bullet> PewPewLaser::shoot(bool is_aiming_up) {
   case 3:
     beam_count--;
     bullet_count += 1;
-    if (direction == RIGHT) {
+    if (is_aiming_up and direction == RIGHT) {
+      beams_vector[0].release(x_pos + DUCK_WIDTH - WIDTH_GUN / 2,
+                              y_pos - WIDTH_BULLET, BULLET_UP, true);
+    } else if (is_aiming_up and direction == LEFT) {
+      beams_vector[0].release(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET,
+                              BULLET_UP, true);
+    } else if (direction == RIGHT) {
       beams_vector[0].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
                               y_pos + (DUCK_HEIGHT / 2), direction, true);
     } else if (direction == LEFT) {
@@ -50,7 +55,13 @@ std::unique_ptr<Bullet> PewPewLaser::shoot(bool is_aiming_up) {
   case 2:
     beam_count--;
     bullet_count += 1;
-    if (direction == RIGHT) {
+    if (is_aiming_up and direction == RIGHT) {
+      beams_vector[1].release(x_pos + DUCK_WIDTH - WIDTH_GUN / 2,
+                              y_pos - WIDTH_BULLET, BULLET_UP, true);
+    } else if (is_aiming_up and direction == LEFT) {
+      beams_vector[1].release(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET,
+                              BULLET_UP, true);
+    } else if (direction == RIGHT) {
       beams_vector[1].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
                               y_pos + (DUCK_HEIGHT / 2), direction, true);
     } else if (direction == LEFT) {
@@ -62,7 +73,13 @@ std::unique_ptr<Bullet> PewPewLaser::shoot(bool is_aiming_up) {
     beam_count--;
     bullet_count += 1;
     ammo_quantity--;
-    if (direction == RIGHT) {
+    if (is_aiming_up and direction == RIGHT) {
+      beams_vector[2].release(x_pos + DUCK_WIDTH - WIDTH_GUN / 2,
+                              y_pos - WIDTH_BULLET, BULLET_UP, true);
+    } else if (is_aiming_up and direction == LEFT) {
+      beams_vector[2].release(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET,
+                              BULLET_UP, true);
+    } else if (direction == RIGHT) {
       beams_vector[2].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
                               y_pos + (DUCK_HEIGHT / 2), direction, true);
     } else if (direction == LEFT) {

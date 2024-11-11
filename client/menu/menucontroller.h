@@ -1,13 +1,11 @@
 #ifndef MENUCONTROLLER_H
 #define MENUCONTROLLER_H
+#include "../client.h"
+#include "menu.h"
 #include <QObject>
 #include <cstdint>
 #include <iostream>
 #include <vector>
-
-#include "../client.h"
-
-#include "menu.h"
 
 class MenuController : public QObject {
   Q_OBJECT
@@ -27,8 +25,8 @@ public:
   ~MenuController();
 
 public slots:
-  void create();
   void start();
+  void create();
   void join(uint8_t id_game);
   void update_games(Menu &menu);
 };

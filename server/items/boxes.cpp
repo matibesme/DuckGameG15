@@ -3,11 +3,9 @@
 //
 
 #include "boxes.h"
-
+#include "weapons/factory_weapons.h"
 #include <cstdlib>
 #include <ctime>
-
-#include "weapons/factory_weapons.h"
 
 Boxes::Boxes(uint8_t type, uint8_t id, float x_pos, float y_pos, int health,
              std::map<uint16_t, std::shared_ptr<Weapon>> &map_free_weapons,

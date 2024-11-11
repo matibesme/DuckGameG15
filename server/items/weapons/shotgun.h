@@ -5,9 +5,8 @@
 #ifndef SHOTGUN_H
 #define SHOTGUN_H
 
-#include <vector>
-
 #include "weapon.h"
+#include <vector>
 
 class Shotgun : public Weapon {
 

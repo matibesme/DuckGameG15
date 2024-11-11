@@ -9,21 +9,23 @@
 #include <vector>
 
 #include "../common/blocking_queue.h"
-#include "../common/common_constant.h"
+
 #include "../common/dto_definitions.h"
 #include "../common/game_exception.h"
 #include "../common/thread.h"
+
+#include "../common/common_constant.h"
 #include "items/ducks/duck.h"
 #include "items/weapons/weapon.h"
-
 #include "protected_queues_map.h"
 // eliminar dsp
-#include "configuration/load_game.h"
-#include "items/boxes.h"
 #include "items/bullets/bullet.h"
+
+#include "configuration/load_game.h"
+#include "duck_action.h"
 #include "items/weapons/factory_weapons.h"
 
-#include "duck_action.h"
+#include "items/boxes.h"
 
 class GameLoop : public Thread {
 

@@ -5,7 +5,6 @@
 #ifndef GRANADA_H
 #define GRANADA_H
 #include "../bullets/granada_bullet.h"
-
 #include "weapon.h"
 
 class Granada : public Weapon {

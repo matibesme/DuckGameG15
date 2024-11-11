@@ -1,11 +1,9 @@
 #include "game_loop.h"
-
+#include "items/weapons/cowboy_pistol.h"
 #include <bits/fs_fwd.h>
 #include <bits/fs_path.h>
 #include <items/weapons/duel_pistol.h>
 #include <items/weapons/magnum.h>
-
-#include "items/weapons/cowboy_pistol.h"
 
 // despues sacar
 #include "items/weapons/banana.h"

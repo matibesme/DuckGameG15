@@ -5,7 +5,6 @@
 #ifndef BANANA_H
 #define BANANA_H
 #include "../bullets/banana_bullet.h"
-
 #include "weapon.h"
 
 class Banana : public Weapon {

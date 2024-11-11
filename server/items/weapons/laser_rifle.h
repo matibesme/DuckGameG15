@@ -4,9 +4,8 @@
 #ifndef LASER_RIFLE_H
 #define LASER_RIFLE_H
 
-#include <vector>
-
 #include "weapon.h"
+#include <vector>
 
 class LaserRifle : public Weapon {
 private:

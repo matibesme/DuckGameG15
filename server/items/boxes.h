@@ -4,16 +4,15 @@
 #ifndef BOXES_H
 #define BOXES_H
 
+#include "objeto.h"
+
+#include "dto_definitions.h"
+#include "weapons/granada.h"
+#include "weapons/weapon.h"
 #include <map>
 #include <memory>
 #include <random>
 #include <variant>
-
-#include "weapons/granada.h"
-#include "weapons/weapon.h"
-
-#include "dto_definitions.h"
-#include "objeto.h"
 
 class Boxes : public Objeto {
 private:

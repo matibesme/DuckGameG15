@@ -5,15 +5,13 @@
 
 #ifndef DUCK_ACTION_H
 #define DUCK_ACTION_H
-#include <map>
-#include <memory>
-
+#include "dto_definitions.h"
+#include "server_constant.h"
 #include <items/bullets/bullet.h>
 #include <items/ducks/duck.h>
 #include <items/weapons/weapon.h>
-
-#include "dto_definitions.h"
-#include "server_constant.h"
+#include <map>
+#include <memory>
 
 class DuckAction {
 private:

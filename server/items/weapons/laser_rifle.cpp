@@ -30,7 +30,13 @@ std::unique_ptr<Bullet> LaserRifle::shoot(bool is_aiming_up) {
   ammo_quantity--;
   bullet_count += 1;
   Bullet actual_bullet = bullets_vector[0];
-  if (direction == RIGHT) {
+  if (is_aiming_up and direction == RIGHT) {
+    actual_bullet.release(x_pos + DUCK_WIDTH - WIDTH_GUN / 2,
+                          y_pos - WIDTH_BULLET, BULLET_UP, true);
+  } else if (is_aiming_up and direction == LEFT) {
+    actual_bullet.release(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET,
+                          BULLET_UP, true);
+  } else if (direction == RIGHT) {
     actual_bullet.release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
                           y_pos + (DUCK_HEIGHT / 2), direction, true);
   } else if (direction == LEFT) {

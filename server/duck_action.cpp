@@ -2,7 +2,6 @@
 // Created by matibesme on 31/10/24.
 //
 #include "duck_action.h"
-
 #include <iostream>
 #include <random>
 DuckAction::DuckAction(
