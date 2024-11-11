@@ -30,6 +30,7 @@ void MenuController::create() { client.createGame(); }
 // handler de make Game
 void MenuController::start() {
     QCoreApplication::quit();
+    client.createGame();
     client.startGame();
 }
 
