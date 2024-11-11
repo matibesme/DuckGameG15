@@ -168,9 +168,6 @@ void Menu::show_make_game_scene(){
     QPushButton* make_game_button = new QPushButton("Make game");
     layout_game->addWidget(make_game_button);
     connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
-    connect(make_game_button, &QPushButton::clicked, this, [this]() {
-        emit create();
-    });
     //connect(make_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
     QPushButton* back_button = new QPushButton("Back");
     layout_game->addWidget(back_button);

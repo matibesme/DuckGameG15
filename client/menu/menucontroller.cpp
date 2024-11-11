@@ -15,7 +15,6 @@ void MenuController::start_game(){
     QApplication a(argc, argv);
     Menu w;
     w.show();
-    connect(&w, &Menu::create, this, &MenuController::create);
     connect(&w, &Menu::start, this, &MenuController::start);
     connect(&w, &Menu::join, this, &MenuController::join);
     connect(&w, &Menu::update_games, this, &MenuController::update_games);
@@ -27,13 +26,10 @@ void MenuController::set_number_players(uint8_t number_players_){
     this->number_players = number_players_;
 }
 
-void MenuController::create(){
-    client.createGame();
-}
-
 //handler de make Game
 void MenuController::start(){
     QCoreApplication::quit();
+    client.createGame();
     client.startGame();
 }
 
