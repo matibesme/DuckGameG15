@@ -7,7 +7,7 @@
 #include "../objeto.h"
 #include <cstdint>
 #include "server_constant.h"
-
+#include "configuration/server_constants.h"
 class Bullet: public Objeto {
     protected:
         uint8_t damage;

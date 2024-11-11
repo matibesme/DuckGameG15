@@ -31,35 +31,55 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         time_defense_last_respawn(),
         duck_action(map_personajes, map_free_weapons, respawn_weapon_points, time_weapon_last_respawn,
             map_bullets, id_balas, id_weapons, map_defense, respawn_defense_points, id_defense,time_defense_last_respawn),
-        list_colors({"red","blue","green","yellow","pink","purple","orange","brown","black","white"}),
         load_game_config(factory_weapons, list_plataformas, respawn_weapon_points, map_defense, respawn_defense_points,id_defense,
-            id_weapons, id_boxes,map_free_weapons, list_boxes, map_bullets, id_balas)
-        {}
+            id_weapons, id_boxes,map_free_weapons, list_boxes, map_bullets, id_balas,map_personajes, list_id_clientes),
+        map_victory_rounds(){}
 
 void GameLoop::run() {
     try {
-        load_game_config.loadGame();
-        int i=0;
+
         for (auto& id : list_id_clientes) {
-            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y, list_colors[i++]));
-
+            map_victory_rounds.emplace(id, VICTORY_ROUNDS_INICIAL);
         }
+        while (!end_game)
+        {
+            uint8_t rounds = 0; 
+            while (!end_game && rounds < GAMES_PER_ROUND)
+            {
+                load_game_config.loadGame();
+
+                while (!end_game && map_personajes.size()!=1) {
 
 
-        while (!end_game) {
+                    CommandClient comando;
+                    while (queue_comandos->try_pop(comando)) {
+                        checkCommand(comando);
 
-
-            CommandClient comando;
-            while (queue_comandos->try_pop(comando)) {
-                checkCommand(comando);
-
+                    }
+                    paraCadaPatoAction();
+                    checkBullets();
+                    respawnWeapon();
+                    sendCompleteScene();
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1000/60));
+                }
+                map_victory_rounds[map_personajes.begin()->first]++;
+                rounds++;
+                cleanGame();
             }
-            paraCadaPatoAction();
-            checkBullets();
-            respawnWeapon();
-            sendCompleteScene();
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000/60));
+            uint8_t winner;
+            bool win=checkWinner( winner);
+            if (win) {
+                sendVictory();
+                end_game=true;
+                break;
+            }
+            sendEndRound();
+
         }
+
+        //send round status
+
+
 
     } catch (const ClosedQueue& e) {
         // Queue closed
@@ -101,9 +121,7 @@ void GameLoop::sendCompleteScene(){
 
 
     for (auto& personaje : map_personajes) {
-        if (!personaje.second.isAlive()) {
-            continue;
-        }
+
         uint8_t weapon_type = NOGUN;
         if (personaje.second.isWeaponEquipped()) {
            weapon_type = personaje.second.getWeapon().getType();
@@ -165,6 +183,9 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
         bool colision = bullet->colisionWithDuck(character.second.getXPos(), character.second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
         if (colision) {
             character.second.applyDamage(bullet->getDamage());
+            if (!character.second.isAlive()) {
+                map_personajes.erase(character.first);
+            }
             return;
         }
     }
@@ -250,10 +271,44 @@ void GameLoop::respawnWeapon()
         } else {
             time_defense_last_respawn[time.first]--;
         }
-
     }
 
+}
 
+
+void GameLoop::cleanGame() {
+    map_personajes.clear();
+    map_bullets.clear();
+    map_free_weapons.clear();
+    list_boxes.clear();
+    map_defense.clear();
+    respawn_defense_points.clear();
+    time_defense_last_respawn.clear();
+    time_weapon_last_respawn.clear();
+    respawn_weapon_points.clear();
+    id_balas = 0;
+    id_weapons = 0;
+    id_boxes = 0;
+    id_defense = 0;
+    list_plataformas.clear();
+}
+
+bool GameLoop::checkWinner(uint8_t& winner) {
+    for (auto& victory_round : map_victory_rounds) {
+        if (victory_round.second == NECESARY_VICTORY_ROUNDS) {
+            winner = victory_round.first;
+            return true;
+        }
+    }
+    return false;
+}
+
+void GameLoop::sendEndRound() {
+    GameState command;
+}
+
+void GameLoop::sendVictory() {
+    GameState command;
 }
 
 GameLoop::~GameLoop() {}

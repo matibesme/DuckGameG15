@@ -9,8 +9,8 @@ void Receiver::run() {
 
     while (_keep_running) {
         try {
-            //GameState command = protocolo.reciveFromServer();
-            //queue_receiver.push(command);
+            GameState command = protocolo.reciveFromServer();
+            queue_receiver.push(command);
         } catch (const std::exception& e) {
             std::cerr << e.what() << '\n';
             _keep_running = false;

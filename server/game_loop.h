@@ -24,7 +24,7 @@
 #include "configuration/load_game.h"
 #include "duck_action.h"
 #include "items/weapons/factory_weapons.h"
-
+#include "configuration/server_constants.h"
 #include "items/boxes.h"
 
 class GameLoop: public Thread {
@@ -50,18 +50,13 @@ private:
     uint16_t id_defense;
     std::list<DTOPlatform> list_plataformas;
 
-
-
-    //std::list<DTOBoxes> list_boxes;
-
     std::map<uint16_t, Protection> map_defense;
     std::map<uint16_t, Protection> respawn_defense_points;
     std::map<uint16_t,uint8_t> time_defense_last_respawn;
-
     DuckAction duck_action;
-    //std::list,std::string> list_colors;
-    std::vector<std::string> list_colors;
     LoadGameFile load_game_config;
+
+    std::map<uint8_t, uint8_t> map_victory_rounds;
     void paraCadaPatoAction();
 
 public:
@@ -78,5 +73,10 @@ public:
     void checkCoalition(std::unique_ptr<Bullet>& bullet);
     void checkCoalitionDuckPlatform(DuckPlayer& personaje);
     void respawnWeapon();
+    void cleanGame();
+    bool checkWinner(uint8_t& winner);
+    void sendEndRound();
+    void sendVictory();
+
     virtual ~GameLoop();
 };

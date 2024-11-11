@@ -145,9 +145,6 @@ constexpr uint8_t TYPE_BOX=0X21;
 // Constantes adicionales
 constexpr char SALIDA = 'q';
 constexpr int QUEUE_TAMANIO_MAX = 100;
-constexpr float BULLET_VEL = 5;
-constexpr float MOVEMENT_QUANTITY_X = 3;
-constexpr float MOVEMENT_QUANTITY_Y = 3;
 
 
 //  Access to game
@@ -157,5 +154,3 @@ constexpr uint8_t START_GAME = 0xEE;
 constexpr uint8_t LISTAR_PARTIDAS = 0xFF;
 
 
-//TIMES
-constexpr int TIME_TO_RESPAWN = 10;
