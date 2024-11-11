@@ -39,9 +39,9 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
 void GameLoop::run() {
     try {
         load_game_config.loadGame();
-
+        int i=0;
         for (auto& id : list_id_clientes) {
-            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y, "red"));
+            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y, list_colors[i++]));
 
         }
 

@@ -60,7 +60,7 @@ private:
 
     DuckAction duck_action;
     //std::list,std::string> list_colors;
-    std::list<std::string> list_colors;
+    std::vector<std::string> list_colors;
     LoadGameFile load_game_config;
     void paraCadaPatoAction();
 
