@@ -148,7 +148,7 @@ void GameLoop::paraCadaPatoAction() {
 
         if (personaje.second.getWeapon().getType() == GRANADA_GUN && personaje.second.getWeapon().isActive()) {
 
-            std::unique_ptr<Bullet> bullet = personaje.second.getWeapon().shoot();
+            std::unique_ptr<Bullet> bullet = personaje.second.getWeapon().shoot(personaje.second.isAimingUp());
             map_bullets.emplace(id_balas, std::move(bullet));
             id_balas++;
         }

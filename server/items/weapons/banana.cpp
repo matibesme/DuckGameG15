@@ -19,7 +19,8 @@ bool Banana::isActive() {
 
 
 
-std::unique_ptr<Bullet> Banana::shoot() {
+std::unique_ptr<Bullet> Banana::shoot(bool is_aiming_up) {
+    (void)is_aiming_up;
     if (bullet_count > 0) {
         return nullptr;
     }
