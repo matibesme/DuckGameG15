@@ -24,8 +24,7 @@ private:
     std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets;
     uint16_t& id_balas;
     uint16_t& id_weapons;
-    uint16_t& id_helemets;
-    uint16_t& id_armors;
+    uint16_t& id_defense;
 
 
     void generateRandomContent();
@@ -33,7 +32,7 @@ private:
 public:
     Boxes(uint8_t type, uint8_t id, float x_pos, float y_pos, int health, std::map<uint16_t,
         std::shared_ptr<Weapon>>& map_free_weapons, std::map<uint16_t, Protection>& map_armor, std::map<uint16_t, Protection>& map_helmet,
-        std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets, uint16_t& id_balas, uint16_t& id_weapons,uint16_t& id_helemets, uint16_t& id_armors);
+        std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets, uint16_t& id_balas, uint16_t& id_weapons,uint16_t& id_defense);
 
     void takeDamage(int damage);
 

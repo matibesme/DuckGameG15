@@ -121,7 +121,6 @@ CommandClient ProtocoloServer::receiveCommandFromClients() {
        
         uint8_t type_of_action = protocolo.receiveByte(dead_connection);
         uint8_t type_of_movement = protocolo.receiveByte(dead_connection);
-        std::cout <<"id" << id << std::endl;
         return {type_of_action, type_of_movement,id};
 
     } catch (const std::exception& e) {

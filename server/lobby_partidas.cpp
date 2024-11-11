@@ -18,8 +18,7 @@ std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::addPartida(uint8_t 
     id_hoster_partida[id_client] = id_partida;
     protected_queues_sender[id_partida]->addClient(id_client, *queues_sender[id_client]);
     map_id_clientes[id_partida].push_back(id_client);
-    partidas_sin_arrancar.emplace(id_partida, id_client);
-    id_partida++;
+    partidas_sin_arrancar.emplace(id_partida++, id_client);
     return queues_game_loop[id_partida-1];
 }
 

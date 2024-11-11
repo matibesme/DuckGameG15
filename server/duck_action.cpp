@@ -6,13 +6,23 @@
 
 DuckAction::DuckAction(std::map<uint8_t, DuckPlayer>& map_personajes,
                        std::map<uint16_t,std::shared_ptr<Weapon>>& map_free_weapons,
+                       std::map<uint16_t, RespawnPoint>& respawn_weapon_points,
+                       std::map<uint16_t,uint8_t>& time_weapon_last_respawn,
                        std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets,
-                       uint16_t& id_balas, uint16_t& id_weapons, std::map<uint16_t, Protection>& map_helmet, std::map<uint16_t, Protection>& map_armor):
+                       uint16_t& id_balas, uint16_t& id_weapons, std::map<uint16_t,
+                       Protection>& map_helmet,
+                       std::map<uint16_t, Protection>& map_armor,
+                          std::map<uint16_t,Protection>& respawn_defense_points,
+                            uint16_t& id_defense):
         map_personajes(map_personajes),
         map_free_weapons(map_free_weapons),
+        respawn_weapon_points(respawn_weapon_points),
+        time_weapon_last_respawn(time_weapon_last_respawn),
         map_bullets(map_bullets),
         map_helmet(map_helmet),
         map_armor(map_armor),
+        respawn_defense_points(respawn_defense_points),
+        id_defense(id_defense),
         id_balas(id_balas),
         id_weapons(id_weapons){}
 
@@ -78,6 +88,18 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
                 personaje.getYPos() <= free_weapon.second->getYPos() + HEIGHT_GUN) {
 
                 personaje.pickUpWeapon(std::move(free_weapon.second));
+
+                //me fijo si esta en el map de respawn, si esta creo una del mismo tipo
+                if (respawn_weapon_points.find(free_weapon.first) != respawn_weapon_points.end()) {
+                    RespawnPoint weapon = respawn_weapon_points[free_weapon.first];
+
+                    respawn_weapon_points.emplace(id_weapons, weapon);
+                    respawn_weapon_points.erase(free_weapon.first);
+                    time_weapon_last_respawn.emplace(id_weapons, 10);
+                    id_weapons++;
+                }
+
+
                 map_free_weapons.erase(free_weapon.first);
                 pick = true;
                 break;

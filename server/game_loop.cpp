@@ -17,21 +17,24 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         queues_map(queues_map),
         map_personajes(),
         respawn_weapon_points(),
+        time_weapon_last_respawn(),
         map_free_weapons(),
         factory_weapons(),
         map_bullets(),
         id_balas(0),
         id_weapons(0),
         id_boxes(0),
-        id_helmets(0),
-        id_armors(0),
+        id_defense(0),
         list_plataformas(),
         map_helmet(),
         map_armor(),
-        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons, map_helmet,map_armor),
+        respawn_defense_points(),
+        time_defense_last_respawn(),
+        duck_action(map_personajes, map_free_weapons, respawn_weapon_points, time_weapon_last_respawn,
+            map_bullets, id_balas, id_weapons, map_helmet,map_armor, respawn_defense_points, id_defense),
         list_colors({"red","blue","green","yellow","pink","purple","orange","brown","black","white"}),
-        load_game_config(factory_weapons, list_plataformas, respawn_weapon_points, map_helmet, map_armor,
-            id_weapons, id_helmets, id_armors, id_boxes,map_free_weapons, list_boxes, map_bullets, id_balas)
+        load_game_config(factory_weapons, list_plataformas, respawn_weapon_points, map_helmet, map_armor, respawn_defense_points,id_defense,
+            id_weapons, id_boxes,map_free_weapons, list_boxes, map_bullets, id_balas)
         {}
 
 void GameLoop::run() {
@@ -54,6 +57,7 @@ void GameLoop::run() {
             }
             paraCadaPatoAction();
             checkBullets();
+            respawnWeapon();
             sendCompleteScene();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000/60));
         }
@@ -224,6 +228,22 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer& personaje) {
 }
 
 
+void GameLoop::respawnWeapon()
+{
 
+    for (auto& time: time_weapon_last_respawn) {
+            if (time.second ==0) {
+                RespawnPoint& weapon = respawn_weapon_points[time.first];
+                map_free_weapons.emplace(time.first, factory_weapons.createWeapon(weapon.type, weapon.x_pos, weapon.y_pos));
+                time_weapon_last_respawn.erase(time.first);
+
+            } else {
+                time_weapon_last_respawn[time.first]--;
+            }
+
+    }
+
+
+}
 
 GameLoop::~GameLoop() {}
