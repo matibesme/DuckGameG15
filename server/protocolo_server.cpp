@@ -99,10 +99,12 @@ void ProtocoloServer::sendFullGame(const GameState& command) {
 void ProtocoloServer::sendActiveGames(const std::map<uint8_t, uint8_t>& games) {
     try
     {
-        protocolo.sendByte(ACTIVE_GAMES_BYTE, dead_connection);
+
         protocolo.sendByte(games.size(), dead_connection);
+        std::cout << "envio de partidas activas" << games.size() << std::endl;
         for (const auto& game : games) {
             protocolo.sendByte(game.first, dead_connection);
+            std::cout << "envio de partida activa" << (int)game.first << std::endl;
 
         }
     }catch (const std::exception& e) {

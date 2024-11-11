@@ -22,13 +22,13 @@ void Client::startGame() {
 }
 
 void Client::joinGame(uint8_t idPartida) {
-    idPartida = 1;
+
     protocolo.sendAccesToServer(JOIN_GAME, idPartida);
 }
 
 std::list<uint8_t> Client::updateGame(uint8_t key) {
     protocolo.sendAccesToServer(LISTAR_PARTIDAS, key);
-    std::list<uint8_t > list = protocolo.reciveActiveGamesFromServer();
+    std::list<uint8_t> list = protocolo.reciveActiveGamesFromServer();
 
     return list;
 }

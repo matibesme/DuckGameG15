@@ -140,16 +140,18 @@ void ProtocoloCliente::sendAccesToServer(uint8_t action,uint8_t id) {
 
 std::list<uint8_t> ProtocoloCliente::reciveActiveGamesFromServer() {
     try {
-        uint8_t firstByte = protocolo.receiveByte(dead_connection);
-        if (firstByte == ACTIVE_GAMES_BYTE) {
+
+
             uint8_t games_quantity = protocolo.receiveByte(dead_connection);
+            std::cout << "cantidad de partidas activas" << (int)games_quantity << std::endl;
             std::list<uint8_t> games;
             for (int i = 0; i < games_quantity; i++) {
                 uint8_t game_id = protocolo.receiveByte(dead_connection);
+                std::cout << "partida activa" << (int)game_id << std::endl;
                 games.push_back(game_id);
             }
             return games;
-        }
+
     } catch (const std::exception& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;

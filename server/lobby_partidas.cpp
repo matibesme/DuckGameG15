@@ -18,8 +18,8 @@ std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::addPartida(uint8_t 
     id_hoster_partida[id_client] = id_partida;
     protected_queues_sender[id_partida]->addClient(id_client, *queues_sender[id_client]);
     map_id_clientes[id_partida].push_back(id_client);
-    partidas_sin_arrancar.emplace(id_partida++, id_client);
-    return queues_game_loop[id_partida-1];
+    partidas_sin_arrancar.emplace(id_partida, id_client);
+    return queues_game_loop[id_partida++];
 }
 
 std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::joinGame(uint8_t id_partida, uint8_t id_cliente)
@@ -40,6 +40,7 @@ std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::joinGame(uint8_t id
 
 bool LobbyPartidas::isHoster(uint8_t id_cliente)
 {
+
     return id_hoster_partida.find(id_cliente) != id_hoster_partida.end();
 }
 
