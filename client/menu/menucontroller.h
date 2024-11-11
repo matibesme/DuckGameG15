@@ -25,6 +25,7 @@ public:
     
 public slots:
     void start();
+    void create();
     void join(uint8_t id_game);
     void update_games(Menu& menu);
 };
