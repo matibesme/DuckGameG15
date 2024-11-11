@@ -25,26 +25,6 @@ plataforms:
     height: 15
     width: 99
     type: 130
-  - pos_x: 39
-    pos_y: 236
-    height: 15
-    width: 99
-    type: 130
-  - pos_x: 137
-    pos_y: 236
-    height: 15
-    width: 99
-    type: 130
-  - pos_x: 234
-    pos_y: 236
-    height: 15
-    width: 99
-    type: 130
-  - pos_x: 332
-    pos_y: 236
-    height: 15
-    width: 99
-    type: 130
 walls:
   - pos_x: 259
     pos_y: 334
