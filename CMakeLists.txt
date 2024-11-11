@@ -67,6 +67,7 @@ if(TALLER_CLIENT)
     add_executable(taller_client)
     find_package(SDL2_image REQUIRED)
     find_package(SDL2_mixer REQUIRED)
+    find_package(SDL2_ttf REQUIRED)
     find_package(Qt5Widgets CONFIG REQUIRED)
     add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
 
@@ -101,7 +102,8 @@ if(TALLER_CLIENT)
     target_include_directories(taller_client PRIVATE ${libSDL2pp_SOURCE_DIR})
 
     # Enlazar la biblioteca común y SDL2pp al ejecutable del cliente
-    target_link_libraries(taller_client taller_common SDL2pp::SDL2pp SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer Qt5::Widgets)
+    target_link_libraries(taller_client taller_common SDL2pp::SDL2pp SDL2_image::SDL2_image
+            SDL2_mixer::SDL2_mixer Qt5::Widgets SDL2_ttf::SDL2_ttf)
 endif()
 
 if(TALLER_SERVER)

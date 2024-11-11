@@ -3,6 +3,7 @@
 
 #include <list>
 
+#include "Graficos.h"
 #include "Items/Box.h"
 #include "Items/Bullet.h"
 #include "Items/ClientDuck.h"
@@ -10,8 +11,7 @@
 #include "Items/Platform.h"
 #include "Items/armor.h"
 #include "Items/helmet.h"
-
-#include "Graficos.h"
+#include "Items/pantallaVictoria.h"
 #include "dto_definitions.h"
 
 class GameRenderer {

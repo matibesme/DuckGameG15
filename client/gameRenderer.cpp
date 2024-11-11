@@ -64,6 +64,7 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   for (auto &helmet : helmets)
     helmet.draw(false, renderer, false, false);
 
+
   // Vuelve al render principal
   renderer.SetTarget();
 
@@ -77,6 +78,7 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
 
   // Por ahora no hago zoom renderer.Copy(textureDeTodo,
   // SDL2pp::Optional<SDL2pp::Rect>(), SDL2pp::Optional<SDL2pp::Rect>());
+  //PantallaVictoria pantallaVictoria("patito", graficos);
   renderer.Present();
 }
 
