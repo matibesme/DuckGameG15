@@ -12,8 +12,9 @@ ProtocoloServer::ProtocoloServer(Socket socket, bool& dead_connection, uint8_t i
 
 void ProtocoloServer::sendToClient(const GameState& command) {
     try {
-
-                sendFullGame(command);
+        if (command.action == FULL_GAME_BYTE) sendFullGame(command);
+        else if (command.action == END_ROUND_BYTE) sendEndRound(command);
+        else sendVictory(command);
 
     } catch (const SocketClose& e) {
         std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
@@ -114,6 +115,19 @@ void ProtocoloServer::sendActiveGames(const std::map<uint8_t, uint8_t>& games) {
 }
 
 
+void ProtocoloServer::sendEndRound(const GameState& command) {
+    protocolo.sendByte(END_ROUND_BYTE, dead_connection);
+    protocolo.sendByte(command.lista_victorias.size(), dead_connection);
+    for (const auto& victory_round : command.lista_victorias) {
+        protocolo.sendByte(victory_round.first, dead_connection);
+        protocolo.sendByte(victory_round.second, dead_connection);
+    }
+}
+
+void ProtocoloServer::sendVictory(const GameState& command) {
+    protocolo.sendByte(VICTORY_BYTE, dead_connection);
+    protocolo.sendByte(command.id_winner, dead_connection);
+}
 
 
 

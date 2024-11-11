@@ -28,7 +28,8 @@ public:
     void sendAccesToServer(uint8_t action,uint8_t id);
     GameState reciveFromServer();
     GameState reciveFullGameFromServer();
-    GameState reciveBackgroundFromServer();
     std::list<uint8_t> reciveActiveGamesFromServer();
+    GameState reciveEndRoundFromServer();
+    GameState reciveVictoryFromServer();
     ~ProtocoloCliente();
 };

@@ -69,7 +69,7 @@ void GameLoop::run() {
             uint8_t winner;
             bool win=checkWinner( winner);
             if (win) {
-                sendVictory();
+                sendVictory(winner);
                 end_game=true;
                 break;
             }
@@ -112,7 +112,7 @@ void GameLoop::checkBullets() {
 
 void GameLoop::sendCompleteScene(){
     GameState command;
-
+    command.action = FULL_GAME_BYTE;
     command.backGround_id = SCENE_ID;
 
     for (auto& platform : list_plataformas) {
@@ -294,21 +294,30 @@ void GameLoop::cleanGame() {
 }
 
 bool GameLoop::checkWinner(uint8_t& winner) {
+    uint8_t cant_winners = 0;
     for (auto& victory_round : map_victory_rounds) {
         if (victory_round.second == NECESARY_VICTORY_ROUNDS) {
             winner = victory_round.first;
-            return true;
+            cant_winners++;
         }
     }
-    return false;
+    return cant_winners == 1;
 }
 
 void GameLoop::sendEndRound() {
     GameState command;
+    command.action = END_ROUND_BYTE;
+    for (auto& victory_round : map_victory_rounds) {
+        command.lista_victorias.emplace(victory_round.first, victory_round.second);
+    }
+    queues_map->sendMessagesToQueues(command);
 }
 
-void GameLoop::sendVictory() {
+void GameLoop::sendVictory(uint8_t& winner) {
     GameState command;
+    command.action = VICTORY_BYTE;
+    command.id_winner = winner;
+
 }
 
 GameLoop::~GameLoop() {}

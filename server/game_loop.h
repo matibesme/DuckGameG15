@@ -76,7 +76,7 @@ public:
     void cleanGame();
     bool checkWinner(uint8_t& winner);
     void sendEndRound();
-    void sendVictory();
+    void sendVictory(uint8_t& id_winner);
 
     virtual ~GameLoop();
 };
