@@ -17,35 +17,34 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         queues_map(queues_map),
         map_personajes(),
         respawn_weapon_points(),
+        time_weapon_last_respawn(),
         map_free_weapons(),
         factory_weapons(),
         map_bullets(),
-        id_balas(1),
-        id_weapons(1),
+        id_balas(0),
+        id_weapons(0),
+        id_boxes(0),
+        id_defense(0),
         list_plataformas(),
-        vector_boxes(),
-        load_game_config(),
-        map_helmet(),
-        map_armor(),
-        duck_action(map_personajes, map_free_weapons, map_bullets, id_balas, id_weapons, map_helmet,map_armor),
-        list_colors({"red","blue","green","yellow","pink","purple","orange","brown","black","white"})
+        map_defense(),
+        respawn_defense_points(),
+        time_defense_last_respawn(),
+        duck_action(map_personajes, map_free_weapons, respawn_weapon_points, time_weapon_last_respawn,
+            map_bullets, id_balas, id_weapons, map_defense, respawn_defense_points, id_defense,time_defense_last_respawn),
+        list_colors({"red","blue","green","yellow","pink","purple","orange","brown","black","white"}),
+        load_game_config(factory_weapons, list_plataformas, respawn_weapon_points, map_defense, respawn_defense_points,id_defense,
+            id_weapons, id_boxes,map_free_weapons, list_boxes, map_bullets, id_balas)
         {}
 
 void GameLoop::run() {
     try {
-        load_game_config.loadGame(list_plataformas, respawn_weapon_points, map_armor,map_helmet);
-        int i = 0;
+        load_game_config.loadGame();
+        int i=0;
         for (auto& id : list_id_clientes) {
-            
-            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y, "red"));
-            i++; 
+            map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y, list_colors[i++]));
+
         }
-        uint8_t id = 0;
-        for (auto& respawn : respawn_weapon_points) {
-            map_free_weapons.emplace(id, factory_weapons.createWeapon(respawn.type, respawn.x_pos, respawn.y_pos));
-            id++;
-        }
-        id_weapons = map_free_weapons.size();
+
 
         while (!end_game) {
 
@@ -53,9 +52,11 @@ void GameLoop::run() {
             CommandClient comando;
             while (queue_comandos->try_pop(comando)) {
                 checkCommand(comando);
+
             }
             paraCadaPatoAction();
             checkBullets();
+            respawnWeapon();
             sendCompleteScene();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000/60));
         }
@@ -69,9 +70,9 @@ void GameLoop::run() {
 
 void GameLoop::checkCommand(CommandClient comando) {
     if (comando.type_of_action == MOVEMENT_ACTION) {
-        duck_action.movementComand(comando.type_of_movement);
+        duck_action.movementComand(comando.type_of_movement,comando.id);
     } else if (comando.type_of_action == WEAPON_ACTION) {
-        duck_action.weaponComand(comando.type_of_movement);
+        duck_action.weaponComand(comando.type_of_movement,comando.id);
     }
 }
 
@@ -122,19 +123,19 @@ void GameLoop::sendCompleteScene(){
         DTOGuns dto_gun = {weapon.second->getType(), weapon.second->getXPos(), weapon.second->getYPos()};
         command.lista_guns.push_back(dto_gun);
     }
-    /*
+
     for (auto& box : list_boxes) {
+        DTOBoxes dto_box = {box.getId(), box.getXPos(), box.getYPos()};
+        command.lista_boxes.push_back(dto_box);
 
-
-    }*/
-
-    for (auto& helmet : map_helmet) {
-
-        command.lista_helmets.push_back(helmet.second);
     }
 
-    for (auto& armor : map_armor) {
-        command.lista_armors.push_back(armor.second);
+    for (auto& defense : map_defense) {
+        if (defense.second.type == HELMET_EQUIPPED) {
+            command.lista_helmets.push_back(defense.second);
+        } else {
+            command.lista_armors.push_back(defense.second);
+        }
     }
 
     queues_map->sendMessagesToQueues(command);
@@ -164,12 +165,21 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
         bool colision = bullet->colisionWithDuck(character.second.getXPos(), character.second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
         if (colision) {
             character.second.applyDamage(bullet->getDamage());
+            return;
         }
     }
-    for (auto& box : vector_boxes) {
-        bool colision = bullet->colisionWithBox(box->getXPos(), box->getYPos(), WIDTH_BOX, HEIGHT_BOX);
+    for (auto it = list_boxes.begin(); it != list_boxes.end(); ) {
+        bool colision = bullet->colisionWithBox(it->getXPos(), it->getYPos(), WIDTH_BOX, HEIGHT_BOX);
         if (colision) {
-            //box->takeDamage(bullet->getDamage());
+            it->takeDamage(bullet->getDamage());
+            if (it->isDestroyed()) {
+                it = list_boxes.erase(it);
+                break;
+            } else {
+                ++it;
+            }
+        } else {
+            ++it;
         }
     }
 }
@@ -216,6 +226,34 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer& personaje) {
 }
 
 
+void GameLoop::respawnWeapon()
+{
 
+    for (auto& time: time_weapon_last_respawn) {
+            if (time.second ==0) {
+                RespawnPoint& weapon = respawn_weapon_points[time.first];
+                map_free_weapons.emplace(time.first, factory_weapons.createWeapon(weapon.type, weapon.x_pos, weapon.y_pos));
+                time_weapon_last_respawn.erase(time.first);
+
+            } else {
+                time_weapon_last_respawn[time.first]--;
+            }
+
+    }
+
+    for (auto& time: time_defense_last_respawn) {
+        if (time.second ==0) {
+            Protection& defense = respawn_defense_points[time.first];
+            map_defense.emplace(time.first, defense);
+            time_defense_last_respawn.erase(time.first);
+
+        } else {
+            time_defense_last_respawn[time.first]--;
+        }
+
+    }
+
+
+}
 
 GameLoop::~GameLoop() {}

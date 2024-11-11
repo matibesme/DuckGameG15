@@ -17,9 +17,10 @@ class ProtocoloServer {
     Socket socket_server;
     bool& dead_connection;
     Protocolo protocolo;
+    uint8_t id;
 
 public:
-    ProtocoloServer(Socket socket, bool& dead_connection);
+    ProtocoloServer(Socket socket, bool& dead_connection, uint8_t id_);
     
     void sendToClient(const GameState& command);
     void sendFullGame(const GameState& command);

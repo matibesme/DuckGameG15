@@ -3,22 +3,29 @@
 //
 #include "duck_action.h"
 #include <iostream>
-
+#include <random>
 DuckAction::DuckAction(std::map<uint8_t, DuckPlayer>& map_personajes,
                        std::map<uint16_t,std::shared_ptr<Weapon>>& map_free_weapons,
+                       std::map<uint16_t, RespawnPoint>& respawn_weapon_points,
+                       std::map<uint16_t,uint8_t>& time_weapon_last_respawn,
                        std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets,
-                       uint16_t& id_balas, uint16_t& id_weapons, std::map<uint8_t, Protection>& map_helmet, std::map<uint8_t, Protection>& map_armor):
+                       uint16_t& id_balas, uint16_t& id_weapons, std::map<uint16_t,Protection>& map_defense,
+                       std::map<uint16_t,Protection>& respawn_defense_points,uint16_t& id_defense, std::map<uint16_t,uint8_t>& time_defense_last_respawn):
         map_personajes(map_personajes),
         map_free_weapons(map_free_weapons),
+        respawn_weapon_points(respawn_weapon_points),
+        time_weapon_last_respawn(time_weapon_last_respawn),
         map_bullets(map_bullets),
-        map_helmet(map_helmet),
-        map_armor(map_armor),
+        map_defense(map_defense),
+        respawn_defense_points(respawn_defense_points),
+        time_defense_last_respawn(time_defense_last_respawn),
+        id_defense(id_defense),
         id_balas(id_balas),
         id_weapons(id_weapons){}
 
 
-void DuckAction::movementComand(uint8_t comando) {
-    DuckPlayer& personaje = map_personajes[1];
+void DuckAction::movementComand(uint8_t comando, uint8_t id) {
+    DuckPlayer& personaje = map_personajes[id];
 
     switch (comando) {
         case RIGHT:
@@ -60,60 +67,79 @@ void DuckAction::movementComand(uint8_t comando) {
     }
 }
 
-void DuckAction::weaponComand(uint8_t comando) {
-    DuckPlayer& personaje = map_personajes[1];
+void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
+    DuckPlayer& personaje = map_personajes[id];
 
     bool pick = false;
 
     switch (comando) {
         case PICKUP: {
             for (auto &free_weapon : map_free_weapons) {
-            if (personaje.isWeaponEquipped()) {
-                pick = true;
-                break;
-            }
-            if (personaje.getXPos() + DUCK_WIDTH >= free_weapon.second->getXPos() &&
-                personaje.getXPos() <= free_weapon.second->getXPos() + WIDTH_GUN &&
-                personaje.getYPos() + DUCK_HEIGHT >= free_weapon.second->getYPos() &&
-                personaje.getYPos() <= free_weapon.second->getYPos() + HEIGHT_GUN) {
+                if (personaje.isWeaponEquipped()) break;
+                if (inRangePickUp(free_weapon.second->getXPos(), free_weapon.second->getYPos(), HEIGHT_GUN, WIDTH_GUN, personaje)) {
 
-                personaje.pickUpWeapon(std::move(free_weapon.second));
-                map_free_weapons.erase(free_weapon.first);
-                pick = true;
-                break;
-            }
-            }
-            if (pick) return;
+                    personaje.pickUpWeapon(std::move(free_weapon.second));
 
-            for (auto &helmet : map_helmet) {
-                if (personaje.getHelmet() == HELMET_EQUIPPED) break;
-                if (personaje.getXPos() + DUCK_WIDTH >= helmet.second.x_pos &&
-                    personaje.getXPos() <= helmet.second.x_pos + WIDTH_HELMET &&
-                    personaje.getYPos() + DUCK_HEIGHT >= helmet.second.y_pos &&
-                    personaje.getYPos() <= helmet.second.y_pos + HEIGHT_HELMET) {
+                    //me fijo si esta en el map de respawn, si esta creo una del mismo tipo
+                    if (respawn_weapon_points.find(free_weapon.first) != respawn_weapon_points.end()) {
+                        RespawnPoint weapon = respawn_weapon_points[free_weapon.first];
 
-                    personaje.setHelmet(HELMET_EQUIPPED);
-                    map_helmet.erase(helmet.first);
+                        respawn_weapon_points.emplace(id_weapons, weapon);
+                        respawn_weapon_points.erase(free_weapon.first);
+
+                        std::random_device rd;
+                        std::mt19937 gen(rd());
+                        std::uniform_int_distribution<> distrib(300, 600);
+                        int random_addition = distrib(gen);
+
+                        time_weapon_last_respawn.emplace(id_weapons, random_addition);
+                        id_weapons++;
+                    }
+
+
+                    map_free_weapons.erase(free_weapon.first);
                     pick = true;
                     break;
                 }
             }
-
             if (pick) return;
 
-            for (auto &armor : map_armor) {
-                if (personaje.getArmor() == ARMOR_EQUIPPED) break;
-                if (personaje.getXPos() + DUCK_WIDTH >= armor.second.x_pos &&
-                     personaje.getXPos() <= armor.second.x_pos + WIDTH_ARMOR &&
-                     personaje.getYPos() + DUCK_HEIGHT >= armor.second.y_pos &&
-                     personaje.getYPos() <= armor.second.y_pos + HEIGHT_ARMOR) {
+            for (auto &defense : map_defense) {
+                if (defense.second.type == HELMET_EQUIPPED) {
+                    if (personaje.getHelmet() == HELMET_EQUIPPED) break;
+                    if (inRangePickUp(defense.second.x_pos, defense.second.y_pos, HEIGHT_HELMET, WIDTH_HELMET, personaje)) {
+                        personaje.setHelmet(HELMET_EQUIPPED);
+                        map_defense.erase(defense.first);
+                        pick = true;
 
-                    personaje.setArmor(ARMOR_EQUIPPED);
-                    map_armor.erase(armor.first);
-                    pick = true;
-                    break;
+                    }
+                } else {
+                    if (personaje.getArmor() == ARMOR_EQUIPPED) break;
+                    if (inRangePickUp(defense.second.x_pos, defense.second.y_pos, HEIGHT_ARMOR, WIDTH_ARMOR, personaje)) {
+
+                            personaje.setArmor(ARMOR_EQUIPPED);
+                            map_defense.erase(defense.first);
+                             pick = true;
+
+                         }
                 }
+
+                if (pick && respawn_defense_points.find(defense.first) != respawn_defense_points.end()) {
+                    Protection defense_protection = respawn_defense_points[defense.first];
+
+                    respawn_defense_points.emplace(id_defense, defense_protection);
+                    respawn_defense_points.erase(defense.first);
+                    std::random_device rd;
+                    std::mt19937 gen(rd());
+                    std::uniform_int_distribution<> distrib(500, 1000);
+                    int random_addition = distrib(gen);
+
+                    time_defense_last_respawn.emplace(id_defense, random_addition);
+                    id_defense++;
+                    break;
+                }else if (pick) break;
             }
+
             break;
         }
 
@@ -162,3 +188,13 @@ void DuckAction::weaponComand(uint8_t comando) {
 
 }
 
+
+
+bool DuckAction::inRangePickUp(float x_pos, float y_pos, float HEIGHT, float WIDTH, DuckPlayer& personaje) {
+
+    return personaje.getXPos() + DUCK_WIDTH >= x_pos &&
+           personaje.getXPos() <= x_pos + WIDTH &&
+           personaje.getYPos() + DUCK_HEIGHT >= y_pos &&
+           personaje.getYPos() <= y_pos + HEIGHT;
+
+}

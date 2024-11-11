@@ -20,6 +20,8 @@ void Menu::initialize(){
     join_game_scene = new QGraphicsScene(this);
     wait_scene = new QGraphicsScene(this);
     view = new QGraphicsView(main_scene, this);
+    game_options = new QComboBox(this);
+    game_options->setVisible(false);
 
     this->setGeometry(0, 0, 800, 600);
     view->setGeometry(0, 0, 800, 600);
@@ -166,6 +168,9 @@ void Menu::show_make_game_scene(){
     QPushButton* make_game_button = new QPushButton("Make game");
     layout_game->addWidget(make_game_button);
     connect(make_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    connect(make_game_button, &QPushButton::clicked, this, [this]() {
+        emit create();
+    });
     //connect(make_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);
     QPushButton* back_button = new QPushButton("Back");
     layout_game->addWidget(back_button);
@@ -228,17 +233,22 @@ void Menu::show_join_game_scene(){
     //Columna 2
     QWidget *widget_games = new QWidget;
     QVBoxLayout *layout_games = new QVBoxLayout(widget_games);
-
-
-    QComboBox *game_options = new QComboBox();
-    game_options->addItem("Partida1");
-    game_options->addItem("Partida2");
-    game_options->addItem("Partida3");
+    
+    game_options->setVisible(true);
     layout_games->addWidget(new QLabel("Select a game:"));
     layout_games->addWidget(game_options);
+    QPushButton* update_button = new QPushButton("Update games");
+    layout_games->addWidget(update_button);
+    connect(update_button, &QPushButton::clicked, this, [this]() {
+        emit update_games(*this);
+    });
     QPushButton* join_game_button = new QPushButton("Join game");
     layout_games->addWidget(join_game_button);
-    connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
+    connect(join_game_button, &QPushButton::clicked, this, [this]() {
+        this->close();
+        emit join(active_games.take(game_options->currentText()));
+    });
+    //connect(join_game_button, &QPushButton::pressed, this, &Menu::show_wait_scene);
     /*connect(join_game_button, &QPushButton::pressed, menu_controller, &MenuController::start_game);*/
 
     QPushButton* back_button = new QPushButton("Back");
@@ -255,10 +265,6 @@ void Menu::show_join_game_scene(){
 
 }
 
-void Menu::show_number_players(){
-
-}
-
 void Menu::show_wait_scene(){
     std::string path = std::string(DATA_PATH) + std::string("/menu/Background.jpg");
     QString path_image = QString::fromStdString(path);
@@ -267,7 +273,6 @@ void Menu::show_wait_scene(){
     QVBoxLayout *layout_wait = new QVBoxLayout(widget_wait);
     layout_wait->addWidget(new QLabel("Waiting for the game to start"));
 
-    //Esto es solo para el cliente que crea el juego.
     QPushButton* start_game = new QPushButton("Start game");
     layout_wait->addWidget(start_game);
     connect(start_game, &QPushButton::clicked, this, [this]() {
@@ -281,6 +286,22 @@ void Menu::show_wait_scene(){
     view->setScene(wait_scene);
     view->show();
 }
+
+void Menu::show_update_games(std::list<uint8_t> active_games){
+    this->active_games.clear();
+    game_options->clear();
+
+    for(auto game : active_games) {
+        std::string game_name_str = std::to_string(game);
+        QString game_name = QString::fromStdString(game_name_str);
+
+        this->active_games.insert(game_name, game);
+        game_options->addItem(game_name);
+    }
+
+    show_join_game_scene();
+}
+
 Menu::~Menu()
 {
 }

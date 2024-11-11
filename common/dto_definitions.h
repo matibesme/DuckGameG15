@@ -42,7 +42,7 @@ struct DTOBoxes{
     uint8_t id;
     float x_pos;
     float y_pos;
-    uint8_t type;
+
 };
 
 struct Protection {
@@ -74,7 +74,8 @@ struct GameState
 struct CommandClient {
     uint8_t type_of_action; 
     // Movement
-    uint8_t type_of_movement;  
+    uint8_t type_of_movement;
+    uint8_t id;
 
 };
 

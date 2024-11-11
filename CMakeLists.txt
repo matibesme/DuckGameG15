@@ -115,8 +115,8 @@ if(TALLER_SERVER)
             server/duck_action.cpp
             server/items/weapons/factory_weapons.cpp
             server/items/weapons/factory_weapons.h
-            server/items/box.h
-            server/items/box.cpp
+            server/items/boxes.h
+            server/items/boxes.cpp
     )
 
     # Incluir el directorio 'server' para los archivos de encabezado (opcional)

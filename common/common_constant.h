@@ -30,8 +30,8 @@ constexpr int SCENE_WIDTH = 800;
 constexpr int SCENE_HEIGHT = 600;
 constexpr int MAP_HEIGHT = 64 * DUCK_HEIGHT;
 constexpr int MAP_WIDTH = 64 * DUCK_WIDTH;
-constexpr int WIDTH_BOX = 32;
-constexpr int HEIGHT_BOX = 32;
+constexpr int WIDTH_BOX = 17;
+constexpr int HEIGHT_BOX = 20;
 
 // Protocolo
 constexpr uint8_t FIRST_SEND_BYTE = 0x03;
@@ -139,6 +139,9 @@ constexpr uint8_t TYPE_BACKGROUND_CITY = 0x90;
 constexpr uint8_t TYPE_BACKGROUND_FOREST = 0x91;
 constexpr uint8_t TYPE_BACKGROUND_CIELO_NUBES = 0x92;
 
+
+//BOXES
+constexpr uint8_t TYPE_BOX=0X21;
 // Constantes adicionales
 constexpr char SALIDA = 'q';
 constexpr int QUEUE_TAMANIO_MAX = 100;
@@ -152,3 +155,7 @@ constexpr uint8_t JOIN_GAME = 0xCC;
 constexpr uint8_t CREATE_GAME = 0xDD;
 constexpr uint8_t START_GAME = 0xEE;
 constexpr uint8_t LISTAR_PARTIDAS = 0xFF;
+
+
+//TIMES
+constexpr int TIME_TO_RESPAWN = 10;

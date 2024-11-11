@@ -1,6 +1,7 @@
 #ifndef MENUCONTROLLER_H
 #define MENUCONTROLLER_H
 #include "../client.h"
+#include "menu.h"
 #include <cstdint>
 #include <iostream>
 #include <vector>
@@ -23,7 +24,10 @@ public:
     ~MenuController();
     
 public slots:
+    void create();
     void start();
+    void join(uint8_t id_game);
+    void update_games(Menu& menu);
 };
 
 #endif // MENUCONTROLLER_H
