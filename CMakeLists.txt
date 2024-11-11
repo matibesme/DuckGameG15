@@ -155,6 +155,8 @@ if(TALLER_EDITOR)
         editor/levelEditor/idmaker.cpp
         editor/levelEditor/mapobject.h
         editor/levelEditor/mapobject.cpp
+        editor/levelEditor/typemaker.h
+        editor/levelEditor/typemaker.cpp
         editor/levelEditor/main.cpp
     )
 

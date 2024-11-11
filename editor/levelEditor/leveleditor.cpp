@@ -6,7 +6,9 @@
 #include <QLabel>
 #include <QDrag>
 #include <QMimeData>
+#include <QtWidgets>
 #include "leveleditorcontroller.h"
+
 
 LevelEditor::LevelEditor(QWidget *parent)
     : QMainWindow(parent)
@@ -14,9 +16,57 @@ LevelEditor::LevelEditor(QWidget *parent)
 {
     //ui->setupUi(this);
     this->setGeometry(0, 0, 640, 480);
+    initialize();
+}
+
+void LevelEditor::initialize(){
+    view = new QGraphicsView(this);
+    level_editor_scene = new QGraphicsScene(this);
+    main_menu_scene = new QGraphicsScene(this);
+    controller = new LevelEditorController(*level_editor_scene, this, this);
+
+    view->setGeometry(0, 0, 640, 480);
+    main_menu_scene->setSceneRect(0, 0, 640, 480);
+    level_editor_scene->setSceneRect(0, 0, 640, 480);
+
+    show_main_menu();
+}
+
+void LevelEditor::show_main_menu(){
+    std::string path = std::string(DATA_PATH) + std::string("/editor/main_background.png");
+    QString path_image = QString::fromStdString(path);
+    QPixmap background(path_image);
+    main_menu_scene->setBackgroundBrush(background);
+
+    QPushButton* create_level = new QPushButton("Create level");
+    create_level->setGeometry(250, 300, 150, 45);
+    connect(create_level, &QPushButton::clicked, this, &LevelEditor::show_level_editor);
+
+    QPushButton* edit_level = new QPushButton("Edit level");
+    connect(edit_level, &QPushButton::clicked, this, [this]() {
+        bool ok;
+        QString text = QInputDialog::getText(this, tr("Nombre del mapa"),
+                                         tr("Ingrese el nombre del mapa"), QLineEdit::Normal,
+                                         "", &ok);
+        if(!text.isEmpty()){
+            controller->load_map(text.toStdString());
+            show_level_editor();
+        }                                
+        
+    });
+    edit_level->setGeometry(250, 350, 150, 45);
+
+    main_menu_scene->addWidget(create_level);
+    main_menu_scene->addWidget(edit_level);
+    view->setScene(main_menu_scene);
+    view->show();
+}
+
+void LevelEditor::show_level_editor(){
     setContextMenuPolicy(Qt::CustomContextMenu);
-    controller = new LevelEditorController(this, this);
     connect(this, &QMainWindow::customContextMenuRequested, this, &LevelEditor::show_menu_context);
+    view->setScene(level_editor_scene);
+    view->show();
 }
 
 void LevelEditor::show_menu_context(const QPoint &pos){

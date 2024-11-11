@@ -14,38 +14,31 @@
 #include <fstream>
 #include <iostream>
 
-LevelEditorController::LevelEditorController(QMainWindow *window, QObject *parent) :  QObject(parent), window(window){
-    scene = new QGraphicsScene(this);
-    view = new QGraphicsView(scene, window);
-
-    view->setGeometry(0, 0, 640, 480);
-    scene->setSceneRect(0, 0, 640, 480);
+LevelEditorController::LevelEditorController(QGraphicsScene& scene, QMainWindow *window, QObject *parent) :  QObject(parent), window(window), scene(scene){
     std::string background_type("");
-    view->setScene(scene);
-    view->show();
 }
 
 void LevelEditorController::set_background(const QString &background_name){
     QString background_path = QString::fromStdString(path_maker.get_background_path(background_name.toStdString()));
 
     QPixmap background(background_path);
-    scene->setBackgroundBrush(background);
+    scene.setBackgroundBrush(background);
     background_type = background_name.toStdString();
 
 }
 
-void LevelEditorController::set_platform(const QString &platform_type){
+void LevelEditorController::set_platform(const QString &platform_type, int pos_x, int pos_y){
     QString platform_path = QString::fromStdString(path_maker.get_platform_path(platform_type.toStdString()));;
 
     QPixmap platform(platform_path);
     MapObject* platform_item = new MapObject(platform, platform_type);
     
-    platform_item->setPos(100, 100);
-    scene->addItem(platform_item);
+    platform_item->setPos(pos_x, pos_y);
+    scene.addItem(platform_item);
     platforms.push_back(platform_item);
 }
 
-void LevelEditorController::set_spawn_duck(){
+void LevelEditorController::set_spawn_duck(int pos_x, int pos_y){
     QString duck_path = QString::fromStdString(std::string(DATA_PATH) + std::string("/Duck.png"));
 
     QRect rect(0, 7, 32, 24);
@@ -54,53 +47,53 @@ void LevelEditorController::set_spawn_duck(){
 
     QGraphicsPixmapItem* duck_spawn = new QGraphicsPixmapItem(duck);
     duck_spawn->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-    duck_spawn->setPos(100, 100);
-    scene->addItem(duck_spawn);
+    duck_spawn->setPos(pos_x, pos_y);
+    scene.addItem(duck_spawn);
     duck_spawns.push_back(duck_spawn);
 
 }
 
-void LevelEditorController::set_spawn_weapon(const QString &gun_type){
+void LevelEditorController::set_spawn_weapon(const QString &gun_type, int pos_x, int pos_y){
     QString weapon_path = QString::fromStdString(path_maker.get_weapon_path(gun_type.toStdString()));;
 
     QPixmap weapon(weapon_path);
     MapObject* weapon_item = new MapObject(weapon, gun_type);
     
-    weapon_item->setPos(100, 100);
-    scene->addItem(weapon_item);
+    weapon_item->setPos(pos_x, pos_y);
+    scene.addItem(weapon_item);
     weapons.push_back(weapon_item);
 }
 
-void LevelEditorController::set_spawn_box(){
+void LevelEditorController::set_spawn_box(int pos_x, int pos_y){
     QString box_path = QString::fromStdString(std::string(DATA_PATH) + std::string("/objects/itemBox.png"));
     QPixmap box(box_path);
 
     QGraphicsPixmapItem* box_spawn = new QGraphicsPixmapItem(box);
     box_spawn->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-    box_spawn->setPos(100, 100);
-    scene->addItem(box_spawn);
+    box_spawn->setPos(pos_x, pos_y);
+    scene.addItem(box_spawn);
     boxes.push_back(box_spawn);
 }
 
-void LevelEditorController::set_spawn_armour(const QString &armour_type){
+void LevelEditorController::set_spawn_armour(const QString &armour_type, int pos_x, int pos_y){
     QString armour_path = QString::fromStdString(path_maker.get_armour_path(armour_type.toStdString()));;
 
     QPixmap armour(armour_path);
     MapObject* armour_item = new MapObject(armour, armour_type);
     
-    armour_item->setPos(100, 100);
-    scene->addItem(armour_item);
+    armour_item->setPos(pos_x, pos_y);
+    scene.addItem(armour_item);
     armours.push_back(armour_item);
 }
 
-void LevelEditorController::set_wall(const QString &wall_type){
+void LevelEditorController::set_wall(const QString &wall_type, int pos_x, int pos_y){
     QString wall_path = QString::fromStdString(path_maker.get_wall_path(wall_type.toStdString()));;
 
     QPixmap wall(wall_path);
     MapObject* wall_item = new MapObject(wall, wall_type);
 
-    wall_item->setPos(100, 100);
-    scene->addItem(wall_item);
+    wall_item->setPos(pos_x, pos_y);
+    scene.addItem(wall_item);
     walls.push_back(wall_item);
 }
 
@@ -236,4 +229,64 @@ void LevelEditorController::save_map(){
     }
     
     
+}
+
+void LevelEditorController::load_map(const std::string path_map){
+    std::string path =  std::string(DATA_PATH) + std::string("/maps/") + std::string(path_map) + std::string(".yaml");
+    YAML::Node map = YAML::LoadFile(path);
+
+    QString background_name = QString::fromStdString(type_maker.get_type_background(map["background_type"].as<uint8_t>()));
+    set_background(background_name);
+
+    if (map["plataforms"]) {
+        for (const auto& platform : map["plataforms"]) {
+            int pos_x = platform["pos_x"].as<int>();
+            int pos_y = platform["pos_y"].as<int>();
+            QString type = QString::fromStdString(type_maker.get_type_platform(platform["type"].as<uint8_t>()));
+            set_platform(type, pos_x, pos_y);
+        }
+    }
+
+    if (map["walls"]) {
+        for (const auto& walls : map["walls"]) {
+            int pos_x = walls["pos_x"].as<int>();
+            int pos_y = walls["pos_y"].as<int>();
+            QString type = QString::fromStdString(type_maker.get_type_wall(walls["type"].as<uint8_t>()));
+            set_wall(type, pos_x, pos_y);
+        }
+    }
+
+    if (map["duck spawns"]) {
+        for (const auto& duck_spawns : map["duck spawns"]) {
+            int pos_x = duck_spawns["pos_x"].as<int>();
+            int pos_y = duck_spawns["pos_y"].as<int>();
+            set_spawn_duck(pos_x, pos_y);
+        }
+    }
+
+    if (map["weapon spawns"]) {
+        for (const auto& weapon : map["weapon spawns"]) {
+            int pos_x = weapon["pos_x"].as<int>();
+            int pos_y = weapon["pos_y"].as<int>();
+            QString type = QString::fromStdString(type_maker.get_type_weapon(weapon["type"].as<uint8_t>()));
+            set_spawn_weapon(type, pos_x, pos_y);
+        }
+    }
+
+    if (map["box spawns"]) {
+        for (const auto& box : map["box spawns"]) {
+            int pos_x = box["pos_x"].as<int>();
+            int pos_y = box["pos_y"].as<int>();
+            set_spawn_box(pos_x, pos_y);
+        }
+    }
+
+    if (map["armour spawns"]) {
+        for (const auto& armour : map["armour spawns"]) {
+            int pos_x = armour["pos_x"].as<int>();
+            int pos_y = armour["pos_y"].as<int>();
+            QString type = QString::fromStdString(type_maker.get_type_armour(armour["type"].as<uint8_t>()));
+            set_spawn_armour(type, pos_x, pos_y);
+        }
+    }
 }
