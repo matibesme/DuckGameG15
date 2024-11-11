@@ -219,7 +219,7 @@ endif()
 # ---------------
 
 if(TALLER_TESTS)
-    # Let's use google test
+    # Let's use Google Test
     include(FetchContent)
     FetchContent_Declare(
             googletest
@@ -231,39 +231,43 @@ if(TALLER_TESTS)
     FetchContent_MakeAvailable(googletest)
     include(GoogleTest)
 
-    # target for testing
+    # Target for testing
     add_executable(taller_tests)
 
     # Assume the code under testing is in taller_common
     add_dependencies(taller_tests taller_common)
 
-    # Say where to find the xoz headers
+    # Say where to find the headers for testing and common code
     target_include_directories(taller_tests PUBLIC .)
 
-    # Add the source files for client and server
+    # Add the source files for client and server protocol implementations
     target_sources(taller_tests PRIVATE
             client/protocolo_cliente.cpp
             server/protocolo_server.cpp
+            common/protocolo.cpp
     )
 
-    # Add the test folder with all its content
-    # Include all files in the tests folder
-    file(GLOB_RECURSE TEST_SOURCES "tests/*.cpp")
+    # Include all test files in the tests folder
+    file(GLOB_RECURSE TEST_SOURCES "tests/*.cpp" "tests/*.h")
     target_sources(taller_tests PRIVATE ${TEST_SOURCES})
 
-    # Set the compiler warnings to the tests target (but be a little lesser strict)
+    # Set compiler warnings for tests (optional strictness)
     set_project_warnings(taller_tests ${TALLER_MAKE_WARNINGS_AS_ERRORS} TRUE)
 
-    # Say where googletest headers can be found
+    # Include directories for Google Test and Mock
     target_include_directories(taller_tests
             PUBLIC
             ${gtest_SOURCE_DIR}/include
             ${gmock_SOURCE_DIR}/include
     )
 
-    # Link the libraries (make sure to link your common code and googletest)
+    # Link the libraries (common code and Google Test/Mock)
     target_link_libraries(taller_tests
             taller_common
             GTest::gtest_main
+            GTest::gmock
     )
+
+    # Register tests with CTest
+    gtest_discover_tests(taller_tests)
 endif()
