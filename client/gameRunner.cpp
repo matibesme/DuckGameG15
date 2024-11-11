@@ -29,7 +29,7 @@ void GameRunner::run() {
       auto t1 = std::chrono::high_resolution_clock::now();
 
       handler.correrHandlers();
-      while (queue_receiver.try_pop(command)) // y nos quedamos con la ultima
+      while (queue_receiver.try_pop(command)) // Nos quedamos con la ultima
       {
         actualizar = true;
       }
