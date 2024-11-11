@@ -7,7 +7,7 @@ DuelPistol::DuelPistol(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8
 
 bool DuelPistol::isEmptyAmmo() { return ammo_quantity == 0; }
 
-std::unique_ptr<Bullet> DuelPistol::shoot() {
+std::unique_ptr<Bullet> DuelPistol::shoot(bool is_aiming_up) {
     if (ammo_quantity == 0) {
         return nullptr;
     }
@@ -16,8 +16,10 @@ std::unique_ptr<Bullet> DuelPistol::shoot() {
     }
     bullet_count += 1;
     ammo_quantity--;
-
-    if (direction == RIGHT) {
+    if (is_aiming_up) {
+        bala.release(x_pos + DUCK_WIDTH - WIDTH_GUN / 2, y_pos - WIDTH_BULLET, BULLET_UP,
+                     bala.randomSpread());
+    } else if (direction == RIGHT) {
         bala.release(x_pos + DUCK_WIDTH + WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2), direction,
                      bala.randomSpread());
     } else if (direction == LEFT) {

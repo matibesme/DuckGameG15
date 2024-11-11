@@ -18,7 +18,8 @@ LaserRifle::LaserRifle(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8
 
 bool LaserRifle::isEmptyAmmo() { return ammo_quantity == 0; }
 
-std::unique_ptr<Bullet> LaserRifle::shoot() {
+std::unique_ptr<Bullet> LaserRifle::shoot(bool is_aiming_up) {
+    (void)is_aiming_up;
     if (isEmptyAmmo()) {
         return nullptr;
     }

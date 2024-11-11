@@ -27,7 +27,8 @@ PewPewLaser::PewPewLaser(uint8_t type, uint8_t id, float x_pos, float y_pos, uin
 
 bool PewPewLaser::isEmptyAmmo() { return ammo_quantity == 0; }
 
-std::unique_ptr<Bullet> PewPewLaser::shoot() {
+std::unique_ptr<Bullet> PewPewLaser::shoot(bool is_aiming_up) {
+    (void)is_aiming_up;
     if (isEmptyAmmo()) {
         return nullptr;
     }

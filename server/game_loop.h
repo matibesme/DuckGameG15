@@ -35,7 +35,8 @@ private:
     std::map<uint8_t, DuckPlayer> map_personajes;
 
     // WEAPONS SECTION
-    std::list<RespawnPoint> respawn_weapon_points;
+    std::map<uint16_t, RespawnPoint> respawn_weapon_points;
+    std::map<uint16_t, uint8_t> time_weapon_last_respawn;
     std::map<uint16_t, std::shared_ptr<Weapon>> map_free_weapons;
     std::list<Boxes> list_boxes;
     FactoryWeapons factory_weapons;
@@ -44,20 +45,19 @@ private:
     uint16_t id_balas;
     uint16_t id_weapons;
     uint8_t id_boxes;
-    uint16_t id_helmets;
-    uint16_t id_armors;
+    uint16_t id_defense;
     std::list<DTOPlatform> list_plataformas;
-
-    std::vector<std::shared_ptr<Boxes>> vector_boxes;
 
 
     // std::list<DTOBoxes> list_boxes;
 
-    std::map<uint16_t, Protection> map_helmet;
-    std::map<uint16_t, Protection> map_armor;
+    std::map<uint16_t, Protection> map_defense;
+    std::map<uint16_t, Protection> respawn_defense_points;
+    std::map<uint16_t, uint8_t> time_defense_last_respawn;
+
     DuckAction duck_action;
     // std::list,std::string> list_colors;
-    std::list<std::string> list_colors;
+    std::vector<std::string> list_colors;
     LoadGameFile load_game_config;
     void paraCadaPatoAction();
 
@@ -73,5 +73,6 @@ public:
     void sendCompleteScene();
     void checkCoalition(std::unique_ptr<Bullet>& bullet);
     void checkCoalitionDuckPlatform(DuckPlayer& personaje);
+    void respawnWeapon();
     virtual ~GameLoop();
 };

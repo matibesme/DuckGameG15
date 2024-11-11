@@ -15,12 +15,11 @@ class LoadGameFile {
 private:
     FactoryWeapons& factory_weapons;
     std::list<DTOPlatform>& platforms;
-    std::list<RespawnPoint>& respawn_weapon_points;
-    std::map<uint16_t, Protection>& map_helmet;
-    std::map<uint16_t, Protection>& map_armor;
+    std::map<uint16_t, RespawnPoint>& respawn_weapon_points;
+    std::map<uint16_t, Protection>& map_defense;
+    std::map<uint16_t, Protection>& respawn_defense_points;
+    uint16_t& id_defense;
     uint16_t& id_weapons;
-    uint16_t& id_helemets;
-    uint16_t& id_armors;
     uint8_t& id_boxes;
     std::map<uint16_t, std::shared_ptr<Weapon>>& map_free_weapons;
     std::list<Boxes>& list_boxes;
@@ -29,10 +28,10 @@ private:
 
 public:
     LoadGameFile(FactoryWeapons& factory_weapons, std::list<DTOPlatform>& platforms,
-                 std::list<RespawnPoint>& respawn_weapon_points,
-                 std::map<uint16_t, Protection>& map_helmet,
-                 std::map<uint16_t, Protection>& map_armor, uint16_t& id_weapons,
-                 uint16_t& id_helemets, uint16_t& id_armors, uint8_t& id_boxes,
+                 std::map<uint16_t, RespawnPoint>& respawn_weapon_points,
+                 std::map<uint16_t, Protection>& map_defense,
+                 std::map<uint16_t, Protection>& respawn_defense_points, uint16_t& id_defense,
+                 uint16_t& id_weapons, uint8_t& id_boxes,
                  std::map<uint16_t, std::shared_ptr<Weapon>>& map_free_weapons,
                  std::list<Boxes>& list_boxes,
                  std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets, uint16_t& id_bullets);

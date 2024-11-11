@@ -14,7 +14,8 @@ bool Banana::isEmptyAmmo() { return ammo_quantity == 0; }
 bool Banana::isActive() { return false; }
 
 
-std::unique_ptr<Bullet> Banana::shoot() {
+std::unique_ptr<Bullet> Banana::shoot(bool is_aiming_up) {
+    (void)is_aiming_up;
     if (bullet_count > 0) {
         return nullptr;
     }

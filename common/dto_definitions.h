@@ -72,6 +72,7 @@ struct CommandClient {
     uint8_t type_of_action;
     // Movement
     uint8_t type_of_movement;
+    uint8_t id;
 };
 
 struct GameAccess {

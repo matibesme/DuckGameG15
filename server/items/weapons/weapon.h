@@ -22,7 +22,7 @@ public:
            uint8_t ammo_quantity, float recoil);
 
     virtual bool isEmptyAmmo() = 0;
-    virtual std::unique_ptr<Bullet> shoot() = 0;
+    virtual std::unique_ptr<Bullet> shoot(bool is_aiming_up) = 0;
     virtual bool isActive() = 0;
 
     virtual void setReloadTime(int reload_time_) = 0;

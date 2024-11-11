@@ -17,7 +17,7 @@ public:
 
     bool isEmptyAmmo() override;
 
-    std::unique_ptr<Bullet> shoot() override;
+    std::unique_ptr<Bullet> shoot(bool is_aiming_up) override;
 
     bool isActive() override;
 

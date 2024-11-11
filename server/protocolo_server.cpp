@@ -1,10 +1,11 @@
 #include "protocolo_server.h"
 
 // cppcheck-suppress constParameter
-ProtocoloServer::ProtocoloServer(Socket socket, bool& dead_connection):
+ProtocoloServer::ProtocoloServer(Socket socket, bool& dead_connection, uint8_t id_):
         socket_server(std::move(socket)),
         dead_connection(dead_connection),
-        protocolo(socket_server) {}
+        protocolo(socket_server),
+        id(id_) {}
 
 void ProtocoloServer::sendToClient(const GameState& command) {
     try {
@@ -108,14 +109,13 @@ CommandClient ProtocoloServer::receiveCommandFromClients() {
 
         uint8_t type_of_action = protocolo.receiveByte(dead_connection);
         uint8_t type_of_movement = protocolo.receiveByte(dead_connection);
-
-        return {type_of_action, type_of_movement};
+        return {type_of_action, type_of_movement, id};
 
     } catch (const std::exception& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;
     }
-    return {0, 0};
+    return {0, 0, 0};
 }
 
 GameAccess ProtocoloServer::receiveAccessFromClients() {

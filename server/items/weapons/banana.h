@@ -20,7 +20,7 @@ public:
            uint8_t ammo_quantity, float recoil);
     bool isEmptyAmmo() override;
     bool isActive() override;
-    std::unique_ptr<Bullet> shoot() override;
+    std::unique_ptr<Bullet> shoot(bool is_aiming_up) override;
     void setReloadTime(int reload_time) override;
     int getReloadTime() override;
     void stopShooting() override;

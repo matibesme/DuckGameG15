@@ -7,6 +7,8 @@
 
 #include "../client.h"
 
+#include "menu.h"
+
 class MenuController: public QObject {
     Q_OBJECT
 private:
@@ -24,8 +26,10 @@ public:
     ~MenuController();
 
 public slots:
+    void create();
     void start();
     void join(uint8_t id_game);
+    void update_games(Menu& menu);
 };
 
 #endif  // MENUCONTROLLER_H
