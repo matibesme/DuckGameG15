@@ -8,17 +8,17 @@
 
 #include "protocolo_server.h"
 
-class Sender: public Thread {
+class Sender : public Thread {
 
 private:
-    ProtocoloServer& protocolo;
-    std::shared_ptr<BlockingQueue<GameState>> queue_sender;
-    bool& dead_connection;
-
+  ProtocoloServer &protocolo;
+  std::shared_ptr<BlockingQueue<GameState>> queue_sender;
+  bool &dead_connection;
 
 public:
-    Sender(ProtocoloServer& protocolo, std::shared_ptr<BlockingQueue<GameState>> queue_sender,
-           bool& dead_connection);
-    virtual void run() override;
-    virtual ~Sender();
+  Sender(ProtocoloServer &protocolo,
+         std::shared_ptr<BlockingQueue<GameState>> queue_sender,
+         bool &dead_connection);
+  virtual void run() override;
+  virtual ~Sender();
 };

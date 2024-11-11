@@ -8,13 +8,14 @@
 #include <QList>
 #include <QMainWindow>
 
-class MapObject: public QGraphicsPixmapItem {
+class MapObject : public QGraphicsPixmapItem {
 public:
-    MapObject(const QPixmap& pixmap, const QString& type, QGraphicsItem* parent = nullptr);
-    QString get_type();
+  MapObject(const QPixmap &pixmap, const QString &type,
+            QGraphicsItem *parent = nullptr);
+  QString get_type();
 
 private:
-    QString type;
+  QString type;
 };
 
 #endif

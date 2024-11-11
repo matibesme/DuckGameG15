@@ -8,14 +8,14 @@
 
 #include "protocolo_cliente.h"
 
-class Sender: public Thread {
+class Sender : public Thread {
 
 private:
-    BlockingQueue<uint8_t>& queue_sender;
-    ProtocoloCliente& protocolo;
+  BlockingQueue<uint8_t> &queue_sender;
+  ProtocoloCliente &protocolo;
 
 public:
-    Sender(ProtocoloCliente& protocolo, BlockingQueue<uint8_t>& queue_sender);
-    virtual void run() override;
-    virtual ~Sender();
+  Sender(ProtocoloCliente &protocolo, BlockingQueue<uint8_t> &queue_sender);
+  virtual void run() override;
+  virtual ~Sender();
 };

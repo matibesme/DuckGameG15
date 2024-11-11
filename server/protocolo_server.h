@@ -13,21 +13,21 @@
 #include "../common/socket.h"
 
 class ProtocoloServer {
-    Socket socket_server;
-    bool& dead_connection;
-    Protocolo protocolo;
-    uint8_t id;
+  Socket socket_server;
+  bool &dead_connection;
+  Protocolo protocolo;
+  uint8_t id;
 
 public:
-    ProtocoloServer(Socket socket, bool& dead_connection, uint8_t id_);
+  ProtocoloServer(Socket socket, bool &dead_connection, uint8_t id_);
 
-    void sendToClient(const GameState& command);
-    void sendFullGame(const GameState& command);
-    void sendActiveGames(const std::map<uint8_t, uint8_t>& games);
-    void sendBackground(const GameState& command);
-    CommandClient receiveCommandFromClients();
-    GameAccess receiveAccessFromClients();
+  void sendToClient(const GameState &command);
+  void sendFullGame(const GameState &command);
+  void sendActiveGames(const std::map<uint8_t, uint8_t> &games);
+  void sendBackground(const GameState &command);
+  CommandClient receiveCommandFromClients();
+  GameAccess receiveAccessFromClients();
 
-    void closeSocket();
-    ~ProtocoloServer();
+  void closeSocket();
+  ~ProtocoloServer();
 };

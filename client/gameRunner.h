@@ -14,19 +14,21 @@
 
 class GameRunner {
 private:
-    Graficos graficos;
-    EventHandler handler;
-    BlockingQueue<uint8_t>& queue_sender;
-    BlockingQueue<GameState>& queue_receiver;
-    Sound sound;
-    void reproducirMusica();
+  Graficos graficos;
+  EventHandler handler;
+  BlockingQueue<uint8_t> &queue_sender;
+  BlockingQueue<GameState> &queue_receiver;
+  Sound sound;
+  void reproducirMusica();
 
 public:
-    GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<GameState>& queue_receiver);
+  GameRunner(BlockingQueue<uint8_t> &queue_sender,
+             BlockingQueue<GameState> &queue_receiver);
 
-    void run();
+  void run();
 
-    void delayIfNeeded(std::chrono::high_resolution_clock::time_point& t1, const int delay);
+  void delayIfNeeded(std::chrono::high_resolution_clock::time_point &t1,
+                     const int delay);
 };
 
-#endif  // GAMERUNNER_H
+#endif // GAMERUNNER_H

@@ -10,20 +10,20 @@
 #include "lobby_partidas.h"
 #include "protocolo_server.h"
 
-class Receiver: public Thread {
+class Receiver : public Thread {
 
 private:
-    ProtocoloServer& protocolo;
-    bool& dead_connection;
-    bool in_lobby;
-    bool start_game;
-    std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;
-    uint8_t id;
-    LobbyPartidas& lobby;
-
+  ProtocoloServer &protocolo;
+  bool &dead_connection;
+  bool in_lobby;
+  bool start_game;
+  std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;
+  uint8_t id;
+  LobbyPartidas &lobby;
 
 public:
-    Receiver(ProtocoloServer& protocolo, bool& dead_connection, uint8_t id_, LobbyPartidas& lobby);
-    virtual void run() override;
-    virtual ~Receiver();
+  Receiver(ProtocoloServer &protocolo, bool &dead_connection, uint8_t id_,
+           LobbyPartidas &lobby);
+  virtual void run() override;
+  virtual ~Receiver();
 };

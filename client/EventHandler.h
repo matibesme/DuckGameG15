@@ -11,13 +11,13 @@
 
 class EventHandler {
 private:
-    BlockingQueue<uint8_t>& queue_sender;
-    std::unordered_set<SDL_Keycode> teclas_presionadas;
+  BlockingQueue<uint8_t> &queue_sender;
+  std::unordered_set<SDL_Keycode> teclas_presionadas;
 
 public:
-    explicit EventHandler(BlockingQueue<uint8_t>& queue_sender);
+  explicit EventHandler(BlockingQueue<uint8_t> &queue_sender);
 
-    void correrHandlers();
+  void correrHandlers();
 };
 
-#endif  // EVENTHANDLER_H
+#endif // EVENTHANDLER_H

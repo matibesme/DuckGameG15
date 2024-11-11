@@ -17,22 +17,22 @@
 
 class Client {
 private:
-    ProtocoloCliente protocolo;
-    bool is_socket_close;
-    BlockingQueue<uint8_t> queue_sender;
-    BlockingQueue<GameState> queue_receiver;
-    GameRunner game;
-    Sender sender;
-    Receiver receiver;
+  ProtocoloCliente protocolo;
+  bool is_socket_close;
+  BlockingQueue<uint8_t> queue_sender;
+  BlockingQueue<GameState> queue_receiver;
+  GameRunner game;
+  Sender sender;
+  Receiver receiver;
 
 public:
-    Client(const char* host, const char* port);
-    void execute();
-    void createGame();
-    void startGame();
-    void joinGame(uint8_t idPartida);
-    std::list<uint8_t> updateGame(uint8_t key);
-    ~Client();
+  Client(const char *host, const char *port);
+  void execute();
+  void createGame();
+  void startGame();
+  void joinGame(uint8_t idPartida);
+  std::list<uint8_t> updateGame(uint8_t key);
+  ~Client();
 };
 
 #endif

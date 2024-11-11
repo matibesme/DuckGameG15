@@ -128,7 +128,6 @@ constexpr uint8_t TYPE_PLATFORM_UNDERGROUND = 0x81;
 constexpr uint8_t TYPE_PLATFORM_DONUT_LONG = 0x82;
 constexpr uint8_t TYPE_PLATFORM_NATURE_LONG = 0x83;
 
-
 // Walls
 constexpr uint8_t TYPE_WALL_DONUT = 0x85;
 constexpr uint8_t TYPE_WALL_NATURE = 0x86;
@@ -139,7 +138,6 @@ constexpr uint8_t TYPE_BACKGROUND_CITY = 0x90;
 constexpr uint8_t TYPE_BACKGROUND_FOREST = 0x91;
 constexpr uint8_t TYPE_BACKGROUND_CIELO_NUBES = 0x92;
 
-
 // BOXES
 constexpr uint8_t TYPE_BOX = 0X21;
 // Constantes adicionales
@@ -149,13 +147,11 @@ constexpr float BULLET_VEL = 5;
 constexpr float MOVEMENT_QUANTITY_X = 3;
 constexpr float MOVEMENT_QUANTITY_Y = 3;
 
-
 //  Access to game
 constexpr uint8_t JOIN_GAME = 0xCC;
 constexpr uint8_t CREATE_GAME = 0xDD;
 constexpr uint8_t START_GAME = 0xEE;
 constexpr uint8_t LISTAR_PARTIDAS = 0xFF;
-
 
 // TIMES
 constexpr int TIME_TO_RESPAWN = 10;

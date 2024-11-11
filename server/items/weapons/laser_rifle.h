@@ -8,26 +8,26 @@
 
 #include "weapon.h"
 
-class LaserRifle: public Weapon {
+class LaserRifle : public Weapon {
 private:
-    float spread_counter;
-    std::vector<Bullet> bullets_vector;
+  float spread_counter;
+  std::vector<Bullet> bullets_vector;
 
 public:
-    LaserRifle(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage, uint8_t range,
-               uint8_t ammo_quantity, float recoil);
+  LaserRifle(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
+             uint8_t range, uint8_t ammo_quantity, float recoil);
 
-    bool isEmptyAmmo() override;
+  bool isEmptyAmmo() override;
 
-    std::unique_ptr<Bullet> shoot(bool is_aiming_up) override;
+  std::unique_ptr<Bullet> shoot(bool is_aiming_up) override;
 
-    bool isActive() override;
+  bool isActive() override;
 
-    void setReloadTime(int reload_time) override;
+  void setReloadTime(int reload_time) override;
 
-    int getReloadTime() override;
+  int getReloadTime() override;
 
-    void stopShooting() override;
+  void stopShooting() override;
 };
 
-#endif  // LASER_RIFLE_H
+#endif // LASER_RIFLE_H

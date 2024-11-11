@@ -10,14 +10,12 @@
 #include "granada.h"
 #include "magnum.h"
 
-
 class FactoryWeapons {
 
 public:
-    FactoryWeapons();
-    std::shared_ptr<Weapon> createWeapon(uint8_t type, float x_pos, float y_pos);
-    std::shared_ptr<Weapon> generateRandomWeapon(float pos_x, float pos_y);
+  FactoryWeapons();
+  std::shared_ptr<Weapon> createWeapon(uint8_t type, float x_pos, float y_pos);
+  std::shared_ptr<Weapon> generateRandomWeapon(float pos_x, float pos_y);
 };
 
-
-#endif  // FACTORY_WEAPONS_H
+#endif // FACTORY_WEAPONS_H

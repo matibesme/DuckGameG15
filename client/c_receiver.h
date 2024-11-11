@@ -8,15 +8,15 @@
 
 #include "protocolo_cliente.h"
 
-
-class Receiver: public Thread {
+class Receiver : public Thread {
 
 private:
-    ProtocoloCliente& protocolo;
-    BlockingQueue<GameState>& queue_receiver;
+  ProtocoloCliente &protocolo;
+  BlockingQueue<GameState> &queue_receiver;
 
 public:
-    Receiver(ProtocoloCliente& protocolo, BlockingQueue<GameState>& queue_receiver);
-    virtual void run() override;
-    virtual ~Receiver();
+  Receiver(ProtocoloCliente &protocolo,
+           BlockingQueue<GameState> &queue_receiver);
+  virtual void run() override;
+  virtual ~Receiver();
 };

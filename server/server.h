@@ -9,18 +9,15 @@
 #include "game_loop.h"
 #include "server_constant.h"
 
-
 class Server {
 
-
 private:
-    bool close;
+  bool close;
 
-    Acceptor acceptor;
-
+  Acceptor acceptor;
 
 public:
-    explicit Server(const char* port);
-    void run();
-    ~Server();
+  explicit Server(const char *port);
+  void run();
+  ~Server();
 };
