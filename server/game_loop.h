@@ -54,8 +54,7 @@ private:
 
     //std::list<DTOBoxes> list_boxes;
 
-    std::map<uint16_t, Protection> map_helmet;
-    std::map<uint16_t, Protection> map_armor;
+    std::map<uint16_t, Protection> map_defense;
     std::map<uint16_t, Protection> respawn_defense_points;
     std::map<uint16_t,uint8_t> time_defense_last_respawn;
 

@@ -26,14 +26,13 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         id_boxes(0),
         id_defense(0),
         list_plataformas(),
-        map_helmet(),
-        map_armor(),
+        map_defense(),
         respawn_defense_points(),
         time_defense_last_respawn(),
         duck_action(map_personajes, map_free_weapons, respawn_weapon_points, time_weapon_last_respawn,
-            map_bullets, id_balas, id_weapons, map_helmet,map_armor, respawn_defense_points, id_defense),
+            map_bullets, id_balas, id_weapons, map_defense, respawn_defense_points, id_defense,time_defense_last_respawn),
         list_colors({"red","blue","green","yellow","pink","purple","orange","brown","black","white"}),
-        load_game_config(factory_weapons, list_plataformas, respawn_weapon_points, map_helmet, map_armor, respawn_defense_points,id_defense,
+        load_game_config(factory_weapons, list_plataformas, respawn_weapon_points, map_defense, respawn_defense_points,id_defense,
             id_weapons, id_boxes,map_free_weapons, list_boxes, map_bullets, id_balas)
         {}
 
@@ -131,13 +130,12 @@ void GameLoop::sendCompleteScene(){
 
     }
 
-    for (auto& helmet : map_helmet) {
-
-        command.lista_helmets.push_back(helmet.second);
-    }
-
-    for (auto& armor : map_armor) {
-        command.lista_armors.push_back(armor.second);
+    for (auto& defense : map_defense) {
+        if (defense.second.type == HELMET_EQUIPPED) {
+            command.lista_helmets.push_back(defense.second);
+        } else {
+            command.lista_armors.push_back(defense.second);
+        }
     }
 
     queues_map->sendMessagesToQueues(command);
@@ -240,6 +238,18 @@ void GameLoop::respawnWeapon()
             } else {
                 time_weapon_last_respawn[time.first]--;
             }
+
+    }
+
+    for (auto& time: time_defense_last_respawn) {
+        if (time.second ==0) {
+            Protection& defense = respawn_defense_points[time.first];
+            map_defense.emplace(time.first, defense);
+            time_defense_last_respawn.erase(time.first);
+
+        } else {
+            time_defense_last_respawn[time.first]--;
+        }
 
     }
 
