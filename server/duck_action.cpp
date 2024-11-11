@@ -17,8 +17,8 @@ DuckAction::DuckAction(std::map<uint8_t, DuckPlayer>& map_personajes,
         id_weapons(id_weapons){}
 
 
-void DuckAction::movementComand(uint8_t comando) {
-    DuckPlayer& personaje = map_personajes[1];
+void DuckAction::movementComand(uint8_t comando, uint8_t id) {
+    DuckPlayer& personaje = map_personajes[id];
 
     switch (comando) {
         case RIGHT:
@@ -60,8 +60,8 @@ void DuckAction::movementComand(uint8_t comando) {
     }
 }
 
-void DuckAction::weaponComand(uint8_t comando) {
-    DuckPlayer& personaje = map_personajes[1];
+void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
+    DuckPlayer& personaje = map_personajes[id];
 
     bool pick = false;
 

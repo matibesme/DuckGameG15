@@ -22,6 +22,7 @@ void Client::startGame() {
 }
 
 void Client::joinGame(uint8_t idPartida) {
+    idPartida = 1;
     protocolo.sendAccesToServer(JOIN_GAME, idPartida);
 }
 

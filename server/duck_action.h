@@ -28,8 +28,8 @@ class DuckAction {
                  std::map<uint16_t,std::shared_ptr<Weapon>>& map_free_weapons,
                  std::map<uint16_t, std::unique_ptr<Bullet>>& map_bullets,
                  uint16_t& id_balas, uint16_t& id_weapons, std::map<uint16_t, Protection>& map_helmet,std::map<uint16_t, Protection>& map_armor);
-    void movementComand(uint8_t comando);
-    void weaponComand(uint8_t comando);
+    void movementComand(uint8_t comando, uint8_t id);
+    void weaponComand(uint8_t comando, uint8_t id);
 
 };
 

@@ -37,11 +37,10 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
 void GameLoop::run() {
     try {
         load_game_config.loadGame();
-        int i = 0;
+
         for (auto& id : list_id_clientes) {
-            
             map_personajes.emplace(id, DuckPlayer(0, id, POSICION_INICIAL_X, POSICION_INICIAL_Y, "red"));
-            i++; 
+
         }
 
 
@@ -51,6 +50,7 @@ void GameLoop::run() {
             CommandClient comando;
             while (queue_comandos->try_pop(comando)) {
                 checkCommand(comando);
+
             }
             paraCadaPatoAction();
             checkBullets();
@@ -67,9 +67,9 @@ void GameLoop::run() {
 
 void GameLoop::checkCommand(CommandClient comando) {
     if (comando.type_of_action == MOVEMENT_ACTION) {
-        duck_action.movementComand(comando.type_of_movement);
+        duck_action.movementComand(comando.type_of_movement,comando.id);
     } else if (comando.type_of_action == WEAPON_ACTION) {
-        duck_action.weaponComand(comando.type_of_movement);
+        duck_action.weaponComand(comando.type_of_movement,comando.id);
     }
 }
 

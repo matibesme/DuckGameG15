@@ -8,8 +8,10 @@ LobbyPartidas::LobbyPartidas(): id_partida(0),partidas(), protected_queues_sende
 
 std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::addPartida(uint8_t id_client)
 {
+
     std::lock_guard<std::mutex> lock(m);
     end_game[id_partida] = false;
+
     queues_game_loop.emplace(id_partida, std::make_shared<BlockingQueue<CommandClient>>(50));
     protected_queues_sender.emplace(id_partida, std::make_unique<ProtectedQueuesMap>());
     partidas.emplace(id_partida, std::make_unique<GameLoop>(queues_game_loop[id_partida], end_game[id_partida], protected_queues_sender[id_partida], map_id_clientes[id_partida]));
