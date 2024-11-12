@@ -31,6 +31,9 @@ public:
   void show_update_games(std::list<std::string> active_games);
   ~Menu();
 
+public slots:
+  void show_wait(bool is_available_name);
+  
 signals:
   void start();
   void create(std::string player_1, std::string player_2, std::string game_name);

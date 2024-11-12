@@ -159,13 +159,9 @@ void Menu::show_make_game_scene() {
   layout_game->addWidget(new QLabel("Game name"));
   QLineEdit* game_name = new QLineEdit();
   layout_game->addWidget(game_name);
-  /*layout_game->addWidget(new QLabel("Port"));
-  QLineEdit* port = new QLineEdit();
-  layout_game->addWidget(port);*/
+
   QPushButton *make_game_button = new QPushButton("Make game");
   layout_game->addWidget(make_game_button);
-  connect(make_game_button, &QPushButton::clicked, this,
-          &Menu::show_wait_scene);
   connect(make_game_button, &QPushButton::clicked, this, [this, name_player_1, name_player_2, game_name]() { 
     std::string player_1;
     std::string player_2;
@@ -189,8 +185,6 @@ void Menu::show_make_game_scene() {
     }
     emit create(player_1, player_2, game); 
   });
-  // connect(make_game_button, &QPushButton::pressed, menu_controller,
-  // &MenuController::start_game);
   QPushButton *back_button = new QPushButton("Back");
   layout_game->addWidget(back_button);
   connect(back_button, &QPushButton::clicked, this, &Menu::show_main_scene);
@@ -283,11 +277,6 @@ void Menu::show_join_game_scene() {
     }
     emit join(active_games.take(game_options->currentText()), player_1, player_2);
   });
-  // connect(join_game_button, &QPushButton::pressed, this,
-  // &Menu::show_wait_scene);
-  /*connect(join_game_button, &QPushButton::pressed, menu_controller,
-   * &MenuController::start_game);*/
-
   QPushButton *back_button = new QPushButton("Back");
   connect(back_button, &QPushButton::clicked, this, &Menu::show_main_scene);
   layout_games->addWidget(back_button);
@@ -337,6 +326,13 @@ void Menu::show_update_games(std::list<std::string> active_games) {
   }
 
   show_join_game_scene();
+}
+
+void Menu::show_wait(bool is_available_game){
+  if(!(is_available_game)){
+    std::cout << "El juego esta disponible (Manda 0 si no)" << (int) is_available_game << std::endl;
+    show_wait_scene();
+  }
 }
 
 Menu::~Menu() {}

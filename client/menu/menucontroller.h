@@ -31,6 +31,9 @@ public slots:
   void join(std::string id_game, std::string player_1, std::string player_2);
   void update_games(Menu &menu);
   void set_number_players(bool are_two_players);
+
+signals:
+  void show_wait(bool is_available_name);
 };
 
 #endif // MENUCONTROLLER_H

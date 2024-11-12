@@ -22,6 +22,7 @@ void MenuController::start_game() {
   connect(&w, &Menu::join, this, &MenuController::join);
   connect(&w, &Menu::update_games, this, &MenuController::update_games);
   connect(&w, &Menu::number_players_changed, this, &MenuController::set_number_players);
+  connect(this, &MenuController::show_wait, &w, &Menu::show_wait);
   a.exec();
 }
 
@@ -30,8 +31,9 @@ void MenuController::set_number_players(bool are_two_players) {
 }
 
 void MenuController::create(std::string player_1, std::string player_2, std::string game_name) { 
-      std::cout << "El nombre de la partida es: " << game_name << std::endl;
-      client.createGame(are_two_players, player_1, player_2, game_name);
+      bool is_available_game;
+      client.createGame(are_two_players, player_1, player_2, game_name, is_available_game);
+      emit show_wait(is_available_game);
 }
 
 void MenuController::start() {
