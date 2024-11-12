@@ -29,7 +29,8 @@ void MenuController::set_number_players(bool are_two_players) {
     this->are_two_players = are_two_players;
 }
 
-void MenuController::create(std::string player_1, std::string player_2) { 
+void MenuController::create(std::string player_1, std::string player_2, std::string game_name) { 
+      std::cout << "El nombre de la partida es: " << game_name << std::endl;
       client.createGame(are_two_players, player_1, player_2); 
 }
 

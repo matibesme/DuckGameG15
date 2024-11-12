@@ -33,7 +33,7 @@ public:
 
 signals:
   void start();
-  void create(std::string player_1, std::string player_2);
+  void create(std::string player_1, std::string player_2, std::string game_name);
   void join(uint8_t id_game, std::string player_1, std::string player_2);
   void update_games(Menu &menu);
   void number_players_changed(bool are_two_players);

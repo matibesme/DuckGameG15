@@ -27,7 +27,7 @@ public:
 
 public slots:
   void start();
-  void create(std::string player_1, std::string player_2);
+  void create(std::string player_1, std::string player_2,  std::string game_name);
   void join(uint8_t id_game, std::string player_1, std::string player_2);
   void update_games(Menu &menu);
   void set_number_players(bool are_two_players);
