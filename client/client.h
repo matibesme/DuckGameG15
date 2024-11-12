@@ -23,10 +23,10 @@ private:
   GameRunner game;
   Sender sender;
   Receiver receiver;
+  void execute();
 
 public:
   Client(const char *host, const char *port);
-  void execute();
   void createGame();
   void startGame();
   void joinGame(uint8_t idPartida);

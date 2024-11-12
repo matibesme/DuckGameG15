@@ -47,26 +47,32 @@ void EventHandler::correrHandlers() {
           // Controles para Jugador 2
         case SDLK_k:
           action.type_of_movement = DOWN;
+          action.player = 2;
           queue_sender.push(action);
           break;
         case SDLK_i:
           action.type_of_movement = JUMP;
+          action.player = 2;
           queue_sender.push(action);
           break;
         case SDLK_RSHIFT:
           action.type_of_movement = SHOOT;
+          action.player = 2;
           queue_sender.push(action); // Empieza a disparar
           break;
         case SDLK_h:
           action.type_of_movement = LEAVE_GUN;
+          action.player = 2;
           queue_sender.push(action); // Soltar arma
           break;
         case SDLK_u:
           action.type_of_movement = PICKUP;
+          action.player = 2;
           queue_sender.push(action); // Recoger objeto
           break;
         case SDLK_RETURN:
           action.type_of_movement = AIM_UP;
+          action.player = 2;
           queue_sender.push(action); // Apuntar hacia arriba
           break;
         }
@@ -98,18 +104,22 @@ void EventHandler::correrHandlers() {
         // Controles para Jugador 2
       case SDLK_j:
         action.type_of_movement = STILL_LEFT;
+        action.player = 2;
         queue_sender.push(action);
         break;
       case SDLK_l:
         action.type_of_movement = STILL_RIGHT;
+        action.player = 2;
         queue_sender.push(action);
         break;
       case SDLK_RSHIFT:
         action.type_of_movement = STOP_SHOOT;
+        action.player = 2;
         queue_sender.push(action); // Detener disparo continuo
         break;
       case SDLK_RETURN:
         action.type_of_movement = STOP_AIM_UP;
+        action.player = 2;
         queue_sender.push(action); // Dejar de apuntar arriba
         break;
       }
@@ -132,9 +142,11 @@ void EventHandler::correrHandlers() {
   // Mover derecha e izquierda con teclas presionadas para Jugador 2
   if (teclas_presionadas.find(SDLK_l) != teclas_presionadas.end()) {
     action.type_of_movement = RIGHT;
+    action.player = 2;
     queue_sender.push(action);
   } else if (teclas_presionadas.find(SDLK_j) != teclas_presionadas.end()) {
     action.type_of_movement = LEFT;
+    action.player = 2;
     queue_sender.push(action);
   }
 
@@ -145,6 +157,7 @@ void EventHandler::correrHandlers() {
   }
   if (teclas_presionadas.find(SDLK_RSHIFT) != teclas_presionadas.end()) {
     action.type_of_movement = SHOOT;
+    action.player = 2;
     queue_sender.push(action);
   }
 }

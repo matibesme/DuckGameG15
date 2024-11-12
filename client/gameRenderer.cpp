@@ -29,6 +29,17 @@ GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform,
 }
 
 void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
+  /*if(command.action == VICTORY_BYTE){
+    PantallaVictoria pantallaVictoria(command.name_winner, graficos);
+    pantallaVictoria.dibujar(renderer);
+    return;
+  }
+  if (command.action == END_ROUND_BYTE) {
+    PantallaFinDeRonda pantallaFinDeRonda(command.lista_victorias, graficos);
+    pantallaFinDeRonda.dibujar(renderer);
+    return;
+  }
+  */
   // Limpio el renderizador y dibujar el fondo directamente en la pantalla
   renderer.SetTarget();
   renderer.Clear();

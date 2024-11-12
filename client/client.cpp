@@ -18,7 +18,8 @@ void Client::createGame() {
   game_access.action_type = CREATE_GAME;
   game_access.game_id = 0;
   game_access.player1_name = "player1";
-  game_access.double_player = false;
+  game_access.player2_name = "player2";
+  game_access.double_player = true;
   protocolo.sendCreateJoinGameToServer(game_access);
 }
 
