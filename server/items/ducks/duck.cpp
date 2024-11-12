@@ -32,7 +32,7 @@ uint8_t DuckPlayer::getTypeOfMoveSprite() { return typeOfMove; }
 void DuckPlayer::incrementXPos(float pos_x) {
   x_pos += pos_x;
   if (x_pos < 0 || x_pos > MAP_LIMIT_X) {
-    x_pos = 0;
+    is_alive = false;
   }
 }
 
