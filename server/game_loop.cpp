@@ -35,8 +35,8 @@ void GameLoop::run() {
       map_victory_rounds.emplace(id.first, VICTORY_ROUNDS_INICIAL);
     }
     if (map_id_clientes.size() == 1) {
-      end_game = true;
       sendVictory(map_id_clientes.begin()->second);
+      end_game = true;
       return;
     }
     while (!end_game) {
@@ -331,6 +331,7 @@ void GameLoop::sendVictory(std::string &winner) {
   GameState command;
   command.action = VICTORY_BYTE;
   command.name_winner = winner;
+  queues_map->sendMessagesToQueues(command);
 }
 
 GameLoop::~GameLoop() {}
