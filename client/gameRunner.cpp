@@ -20,6 +20,8 @@ void GameRunner::run() {
 
     // Crear el renderizador del juego
     GameRenderer gameRenderer(graficos, command.lista_plataformas);
+    auto &sdl_renderer = graficos.GetRenderer();
+    gameRenderer.dibujar(sdl_renderer, command);
 
     runGameLoop(gameRenderer);
 
@@ -45,6 +47,13 @@ void GameRunner::runGameLoop(GameRenderer &gameRenderer) {
 
     // Recibimos el comando y actualizamos si es necesario
     while (queue_receiver.try_pop(command)) {
+      if(command.action == END_ROUND_BYTE){
+        gameRenderer.mostrarPantallaEndRound(command.map_victorias, sdl_renderer);
+      } else if (command.action == VICTORY_BYTE) {
+        gameRenderer.mostrarPantallaVictoria(command.name_winner);
+      } else if(command.action == FINALLY_GAME){
+        return;
+      }
       actualizar = true;
     }
 

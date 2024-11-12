@@ -25,14 +25,6 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   renderer.SetTarget();
   renderer.Clear();
 
-  if (command.action == END_ROUND_BYTE) {
-    // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
-    SDL_Renderer& sdlRenderer = *renderer.Get();  // Obtiene el SDL_Renderer subyacente
-    EndRoundScene endRoundSene(command.map_victorias, sdlRenderer);  // Pasar el SDL_Renderer a la escena
-    endRoundSene.Run();  // Ejecutar la escena
-    return;
-  }
-
   drawBackground(command.backGround_id);
   // Creo una textura para dibujar todos los objetos
   SDL2pp::Texture textureDeTodo(renderer, SDL_PIXELFORMAT_RGBA8888,
@@ -324,16 +316,14 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
   renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);
 }
 
-void GameRenderer::mostrarPantallaVictoria(std::string &winner) {
-  char* args[] = { (char*)"AppName" };
-  int argc_ = 1;
-  QApplication a(argc_, args);
-  FinalScene w(winner);
-  w.show();
-  a.exec();
+void GameRenderer::mostrarPantallaVictoria([[maybe_unused]] std::string &winner) {
+
 }
 
-void GameRenderer::mostrarPantallaEndRound([[maybe_unused]] std::map<std::string, uint8_t> &map_victorias) {
-
+void GameRenderer::mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias, Renderer &renderer) {
+  // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
+  SDL_Renderer& sdlRenderer = *renderer.Get();  // Obtiene el SDL_Renderer subyacente
+  EndRoundScene endRoundSene(map_victorias, sdlRenderer);  // Pasar el SDL_Renderer a la escena
+  endRoundSene.Run();  // Ejecutar la escena
 }
 
