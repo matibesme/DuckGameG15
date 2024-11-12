@@ -31,7 +31,7 @@ void MenuController::set_number_players(bool are_two_players) {
 
 void MenuController::create(std::string player_1, std::string player_2, std::string game_name) { 
       std::cout << "El nombre de la partida es: " << game_name << std::endl;
-      client.createGame(are_two_players, player_1, player_2); 
+      client.createGame(are_two_players, player_1, player_2, game_name);
 }
 
 void MenuController::start() {
@@ -39,7 +39,7 @@ void MenuController::start() {
   client.startGame();
 }
 
-void MenuController::join(uint8_t id_game, std::string player_1, std::string player_2) {
+void MenuController::join(std::string id_game, std::string player_1, std::string player_2) {
   QCoreApplication::quit();
   client.joinGame(id_game, are_two_players, player_1, player_2);
 }
