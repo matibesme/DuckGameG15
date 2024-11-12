@@ -164,6 +164,7 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
     for (auto& character : map_personajes) {
         bool colision = bullet->colisionWithDuck(character.second.getXPos(), character.second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
         if (colision) {
+            std::cout << "colision con pato" << std::endl;
             character.second.applyDamage(bullet->getDamage());
             return;
         }
