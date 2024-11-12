@@ -21,19 +21,16 @@ GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform)
 }
 
 void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
-  if(command.action == VICTORY_BYTE){
-    mostrarPantallaVictoria(command.name_winner);
-    return;
-  }else if (command.action == END_ROUND_BYTE) {
-    mostrarPantallaEndRound(command.map_victorias);
-    return;
-  }
-
   // Limpio el renderizador y dibujar el fondo directamente en la pantalla
   renderer.SetTarget();
   renderer.Clear();
-  drawBackground(command.backGround_id);
 
+  if (command.action == END_ROUND_BYTE) {
+    EndRoundScene endRoundScene(command.map_victorias);
+    return;
+  }
+
+  drawBackground(command.backGround_id);
   // Creo una textura para dibujar todos los objetos
   SDL2pp::Texture textureDeTodo(renderer, SDL_PIXELFORMAT_RGBA8888,
                                 SDL_TEXTUREACCESS_TARGET, SCENE_WIDTH,
@@ -334,11 +331,6 @@ void GameRenderer::mostrarPantallaVictoria(std::string &winner) {
 }
 
 void GameRenderer::mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias) {
-  char* args[] = { (char*)"AppName" };
-  int argc_ = 1;
-  QApplication a(argc_, args);
-  EndRoundScene w(map_victorias);
-  w.show();
-  a.exec();
+
 }
 

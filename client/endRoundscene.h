@@ -1,14 +1,31 @@
-#ifndef TALLER_TP_ENDROUNDSCENE_H
-#define TALLER_TP_ENDROUNDSCENE_H
+#ifndef ENDROUNDSCENE_H
+#define ENDROUNDSCENE_H
 
-#include <QMainWindow>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <map>
+#include <string>
 
-class EndRoundScene : public QMainWindow {
-  Q_OBJECT
+#define FUENTE DATA_PATH "/fonts/8-bit-hud.ttf"
+#define IMAGEN_END_OF_ROUND DATA_PATH "/pantallaVictoria.png"
 
+class EndRoundScene {
 public:
-  EndRoundScene(std::map< std::string, uint8_t > &players, QWidget *parent = nullptr);
+  EndRoundScene(std::map<std::string, uint8_t>& players);
   ~EndRoundScene();
+  void Run();
+
+private:
+  void RenderBackground();
+  void RenderTitle();
+  void RenderResultsTable();
+  void RenderBorder();
+  SDL_Window* window;
+  SDL_Renderer* renderer;
+  TTF_Font* font;
+  std::map<std::string, uint8_t>& players;
+  int windowWidth = 600;
+  int windowHeight = 400;
 };
 
-#endif // TALLER_TP_ENDROUNDSCENE_H
+#endif // ENDROUNDSCENE_H
