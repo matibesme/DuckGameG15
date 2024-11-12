@@ -120,6 +120,7 @@ if(TALLER_SERVER)
             server/items/boxes.h
             server/items/boxes.cpp
             server/configuration/server_constants.h
+            server/constant_definitions.cpp
     )
 
     # Incluir el directorio 'server' para los archivos de encabezado (opcional)

@@ -324,13 +324,13 @@ void Menu::show_wait_scene() {
   view->show();
 }
 
-void Menu::show_update_games(std::list<uint8_t> active_games) {
+void Menu::show_update_games(std::list<std::string> active_games) {
   this->active_games.clear();
   game_options->clear();
 
   for (auto game : active_games) {
-    std::string game_name_str = std::to_string(game);
-    QString game_name = QString::fromStdString(game_name_str);
+
+    QString game_name = QString::fromStdString(game);
 
     this->active_games.insert(game_name, game);
     game_options->addItem(game_name);

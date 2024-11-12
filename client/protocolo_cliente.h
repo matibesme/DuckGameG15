@@ -29,7 +29,7 @@ public:
   void sendRequestGameToServer(const GameAccess &game_access);
   GameState reciveFromServer();
   GameState reciveFullGameFromServer();
-  std::list<uint8_t> reciveActiveGamesFromServer();
+  std::list<std::string> reciveActiveGamesFromServer();
   GameState reciveEndRoundFromServer();
   GameState reciveVictoryFromServer();
   ~ProtocoloCliente();

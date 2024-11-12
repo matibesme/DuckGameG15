@@ -26,7 +26,7 @@
 #include "duck_action.h"
 #include "items/boxes.h"
 #include "items/weapons/factory_weapons.h"
-
+#include "server_constant.h"
 class GameLoop : public Thread {
 
 private:
