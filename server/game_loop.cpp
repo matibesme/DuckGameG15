@@ -157,21 +157,31 @@ void GameLoop::sendCompleteScene() {
 }
 
 void GameLoop::paraCadaPatoAction() {
-  for (auto &personaje : map_personajes) {
 
-    checkCoalitionDuckPlatform(personaje.second);
-    personaje.second.executeAction();
-    if (!personaje.second.isWeaponEquipped())
+  for (auto it = map_personajes.begin(); it != map_personajes.end(); ) {
+    checkCoalitionDuckPlatform(it->second);
+    it->second.executeAction();
+
+    if (!it->second.isAlive()) {
+      it = map_personajes.erase(it);
       continue;
+    }
 
-    if (personaje.second.getWeapon().getType() == GRANADA_GUN &&
-        personaje.second.getWeapon().isActive()) {
+    if (!it->second.isWeaponEquipped()) {
+      ++it;  // Solo avanza el iterador si no hay eliminación
+      continue;
+    }
+
+    if (it->second.getWeapon().getType() == GRANADA_GUN &&
+        it->second.getWeapon().isActive()) {
 
       std::unique_ptr<Bullet> bullet =
-          personaje.second.getWeapon().shoot(personaje.second.isAimingUp());
+          it->second.getWeapon().shoot(it->second.isAimingUp());
       map_bullets.emplace(id_balas, std::move(bullet));
       id_balas++;
-    }
+        }
+
+    ++it;
   }
 }
 
@@ -183,6 +193,8 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
   for (auto it = map_personajes.begin(); it != map_personajes.end();) {
     bool colision = bullet->colisionWithDuck(
         it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
+
+
     if (colision) {
       if (it -> second.receiveShoot()){
         it->second.applyDamage(bullet->getDamage());
