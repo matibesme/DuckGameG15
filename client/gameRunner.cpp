@@ -19,19 +19,9 @@ void GameRunner::run() {
     GameState command = queue_receiver.pop();
 
     // Crear el renderizador del juego
-    GameRenderer gameRenderer(graficos, command.lista_plataformas, command.lista_boxes);
+    GameRenderer gameRenderer(graficos, command.lista_plataformas);
 
-    // Dibujar el primer estado del juego
-    Renderer &sdl_renderer = graficos.GetRenderer();
-    gameRenderer.dibujar(sdl_renderer, command);
-
-    if (command.action == VICTORY_BYTE) {
-      gameRenderer.mostrarPantallaVictoria(command.name_winner);
-    } else if (command.action == END_ROUND_BYTE) {
-      gameRenderer.mostrarPantallaEndRound(command.map_victorias);
-    }else{
-      runGameLoop(gameRenderer, sdl_renderer);
-    }
+    runGameLoop(gameRenderer);
 
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
@@ -42,7 +32,8 @@ void GameRunner::run() {
   sound.limpiar();
 }
 
-void GameRunner::runGameLoop(GameRenderer &gameRenderer, Renderer &sdl_renderer) {
+void GameRunner::runGameLoop(GameRenderer &gameRenderer) {
+  Renderer &sdl_renderer = graficos.GetRenderer();
   bool actualizar = false;
   const int frameDelay = 1000 / 60;
   GameState command;

@@ -10,20 +10,13 @@
 #define CANT_ZOOM_WIDTH (7 * DUCK_WIDTH)
 #define CANT_ZOOM_HEIGHT (15 * DUCK_HEIGHT)
 
-GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform,
-                           std::list<DTOBoxes> &box)
+GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform)
     : graficos(graficos) {
   // Creo las plataformas por única vez
   for (auto &platformStruct : platform) {
     platforms.emplace_back(platformStruct.x_pos, platformStruct.y_pos, graficos,
                            platformStruct.type, platformStruct.width,
                            platformStruct.height);
-  }
-
-  // Creo las cajas por única vez
-  for (auto &boxStruct : box) {
-    boxes.emplace_back(boxStruct.id, boxStruct.x_pos, boxStruct.y_pos,
-                       graficos);
   }
 }
 
