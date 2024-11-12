@@ -41,11 +41,11 @@ void GameLoop::run() {
         for (auto& id : list_id_clientes) {
             map_victory_rounds.emplace(id, VICTORY_ROUNDS_INICIAL);
         }
-        if (list_id_clientes.size() == 1) {
+     /*   if (list_id_clientes.size() == 1) {
             end_game = true;
             sendVictory(list_id_clientes.front());
             return;
-        }
+        }*/
         while (!end_game)
         {
             uint8_t rounds = 0; 
@@ -53,7 +53,7 @@ void GameLoop::run() {
             {
                 load_game_config.loadGame();
 
-                while (!end_game && map_personajes.size()!=1) {
+                while (!end_game ){//&& map_personajes.size()!=1) {
 
 
                     CommandClient comando;
@@ -184,15 +184,18 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet>& bullet) {
     for (auto& plataform : list_plataformas) {
         bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos, plataform.width, plataform.height);
     }
-    for (auto& character : map_personajes) {
-        bool colision = bullet->colisionWithDuck(character.second.getXPos(), character.second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
+    for (auto it = map_personajes.begin(); it != map_personajes.end(); ) {
+        bool colision = bullet->colisionWithDuck(it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
         if (colision) {
-            std::cout << "colision con pato" << std::endl;
-            character.second.applyDamage(bullet->getDamage());
-            if (!character.second.isAlive()) {
-                map_personajes.erase(character.first);
+            it->second.applyDamage(bullet->getDamage());
+            if (!it->second.isAlive()) {
+                it = map_personajes.erase(it);
+            } else {
+                ++it;
             }
             return;
+        } else {
+            ++it;
         }
     }
     for (auto it = list_boxes.begin(); it != list_boxes.end(); ) {
@@ -256,26 +259,25 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer& personaje) {
 void GameLoop::respawnWeapon()
 {
 
-    for (auto& time: time_weapon_last_respawn) {
-            if (time.second ==0) {
-                RespawnPoint& weapon = respawn_weapon_points[time.first];
-                map_free_weapons.emplace(time.first, factory_weapons.createWeapon(weapon.type, weapon.x_pos, weapon.y_pos));
-                time_weapon_last_respawn.erase(time.first);
-
-            } else {
-                time_weapon_last_respawn[time.first]--;
-            }
-
+    for (auto it = time_weapon_last_respawn.begin(); it != time_weapon_last_respawn.end(); ) {
+        if (it->second == 0) {
+            RespawnPoint& weapon = respawn_weapon_points[it->first];
+            map_free_weapons.emplace(it->first, factory_weapons.createWeapon(weapon.type, weapon.x_pos, weapon.y_pos));
+            it = time_weapon_last_respawn.erase(it);
+        } else {
+            it->second--;
+            ++it;
+        }
     }
 
-    for (auto& time: time_defense_last_respawn) {
-        if (time.second ==0) {
-            Protection& defense = respawn_defense_points[time.first];
-            map_defense.emplace(time.first, defense);
-            time_defense_last_respawn.erase(time.first);
-
+    for (auto it = time_defense_last_respawn.begin(); it != time_defense_last_respawn.end(); ) {
+        if (it->second == 0) {
+            Protection& defense = respawn_defense_points[it->first];
+            map_defense.emplace(it->first, defense);
+            it = time_defense_last_respawn.erase(it);
         } else {
-            time_defense_last_respawn[time.first]--;
+            it->second--;
+            ++it;
         }
     }
 
