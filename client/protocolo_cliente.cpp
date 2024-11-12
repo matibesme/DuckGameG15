@@ -150,7 +150,7 @@ void ProtocoloCliente::sendCreateJoinGameToServer(
     const GameAccess &game_access) {
   try {
     protocolo.sendByte(game_access.action_type, dead_connection);
-    protocolo.sendByte(game_access.game_id, dead_connection);
+    protocolo.sendString(game_access.game_name, dead_connection);
     protocolo.sendString(game_access.player1_name, dead_connection);
     protocolo.sendBool(game_access.double_player, dead_connection);
     if (game_access.double_player) {
@@ -175,15 +175,15 @@ void ProtocoloCliente::sendRequestGameToServer(const GameAccess &game_access) {
   }
 }
 
-std::list<uint8_t> ProtocoloCliente::reciveActiveGamesFromServer() {
+std::list<std::string> ProtocoloCliente::reciveActiveGamesFromServer() {
   try {
     uint8_t games_quantity = protocolo.receiveByte(dead_connection);
 
-    std::list<uint8_t> games;
+    std::list<std::string> games;
     for (int i = 0; i < games_quantity; i++) {
-      uint8_t game_id = protocolo.receiveByte(dead_connection);
+      std::string game_name = protocolo.receiveString(dead_connection);
 
-      games.push_back(game_id);
+      games.push_back(game_name);
     }
     return games;
 

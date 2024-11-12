@@ -21,7 +21,7 @@ private:
   std::map<uint8_t, uint8_t> id_hoster_partida;
   std::map<uint8_t, bool> end_game;
   std::map<uint8_t, std::map<uint8_t, std::string>> map_id_clientes;
-  std::map<uint8_t, uint8_t> partidas_sin_arrancar;
+  std::map<std::string, uint8_t> partidas_sin_arrancar;
   std::mutex m;
 
 public:
@@ -29,17 +29,17 @@ public:
   std::shared_ptr<BlockingQueue<CommandClient>> addPartida(uint8_t id_cliente,
                                                            std::string &name1,
                                                            bool double_player,
-                                                           std::string &name2);
+                                                           std::string &name2, std::string &game_name);
   void removePartida(uint8_t id_partida);
   std::shared_ptr<BlockingQueue<CommandClient>>
-  joinGame(uint8_t id_partida, uint8_t id_cliente, std::string &name1,
+  joinGame(std::string& id_partida, uint8_t id_cliente, std::string &name1,
            bool double_player, std::string &name2);
   void addQueueSender(uint8_t id_player,
                       std::shared_ptr<BlockingQueue<GameState>> queue);
   bool isHoster(uint8_t id_cliente);
-  void startGame(uint8_t id_client);
+  void startGame(uint8_t id_client, std::string& game_name);
   void removeQueue(uint8_t id);
   void removeGame(uint8_t id);
-  std::map<uint8_t, uint8_t> &getIdPartidas();
+  std::map<std::string, uint8_t> &getIdPartidas();
   ~LobbyPartidas();
 };

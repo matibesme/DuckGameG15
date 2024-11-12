@@ -10,26 +10,29 @@ Receiver::Receiver(ProtocoloServer &protocolo, bool &dead_connection,
 
 void Receiver::run() {
   try {
+    std::string game_name;
     while (in_lobby) {
       GameAccess command = protocolo.receiveAccessFromClients();
       if (command.action_type == JOIN_GAME) {
         queue_comandos =
-            lobby.joinGame(command.game_id, id, command.player1_name,
+            lobby.joinGame(command.game_name, id, command.player1_name,
                            command.double_player, command.player2_name);
         if (queue_comandos == nullptr) {
           continue;
         }
         in_lobby = false;
         two_players = command.double_player;
+        game_name = command.game_name;
       } else if (command.action_type == CREATE_GAME) {
 
         queue_comandos =
             lobby.addPartida(id, command.player1_name, command.double_player,
-                             command.player2_name);
+                             command.player2_name, command.game_name);
         in_lobby = false;
         two_players = command.double_player;
+        game_name = command.game_name;
       } else if (command.action_type == LISTAR_PARTIDAS) {
-        std::map<uint8_t, uint8_t> &partidas = lobby.getIdPartidas();
+        std::map<std::string, uint8_t> &partidas = lobby.getIdPartidas();
         protocolo.sendActiveGames(partidas);
       }
     }
@@ -38,7 +41,7 @@ void Receiver::run() {
       while (!start_game) {
         GameAccess command = protocolo.receiveAccessFromClients();
         if (command.action_type == START_GAME) {
-          lobby.startGame(id);
+          lobby.startGame(id, game_name);
           start_game = true;
         }
       }

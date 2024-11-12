@@ -7,7 +7,7 @@ LobbyPartidas::LobbyPartidas()
 
 std::shared_ptr<BlockingQueue<CommandClient>>
 LobbyPartidas::addPartida(uint8_t id_client, std::string &name1,
-                          bool double_player, std::string &name2) {
+                          bool double_player, std::string &name2, std::string &game_name) {
 
   std::lock_guard<std::mutex> lock(m);
   end_game[id_partida] = false;
@@ -28,26 +28,26 @@ LobbyPartidas::addPartida(uint8_t id_client, std::string &name1,
   if (double_player) {
     map_id_clientes[id_partida].emplace(id_client + 1, name2);
   }
-  partidas_sin_arrancar.emplace(id_partida, id_client);
+  partidas_sin_arrancar.emplace(game_name, id_partida);
   return queues_game_loop[id_partida++];
 }
 
 std::shared_ptr<BlockingQueue<CommandClient>>
-LobbyPartidas::joinGame(uint8_t id_partida, uint8_t id_cliente,
+LobbyPartidas::joinGame(std::string id_partida, uint8_t id_cliente,
                         std::string &name1, bool double_player,
                         std::string &name2) {
   std::lock_guard<std::mutex> lock(m);
   if (partidas_sin_arrancar.find(id_partida) == partidas_sin_arrancar.end()) {
     return nullptr;
   }
-
-  protected_queues_sender[id_partida]->addClient(id_cliente,
+  uint8_t id_game = partidas_sin_arrancar[id_partida];
+  protected_queues_sender[id_game]->addClient(id_cliente,
                                                  *queues_sender[id_cliente]);
-  map_id_clientes[id_partida].emplace(id_cliente, name1);
+  map_id_clientes[id_game].emplace(id_cliente, name1);
   if (double_player) {
-    map_id_clientes[id_partida].emplace(id_cliente + 1, name2);
+    map_id_clientes[id_game].emplace(id_cliente + 1, name2);
   }
-  return queues_game_loop[id_partida];
+  return queues_game_loop[id_game];
 }
 
 bool LobbyPartidas::isHoster(uint8_t id_cliente) {
@@ -55,10 +55,11 @@ bool LobbyPartidas::isHoster(uint8_t id_cliente) {
   return id_hoster_partida.find(id_cliente) != id_hoster_partida.end();
 }
 
-void LobbyPartidas::startGame(uint8_t id_client) {
+void LobbyPartidas::startGame(uint8_t id_client,std::string& game_name) {
   std::lock_guard<std::mutex> lock(m);
   partidas[id_hoster_partida[id_client]]->start();
-  partidas_sin_arrancar.erase(id_hoster_partida[id_client]);
+  partidas_sin_arrancar.erase(game_name);
+
 }
 
 void LobbyPartidas::addQueueSender(
@@ -81,7 +82,7 @@ void LobbyPartidas::removeGame(uint8_t id) {
   partidas.erase(id);
 }
 
-std::map<uint8_t, uint8_t> &LobbyPartidas::getIdPartidas() {
+std::map<std::string, uint8_t> &LobbyPartidas::getIdPartidas() {
   std::lock_guard<std::mutex> lock(m);
   return partidas_sin_arrancar;
 }
