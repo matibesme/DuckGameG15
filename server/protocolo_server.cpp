@@ -93,14 +93,14 @@ void ProtocoloServer::sendFullGame(const GameState &command) {
   }
 }
 
-void ProtocoloServer::sendActiveGames(const std::map<uint8_t, uint8_t> &games) {
+void ProtocoloServer::sendActiveGames(const std::map<std::string, uint8_t> &games) {
   try {
 
     protocolo.sendByte(games.size(), dead_connection);
-    std::cout << "envio de partidas activas" << games.size() << std::endl;
+
     for (const auto &game : games) {
-      protocolo.sendByte(game.first, dead_connection);
-      std::cout << "envio de partida activa" << (int)game.first << std::endl;
+      protocolo.sendString(game.first, dead_connection);
+
     }
   } catch (const std::exception &e) {
     dead_connection = true;
@@ -144,17 +144,17 @@ GameAccess ProtocoloServer::receiveAccessFromClients() {
     uint8_t action_type = protocolo.receiveByte(dead_connection);
 
     if (action_type == LISTAR_PARTIDAS || action_type == START_GAME)
-      return {action_type, 0, "", false, ""};
+      return {action_type, "", "", false, ""};
 
-    uint8_t game_id = protocolo.receiveByte(dead_connection);
+    std::string game_name = protocolo.receiveString(dead_connection);
     std::string name = protocolo.receiveString(dead_connection);
     bool double_player = protocolo.receiveBool(dead_connection);
     if (double_player) {
       std::string name2 = protocolo.receiveString(dead_connection);
-      return {action_type, game_id, name, double_player, name2};
+      return {action_type, game_name, name, double_player, name2};
     }
 
-    return {action_type, game_id, name, false, ""};
+    return {action_type, game_name, name, false, ""};
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;

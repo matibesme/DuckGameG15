@@ -13,10 +13,10 @@ void Client::execute() {
   game.run();
 }
 
-void Client::createGame(bool is_double_player, std::string player_1, std::string player_2) {
+void Client::createGame(bool is_double_player, std::string player_1, std::string player_2, std::string game_name) {
   GameAccess game_access;
   game_access.action_type = CREATE_GAME;
-  game_access.game_id = 0;
+  game_access.game_name = game_name;
   game_access.player1_name = player_1;
   game_access.player2_name = player_2;
   game_access.double_player = is_double_player;
@@ -30,10 +30,10 @@ void Client::startGame() {
   execute();
 }
 
-void Client::joinGame(uint8_t idPartida, bool is_double_player, std::string player_1, std::string player_2) {
+void Client::joinGame(std::string game_name, bool is_double_player, std::string player_1, std::string player_2) {
   GameAccess game_access;
   game_access.action_type = JOIN_GAME;
-  game_access.game_id = idPartida;
+  game_access.game_name = game_name;
   game_access.player1_name = player_1;
   game_access.player2_name = player_2;
   game_access.double_player = is_double_player;
@@ -41,11 +41,11 @@ void Client::joinGame(uint8_t idPartida, bool is_double_player, std::string play
   execute();
 }
 
-std::list<uint8_t> Client::updateGame() {
+std::list<std::string> Client::updateGame() {
   GameAccess game_access;
   game_access.action_type = LISTAR_PARTIDAS;
   protocolo.sendRequestGameToServer(game_access);
-  std::list<uint8_t> list = protocolo.reciveActiveGamesFromServer();
+  std::list<std::string> list = protocolo.reciveActiveGamesFromServer();
 
   return list;
 }

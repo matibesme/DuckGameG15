@@ -86,7 +86,7 @@ struct CommandClient {
 
 struct GameAccess {
   uint8_t action_type;
-  uint8_t game_id;
+  std::string game_name;
   std::string player1_name;
   bool double_player;
   std::string player2_name;

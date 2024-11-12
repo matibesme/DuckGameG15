@@ -18,7 +18,7 @@ private:
   QGraphicsScene *join_game_scene;
   QGraphicsScene *wait_scene;
   QComboBox *game_options;
-  QMap<QString, uint8_t> active_games;
+  QMap<QString, std::string> active_games;
 
   void initialize();
   void show_main_scene();
@@ -28,13 +28,13 @@ private:
 
 public:
   Menu(QWidget *parent = nullptr);
-  void show_update_games(std::list<uint8_t> active_games);
+  void show_update_games(std::list<std::string> active_games);
   ~Menu();
 
 signals:
   void start();
   void create(std::string player_1, std::string player_2, std::string game_name);
-  void join(uint8_t id_game, std::string player_1, std::string player_2);
+  void join(std::string id_game, std::string player_1, std::string player_2);
   void update_games(Menu &menu);
   void number_players_changed(bool are_two_players);
 };

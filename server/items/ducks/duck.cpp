@@ -16,14 +16,14 @@
 
 DuckPlayer::DuckPlayer()
     : Objeto(0, 0, 0, 0), is_weapon_equiped(false), typeOfMove(STILL_RIGHT),
-      saltando(false), velocidad(VELOCIDAD_INICIAL), life(100), is_alive(true),
+      saltando(false), velocidad(VELOCIDAD_INICIAL), life(LIFE), is_alive(true),
       gravity(GRAVEDAD) {}
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos,
                        std::string color_)
     : Objeto(type, id, x_pos, y_pos), is_weapon_equiped(false),
       typeOfMove(STILL_RIGHT), saltando(false), velocidad(VELOCIDAD_INICIAL),
-      life(100), is_alive(true), gravity(GRAVEDAD), weapons_list(),
+      life(LIFE), is_alive(true), gravity(GRAVEDAD), weapons_list(),
       counter_flapping(0), is_flapping(false), helmet(NO_HELMET),
       armor(NO_ARMOR), color(color_), is_aiming_up(false) {}
 
@@ -32,7 +32,7 @@ uint8_t DuckPlayer::getTypeOfMoveSprite() { return typeOfMove; }
 void DuckPlayer::incrementXPos(float pos_x) {
   x_pos += pos_x;
   if (x_pos < 0 || x_pos > MAP_LIMIT_X) {
-    x_pos = 0;
+    is_alive = false;
   }
 }
 

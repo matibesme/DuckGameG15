@@ -30,7 +30,7 @@ GameLoop::GameLoop(
 
 void GameLoop::run() {
   try {
-
+    load_game_config.loadConfigurations();
     for (auto &id : map_id_clientes) {
       map_victory_rounds.emplace(id.first, VICTORY_ROUNDS_INICIAL);
     }
@@ -157,21 +157,31 @@ void GameLoop::sendCompleteScene() {
 }
 
 void GameLoop::paraCadaPatoAction() {
-  for (auto &personaje : map_personajes) {
 
-    checkCoalitionDuckPlatform(personaje.second);
-    personaje.second.executeAction();
-    if (!personaje.second.isWeaponEquipped())
+  for (auto it = map_personajes.begin(); it != map_personajes.end(); ) {
+    checkCoalitionDuckPlatform(it->second);
+    it->second.executeAction();
+
+    if (!it->second.isAlive()) {
+      it = map_personajes.erase(it);
       continue;
+    }
 
-    if (personaje.second.getWeapon().getType() == GRANADA_GUN &&
-        personaje.second.getWeapon().isActive()) {
+    if (!it->second.isWeaponEquipped()) {
+      ++it;  // Solo avanza el iterador si no hay eliminación
+      continue;
+    }
+
+    if (it->second.getWeapon().getType() == GRANADA_GUN &&
+        it->second.getWeapon().isActive()) {
 
       std::unique_ptr<Bullet> bullet =
-          personaje.second.getWeapon().shoot(personaje.second.isAimingUp());
+          it->second.getWeapon().shoot(it->second.isAimingUp());
       map_bullets.emplace(id_balas, std::move(bullet));
       id_balas++;
-    }
+        }
+
+    ++it;
   }
 }
 
@@ -180,23 +190,27 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
     bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos,
                                  plataform.width, plataform.height);
   }
-  for (auto it = map_personajes.begin(); it != map_personajes.end();) {
-    bool colision = bullet->colisionWithDuck(
-        it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
-    if (colision) {
-      if (it -> second.receiveShoot()){
-        it->second.applyDamage(bullet->getDamage());
-      }
-      if (!it->second.isAlive()) {
-        it = map_personajes.erase(it);
+  uint8_t bullet_type = bullet->getTypeOfBullet();
+  if (bullet_type != BANANA_BULLET and bullet_type != GRANADA_BULLET) {
+    for (auto it = map_personajes.begin(); it != map_personajes.end();) {
+      bool colision = bullet->colisionWithDuck(
+          it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
+      if (colision) {
+        if (it -> second.receiveShoot()){
+          it->second.applyDamage(bullet->getDamage());
+        }
+        if (!it->second.isAlive()) {
+          it = map_personajes.erase(it);
+        } else {
+          ++it;
+        }
+        return;
       } else {
         ++it;
       }
-      return;
-    } else {
-      ++it;
     }
   }
+
   for (auto it = list_boxes.begin(); it != list_boxes.end();) {
     bool colision = bullet->colisionWithBox(it->getXPos(), it->getYPos(),
                                             WIDTH_BOX, HEIGHT_BOX);
@@ -324,7 +338,11 @@ void GameLoop::sendEndRound() {
     command.map_victorias.emplace(map_id_clientes[victory_round.first],
                                     victory_round.second);
   }
-  queues_map->sendMessagesToQueues(command);
+
+  for (int i = 0; i < 20; i++) {
+    queues_map->sendMessagesToQueues(command);
+  }
+
 }
 
 void GameLoop::sendVictory(std::string &winner) {
