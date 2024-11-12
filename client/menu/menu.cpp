@@ -136,13 +136,15 @@ void Menu::show_make_game_scene() {
       new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
   layout_name_players->addItem(spacer);
 
-  connect(single_player, &QPushButton::clicked, [=]() {
+  connect(single_player, &QPushButton::clicked, [this, name_player_2, label_player_2]() {
     name_player_2->setVisible(false);
     label_player_2->setVisible(false);
+    emit number_players_changed(false);
   });
-  connect(two_players, &QPushButton::clicked, [=]() {
+  connect(two_players, &QPushButton::clicked, [this, name_player_2, label_player_2]() {
     name_player_2->setVisible(true);
     label_player_2->setVisible(true);
+    emit number_players_changed(true);
   });
 
   layout_players->addWidget(widget_choose_players);
@@ -214,13 +216,15 @@ void Menu::show_join_game_scene() {
       new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
   layout_name_players->addItem(spacer);
 
-  connect(single_player, &QPushButton::clicked, [=]() {
+  connect(single_player, &QPushButton::clicked, [this, name_player_2, label_player_2]() {
     name_player_2->setVisible(false);
     label_player_2->setVisible(false);
+    emit number_players_changed(false);
   });
-  connect(two_players, &QPushButton::clicked, [=]() {
+  connect(two_players, &QPushButton::clicked, [this, name_player_2, label_player_2]() {
     name_player_2->setVisible(true);
     label_player_2->setVisible(true);
+    emit number_players_changed(true);
   });
 
   layout_players->addWidget(widget_choose_players);

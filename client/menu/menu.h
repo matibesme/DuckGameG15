@@ -36,5 +36,6 @@ signals:
   void create();
   void join(uint8_t id_game);
   void update_games(Menu &menu);
+  void number_players_changed(bool are_two_players);
 };
 #endif // MENU_H
