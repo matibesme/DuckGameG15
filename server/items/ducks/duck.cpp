@@ -141,6 +141,19 @@ void DuckPlayer::setArmor(uint8_t type) { armor = type; }
 uint8_t &DuckPlayer::getHelmet() { return helmet; }
 uint8_t &DuckPlayer::getArmor() { return armor; }
 
+bool DuckPlayer::receiveShoot()
+{
+  if (armor==ARMOR_EQUIPPED){
+    armor=NO_ARMOR;
+    return false;
+  }
+  if (helmet==HELMET_EQUIPPED){
+    helmet=NO_HELMET;
+    return false;
+  }
+  return true;
+}
+
 std::string &DuckPlayer::getColor() { return color; }
 
 bool DuckPlayer::isAimingUp() { return is_aiming_up; }

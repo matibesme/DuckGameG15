@@ -184,7 +184,9 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
     bool colision = bullet->colisionWithDuck(
         it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
     if (colision) {
-      it->second.applyDamage(bullet->getDamage());
+      if (it -> second.receiveShoot()){
+        it->second.applyDamage(bullet->getDamage());
+      }
       if (!it->second.isAlive()) {
         it = map_personajes.erase(it);
       } else {
