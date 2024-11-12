@@ -27,8 +27,11 @@ public:
   void sendActiveGames(const std::map<std::string, uint8_t> &games);
   void sendEndRound(const GameState &command);
   void sendVictory(const GameState &command);
+  void sendMatchWithSameName(bool same_name);
+
   CommandClient receiveCommandFromClients(bool &two_players);
   GameAccess receiveAccessFromClients();
+
 
   void closeSocket();
   ~ProtocoloServer();

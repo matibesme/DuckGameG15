@@ -195,26 +195,49 @@ std::list<std::string> ProtocoloCliente::reciveActiveGamesFromServer() {
 }
 
 GameState ProtocoloCliente::reciveEndRoundFromServer() {
-  GameState command;
-  command.action = END_ROUND_BYTE;
-  uint8_t victorias_quantity = protocolo.receiveByte(dead_connection);
-  std::map<std::string, uint8_t> lista_victorias;
-  for (int i = 0; i < victorias_quantity; i++) {
-    std::string id = protocolo.receiveString(dead_connection);
-    uint8_t victorias = protocolo.receiveByte(dead_connection);
-    lista_victorias.emplace(id, victorias);
-  }
-  command.map_victorias = lista_victorias;
-  return command;
+  try {
+    GameState command;
+    command.action = END_ROUND_BYTE;
+    uint8_t victorias_quantity = protocolo.receiveByte(dead_connection);
+    std::map<std::string, uint8_t> lista_victorias;
+    for (int i = 0; i < victorias_quantity; i++) {
+      std::string id = protocolo.receiveString(dead_connection);
+      uint8_t victorias = protocolo.receiveByte(dead_connection);
+      lista_victorias.emplace(id, victorias);
+    }
+    command.map_victorias = lista_victorias;
+    return command;
+    } catch (const std::exception &e) {
+      dead_connection = true;
+      std::cerr << e.what() << std::endl;
+    }
+  throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
 
 GameState ProtocoloCliente::reciveVictoryFromServer() {
+  try {
   GameState command;
   command.action = VICTORY_BYTE;
   std::string winner = protocolo.receiveString(dead_connection);
   command.name_winner = winner;
 
   return command;
+  } catch (const std::exception &e) {
+    dead_connection = true;
+    std::cerr << e.what() << std::endl;
+  }
+  throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
+
+bool ProtocoloCliente::reciveMatchWithSameName() {
+  try {
+    return protocolo.receiveBool(dead_connection);
+  } catch (const std::exception &e) {
+    dead_connection = true;
+    std::cerr << e.what() << std::endl;
+  }
+  throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
+}
+
 
 ProtocoloCliente::~ProtocoloCliente() {}
