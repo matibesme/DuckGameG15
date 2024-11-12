@@ -35,6 +35,7 @@ void Client::joinGame(uint8_t idPartida, bool is_double_player) {
   game_access.action_type = JOIN_GAME;
   game_access.game_id = idPartida;
   game_access.player1_name = "player1";
+  game_access.player2_name = "player2";
   game_access.double_player = is_double_player;
 
   protocolo.sendCreateJoinGameToServer(game_access);
