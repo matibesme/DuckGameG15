@@ -14,7 +14,7 @@ final_scene::final_scene(std::string winner, QWidget *parent)
         std::string winner("");
         final_scene w(winner);
         w.show();
-        return a.exec();
+        a.exec();
     */
     this->setGeometry(0,0,800,600);
     QGraphicsScene* main_scene = new QGraphicsScene(this);
