@@ -132,12 +132,16 @@ void ProtocoloServer::sendVictory(const GameState& command) {
 
 
 
-CommandClient ProtocoloServer::receiveCommandFromClients() {
-    try {
-       
+CommandClient ProtocoloServer::receiveCommandFromClients(bool& two_players) {
+    try
+    {
         uint8_t type_of_action = protocolo.receiveByte(dead_connection);
         uint8_t type_of_movement = protocolo.receiveByte(dead_connection);
-        return {type_of_action, type_of_movement,id};
+        uint8_t player = protocolo.receiveByte(dead_connection);
+        if (player==2 && two_players)
+            return {type_of_action, type_of_movement,static_cast<uint8_t>(id + 1)};
+
+        return {type_of_action, type_of_movement, id};
 
     } catch (const std::exception& e) {
         dead_connection = true;
@@ -149,14 +153,27 @@ CommandClient ProtocoloServer::receiveCommandFromClients() {
 GameAccess ProtocoloServer::receiveAccessFromClients() {
     try {
         uint8_t action_type = protocolo.receiveByte(dead_connection);
+
+        if (action_type == LISTAR_PARTIDAS || action_type == START_GAME)
+            return {action_type,0,"",false,""};
+
+
         uint8_t game_id = protocolo.receiveByte(dead_connection);
         std::string name = protocolo.receiveString(dead_connection);
-        return {action_type, game_id, name};
+        bool double_player = protocolo.receiveBool(dead_connection);
+        if (double_player)
+        {
+            std::string name2 = protocolo.receiveString(dead_connection);
+            return {action_type, game_id, name, double_player, name2};
+        }
+
+        return {action_type, game_id, name, false, ""};
     } catch (const std::exception& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;
     }
-    return {0,0,""};
+    GameAccess null_access;
+    return null_access;
 }
 
 

@@ -12,10 +12,11 @@ ProtocoloCliente::ProtocoloCliente(const char* host, const char* port, bool& dea
 
 
 
-void ProtocoloCliente::sendInGameToServer(const uint8_t& command) {
+void ProtocoloCliente::sendInGameToServer(const ClientAction& command) {
     try {
-        protocolo.sendByte(decode_type_of_action[command],dead_connection);
-        protocolo.sendByte(command,dead_connection);
+        protocolo.sendByte(decode_type_of_action[command.type_of_movement],dead_connection);
+        protocolo.sendByte(command.type_of_movement,dead_connection);
+        protocolo.sendByte(command.player,dead_connection);
 
     } catch (const SocketClose& e) {
         std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
@@ -138,11 +139,16 @@ GameState ProtocoloCliente::reciveFullGameFromServer(){
 }
 
 
-void ProtocoloCliente::sendAccesToServer(uint8_t action,uint8_t id, const std::string& name) {
+
+void ProtocoloCliente::sendCreateJoinGameToServer(const GameAccess& game_access) {
     try {
-        protocolo.sendByte(action,dead_connection);
-        protocolo.sendByte(id,dead_connection);
-        protocolo.sendString(name,dead_connection);
+        protocolo.sendByte(game_access.action_type,dead_connection);
+        protocolo.sendByte(game_access.game_id,dead_connection);
+        protocolo.sendString(game_access.player1_name,dead_connection);
+        protocolo.sendBool(game_access.double_player,dead_connection);
+        if (game_access.double_player) {
+            protocolo.sendString(game_access.player2_name,dead_connection);
+        }
     } catch (const SocketClose& e) {
         std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
     } catch (const std::exception& e) {
@@ -150,6 +156,23 @@ void ProtocoloCliente::sendAccesToServer(uint8_t action,uint8_t id, const std::s
         std::cerr << e.what() << std::endl;
     }
 }
+
+void ProtocoloCliente::sendRequestGameToServer(const GameAccess& game_access) {
+    try {
+        protocolo.sendByte(game_access.action_type,dead_connection);
+    } catch (const SocketClose& e) {
+        std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
+    } catch (const std::exception& e) {
+        dead_connection = true;
+        std::cerr << e.what() << std::endl;
+    }
+}
+
+
+
+
+
+
 
 std::list<uint8_t> ProtocoloCliente::reciveActiveGamesFromServer() {
     try {

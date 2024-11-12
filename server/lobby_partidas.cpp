@@ -6,7 +6,7 @@ LobbyPartidas::LobbyPartidas(): id_partida(0),partidas(), protected_queues_sende
 {
 }
 
-std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::addPartida(uint8_t id_client, std::string& name)
+std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::addPartida(uint8_t id_client, std::string& name1, bool double_player, std::string& name2)
 {
 
     std::lock_guard<std::mutex> lock(m);
@@ -17,12 +17,16 @@ std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::addPartida(uint8_t 
     partidas.emplace(id_partida, std::make_unique<GameLoop>(queues_game_loop[id_partida], end_game[id_partida], protected_queues_sender[id_partida], map_id_clientes[id_partida]));
     id_hoster_partida[id_client] = id_partida;
     protected_queues_sender[id_partida]->addClient(id_client, *queues_sender[id_client]);
-    map_id_clientes[id_partida].emplace(id_client, name);
+    map_id_clientes[id_partida].emplace(id_client, name1);
+    if (double_player)
+    {
+        map_id_clientes[id_partida].emplace(id_client+1, name2);
+    }
     partidas_sin_arrancar.emplace(id_partida, id_client);
     return queues_game_loop[id_partida++];
 }
 
-std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::joinGame(uint8_t id_partida, uint8_t id_cliente, std::string& name)
+std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::joinGame(uint8_t id_partida, uint8_t id_cliente, std::string& name1, bool double_player, std::string& name2)
 {
     std::lock_guard<std::mutex> lock(m);
     if (partidas_sin_arrancar.find(id_partida) == partidas_sin_arrancar.end())
@@ -31,7 +35,11 @@ std::shared_ptr<BlockingQueue<CommandClient>> LobbyPartidas::joinGame(uint8_t id
     }
 
     protected_queues_sender[id_partida]->addClient(id_cliente, *queues_sender[id_cliente]);
-    map_id_clientes[id_partida].emplace(id_cliente, name);
+    map_id_clientes[id_partida].emplace(id_cliente, name1);
+    if (double_player)
+    {
+        map_id_clientes[id_partida].emplace(id_cliente+1, name2);
+    }
     return queues_game_loop[id_partida];
 }
 

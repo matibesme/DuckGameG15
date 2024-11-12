@@ -19,6 +19,7 @@ private:
     std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;
     uint8_t id;
     LobbyPartidas &lobby;
+    bool two_players;
 
 
 public:

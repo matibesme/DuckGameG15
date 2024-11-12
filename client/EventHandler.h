@@ -8,11 +8,11 @@
 
 class EventHandler {
 private:
-    BlockingQueue<uint8_t>& queue_sender;
+    BlockingQueue<ClientAction>& queue_sender;
     std::unordered_set<SDL_Keycode> teclas_presionadas;
 
 public:
-    explicit EventHandler(BlockingQueue<uint8_t>& queue_sender);
+    explicit EventHandler(BlockingQueue<ClientAction>& queue_sender);
 
     void correrHandlers();
 };

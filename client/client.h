@@ -18,7 +18,7 @@ class Client {
 private:
     ProtocoloCliente protocolo;
     bool is_socket_close;
-    BlockingQueue<uint8_t> queue_sender;
+    BlockingQueue<ClientAction> queue_sender;
     BlockingQueue<GameState> queue_receiver;
     GameRunner game;
     Sender sender;
@@ -30,7 +30,7 @@ public:
     void createGame();
     void startGame();
     void joinGame(uint8_t idPartida);
-    std::list<uint8_t>  updateGame(uint8_t key);
+    std::list<uint8_t>  updateGame();
     ~Client();
 };
 

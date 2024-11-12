@@ -24,8 +24,9 @@ public:
     ProtocoloCliente(const char* host, const char* port, bool& dead_connection);
 
    // void sendGameAccessToServer(const GameAccess& game_access);
-    void sendInGameToServer(const uint8_t& command);
-    void sendAccesToServer(uint8_t action,uint8_t id, const std::string& name);
+    void sendInGameToServer(const ClientAction& command);
+    void sendCreateJoinGameToServer(const GameAccess& game_access);
+    void sendRequestGameToServer(const GameAccess& game_access);
     GameState reciveFromServer();
     GameState reciveFullGameFromServer();
     std::list<uint8_t> reciveActiveGamesFromServer();

@@ -4,7 +4,7 @@
 #define TITULO "DUCK GAME"
 #define SONIDO_FONDO DATA_PATH "/sound/sonidoDeFondo.wav"
 
-GameRunner::GameRunner(BlockingQueue<uint8_t>& queue_sender, BlockingQueue<GameState>& queue_receiver)
+GameRunner::GameRunner(BlockingQueue<ClientAction>& queue_sender, BlockingQueue<GameState>& queue_receiver)
         : graficos(TITULO, SCENE_WIDTH, SCENE_HEIGHT),
           handler(queue_sender),
           queue_sender(queue_sender),

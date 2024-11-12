@@ -10,7 +10,8 @@ Receiver::Receiver(ProtocoloServer& protocolo, bool& dead_connection,  uint8_t i
         start_game(false),
         queue_comandos(),
         id(id_),
-        lobby(lobby)
+        lobby(lobby),
+        two_players(false)
         {}
 
 void Receiver::run() {
@@ -18,20 +19,23 @@ void Receiver::run() {
         while (in_lobby) {
             GameAccess command = protocolo.receiveAccessFromClients();
             if (command.action_type == JOIN_GAME) {
-                queue_comandos = lobby.joinGame(command.game_id, id, command.player_name);
+                queue_comandos = lobby.joinGame(command.game_id, id, command.player1_name, command.double_player, command.player2_name);
                 if (queue_comandos == nullptr) {
                     continue;
                 }
                 in_lobby = false;
+                two_players = command.double_player;
             } else if (command.action_type == CREATE_GAME) {
 
-                queue_comandos = lobby.addPartida(id, command.player_name);
+                queue_comandos = lobby.addPartida(id, command.player1_name, command.double_player, command.player2_name);
                 in_lobby = false;
+                two_players = command.double_player;
             } else if (command.action_type == LISTAR_PARTIDAS) {
                std::map<uint8_t, uint8_t>& partidas = lobby.getIdPartidas();
                 protocolo.sendActiveGames(partidas);
 
             }
+
         }
 
         if (lobby.isHoster(id)) {
@@ -48,7 +52,7 @@ void Receiver::run() {
 
 
         while (!dead_connection) {
-            CommandClient command = protocolo.receiveCommandFromClients();
+            CommandClient command = protocolo.receiveCommandFromClients(two_players);
             queue_comandos->push(command);
         }
     } catch (const SocketClose& e) {
