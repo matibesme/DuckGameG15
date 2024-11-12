@@ -82,9 +82,9 @@ constexpr uint8_t VICTORY_ROUNDS_INICIAL = 0;
 constexpr uint8_t NECESARY_VICTORY_ROUNDS = 10;
 constexpr uint8_t GAMES_PER_ROUND = 5;
 
-constexpr float BULLET_VEL = 5;
-constexpr float MOVEMENT_QUANTITY_X = 3;
-constexpr float MOVEMENT_QUANTITY_Y = 3;
+constexpr float BULLET_VEL = 8;
+constexpr float MOVEMENT_QUANTITY_X = 2;
+constexpr float MOVEMENT_QUANTITY_Y = 2;
 //TIMES
 constexpr int TIME_TO_RESPAWN = 10;
 
