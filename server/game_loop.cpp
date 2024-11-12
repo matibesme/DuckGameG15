@@ -34,6 +34,7 @@ void GameLoop::run() {
     for (auto &id : map_id_clientes) {
       map_victory_rounds.emplace(id.first, VICTORY_ROUNDS_INICIAL);
     }
+    sendEndRound();
     if (map_id_clientes.size() == 1) {
       sendVictory(map_id_clientes.begin()->second);
       end_game = true;
@@ -337,7 +338,7 @@ void GameLoop::sendEndRound() {
                                     victory_round.second);
   }
 
-  for (int i = 0; i < 20; i++) {
+  for (int i = 0; i < 200; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 

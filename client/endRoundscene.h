@@ -6,26 +6,37 @@
 #include <map>
 #include <string>
 
-#define FUENTE DATA_PATH "/fonts/8-bit-hud.ttf"
-#define IMAGEN_END_OF_ROUND DATA_PATH "/pantallaVictoria.png"
-
 class EndRoundScene {
 public:
-  EndRoundScene(std::map<std::string, uint8_t>& players);
+  // Constructor: recibe una referencia a un renderer
+  EndRoundScene(std::map<std::string, uint8_t>& players, SDL_Renderer& renderer);
+
+  // Destructor
   ~EndRoundScene();
+
+  // Método para renderizar el fondo
+  void RenderBackground();
+
+  // Método para renderizar el título
+  void RenderTitle();
+
+  // Método para renderizar la tabla de resultados
+  void RenderResultsTable();
+
+  // Método para renderizar el borde
+  void RenderBorder();
+
+  // Método principal para ejecutar la escena
   void Run();
 
 private:
-  void RenderBackground();
-  void RenderTitle();
-  void RenderResultsTable();
-  void RenderBorder();
-  SDL_Window* window;
-  SDL_Renderer* renderer;
+  std::map<std::string, uint8_t>& players;  // Referencia al mapa de jugadores y sus victorias
+  SDL_Renderer& renderer;  // Referencia al renderer recibido
+
+  // Propiedades de la ventana y la fuente
   TTF_Font* font;
-  std::map<std::string, uint8_t>& players;
-  int windowWidth = 600;
-  int windowHeight = 400;
+  int windowWidth = 800;
+  int windowHeight = 600;
 };
 
 #endif // ENDROUNDSCENE_H

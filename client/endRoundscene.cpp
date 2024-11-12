@@ -5,29 +5,12 @@
 #define FUENTE DATA_PATH "/fonts/8-bit-hud.ttf"
 #define IMAGEN_END_OF_ROUND DATA_PATH "/pantallaVictoria.png"
 
-EndRoundScene::EndRoundScene(std::map<std::string, uint8_t>& players)
-    : players(players) {
+// Modificación: el constructor ahora acepta un renderer como referencia
+EndRoundScene::EndRoundScene(std::map<std::string, uint8_t>& players, SDL_Renderer& renderer)
+    : players(players), renderer(renderer) {  // Se pasa el renderer al constructor
   // Inicializar SDL
-  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-    std::cerr << "Error al inicializar SDL: " << SDL_GetError() << std::endl;
-    exit(1);
-  }
-
   if (TTF_Init() == -1) {
     std::cerr << "Error al inicializar SDL_ttf: " << TTF_GetError() << std::endl;
-    exit(1);
-  }
-
-  // Crear ventana y renderizador
-  window = SDL_CreateWindow("End Round", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
-  if (!window) {
-    std::cerr << "Error al crear la ventana: " << SDL_GetError() << std::endl;
-    exit(1);
-  }
-
-  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-  if (!renderer) {
-    std::cerr << "Error al crear el renderizador: " << SDL_GetError() << std::endl;
     exit(1);
   }
 
@@ -40,11 +23,8 @@ EndRoundScene::EndRoundScene(std::map<std::string, uint8_t>& players)
 
 EndRoundScene::~EndRoundScene() {
   // Limpiar recursos
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
   TTF_CloseFont(font);
   TTF_Quit();
-  SDL_Quit();
 }
 
 void EndRoundScene::RenderBackground() {
@@ -53,8 +33,8 @@ void EndRoundScene::RenderBackground() {
   if (!background) {
     std::cerr << "Error al cargar la imagen: " << SDL_GetError() << std::endl;
   }
-  SDL_Texture* backgroundTexture = SDL_CreateTextureFromSurface(renderer, background);
-  SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
+  SDL_Texture* backgroundTexture = SDL_CreateTextureFromSurface(&renderer, background);
+  SDL_RenderCopy(&renderer, backgroundTexture, NULL, NULL);
   SDL_DestroyTexture(backgroundTexture);
   SDL_FreeSurface(background);
 }
@@ -64,15 +44,15 @@ void EndRoundScene::RenderTitle() {
   SDL_Color textColor = {255, 255, 255, 255};  // Blanco
   SDL_Color backgroundColor = {0, 0, 0, 255}; // Fondo negro
   SDL_Surface* textSurface = TTF_RenderText_Blended(font, "End of Round Results", textColor);
-  SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+  SDL_Texture* textTexture = SDL_CreateTextureFromSurface(&renderer, textSurface);
 
   // Fondo negro para el texto
   SDL_Rect backgroundRect = { (windowWidth - textSurface->w) / 2 - 10, 20 - 10, textSurface->w + 20, textSurface->h + 20 };
-  SDL_SetRenderDrawColor(renderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
-  SDL_RenderFillRect(renderer, &backgroundRect);
+  SDL_SetRenderDrawColor(&renderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+  SDL_RenderFillRect(&renderer, &backgroundRect);
 
   SDL_Rect textRect = { (windowWidth - textSurface->w) / 2, 20, textSurface->w, textSurface->h };
-  SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+  SDL_RenderCopy(&renderer, textTexture, NULL, &textRect);
 
   SDL_DestroyTexture(textTexture);
   SDL_FreeSurface(textSurface);
@@ -94,15 +74,15 @@ void EndRoundScene::RenderResultsTable() {
 
     // Renderizar nombre del jugador con fondo negro
     SDL_Surface* nameSurface = TTF_RenderText_Blended(font, resultText.c_str(), textColor);
-    SDL_Texture* nameTexture = SDL_CreateTextureFromSurface(renderer, nameSurface);
+    SDL_Texture* nameTexture = SDL_CreateTextureFromSurface(&renderer, nameSurface);
 
     // Fondo negro para los resultados
     SDL_Rect backgroundRect = { (windowWidth - nameSurface->w) / 2 - 10, yOffset - 10, nameSurface->w + 20, nameSurface->h + 20 };
-    SDL_SetRenderDrawColor(renderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
-    SDL_RenderFillRect(renderer, &backgroundRect);
+    SDL_SetRenderDrawColor(&renderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+    SDL_RenderFillRect(&renderer, &backgroundRect);
 
     SDL_Rect nameRect = { (windowWidth - nameSurface->w) / 2, yOffset, nameSurface->w, nameSurface->h };
-    SDL_RenderCopy(renderer, nameTexture, NULL, &nameRect);
+    SDL_RenderCopy(&renderer, nameTexture, NULL, &nameRect);
 
     SDL_DestroyTexture(nameTexture);
     SDL_FreeSurface(nameSurface);
@@ -118,29 +98,19 @@ void EndRoundScene::RenderResultsTable() {
 
 void EndRoundScene::RenderBorder() {
   // Dibujar borde negro
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);  // Negro
+  SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);  // Negro
   SDL_Rect borderRect = { 0, 0, windowWidth, windowHeight };
-  SDL_RenderDrawRect(renderer, &borderRect);
+  SDL_RenderDrawRect(&renderer, &borderRect);
 }
 
 void EndRoundScene::Run() {
-  bool running = true;
-  SDL_Event event;
+  SDL_RenderClear(&renderer);
 
-  while (running) {
-    while (SDL_PollEvent(&event)) {
-      if (event.type == SDL_QUIT) {
-        running = false;
-      }
-    }
+  RenderBackground();
+  RenderTitle();
+  RenderResultsTable();
+  RenderBorder();
 
-    SDL_RenderClear(renderer);
+  SDL_RenderPresent(&renderer);
 
-    RenderBackground();
-    RenderTitle();
-    RenderResultsTable();
-    RenderBorder();
-
-    SDL_RenderPresent(renderer);
-  }
 }

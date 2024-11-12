@@ -26,7 +26,10 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   renderer.Clear();
 
   if (command.action == END_ROUND_BYTE) {
-    EndRoundScene endRoundScene(command.map_victorias);
+    // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
+    SDL_Renderer& sdlRenderer = *renderer.Get();  // Obtiene el SDL_Renderer subyacente
+    EndRoundScene endRoundSene(command.map_victorias, sdlRenderer);  // Pasar el SDL_Renderer a la escena
+    endRoundSene.Run();  // Ejecutar la escena
     return;
   }
 
@@ -330,7 +333,7 @@ void GameRenderer::mostrarPantallaVictoria(std::string &winner) {
   a.exec();
 }
 
-void GameRenderer::mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias) {
+void GameRenderer::mostrarPantallaEndRound([[maybe_unused]] std::map<std::string, uint8_t> &map_victorias) {
 
 }
 
