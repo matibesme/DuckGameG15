@@ -41,6 +41,11 @@ void GameLoop::run() {
         for (auto& id : list_id_clientes) {
             map_victory_rounds.emplace(id, VICTORY_ROUNDS_INICIAL);
         }
+        if (list_id_clientes.size() == 1) {
+            end_game = true;
+            sendVictory(list_id_clientes.front());
+            return;
+        }
         while (!end_game)
         {
             uint8_t rounds = 0; 
