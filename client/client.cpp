@@ -15,22 +15,22 @@ void Client::execute() {
 }
 
 void Client::createGame() {
-    protocolo.sendAccesToServer(CREATE_GAME, 1);
+    protocolo.sendAccesToServer(CREATE_GAME, 1, "player1");
 }
 
 void Client::startGame() {
-    protocolo.sendAccesToServer(START_GAME, 1);
+    protocolo.sendAccesToServer(START_GAME, 1, "player1");
     execute();
 }
 
 void Client::joinGame(uint8_t idPartida) {
 
-    protocolo.sendAccesToServer(JOIN_GAME, idPartida);
+    protocolo.sendAccesToServer(JOIN_GAME, idPartida, "player1");
     execute();
 }
 
 std::list<uint8_t> Client::updateGame(uint8_t key) {
-    protocolo.sendAccesToServer(LISTAR_PARTIDAS, key);
+    protocolo.sendAccesToServer(LISTAR_PARTIDAS, key, "player1");
     std::list<uint8_t> list = protocolo.reciveActiveGamesFromServer();
 
     return list;

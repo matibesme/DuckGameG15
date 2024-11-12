@@ -18,14 +18,14 @@ void Receiver::run() {
         while (in_lobby) {
             GameAccess command = protocolo.receiveAccessFromClients();
             if (command.action_type == JOIN_GAME) {
-                queue_comandos = lobby.joinGame(command.game_id, id);
+                queue_comandos = lobby.joinGame(command.game_id, id, command.player_name);
                 if (queue_comandos == nullptr) {
                     continue;
                 }
                 in_lobby = false;
             } else if (command.action_type == CREATE_GAME) {
 
-                queue_comandos = lobby.addPartida(id);
+                queue_comandos = lobby.addPartida(id, command.player_name);
                 in_lobby = false;
             } else if (command.action_type == LISTAR_PARTIDAS) {
                std::map<uint8_t, uint8_t>& partidas = lobby.getIdPartidas();

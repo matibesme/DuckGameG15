@@ -119,14 +119,14 @@ void ProtocoloServer::sendEndRound(const GameState& command) {
     protocolo.sendByte(END_ROUND_BYTE, dead_connection);
     protocolo.sendByte(command.lista_victorias.size(), dead_connection);
     for (const auto& victory_round : command.lista_victorias) {
-        protocolo.sendByte(victory_round.first, dead_connection);
+        protocolo.sendString(victory_round.first, dead_connection);
         protocolo.sendByte(victory_round.second, dead_connection);
     }
 }
 
 void ProtocoloServer::sendVictory(const GameState& command) {
     protocolo.sendByte(VICTORY_BYTE, dead_connection);
-    protocolo.sendByte(command.id_winner, dead_connection);
+    protocolo.sendString(command.name_winner, dead_connection);
 }
 
 
@@ -150,12 +150,13 @@ GameAccess ProtocoloServer::receiveAccessFromClients() {
     try {
         uint8_t action_type = protocolo.receiveByte(dead_connection);
         uint8_t game_id = protocolo.receiveByte(dead_connection);
-        return {action_type, game_id};
+        std::string name = protocolo.receiveString(dead_connection);
+        return {action_type, game_id, name};
     } catch (const std::exception& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;
     }
-    return {0,0};
+    return {0,0,""};
 }
 
 

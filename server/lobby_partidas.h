@@ -18,15 +18,15 @@ class LobbyPartidas {
         std::map<uint8_t, std::shared_ptr<BlockingQueue<CommandClient>>> queues_game_loop;
         std::map<uint8_t, uint8_t> id_hoster_partida;
         std::map<uint8_t, bool> end_game;
-        std::map<uint8_t,std::list<uint8_t>> map_id_clientes;
+        std::map<uint8_t,std::map<uint8_t,std::string>> map_id_clientes;
         std::map<uint8_t, uint8_t> partidas_sin_arrancar;
         std::mutex m;
 
     public:
         LobbyPartidas();
-        std::shared_ptr<BlockingQueue<CommandClient>> addPartida(uint8_t id_cliente);
+        std::shared_ptr<BlockingQueue<CommandClient>> addPartida(uint8_t id_cliente, std::string& name);
         void removePartida(uint8_t id_partida);
-        std::shared_ptr<BlockingQueue<CommandClient>> joinGame(uint8_t id_partida, uint8_t id_cliente);
+        std::shared_ptr<BlockingQueue<CommandClient>> joinGame(uint8_t id_partida, uint8_t id_cliente, std::string& name);
         void addQueueSender(uint8_t id_player, std::shared_ptr<BlockingQueue<GameState>> queue);
         bool isHoster(uint8_t id_cliente);
         void startGame(uint8_t id_client);

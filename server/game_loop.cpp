@@ -10,8 +10,8 @@
 
 
 GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comandos, bool& end_game,
-                    std::shared_ptr<ProtectedQueuesMap>& queues_map, std::list<uint8_t>& list_id_clientes):
-        list_id_clientes(list_id_clientes),
+                    std::shared_ptr<ProtectedQueuesMap>& queues_map, std::map<uint8_t, std::string>& list_id_clientes):
+        map_id_clientes(list_id_clientes),
         queue_comandos(queue_comandos),
         end_game(end_game),
         queues_map(queues_map),
@@ -32,18 +32,18 @@ GameLoop::GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comando
         duck_action(map_personajes, map_free_weapons, respawn_weapon_points, time_weapon_last_respawn,
             map_bullets, id_balas, id_weapons, map_defense, respawn_defense_points, id_defense,time_defense_last_respawn),
         load_game_config(factory_weapons, list_plataformas, respawn_weapon_points, map_defense, respawn_defense_points,id_defense,
-            id_weapons, id_boxes,map_free_weapons, list_boxes, map_bullets, id_balas,map_personajes, list_id_clientes),
+            id_weapons, id_boxes,map_free_weapons, list_boxes, map_bullets, id_balas,map_personajes, map_id_clientes),
         map_victory_rounds(){}
 
 void GameLoop::run() {
     try {
 
-        for (auto& id : list_id_clientes) {
-            map_victory_rounds.emplace(id, VICTORY_ROUNDS_INICIAL);
+        for (auto& id : map_id_clientes) {
+            map_victory_rounds.emplace(id.first, VICTORY_ROUNDS_INICIAL);
         }
-        if (list_id_clientes.size() == 1) {
+        if (map_id_clientes.size() == 1) {
             end_game = true;
-            sendVictory(list_id_clientes.front());
+            sendVictory(map_id_clientes.begin()->second);
             return;
         }
         while (!end_game)
@@ -71,7 +71,7 @@ void GameLoop::run() {
                 rounds++;
                 cleanGame();
             }
-            uint8_t winner;
+            std::string winner;
             bool win=checkWinner( winner);
             if (win) {
                 sendVictory(winner);
@@ -298,7 +298,7 @@ void GameLoop::cleanGame() {
     list_plataformas.clear();
 }
 
-bool GameLoop::checkWinner(uint8_t& winner) {
+bool GameLoop::checkWinner(std::string& winner) {
     uint8_t cant_winners = 0;
     for (auto& victory_round : map_victory_rounds) {
         if (victory_round.second == NECESARY_VICTORY_ROUNDS) {
@@ -313,15 +313,15 @@ void GameLoop::sendEndRound() {
     GameState command;
     command.action = END_ROUND_BYTE;
     for (auto& victory_round : map_victory_rounds) {
-        command.lista_victorias.emplace(victory_round.first, victory_round.second);
+        command.lista_victorias.emplace(map_id_clientes[victory_round.first], victory_round.second);
     }
     queues_map->sendMessagesToQueues(command);
 }
 
-void GameLoop::sendVictory(uint8_t& winner) {
+void GameLoop::sendVictory(std::string& winner) {
     GameState command;
     command.action = VICTORY_BYTE;
-    command.id_winner = winner;
+    command.name_winner = winner;
 
 }
 

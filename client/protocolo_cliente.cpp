@@ -138,10 +138,11 @@ GameState ProtocoloCliente::reciveFullGameFromServer(){
 }
 
 
-void ProtocoloCliente::sendAccesToServer(uint8_t action,uint8_t id) {
+void ProtocoloCliente::sendAccesToServer(uint8_t action,uint8_t id, const std::string& name) {
     try {
         protocolo.sendByte(action,dead_connection);
         protocolo.sendByte(id,dead_connection);
+        protocolo.sendString(name,dead_connection);
     } catch (const SocketClose& e) {
         std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
     } catch (const std::exception& e) {
@@ -174,9 +175,9 @@ GameState ProtocoloCliente::reciveEndRoundFromServer() {
     GameState command;
     command.action = END_ROUND_BYTE;
     uint8_t victorias_quantity = protocolo.receiveByte(dead_connection);
-    std::map<uint8_t, uint8_t> lista_victorias;
+    std::map<std::string, uint8_t> lista_victorias;
     for (int i = 0; i < victorias_quantity; i++) {
-        uint8_t id = protocolo.receiveByte(dead_connection);
+        std::string id = protocolo.receiveString(dead_connection);
         uint8_t victorias = protocolo.receiveByte(dead_connection);
         lista_victorias.emplace(id, victorias);
     }
@@ -187,8 +188,9 @@ GameState ProtocoloCliente::reciveEndRoundFromServer() {
 GameState ProtocoloCliente::reciveVictoryFromServer() {
     GameState command;
     command.action = VICTORY_BYTE;
-    uint8_t id_winner = protocolo.receiveByte(dead_connection);
-    command.id_winner = id_winner;
+    std::string winner = protocolo.receiveString(dead_connection);
+    command.name_winner = winner;
+
     return command;
 }
 

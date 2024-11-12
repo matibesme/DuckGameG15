@@ -73,10 +73,10 @@ struct GameState
     std::list<Protection> lista_armors;
 
     //END ROUND
-    std::map<uint8_t, uint8_t> lista_victorias;
+    std::map<std::string, uint8_t> lista_victorias;
 
     //VICTORY
-    uint8_t id_winner;
+    std::string name_winner;
 
 };
 
@@ -91,6 +91,7 @@ struct CommandClient {
 struct GameAccess {
     uint8_t action_type;
     uint8_t game_id;
+    std::string player_name;
    // join game, create game, start game
 
 };

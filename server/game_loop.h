@@ -30,7 +30,8 @@
 class GameLoop: public Thread {
 
 private:
-    std::list<uint8_t>& list_id_clientes;
+
+    std::map<uint8_t, std::string>& map_id_clientes;
     std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;
     bool& end_game;
     std::shared_ptr<ProtectedQueuesMap> queues_map;
@@ -62,7 +63,7 @@ private:
 public:
 
     GameLoop( std::shared_ptr<BlockingQueue<CommandClient>>& queue_comandos, bool& end_game,
-              std::shared_ptr<ProtectedQueuesMap>& queues_map, std::list<uint8_t>& list_id_clientes);
+              std::shared_ptr<ProtectedQueuesMap>& queues_map, std::map<uint8_t, std::string>& map_id_clientes);
     virtual void run() override;
     void checkCommand(CommandClient comando);
     void movementComand(uint8_t comando);
@@ -74,9 +75,9 @@ public:
     void checkCoalitionDuckPlatform(DuckPlayer& personaje);
     void respawnWeapon();
     void cleanGame();
-    bool checkWinner(uint8_t& winner);
+    bool checkWinner(std::string& winner);
     void sendEndRound();
-    void sendVictory(uint8_t& id_winner);
+    void sendVictory(std::string& winner);
 
     virtual ~GameLoop();
 };
