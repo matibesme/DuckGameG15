@@ -30,7 +30,7 @@ FinalScene::FinalScene(std::string winner, SDL_Renderer& renderer)
   }
 
   // Mensaje del ganador
-  message = "Winner is: " +  winner;
+  message = "Winner is " + winner;
 }
 
 FinalScene::~FinalScene() {
@@ -44,16 +44,22 @@ void FinalScene::Render() {
   // Renderizar el fondo
   SDL_RenderCopy(&renderer, backgroundTexture, NULL, NULL);
 
-  // Renderizar el mensaje del ganador
+  // Renderizar el mensaje del ganador con fondo negro
   SDL_Color textColor = {255, 255, 255, 255};  // Blanco
   SDL_Surface* textSurface = TTF_RenderText_Blended(font, message.c_str(), textColor);
-  SDL_Texture* textTexture = SDL_CreateTextureFromSurface(&renderer, textSurface);
+
+  // Crear un fondo negro para el texto
   SDL_Rect textRect = { 50, 400, textSurface->w, textSurface->h };
+  SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);  // Negro
+  SDL_RenderFillRect(&renderer, &textRect);  // Dibujar el rectángulo negro detrás del texto
+
+  // Renderizar el texto
+  SDL_Texture* textTexture = SDL_CreateTextureFromSurface(&renderer, textSurface);
   SDL_RenderCopy(&renderer, textTexture, NULL, &textRect);
 
   SDL_DestroyTexture(textTexture);
   SDL_FreeSurface(textSurface);
-
   // Actualizar la pantalla
   SDL_RenderPresent(&renderer);
 }
+

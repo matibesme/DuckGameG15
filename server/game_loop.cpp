@@ -324,7 +324,7 @@ bool GameLoop::checkWinner(std::string &winner) {
   uint8_t cant_winners = 0;
   for (auto &victory_round : map_victory_rounds) {
     if (victory_round.second == NECESARY_VICTORY_ROUNDS) {
-      winner = victory_round.first;
+      winner = map_id_clientes[victory_round.first];
       cant_winners++;
     }
   }
