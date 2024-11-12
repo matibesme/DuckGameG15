@@ -8,6 +8,26 @@
 
 #include "client.h"
 
+#include <QApplication>
+#include "endRoundscene.h"
+
+int main(int argc, char* argv[]) {
+  QApplication a(argc, argv);
+
+  std::map<uint8_t, std::string> players = {
+      {5, "Player1"},
+      {3, "Player2"},
+      {8, "Player3"}
+  };
+
+  EndRoundScene w(players);
+  w.show();
+
+  return a.exec();
+}
+
+
+/*
 int main(int argc, char *argv[]) {
   if (argc != CANT_ARGUMENTS) {
     std::cerr << "Ingrese correctamente la IP o host y el puerto o servicio.\n";
@@ -32,3 +52,4 @@ int main(int argc, char *argv[]) {
 
   return EXIT_SUCCESS;
 }
+*/

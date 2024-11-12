@@ -71,7 +71,7 @@ struct GameState {
   std::list<Protection> lista_armors;
 
   // END ROUND
-  std::map<std::string, uint8_t> lista_victorias;
+  std::map<std::string, uint8_t> map_victorias;
 
   // VICTORY
   std::string name_winner;
