@@ -25,8 +25,9 @@ public:
   void sendToClient(const GameState &command);
   void sendFullGame(const GameState &command);
   void sendActiveGames(const std::map<uint8_t, uint8_t> &games);
-  void sendBackground(const GameState &command);
-  CommandClient receiveCommandFromClients();
+  void sendEndRound(const GameState &command);
+  void sendVictory(const GameState &command);
+  CommandClient receiveCommandFromClients(bool &two_players);
   GameAccess receiveAccessFromClients();
 
   void closeSocket();

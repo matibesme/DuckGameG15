@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <list>
+#include <map>
 #include <string>
 
 struct DTODuck {
@@ -51,6 +52,8 @@ struct Protection {
 };
 
 struct GameState {
+  uint8_t action;
+  // FULL GAME
   uint8_t backGround_id;
 
   std::list<DTOPlatform> lista_plataformas;
@@ -66,6 +69,12 @@ struct GameState {
   std::list<Protection> lista_helmets;
 
   std::list<Protection> lista_armors;
+
+  // END ROUND
+  std::map<std::string, uint8_t> lista_victorias;
+
+  // VICTORY
+  std::string name_winner;
 };
 
 struct CommandClient {
@@ -78,7 +87,15 @@ struct CommandClient {
 struct GameAccess {
   uint8_t action_type;
   uint8_t game_id;
+  std::string player1_name;
+  bool double_player;
+  std::string player2_name;
   // join game, create game, start game
+};
+
+struct ClientAction {
+  uint8_t type_of_movement;
+  uint8_t player; // si es el jugador 1 o 2
 };
 
 struct CommandBackGround {

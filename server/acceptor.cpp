@@ -28,8 +28,7 @@ void Acceptor::accept_new_client() {
   cliente.start();
   reapDead();
 
-  // map_queues_sender.addClient(cantidad_clientes, cliente.getQueueSender());//
-  cantidad_clientes++;
+  cantidad_clientes += 2;
 }
 
 void Acceptor::deleteAClient(ThreadCliente &cliente) {
@@ -38,16 +37,16 @@ void Acceptor::deleteAClient(ThreadCliente &cliente) {
 }
 
 void Acceptor::reapDead() {
-  /*
-      for (auto it = lista_clientes.begin(); it != lista_clientes.end();) {
-          if (it->isDead()) {
-              it->join();
-              deleteAClient(*it);
-              lista_clientes.erase(it);
-          } else {
-              ++it;
-          }
-      }*/
+
+  for (auto it = lista_clientes.begin(); it != lista_clientes.end();) {
+    if (it->isDead()) {
+      it->join();
+      deleteAClient(*it);
+      lista_clientes.erase(it);
+    } else {
+      ++it;
+    }
+  }
 }
 
 void Acceptor::closeSocket() {

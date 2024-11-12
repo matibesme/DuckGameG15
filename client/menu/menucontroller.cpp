@@ -39,7 +39,7 @@ void MenuController::join(uint8_t id_game) {
 }
 
 void MenuController::update_games(Menu &menu) {
-  menu.show_update_games(client.updateGame(0));
+  menu.show_update_games(client.updateGame());
 }
 
 MenuController::~MenuController() {}

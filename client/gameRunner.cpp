@@ -1,11 +1,10 @@
 #include "gameRunner.h"
-
 #include <chrono>
 #include <functional>
 #define TITULO "DUCK GAME"
 #define SONIDO_FONDO DATA_PATH "/sound/sonidoDeFondo.wav"
 
-GameRunner::GameRunner(BlockingQueue<uint8_t> &queue_sender,
+GameRunner::GameRunner(BlockingQueue<ClientAction> &queue_sender,
                        BlockingQueue<GameState> &queue_receiver)
     : graficos(TITULO, SCENE_WIDTH, SCENE_HEIGHT), handler(queue_sender),
       queue_sender(queue_sender), queue_receiver(queue_receiver) {}
@@ -29,7 +28,7 @@ void GameRunner::run() {
       auto t1 = std::chrono::high_resolution_clock::now();
 
       handler.correrHandlers();
-      while (queue_receiver.try_pop(command)) // Nos quedamos con la ultima
+      while (queue_receiver.try_pop(command)) // y nos quedamos con la ultima
       {
         actualizar = true;
       }
@@ -89,8 +88,8 @@ void GameRunner::reproducirMusica() {
 // correr valgrind con
 // valgrind --tool=callgrind --compress-strings=no --dump-line=yes
 // ./build-relwithdebinfo/tarlike x.xoz a ~/Documents/*pdf en mi caso valgrind
-// --tool=callgrind --compress-strings=no
-// --dump-line=yes ./taller_client localhost 8080 y luego para ver el callgrind
-// kcachegrind callgrind.out.xxxx donde xxxx es el numero de la corrida
+// --tool=callgrind --compress-strings=no --dump-line=yes ./taller_client
+// localhost 8080 y luego para ver el callgrind kcachegrind callgrind.out.xxxx
+// donde xxxx es el numero de la corrida
 
 // otra app es Linux perf Examples

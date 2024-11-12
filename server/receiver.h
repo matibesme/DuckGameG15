@@ -6,7 +6,6 @@
 #include "../common/dto_definitions.h"
 #include "../common/socket.h"
 #include "../common/thread.h"
-
 #include "lobby_partidas.h"
 #include "protocolo_server.h"
 
@@ -20,6 +19,7 @@ private:
   std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;
   uint8_t id;
   LobbyPartidas &lobby;
+  bool two_players;
 
 public:
   Receiver(ProtocoloServer &protocolo, bool &dead_connection, uint8_t id_,

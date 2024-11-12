@@ -22,15 +22,15 @@
 #include "items/bullets/bullet.h"
 
 #include "configuration/load_game.h"
+#include "configuration/server_constants.h"
 #include "duck_action.h"
-#include "items/weapons/factory_weapons.h"
-
 #include "items/boxes.h"
+#include "items/weapons/factory_weapons.h"
 
 class GameLoop : public Thread {
 
 private:
-  std::list<uint8_t> &list_id_clientes;
+  std::map<uint8_t, std::string> &map_id_clientes;
   std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;
   bool &end_game;
   std::shared_ptr<ProtectedQueuesMap> queues_map;
@@ -50,22 +50,19 @@ private:
   uint16_t id_defense;
   std::list<DTOPlatform> list_plataformas;
 
-  // std::list<DTOBoxes> list_boxes;
-
   std::map<uint16_t, Protection> map_defense;
   std::map<uint16_t, Protection> respawn_defense_points;
   std::map<uint16_t, uint8_t> time_defense_last_respawn;
-
   DuckAction duck_action;
-  // std::list,std::string> list_colors;
-  std::vector<std::string> list_colors;
   LoadGameFile load_game_config;
+
+  std::map<uint8_t, uint8_t> map_victory_rounds;
   void paraCadaPatoAction();
 
 public:
   GameLoop(std::shared_ptr<BlockingQueue<CommandClient>> &queue_comandos,
            bool &end_game, std::shared_ptr<ProtectedQueuesMap> &queues_map,
-           std::list<uint8_t> &list_id_clientes);
+           std::map<uint8_t, std::string> &map_id_clientes);
   virtual void run() override;
   void checkCommand(CommandClient comando);
   void movementComand(uint8_t comando);
@@ -76,5 +73,10 @@ public:
   void checkCoalition(std::unique_ptr<Bullet> &bullet);
   void checkCoalitionDuckPlatform(DuckPlayer &personaje);
   void respawnWeapon();
+  void cleanGame();
+  bool checkWinner(std::string &winner);
+  void sendEndRound();
+  void sendVictory(std::string &winner);
+
   virtual ~GameLoop();
 };

@@ -23,6 +23,9 @@ private:
   std::list<Boxes> &list_boxes;
   std::map<uint16_t, std::unique_ptr<Bullet>> &map_bullets;
   uint16_t &id_bullets;
+  std::map<uint8_t, DuckPlayer> &map_personajes;
+  std::map<uint8_t, std::string> &map_id_clientes;
+  std::vector<std::string> list_colors;
 
 public:
   LoadGameFile(FactoryWeapons &factory_weapons,
@@ -34,6 +37,8 @@ public:
                std::map<uint16_t, std::shared_ptr<Weapon>> &map_free_weapons,
                std::list<Boxes> &list_boxes,
                std::map<uint16_t, std::unique_ptr<Bullet>> &map_bullets,
-               uint16_t &id_bullets);
+               uint16_t &id_bullets,
+               std::map<uint8_t, DuckPlayer> &map_personajes,
+               std::map<uint8_t, std::string> &map_id_clientes);
   void loadGame();
 };

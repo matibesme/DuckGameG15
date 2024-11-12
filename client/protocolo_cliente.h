@@ -1,19 +1,18 @@
 #pragma once
+#include "../common/dto_definitions.h"
+#include "../common/game_exception.h"
 #include <cstdint>
 #include <iostream>
 #include <map>
 #include <ostream>
 #include <string>
 #include <utility>
-
-#include "../common/dto_definitions.h"
-#include "../common/game_exception.h"
 // #include "../common/liberror.h"
-#include <vector>
-
-#include "../common/common_constant.h"
 #include "../common/protocolo.h"
 #include "../common/socket.h"
+
+#include "../common/common_constant.h"
+#include <vector>
 
 class ProtocoloCliente {
   Socket socket;
@@ -25,11 +24,13 @@ public:
   ProtocoloCliente(const char *host, const char *port, bool &dead_connection);
 
   // void sendGameAccessToServer(const GameAccess& game_access);
-  void sendInGameToServer(const uint8_t &command);
-  void sendAccesToServer(uint8_t action, uint8_t id);
+  void sendInGameToServer(const ClientAction &command);
+  void sendCreateJoinGameToServer(const GameAccess &game_access);
+  void sendRequestGameToServer(const GameAccess &game_access);
   GameState reciveFromServer();
   GameState reciveFullGameFromServer();
-  GameState reciveBackgroundFromServer();
   std::list<uint8_t> reciveActiveGamesFromServer();
+  GameState reciveEndRoundFromServer();
+  GameState reciveVictoryFromServer();
   ~ProtocoloCliente();
 };

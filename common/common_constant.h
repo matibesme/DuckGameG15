@@ -34,15 +34,11 @@ constexpr int WIDTH_BOX = 17;
 constexpr int HEIGHT_BOX = 20;
 
 // Protocolo
-constexpr uint8_t FIRST_SEND_BYTE = 0x03;
-constexpr uint8_t FIRST_RECEIVE_BYTE = 0x06;
 
 // Imagen completa
-constexpr uint8_t BACKGROUND_BYTE = 0x19;
 constexpr uint8_t FULL_GAME_BYTE = 0x20;
 constexpr uint8_t END_ROUND_BYTE = 0x21;
 constexpr uint8_t VICTORY_BYTE = 0x22;
-constexpr uint8_t ACTIVE_GAMES_BYTE = 0x23;
 
 // Movimientos del pato 1
 constexpr uint8_t MOVEMENT_ACTION = 0x03;
@@ -143,15 +139,9 @@ constexpr uint8_t TYPE_BOX = 0X21;
 // Constantes adicionales
 constexpr char SALIDA = 'q';
 constexpr int QUEUE_TAMANIO_MAX = 100;
-constexpr float BULLET_VEL = 5;
-constexpr float MOVEMENT_QUANTITY_X = 3;
-constexpr float MOVEMENT_QUANTITY_Y = 3;
 
 //  Access to game
 constexpr uint8_t JOIN_GAME = 0xCC;
 constexpr uint8_t CREATE_GAME = 0xDD;
 constexpr uint8_t START_GAME = 0xEE;
 constexpr uint8_t LISTAR_PARTIDAS = 0xFF;
-
-// TIMES
-constexpr int TIME_TO_RESPAWN = 10;

@@ -8,8 +8,12 @@ ProtocoloServer::ProtocoloServer(Socket socket, bool &dead_connection,
 
 void ProtocoloServer::sendToClient(const GameState &command) {
   try {
-
-    sendFullGame(command);
+    if (command.action == FULL_GAME_BYTE)
+      sendFullGame(command);
+    else if (command.action == END_ROUND_BYTE)
+      sendEndRound(command);
+    else
+      sendVictory(command);
 
   } catch (const SocketClose &e) {
     std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
@@ -104,11 +108,28 @@ void ProtocoloServer::sendActiveGames(const std::map<uint8_t, uint8_t> &games) {
   }
 }
 
-CommandClient ProtocoloServer::receiveCommandFromClients() {
-  try {
+void ProtocoloServer::sendEndRound(const GameState &command) {
+  protocolo.sendByte(END_ROUND_BYTE, dead_connection);
+  protocolo.sendByte(command.lista_victorias.size(), dead_connection);
+  for (const auto &victory_round : command.lista_victorias) {
+    protocolo.sendString(victory_round.first, dead_connection);
+    protocolo.sendByte(victory_round.second, dead_connection);
+  }
+}
 
+void ProtocoloServer::sendVictory(const GameState &command) {
+  protocolo.sendByte(VICTORY_BYTE, dead_connection);
+  protocolo.sendString(command.name_winner, dead_connection);
+}
+
+CommandClient ProtocoloServer::receiveCommandFromClients(bool &two_players) {
+  try {
     uint8_t type_of_action = protocolo.receiveByte(dead_connection);
     uint8_t type_of_movement = protocolo.receiveByte(dead_connection);
+    uint8_t player = protocolo.receiveByte(dead_connection);
+    if (player == 2 && two_players)
+      return {type_of_action, type_of_movement, static_cast<uint8_t>(id + 1)};
+
     return {type_of_action, type_of_movement, id};
 
   } catch (const std::exception &e) {
@@ -121,13 +142,25 @@ CommandClient ProtocoloServer::receiveCommandFromClients() {
 GameAccess ProtocoloServer::receiveAccessFromClients() {
   try {
     uint8_t action_type = protocolo.receiveByte(dead_connection);
+
+    if (action_type == LISTAR_PARTIDAS || action_type == START_GAME)
+      return {action_type, 0, "", false, ""};
+
     uint8_t game_id = protocolo.receiveByte(dead_connection);
-    return {action_type, game_id};
+    std::string name = protocolo.receiveString(dead_connection);
+    bool double_player = protocolo.receiveBool(dead_connection);
+    if (double_player) {
+      std::string name2 = protocolo.receiveString(dead_connection);
+      return {action_type, game_id, name, double_player, name2};
+    }
+
+    return {action_type, game_id, name, false, ""};
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
   }
-  return {0, 0};
+  GameAccess null_access;
+  return null_access;
 }
 
 void ProtocoloServer::closeSocket() {

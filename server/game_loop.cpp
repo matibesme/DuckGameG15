@@ -11,8 +11,8 @@
 GameLoop::GameLoop(
     std::shared_ptr<BlockingQueue<CommandClient>> &queue_comandos,
     bool &end_game, std::shared_ptr<ProtectedQueuesMap> &queues_map,
-    std::list<uint8_t> &list_id_clientes)
-    : list_id_clientes(list_id_clientes), queue_comandos(queue_comandos),
+    std::map<uint8_t, std::string> &list_id_clientes)
+    : map_id_clientes(list_id_clientes), queue_comandos(queue_comandos),
       end_game(end_game), queues_map(queues_map), map_personajes(),
       respawn_weapon_points(), time_weapon_last_respawn(), map_free_weapons(),
       factory_weapons(), map_bullets(), id_balas(0), id_weapons(0), id_boxes(0),
@@ -22,35 +22,55 @@ GameLoop::GameLoop(
                   time_weapon_last_respawn, map_bullets, id_balas, id_weapons,
                   map_defense, respawn_defense_points, id_defense,
                   time_defense_last_respawn),
-      list_colors({"red", "blue", "green", "yellow", "pink", "purple", "orange",
-                   "brown", "black", "white"}),
       load_game_config(factory_weapons, list_plataformas, respawn_weapon_points,
                        map_defense, respawn_defense_points, id_defense,
                        id_weapons, id_boxes, map_free_weapons, list_boxes,
-                       map_bullets, id_balas) {}
+                       map_bullets, id_balas, map_personajes, map_id_clientes),
+      map_victory_rounds() {}
 
 void GameLoop::run() {
   try {
-    load_game_config.loadGame();
-    int i = 0;
-    for (auto &id : list_id_clientes) {
-      map_personajes.emplace(id,
-                             DuckPlayer(0, id, POSICION_INICIAL_X,
-                                        POSICION_INICIAL_Y, list_colors[i++]));
-    }
 
+    for (auto &id : map_id_clientes) {
+      map_victory_rounds.emplace(id.first, VICTORY_ROUNDS_INICIAL);
+    }
+    if (map_id_clientes.size() == 1) {
+      end_game = true;
+      sendVictory(map_id_clientes.begin()->second);
+      return;
+    }
     while (!end_game) {
+      uint8_t rounds = 0;
+      while (!end_game && rounds < GAMES_PER_ROUND) {
+        load_game_config.loadGame();
 
-      CommandClient comando;
-      while (queue_comandos->try_pop(comando)) {
-        checkCommand(comando);
+        while (!end_game && map_personajes.size() != 1) {
+
+          CommandClient comando;
+          while (queue_comandos->try_pop(comando)) {
+            checkCommand(comando);
+          }
+          paraCadaPatoAction();
+          checkBullets();
+          respawnWeapon();
+          sendCompleteScene();
+          std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
+        }
+        map_victory_rounds[map_personajes.begin()->first]++;
+        rounds++;
+        cleanGame();
       }
-      paraCadaPatoAction();
-      checkBullets();
-      respawnWeapon();
-      sendCompleteScene();
-      std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
+      std::string winner;
+      bool win = checkWinner(winner);
+      if (win) {
+        sendVictory(winner);
+        end_game = true;
+        break;
+      }
+      sendEndRound();
     }
+
+    // send round status
 
   } catch (const ClosedQueue &e) {
     // Queue closed
@@ -81,7 +101,7 @@ void GameLoop::checkBullets() {
 
 void GameLoop::sendCompleteScene() {
   GameState command;
-
+  command.action = FULL_GAME_BYTE;
   command.backGround_id = SCENE_ID;
 
   for (auto &platform : list_plataformas) {
@@ -89,9 +109,7 @@ void GameLoop::sendCompleteScene() {
   }
 
   for (auto &personaje : map_personajes) {
-    if (!personaje.second.isAlive()) {
-      continue;
-    }
+
     uint8_t weapon_type = NOGUN;
     if (personaje.second.isWeaponEquipped()) {
       weapon_type = personaje.second.getWeapon().getType();
@@ -162,13 +180,19 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
     bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos,
                                  plataform.width, plataform.height);
   }
-  for (auto &character : map_personajes) {
-    bool colision = bullet->colisionWithDuck(character.second.getXPos(),
-                                             character.second.getYPos(),
-                                             DUCK_WIDTH, DUCK_HEIGHT);
+  for (auto it = map_personajes.begin(); it != map_personajes.end();) {
+    bool colision = bullet->colisionWithDuck(
+        it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
     if (colision) {
-      character.second.applyDamage(bullet->getDamage());
+      it->second.applyDamage(bullet->getDamage());
+      if (!it->second.isAlive()) {
+        it = map_personajes.erase(it);
+      } else {
+        ++it;
+      }
       return;
+    } else {
+      ++it;
     }
   }
   for (auto it = list_boxes.begin(); it != list_boxes.end();) {
@@ -236,29 +260,75 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
 
 void GameLoop::respawnWeapon() {
 
-  for (auto &time : time_weapon_last_respawn) {
-    if (time.second == 0) {
-      RespawnPoint &weapon = respawn_weapon_points[time.first];
+  for (auto it = time_weapon_last_respawn.begin();
+       it != time_weapon_last_respawn.end();) {
+    if (it->second == 0) {
+      RespawnPoint &weapon = respawn_weapon_points[it->first];
       map_free_weapons.emplace(
-          time.first, factory_weapons.createWeapon(weapon.type, weapon.x_pos,
-                                                   weapon.y_pos));
-      time_weapon_last_respawn.erase(time.first);
-
+          it->first, factory_weapons.createWeapon(weapon.type, weapon.x_pos,
+                                                  weapon.y_pos));
+      it = time_weapon_last_respawn.erase(it);
     } else {
-      time_weapon_last_respawn[time.first]--;
+      it->second--;
+      ++it;
     }
   }
 
-  for (auto &time : time_defense_last_respawn) {
-    if (time.second == 0) {
-      Protection &defense = respawn_defense_points[time.first];
-      map_defense.emplace(time.first, defense);
-      time_defense_last_respawn.erase(time.first);
-
+  for (auto it = time_defense_last_respawn.begin();
+       it != time_defense_last_respawn.end();) {
+    if (it->second == 0) {
+      Protection &defense = respawn_defense_points[it->first];
+      map_defense.emplace(it->first, defense);
+      it = time_defense_last_respawn.erase(it);
     } else {
-      time_defense_last_respawn[time.first]--;
+      it->second--;
+      ++it;
     }
   }
+}
+
+void GameLoop::cleanGame() {
+  map_personajes.clear();
+  map_bullets.clear();
+  map_free_weapons.clear();
+  list_boxes.clear();
+  map_defense.clear();
+  respawn_defense_points.clear();
+  time_defense_last_respawn.clear();
+  time_weapon_last_respawn.clear();
+  respawn_weapon_points.clear();
+  id_balas = 0;
+  id_weapons = 0;
+  id_boxes = 0;
+  id_defense = 0;
+  list_plataformas.clear();
+}
+
+bool GameLoop::checkWinner(std::string &winner) {
+  uint8_t cant_winners = 0;
+  for (auto &victory_round : map_victory_rounds) {
+    if (victory_round.second == NECESARY_VICTORY_ROUNDS) {
+      winner = victory_round.first;
+      cant_winners++;
+    }
+  }
+  return cant_winners == 1;
+}
+
+void GameLoop::sendEndRound() {
+  GameState command;
+  command.action = END_ROUND_BYTE;
+  for (auto &victory_round : map_victory_rounds) {
+    command.lista_victorias.emplace(map_id_clientes[victory_round.first],
+                                    victory_round.second);
+  }
+  queues_map->sendMessagesToQueues(command);
+}
+
+void GameLoop::sendVictory(std::string &winner) {
+  GameState command;
+  command.action = VICTORY_BYTE;
+  command.name_winner = winner;
 }
 
 GameLoop::~GameLoop() {}

@@ -13,13 +13,17 @@ LoadGameFile::LoadGameFile(
     std::map<uint16_t, std::shared_ptr<Weapon>> &map_free_weapons,
     std::list<Boxes> &list_boxes,
     std::map<uint16_t, std::unique_ptr<Bullet>> &map_bullets,
-    uint16_t &id_balas)
+    uint16_t &id_balas, std::map<uint8_t, DuckPlayer> &map_personajes,
+    std::map<uint8_t, std::string> &map_id_clientes)
     : factory_weapons(factory_weapons), platforms(platforms),
       respawn_weapon_points(respawn_weapon_points), map_defense(map_defense),
       respawn_defense_points(respawn_defense_points), id_defense(id_defense),
       id_weapons(id_weapons), id_boxes(id_boxes),
       map_free_weapons(map_free_weapons), list_boxes(list_boxes),
-      map_bullets(map_bullets), id_bullets(id_balas) {}
+      map_bullets(map_bullets), id_bullets(id_balas),
+      map_personajes(map_personajes), map_id_clientes(map_id_clientes),
+      list_colors({"red", "blue", "green", "yellow", "pink", "purple", "orange",
+                   "brown", "black", "white"}) {}
 
 void LoadGameFile::loadGame() {
 
@@ -55,6 +59,13 @@ void LoadGameFile::loadGame() {
         platform["pos_y"].as<float>(), platform["width"].as<float>(),
         platform["height"].as<float>()};
     platforms.push_back(dto_platform);
+  }
+
+  int i = 0;
+  for (auto &id : map_id_clientes) {
+    map_personajes.emplace(id.first,
+                           DuckPlayer(0, id.first, POSICION_INICIAL_X,
+                                      POSICION_INICIAL_Y, list_colors[i++]));
   }
 
   for (const auto &wall : map["walls"]) {

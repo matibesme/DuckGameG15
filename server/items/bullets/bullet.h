@@ -4,12 +4,10 @@
 
 #ifndef BULLET_H
 #define BULLET_H
-#include <cstdint>
-
 #include "../objeto.h"
-
+#include "configuration/server_constants.h"
 #include "server_constant.h"
-
+#include <cstdint>
 class Bullet : public Objeto {
 protected:
   uint8_t damage;
