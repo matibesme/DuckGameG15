@@ -13,13 +13,13 @@ void Client::execute() {
   game.run();
 }
 
-void Client::createGame() {
+void Client::createGame(bool is_double_player) {
   GameAccess game_access;
   game_access.action_type = CREATE_GAME;
   game_access.game_id = 0;
   game_access.player1_name = "player1";
   game_access.player2_name = "player2";
-  game_access.double_player = true;
+  game_access.double_player = is_double_player;
   protocolo.sendCreateJoinGameToServer(game_access);
 }
 
@@ -30,12 +30,12 @@ void Client::startGame() {
   execute();
 }
 
-void Client::joinGame(uint8_t idPartida) {
+void Client::joinGame(uint8_t idPartida, bool is_double_player) {
   GameAccess game_access;
   game_access.action_type = JOIN_GAME;
   game_access.game_id = idPartida;
   game_access.player1_name = "player1";
-  game_access.double_player = false;
+  game_access.double_player = is_double_player;
 
   protocolo.sendCreateJoinGameToServer(game_access);
   execute();
