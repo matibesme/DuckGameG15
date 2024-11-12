@@ -21,11 +21,13 @@ GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform)
 }
 
 void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
-  // Limpio el renderizador y dibujar el fondo directamente en la pantalla
+  // Limpio el renderizador y dibujo el fondo directamente en la pantalla
   renderer.SetTarget();
   renderer.Clear();
 
+  // Dibujo el fondo
   drawBackground(command.backGround_id);
+
   // Creo una textura para dibujar todos los objetos
   SDL2pp::Texture textureDeTodo(renderer, SDL_PIXELFORMAT_RGBA8888,
                                 SDL_TEXTUREACCESS_TARGET, SCENE_WIDTH,
@@ -36,8 +38,7 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
 
   // Cambio el objetivo de renderizado a textureDeTodo
   renderer.SetTarget(textureDeTodo);
-  renderer.SetDrawColor(0, 0, 0,
-                        0); // Limpio la textura con un color transparente
+  renderer.SetDrawColor(0, 0, 0, 0); // Limpio la textura con un color transparente
   renderer.Clear();
 
   // Dibujo los objetos en la textura
@@ -56,28 +57,25 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   for (auto &helmet : helmets)
     helmet.draw(false, renderer, false, false);
 
-
   // Vuelve al render principal
   renderer.SetTarget();
 
-  // DESCOMENTAR PARA TENER ZOOM
-  //  Defino el rectángulo de zoom para centrarse en la posición deseada
-  SDL2pp::Rect srcRect = calcularRectanguloDeZoom(
-      ducks); // Método que calcula el rectángulo para incluir todos los patos
-  // Renderizar la textura con los objetos y zoom, sobre el fondo
-  renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect),
-                SDL2pp::Optional<SDL2pp::Rect>());
+  // Calcular el rectángulo de zoom
+  SDL2pp::Rect srcRect = calcularRectanguloDeZoom(ducks);
 
-  // Por ahora no hago zoom renderer.Copy(textureDeTodo,
-  // SDL2pp::Optional<SDL2pp::Rect>(), SDL2pp::Optional<SDL2pp::Rect>());
-  //PantallaVictoria pantallaVictoria("patito", graficos);
+  // Escalar la textura para que ocupe todo el ancho y alto de la pantalla
+  SDL2pp::Rect dstRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
+
+  // Renderizar la textura con zoom aplicado sobre toda la pantalla
+  renderer.Copy(textureDeTodo, SDL2pp::Optional<SDL2pp::Rect>(srcRect),
+                SDL2pp::Optional<SDL2pp::Rect>(dstRect));
+
   renderer.Present();
 }
 
-SDL2pp::Rect
-GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks) {
+SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks) {
   if (ducks.empty()) {
-    return {0, 0, 0, 0};
+    return {0, 0, SCENE_WIDTH, SCENE_HEIGHT};
   }
 
   // Inicializo valores extremos con el primer pato
@@ -94,30 +92,58 @@ GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks) {
     maxY = std::max(maxY, duck.getPosY());
   }
 
-  // Agregar un margen mínimo para evitar el estiramiento extremo
-  const int MARGIN =
-      50; // Define un margen mínimo que puedes ajustar según tu necesidad
+  // Márgenes para evitar ajustes pequeños innecesarios
+  constexpr int MARGIN = 100; // Ajusta según tu preferencia
 
-  // Aseguramos que el rectángulo no se acerque demasiado a los bordes
-  int width = maxX - minX + DUCK_WIDTH + CANT_ZOOM_WIDTH;
-  int height = maxY - minY + DUCK_HEIGHT + CANT_ZOOM_HEIGHT;
+  // Agregar margen alrededor de los patos
+  minX -= MARGIN;
+  maxX += MARGIN;
+  minY -= MARGIN;
+  maxY += MARGIN;
 
-  // Ajustamos el rectángulo de zoom con el margen mínimo
-  int zoomWidth = std::max(width, MARGIN);
-  int zoomHeight = std::max(height, MARGIN);
+  // Calcular el tamaño del área ocupada por los patos
+  int width = maxX - minX;
+  int height = maxY - minY;
 
-  // Ajustamos la posición del rectángulo para que no se salga de los bordes
-  int zoomMinX = std::max(minX - CANT_ZOOM_WIDTH / 2, MARGIN);
-  int zoomMinY = std::max(minY - CANT_ZOOM_HEIGHT / 2, MARGIN);
+  // Asegurar que el rectángulo sea cuadrado manteniendo un ratio constante
+  constexpr float SCENE_RATIO = static_cast<float>(SCENE_WIDTH) / SCENE_HEIGHT;
 
-  //if(//pantalla el alto  && ancho){
-    //proporcion de pantalla ratio tiene q tener el mismo ratio
-    //si me quedo mucho mas anch que alto dibujo mas
+  if (width > height * SCENE_RATIO) {
+    // El ancho domina, ajustamos la altura
+    height = static_cast<int>(width / SCENE_RATIO);
+  } else {
+    // La altura domina, ajustamos el ancho
+    width = static_cast<int>(height * SCENE_RATIO);
+  }
 
-  //}
+  // Centrar el rectángulo alrededor de los patos
+  int centerX = (minX + maxX) / 2;
+  int centerY = (minY + maxY) / 2;
 
-  return {zoomMinX, zoomMinY, zoomWidth, zoomHeight};
+  // Permitir que el rectángulo de zoom se salga de los límites de los patos y muestre más fondo
+  int zoomMinX = centerX - width / 2;
+  int zoomMinY = centerY - height / 2;
+
+  // Permitir que el zoom "salga" de los límites del mapa, sin restringirlo
+  // No limitamos las coordenadas mínimas ni máximas
+  zoomMinX = std::max(zoomMinX, 0); // No puede ser menor que 0
+  zoomMinY = std::max(zoomMinY, 0); // No puede ser menor que 0
+
+  // Ampliamos el área de fondo permitiendo que el zoom se extienda más allá del mapa
+  int zoomMaxX = zoomMinX + width;
+  int zoomMaxY = zoomMinY + height;
+
+  // De nuevo, sin restringir el tamaño a los límites del mapa
+  // No hay límite superior para zoomMaxX ni zoomMaxY
+
+  // Ajustar el tamaño del rectángulo para que se mantenga cuadrado
+  width = zoomMaxX - zoomMinX;
+  height = zoomMaxY - zoomMinY;
+
+  return {zoomMinX, zoomMinY, width, height};
 }
+
+
 
 void GameRenderer::actualizarElementos(const GameState &command) {
   // PRIMERO ACTUALIZO PATOS
