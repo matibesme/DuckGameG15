@@ -190,25 +190,27 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
     bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos,
                                  plataform.width, plataform.height);
   }
-  for (auto it = map_personajes.begin(); it != map_personajes.end();) {
-    bool colision = bullet->colisionWithDuck(
-        it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
-
-
-    if (colision) {
-      if (it -> second.receiveShoot()){
-        it->second.applyDamage(bullet->getDamage());
-      }
-      if (!it->second.isAlive()) {
-        it = map_personajes.erase(it);
+  uint8_t bullet_type = bullet->getTypeOfBullet();
+  if (bullet_type != BANANA_BULLET and bullet_type != GRANADA_BULLET) {
+    for (auto it = map_personajes.begin(); it != map_personajes.end();) {
+      bool colision = bullet->colisionWithDuck(
+          it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
+      if (colision) {
+        if (it -> second.receiveShoot()){
+          it->second.applyDamage(bullet->getDamage());
+        }
+        if (!it->second.isAlive()) {
+          it = map_personajes.erase(it);
+        } else {
+          ++it;
+        }
+        return;
       } else {
         ++it;
       }
-      return;
-    } else {
-      ++it;
     }
   }
+
   for (auto it = list_boxes.begin(); it != list_boxes.end();) {
     bool colision = bullet->colisionWithBox(it->getXPos(), it->getYPos(),
                                             WIDTH_BOX, HEIGHT_BOX);
