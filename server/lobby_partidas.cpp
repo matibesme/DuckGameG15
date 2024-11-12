@@ -10,8 +10,11 @@ LobbyPartidas::addPartida(uint8_t id_client, std::string &name1,
                           bool double_player, std::string &name2, std::string &game_name) {
 
   std::lock_guard<std::mutex> lock(m);
-  end_game[id_partida] = false;
 
+  if (id_hoster_partida.find(id_client) != id_hoster_partida.end()) {
+    return nullptr;
+  }
+  end_game[id_partida] = false;
   queues_game_loop.emplace(id_partida,
                            std::make_shared<BlockingQueue<CommandClient>>(50));
   protected_queues_sender.emplace(id_partida,

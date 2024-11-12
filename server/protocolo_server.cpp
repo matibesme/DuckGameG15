@@ -172,4 +172,18 @@ void ProtocoloServer::closeSocket() {
   socket_server.close();
 }
 
+void ProtocoloServer::sendMatchWithSameName(bool same_name) {
+  try {
+    protocolo.sendBool(same_name, dead_connection);
+
+  } catch (const SocketClose &e) {
+    std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
+  } catch (const std::exception &e) {
+    dead_connection = true;
+    std::cerr << e.what() << std::endl;
+  }
+}
+
+
+
 ProtocoloServer::~ProtocoloServer() {}

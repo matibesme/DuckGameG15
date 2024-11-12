@@ -21,6 +21,9 @@ void Client::createGame(bool is_double_player, std::string player_1, std::string
   game_access.player2_name = player_2;
   game_access.double_player = is_double_player;
   protocolo.sendCreateJoinGameToServer(game_access);
+  bool match = protocolo.reciveMatchWithSameName();
+  //si devuelve true ya existe una partida con el mismo nombre
+  //si devuelve false se creo la partida
 }
 
 void Client::startGame() {

@@ -28,6 +28,10 @@ void Receiver::run() {
         queue_comandos =
             lobby.addPartida(id, command.player1_name, command.double_player,
                              command.player2_name, command.game_name);
+        if (queue_comandos == nullptr) {
+          protocolo.sendMatchWithSameName(true);
+        }
+        protocolo.sendMatchWithSameName(false);
         in_lobby = false;
         two_players = command.double_player;
         game_name = command.game_name;

@@ -145,3 +145,4 @@ constexpr uint8_t JOIN_GAME = 0xCC;
 constexpr uint8_t CREATE_GAME = 0xDD;
 constexpr uint8_t START_GAME = 0xEE;
 constexpr uint8_t LISTAR_PARTIDAS = 0xFF;
+constexpr uint8_t MATCH_WITH_SAME_NAME = 0xBB;

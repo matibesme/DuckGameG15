@@ -32,5 +32,6 @@ public:
   std::list<std::string> reciveActiveGamesFromServer();
   GameState reciveEndRoundFromServer();
   GameState reciveVictoryFromServer();
+  bool reciveMatchWithSameName();
   ~ProtocoloCliente();
 };
