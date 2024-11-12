@@ -324,7 +324,11 @@ void GameLoop::sendEndRound() {
     command.map_victorias.emplace(map_id_clientes[victory_round.first],
                                     victory_round.second);
   }
-  queues_map->sendMessagesToQueues(command);
+
+  for (int i = 0; i < 20; i++) {
+    queues_map->sendMessagesToQueues(command);
+  }
+
 }
 
 void GameLoop::sendVictory(std::string &winner) {
