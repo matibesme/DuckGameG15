@@ -32,6 +32,7 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
     mostrarPantallaVictoria(command.name_winner);
     return;
   }else if (command.action == END_ROUND_BYTE) {
+    mostrarPantallaEndRound(command.map_victorias);
     return;
   }
 
@@ -339,4 +340,12 @@ void GameRenderer::mostrarPantallaVictoria(std::string &winner) {
   a.exec();
 }
 
+void GameRenderer::mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias) {
+  char* args[] = { (char*)"AppName" };
+  int argc_ = 1;
+  QApplication a(argc_, args);
+  EndRoundScene w(map_victorias);
+  w.show();
+  a.exec();
+}
 

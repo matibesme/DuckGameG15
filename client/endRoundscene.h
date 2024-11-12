@@ -7,7 +7,7 @@ class EndRoundScene : public QMainWindow {
   Q_OBJECT
 
 public:
-  EndRoundScene(std::map<uint8_t, std::string> &players, QWidget *parent = nullptr);
+  EndRoundScene(std::map< std::string, uint8_t > &players, QWidget *parent = nullptr);
   ~EndRoundScene();
 };
 

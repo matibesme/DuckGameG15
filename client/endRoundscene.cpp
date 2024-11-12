@@ -5,16 +5,17 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <QScreen>
 
-EndRoundScene::EndRoundScene(std::map<uint8_t, std::string>& players, QWidget* parent)
+EndRoundScene::EndRoundScene(std::map<std::string, uint8_t>& players, QWidget* parent)
     : QMainWindow(parent) {
   // Establecer tamaño más pequeño para la ventana
   this->setFixedSize(600, 400);  // Ventana de tamaño fijo
   this->setWindowTitle("");     // Eliminar el título de la ventana
 
-  // Centrar la ventana en la pantalla
-  QDesktopWidget desktop;
-  QRect screenGeometry = desktop.screenGeometry();
+  // Centrar la ventana en la pantalla usando QGuiApplication
+  QScreen* screen = QGuiApplication::primaryScreen();
+  QRect screenGeometry = screen->geometry();
   int x = (screenGeometry.width() - this->width()) / 2;
   int y = (screenGeometry.height() - this->height()) / 2;
   this->move(x, y);
@@ -54,7 +55,7 @@ EndRoundScene::EndRoundScene(std::map<uint8_t, std::string>& players, QWidget* p
   // Rellenar la tabla con los datos del mapa
   table->setRowCount(players.size());
   int row = 0;
-  for (const auto& [wins, name] : players) {
+  for (const auto& [name, wins] : players) {
     // Columna 1: Nombre del jugador
     QTableWidgetItem* nameItem = new QTableWidgetItem(QString::fromStdString(name));
     nameItem->setTextAlignment(Qt::AlignCenter);
@@ -70,7 +71,9 @@ EndRoundScene::EndRoundScene(std::map<uint8_t, std::string>& players, QWidget* p
 
   // Ajustar tamaño más pequeño para la tabla
   table->setFixedSize(450, 200);
+  // Centrar la tabla tanto horizontal como verticalmente y subirla un poco en y
   layout->addWidget(table, 0, Qt::AlignCenter);
+  layout->setAlignment(table, Qt::AlignCenter);
 
   // Configurar el widget central
   this->setCentralWidget(centralWidget);
