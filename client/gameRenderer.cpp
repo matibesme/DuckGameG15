@@ -118,6 +118,12 @@ GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks) {
   int zoomMinX = std::max(minX - CANT_ZOOM_WIDTH / 2, MARGIN);
   int zoomMinY = std::max(minY - CANT_ZOOM_HEIGHT / 2, MARGIN);
 
+  //if(//pantalla el alto  && ancho){
+    //proporcion de pantalla ratio tiene q tener el mismo ratio
+    //si me quedo mucho mas anch que alto dibujo mas
+
+  //}
+
   return {zoomMinX, zoomMinY, zoomWidth, zoomHeight};
 }
 
