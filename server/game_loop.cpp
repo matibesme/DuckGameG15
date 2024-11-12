@@ -30,7 +30,7 @@ GameLoop::GameLoop(
 
 void GameLoop::run() {
   try {
-
+    load_game_config.loadConfigurations();
     for (auto &id : map_id_clientes) {
       map_victory_rounds.emplace(id.first, VICTORY_ROUNDS_INICIAL);
     }

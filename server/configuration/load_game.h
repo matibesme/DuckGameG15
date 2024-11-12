@@ -41,4 +41,5 @@ public:
                std::map<uint8_t, DuckPlayer> &map_personajes,
                std::map<uint8_t, std::string> &map_id_clientes);
   void loadGame();
+    void loadConfigurations();
 };

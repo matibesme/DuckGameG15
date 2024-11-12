@@ -119,8 +119,7 @@ if(TALLER_SERVER)
             server/items/weapons/factory_weapons.h
             server/items/boxes.h
             server/items/boxes.cpp
-            server/configuration/server_constants.h
-            server/constant_definitions.cpp
+            server/server_constant.cpp
     )
 
     # Incluir el directorio 'server' para los archivos de encabezado (opcional)

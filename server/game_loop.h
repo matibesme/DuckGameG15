@@ -22,7 +22,6 @@
 #include "items/bullets/bullet.h"
 
 #include "configuration/load_game.h"
-#include "configuration/server_constants.h"
 #include "duck_action.h"
 #include "items/boxes.h"
 #include "items/weapons/factory_weapons.h"

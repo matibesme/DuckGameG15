@@ -103,3 +103,68 @@ void LoadGameFile::loadGame() {
               map_bullets, id_bullets, id_weapons, id_defense));
   }
 }
+
+void LoadGameFile::loadConfigurations() {
+  YAML::Node config = YAML::LoadFile("../server/configuration/config.yaml");
+
+  GRAVEDAD = config["gravity"].as<float>();
+  VELOCIDAD_INICIAL = config["initial_speed"].as<float>();
+  GRAVITY_FLAP = config["gravity_flap"].as<float>();
+  CANT_FLAP = config["flap_quantity"].as<uint8_t>();
+  LIFE = config["life"].as<uint8_t>();
+
+
+
+  //GRANADA
+  DAMAGE_GRANADA = config["granade"]["damage"].as<uint8_t>();
+  RANGE_GRANADA = config["granade"]["range"].as<uint8_t>();
+  AMMO_GRANADA = config["granade"]["ammo"].as<uint8_t>();
+  RECOIL_GRANADA = config["granade"]["recoil"].as<float>();
+  //BANANA
+  DAMAGE_BANANA = config["banana"]["damage"].as<uint8_t>();
+  RANGE_BANANA = config["banana"]["range"].as<uint8_t>();
+  AMMO_BANANA = config["banana"]["ammo"].as<uint8_t>();
+  RECOIL_BANANA = config["banana"]["recoil"].as<float>();
+  //AK47
+  DAMAGE_AK47 = config["ak47"]["damage"].as<uint8_t>();
+  RANGE_AK47 = config["ak47"]["range"].as<uint8_t>();
+  AMMO_AK47 = config["ak47"]["ammo"].as<uint8_t>();
+  RECOIL_AK47 = config["ak47"]["recoil"].as<float>();
+  //LASER RIFLE
+  DAMAGE_LASER_RIFLE = config["laser_rifle"]["damage"].as<uint8_t>();
+  RANGE_LASER_RIFLE = config["laser_rifle"]["range"].as<uint8_t>();
+  AMMO_LASER_RIFLE = config["laser_rifle"]["ammo"].as<uint8_t>();
+  RECOIL_LASER_RIFLE = config["laser_rifle"]["recoil"].as<float>();
+  //PEW PEW LASER
+  DAMAGE_PEW_PEW_LASER = config["pew_pew_laser"]["damage"].as<uint8_t>();
+  RANGE_PEW_PEW_LASER = config["pew_pew_laser"]["range"].as<uint8_t>();
+  AMMO_PEW_PEW_LASER = config["pew_pew_laser"]["ammo"].as<uint8_t>();
+  RECOIL_PEW_PEW_LASER = config["pew_pew_laser"]["recoil"].as<float>();
+  //ESCOPETA
+  DAMAGE_ESCOPETA = config["escopeta"]["damage"].as<uint8_t>();
+  RANGE_ESCOPETA = config["escopeta"]["range"].as<uint8_t>();
+  AMMO_ESCOPETA = config["escopeta"]["ammo"].as<uint8_t>();
+  RECOIL_ESCOPETA = config["escopeta"]["recoil"].as<float>();
+  //SNIPER
+  DAMAGE_SNIPER = config["sniper"]["damage"].as<uint8_t>();
+  RANGE_SNIPER = config["sniper"]["range"].as<uint8_t>();
+  AMMO_SNIPER = config["sniper"]["ammo"].as<uint8_t>();
+  RECOIL_SNIPER = config["sniper"]["recoil"].as<float>();
+  //COWBOY
+  DAMAGE_COWBOY = config["cowboy"]["damage"].as<uint8_t>();
+  RANGE_COWBOY = config["cowboy"]["range"].as<uint8_t>();
+  AMMO_COWBOY = config["cowboy"]["ammo"].as<uint8_t>();
+  RECOIL_COWBOY = config["cowboy"]["recoil"].as<float>();
+
+  //PISTOLA DE DUELOS
+  DAMAGE_PISTOLA_DUELOS = config["pistola_de_duelos"]["damage"].as<uint8_t>();
+  RANGE_PISTOLA_DUELOS = config["pistola_de_duelos"]["range"].as<uint8_t>();
+  AMMO_PISTOLA_DUELOS = config["pistola_de_duelos"]["ammo"].as<uint8_t>();
+  RECOIL_PISTOLA_DUELOS = config["pistola_de_duelos"]["recoil"].as<float>();
+
+  //MAGNUM
+  DAMAGE_MAGNUM = config["magnum"]["damage"].as<uint8_t>();
+  RANGE_MAGNUM = config["magnum"]["range"].as<uint8_t>();
+  AMMO_MAGNUM = config["magnum"]["ammo"].as<uint8_t>();
+  RECOIL_MAGNUM = config["magnum"]["recoil"].as<float>();
+}

@@ -5,7 +5,7 @@
 #ifndef BULLET_H
 #define BULLET_H
 #include "../objeto.h"
-#include "configuration/server_constants.h"
+
 #include "server_constant.h"
 #include <cstdint>
 class Bullet : public Objeto {
