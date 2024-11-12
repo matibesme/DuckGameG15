@@ -144,7 +144,7 @@ GameAccess ProtocoloServer::receiveAccessFromClients() {
     uint8_t action_type = protocolo.receiveByte(dead_connection);
 
     if (action_type == LISTAR_PARTIDAS || action_type == START_GAME)
-      return {action_type, 0, "", false, ""};
+      return {action_type, "", "", false, ""};
 
     std::string game_name = protocolo.receiveString(dead_connection);
     std::string name = protocolo.receiveString(dead_connection);

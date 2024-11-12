@@ -33,7 +33,7 @@ LobbyPartidas::addPartida(uint8_t id_client, std::string &name1,
 }
 
 std::shared_ptr<BlockingQueue<CommandClient>>
-LobbyPartidas::joinGame(std::string id_partida, uint8_t id_cliente,
+LobbyPartidas::joinGame(std::string& id_partida, uint8_t id_cliente,
                         std::string &name1, bool double_player,
                         std::string &name2) {
   std::lock_guard<std::mutex> lock(m);
