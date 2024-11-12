@@ -339,7 +339,7 @@ void GameLoop::sendEndRound() {
                                     victory_round.second);
   }
 
-  for (int i = 0; i < 20; i++) {
+  for (int i = 0; i < 2000; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 
@@ -349,7 +349,11 @@ void GameLoop::sendVictory(std::string &winner) {
   GameState command;
   command.action = VICTORY_BYTE;
   command.name_winner = winner;
-  queues_map->sendMessagesToQueues(command);
+
+  for (int i = 0; i < 2500; i++) {
+    queues_map->sendMessagesToQueues(command);
+  }
+
 }
 
 GameLoop::~GameLoop() {}
