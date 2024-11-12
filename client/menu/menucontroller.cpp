@@ -20,7 +20,7 @@ void MenuController::start_game(){
     connect(&w, &Menu::join, this, &MenuController::join);
     connect(&w, &Menu::update_games, this, &MenuController::update_games);
     a.exec();
-    client.execute();
+
 }
 
 void MenuController::set_number_players(uint8_t number_players_){

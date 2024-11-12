@@ -30,6 +30,8 @@ GameState ProtocoloCliente::reciveFromServer() {
         uint8_t firstByte = protocolo.receiveByte(dead_connection);
 
         if (firstByte==FULL_GAME_BYTE) return reciveFullGameFromServer();
+        else if (firstByte==END_ROUND_BYTE) return reciveEndRoundFromServer();
+        else if (firstByte==VICTORY_BYTE) return reciveVictoryFromServer();
       
     } catch (const std::exception& e) {
         dead_connection = true;
@@ -38,10 +40,12 @@ GameState ProtocoloCliente::reciveFromServer() {
     throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
 
-GameState ProtocoloCliente::reciveFullGameFromServer()
-{
-    uint8_t background_id = protocolo.receiveByte(dead_connection);
+GameState ProtocoloCliente::reciveFullGameFromServer(){
 
+    GameState command;
+    command.action = FULL_GAME_BYTE;
+    uint8_t background_id = protocolo.receiveByte(dead_connection);
+    command.backGround_id = background_id;
     //recivo plataformas
     uint8_t platforms_quantity = protocolo.receiveByte(dead_connection);
     std::list<DTOPlatform> lista_plataformas;
@@ -53,7 +57,8 @@ GameState ProtocoloCliente::reciveFullGameFromServer()
         float height = protocolo.receiveFloat(dead_connection);
         lista_plataformas.push_back({typeOfPlataform, x_pos, y_pos, width, height});
     }
-   
+    command.lista_plataformas = lista_plataformas;
+
     //recivo personajes
     uint8_t patos_quantity = protocolo.receiveByte(dead_connection);
     std::list<DTODuck> lista_patos;
@@ -70,6 +75,8 @@ GameState ProtocoloCliente::reciveFullGameFromServer()
         uint8_t direction = protocolo.receiveByte(dead_connection);
         lista_patos.push_back({id,personajes_type, x_pos, y_pos, typeOfMove, typeOfGun,helmet,armor, is_aiming_up, direction});
     }
+
+    command.lista_patos = lista_patos;
     //recivo balas
     uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);
 
@@ -82,6 +89,7 @@ GameState ProtocoloCliente::reciveFullGameFromServer()
         uint8_t orientation = protocolo.receiveByte(dead_connection);
         bullets.push_back({ id, bala_type, x_pos, y_pos, orientation});
     }
+    command.lista_balas = bullets;
 
     //recivo armas libres
     uint8_t guns_quantity = protocolo.receiveByte(dead_connection);
@@ -92,6 +100,7 @@ GameState ProtocoloCliente::reciveFullGameFromServer()
         float y_pos = protocolo.receiveFloat(dead_connection);
         guns.push_back({gun_type, x_pos, y_pos});
     }
+    command.lista_guns = guns;
 
     std::list<DTOBoxes> lista_boxes;
     uint8_t boxes_quantity = protocolo.receiveByte(dead_connection);
@@ -101,6 +110,7 @@ GameState ProtocoloCliente::reciveFullGameFromServer()
         float y_pos = protocolo.receiveFloat(dead_connection);
         lista_boxes.push_back({id, x_pos, y_pos});
     }
+    command.lista_boxes = lista_boxes;
 
     uint8_t helmets_quantity = protocolo.receiveByte(dead_connection);
     std::list<Protection> lista_helemets;
@@ -110,6 +120,7 @@ GameState ProtocoloCliente::reciveFullGameFromServer()
         float y_pos = protocolo.receiveFloat(dead_connection);
         lista_helemets.push_back({type, x_pos, y_pos});
     }
+    command.lista_helmets = lista_helemets;
 
     uint8_t armors_quantity = protocolo.receiveByte(dead_connection);
     std::list<Protection> lista_armors;
@@ -119,9 +130,10 @@ GameState ProtocoloCliente::reciveFullGameFromServer()
         float y_pos = protocolo.receiveFloat(dead_connection);
         lista_armors.push_back({type, x_pos, y_pos});
     }
+    command.lista_armors = lista_armors;
 
 
-    return {background_id,lista_plataformas,lista_patos, bullets, guns, lista_boxes, lista_helemets, lista_armors};
+    return command;
 
 }
 
@@ -140,22 +152,46 @@ void ProtocoloCliente::sendAccesToServer(uint8_t action,uint8_t id) {
 
 std::list<uint8_t> ProtocoloCliente::reciveActiveGamesFromServer() {
     try {
-        uint8_t firstByte = protocolo.receiveByte(dead_connection);
-        if (firstByte == ACTIVE_GAMES_BYTE) {
             uint8_t games_quantity = protocolo.receiveByte(dead_connection);
+
             std::list<uint8_t> games;
             for (int i = 0; i < games_quantity; i++) {
                 uint8_t game_id = protocolo.receiveByte(dead_connection);
+
                 games.push_back(game_id);
             }
             return games;
-        }
+
     } catch (const std::exception& e) {
         dead_connection = true;
         std::cerr << e.what() << std::endl;
     }
     throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
+
+
+GameState ProtocoloCliente::reciveEndRoundFromServer() {
+    GameState command;
+    command.action = END_ROUND_BYTE;
+    uint8_t victorias_quantity = protocolo.receiveByte(dead_connection);
+    std::map<uint8_t, uint8_t> lista_victorias;
+    for (int i = 0; i < victorias_quantity; i++) {
+        uint8_t id = protocolo.receiveByte(dead_connection);
+        uint8_t victorias = protocolo.receiveByte(dead_connection);
+        lista_victorias.emplace(id, victorias);
+    }
+    command.lista_victorias = lista_victorias;
+    return command;
+}
+
+GameState ProtocoloCliente::reciveVictoryFromServer() {
+    GameState command;
+    command.action = VICTORY_BYTE;
+    uint8_t id_winner = protocolo.receiveByte(dead_connection);
+    command.id_winner = id_winner;
+    return command;
+}
+
 
 
 

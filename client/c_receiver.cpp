@@ -6,6 +6,7 @@ Receiver::Receiver(ProtocoloCliente& protocolo, BlockingQueue<GameState>& queue_
     protocolo(protocolo), queue_receiver(queue_receiver) {}
 
 void Receiver::run() {
+
     while (_keep_running) {
         try {
             GameState command = protocolo.reciveFromServer();

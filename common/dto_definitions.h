@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <string>
 #include <list>
+#include <map>
 
 struct DTODuck{
     uint8_t id;
@@ -53,6 +54,8 @@ struct Protection {
 
 struct GameState
 {
+    uint8_t action;
+    //FULL GAME
     uint8_t backGround_id;
     
     std::list<DTOPlatform> lista_plataformas;
@@ -68,6 +71,12 @@ struct GameState
     std::list<Protection> lista_helmets;
 
     std::list<Protection> lista_armors;
+
+    //END ROUND
+    std::map<uint8_t, uint8_t> lista_victorias;
+
+    //VICTORY
+    uint8_t id_winner;
 
 };
 
