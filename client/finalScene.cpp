@@ -1,65 +1,65 @@
 #include "finalScene.h"
-#include <QGraphicsView>
-#include <QtWidgets>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include <string>
 
 #define IMAGEN_VICTORIA DATA_PATH "/pantallaVictoria.png"
 #define FUENTE DATA_PATH "/fonts/8-bit-hud.ttf"
 
-FinalScene::FinalScene(std::string winner, QWidget* parent)
-    : QMainWindow(parent) {
-  // Establecer tamaño de la ventana
-  this->setGeometry(0, 0, 800, 600);
-
-  QGraphicsScene* main_scene = new QGraphicsScene(this);
-  QGraphicsView* view = new QGraphicsView(main_scene, this);
-  main_scene->setSceneRect(0, 0, 800, 600);
-  view->setGeometry(0, 0, 800, 600);
-
-  // Cargar y ajustar la imagen de fondo
-  QPixmap initial_background(IMAGEN_VICTORIA);
-  if (initial_background.isNull()) {
-    qWarning("No se pudo cargar la imagen de fondo");
-  } else {
-    initial_background = initial_background.scaled(800, 600, Qt::KeepAspectRatioByExpanding);
+FinalScene::FinalScene(std::string winner, SDL_Renderer& renderer)
+    : winner(winner), renderer(renderer) {
+  // Inicializar SDL_ttf
+  if (TTF_Init() == -1) {
+    std::cerr << "Error al inicializar SDL_ttf: " << TTF_GetError() << std::endl;
+    exit(1);
   }
 
-  // Crear el mensaje del ganador en dos líneas
-  std::string message = "Winner is:\n" + winner;
-  QLabel* message_label = new QLabel(message.c_str());
+  // Cargar la imagen de fondo
+  SDL_Surface* background = IMG_Load(IMAGEN_VICTORIA);
+  if (!background) {
+    std::cerr << "Error al cargar la imagen: " << SDL_GetError() << std::endl;
+  }
+  backgroundTexture = SDL_CreateTextureFromSurface(&renderer, background);
+  SDL_FreeSurface(background);
 
-  // Estilo del mensaje
-  message_label->setStyleSheet(
-      "background-color: rgba(0, 0, 0, 128);" // Fondo semitransparente
-      "color: white;"                         // Texto blanco
-      "border: 2px solid white;"              // Borde blanco
-      "border-radius: 10px;"                  // Bordes redondeados
-      "padding: 10px;"                        // Espaciado interno
-  );
-  message_label->setAlignment(Qt::AlignCenter);
-
-  // Ajustar tamaño y posición del texto
-  message_label->setGeometry(50, 400, 300, 80); // Posicionado más arriba a la izquierda
-
-  // Cargar la fuente personalizada
-  int id = QFontDatabase::addApplicationFont(FUENTE);
-  if (id != -1) {
-    QString fontFamily = QFontDatabase::applicationFontFamilies(id).at(0);
-    QFont customFont(fontFamily, 16); // Tamaño de fuente reducido
-    message_label->setFont(customFont);
-  } else {
-    qWarning("No se pudo cargar la fuente personalizada");
+  // Cargar la fuente
+  font = TTF_OpenFont(FUENTE, 24);  // Tamaño de fuente
+  if (!font) {
+    std::cerr << "Error al cargar la fuente: " << TTF_GetError() << std::endl;
   }
 
-  // Añadir el mensaje a la escena
-  main_scene->addWidget(message_label);
-
-  // Establecer el fondo en la escena
-  main_scene->setBackgroundBrush(initial_background);
-
-  view->setScene(main_scene);
-  view->show();
+  // Mensaje del ganador
+  message = "Winner is " + winner;
 }
 
-FinalScene::~FinalScene() {}
+FinalScene::~FinalScene() {
+  // Limpiar recursos
+  SDL_DestroyTexture(backgroundTexture);
+  TTF_CloseFont(font);
+  TTF_Quit();
+}
+
+void FinalScene::Render() {
+  // Renderizar el fondo
+  SDL_RenderCopy(&renderer, backgroundTexture, NULL, NULL);
+
+  // Renderizar el mensaje del ganador con fondo negro
+  SDL_Color textColor = {255, 255, 255, 255};  // Blanco
+  SDL_Surface* textSurface = TTF_RenderText_Blended(font, message.c_str(), textColor);
+
+  // Crear un fondo negro para el texto
+  SDL_Rect textRect = { 50, 400, textSurface->w, textSurface->h };
+  SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);  // Negro
+  SDL_RenderFillRect(&renderer, &textRect);  // Dibujar el rectángulo negro detrás del texto
+
+  // Renderizar el texto
+  SDL_Texture* textTexture = SDL_CreateTextureFromSurface(&renderer, textSurface);
+  SDL_RenderCopy(&renderer, textTexture, NULL, &textRect);
+
+  SDL_DestroyTexture(textTexture);
+  SDL_FreeSurface(textSurface);
+  // Actualizar la pantalla
+  SDL_RenderPresent(&renderer);
+}
+

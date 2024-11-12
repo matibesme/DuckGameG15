@@ -324,7 +324,7 @@ bool GameLoop::checkWinner(std::string &winner) {
   uint8_t cant_winners = 0;
   for (auto &victory_round : map_victory_rounds) {
     if (victory_round.second == NECESARY_VICTORY_ROUNDS) {
-      winner = victory_round.first;
+      winner = map_id_clientes[victory_round.first];
       cant_winners++;
     }
   }
@@ -339,7 +339,7 @@ void GameLoop::sendEndRound() {
                                     victory_round.second);
   }
 
-  for (int i = 0; i < 20; i++) {
+  for (int i = 0; i < 2000; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 
@@ -349,7 +349,11 @@ void GameLoop::sendVictory(std::string &winner) {
   GameState command;
   command.action = VICTORY_BYTE;
   command.name_winner = winner;
-  queues_map->sendMessagesToQueues(command);
+
+  for (int i = 0; i < 2500; i++) {
+    queues_map->sendMessagesToQueues(command);
+  }
+
 }
 
 GameLoop::~GameLoop() {}

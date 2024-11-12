@@ -1,90 +1,116 @@
-#define IMAGEN_END_ROUND DATA_PATH "/pantallaVictoria.png"
 #include "endRoundscene.h"
-#include <QGraphicsView>
-#include <QtWidgets>
+#include <SDL2/SDL_image.h>
 #include <iostream>
-#include <string>
-#include <map>
-#include <QScreen>
 
-EndRoundScene::EndRoundScene(std::map<std::string, uint8_t>& players, QWidget* parent)
-    : QMainWindow(parent) {
-  // Establecer tamaño más pequeño para la ventana
-  this->setFixedSize(600, 400);  // Ventana de tamaño fijo
-  this->setWindowTitle("");     // Eliminar el título de la ventana
+#define FUENTE DATA_PATH "/fonts/8-bit-hud.ttf"
+#define IMAGEN_END_OF_ROUND DATA_PATH "/pantallaVictoria.png"
 
-  // Centrar la ventana en la pantalla usando QGuiApplication
-  QScreen* screen = QGuiApplication::primaryScreen();
-  QRect screenGeometry = screen->geometry();
-  int x = (screenGeometry.width() - this->width()) / 2;
-  int y = (screenGeometry.height() - this->height()) / 2;
-  this->move(x, y);
-
-  // Crear un layout principal
-  QWidget* centralWidget = new QWidget(this);
-  QVBoxLayout* layout = new QVBoxLayout(centralWidget);
-
-  // Crear un título para la escena
-  QLabel* title = new QLabel("End of Round Results", this);
-  title->setStyleSheet(
-      "font-size: 20px;"  // Tamaño más grande para el texto
-      "font-weight: bold;"
-      "color: white;"
-      "background-color: rgba(0, 0, 0, 200);"  // Fondo más opaco
-      "padding: 8px;"
-      "border-radius: 5px;"
-  );
-  title->setAlignment(Qt::AlignCenter);
-  layout->addWidget(title, 0, Qt::AlignCenter);
-
-  // Crear la tabla para mostrar los resultados
-  QTableWidget* table = new QTableWidget(this);
-  table->setColumnCount(2);  // Dos columnas: Nombre y Partidas Ganadas
-  table->setHorizontalHeaderLabels({"Player Name", "Wins"});
-  table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-  table->verticalHeader()->setVisible(false);  // Ocultar encabezados de las filas
-  table->setEditTriggers(QAbstractItemView::NoEditTriggers);  // Hacer la tabla no editable
-  table->setSelectionMode(QAbstractItemView::NoSelection);    // Desactivar selección
-  table->setStyleSheet(
-      "background-color: rgba(255, 255, 255, 200);"
-      "border: 2px solid black;"
-      "border-radius: 5px;"
-      "font-size: 16px;"  // Tamaño de texto más grande para la tabla
-  );
-
-  // Rellenar la tabla con los datos del mapa
-  table->setRowCount(players.size());
-  int row = 0;
-  for (const auto& [name, wins] : players) {
-    // Columna 1: Nombre del jugador
-    QTableWidgetItem* nameItem = new QTableWidgetItem(QString::fromStdString(name));
-    nameItem->setTextAlignment(Qt::AlignCenter);
-    table->setItem(row, 0, nameItem);
-
-    // Columna 2: Partidas ganadas
-    QTableWidgetItem* winsItem = new QTableWidgetItem(QString::number(wins));
-    winsItem->setTextAlignment(Qt::AlignCenter);
-    table->setItem(row, 1, winsItem);
-
-    ++row;
+// Modificación: el constructor ahora acepta un renderer como referencia
+EndRoundScene::EndRoundScene(std::map<std::string, uint8_t>& players, SDL_Renderer& renderer)
+    : players(players), renderer(renderer) {  // Se pasa el renderer al constructor
+  // Inicializar SDL
+  if (TTF_Init() == -1) {
+    std::cerr << "Error al inicializar SDL_ttf: " << TTF_GetError() << std::endl;
+    exit(1);
   }
 
-  // Ajustar tamaño más pequeño para la tabla
-  table->setFixedSize(450, 200);
-  // Centrar la tabla tanto horizontal como verticalmente y subirla un poco en y
-  layout->addWidget(table, 0, Qt::AlignCenter);
-  layout->setAlignment(table, Qt::AlignCenter);
-
-  // Configurar el widget central
-  this->setCentralWidget(centralWidget);
-
-  // Establecer el fondo
-  QPixmap background(IMAGEN_END_ROUND);
-  if (!background.isNull()) {
-    QPalette palette;
-    palette.setBrush(QPalette::Window, background.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-    this->setPalette(palette);
+  // Inicializar fuentes (reducido el tamaño de la fuente a 14)
+  font = TTF_OpenFont(FUENTE, 14); // Cambié el tamaño de la fuente a 14
+  if (!font) {
+    std::cerr << "Error al cargar la fuente: " << TTF_GetError() << std::endl;
   }
 }
 
-EndRoundScene::~EndRoundScene() {}
+EndRoundScene::~EndRoundScene() {
+  // Limpiar recursos
+  TTF_CloseFont(font);
+  TTF_Quit();
+}
+
+void EndRoundScene::RenderBackground() {
+  // Renderizar el fondo con una imagen .PNG
+  SDL_Surface* background = IMG_Load(IMAGEN_END_OF_ROUND);
+  if (!background) {
+    std::cerr << "Error al cargar la imagen: " << SDL_GetError() << std::endl;
+  }
+  SDL_Texture* backgroundTexture = SDL_CreateTextureFromSurface(&renderer, background);
+  SDL_RenderCopy(&renderer, backgroundTexture, NULL, NULL);
+  SDL_DestroyTexture(backgroundTexture);
+  SDL_FreeSurface(background);
+}
+
+void EndRoundScene::RenderTitle() {
+  // Renderizar el título con fondo negro
+  SDL_Color textColor = {255, 255, 255, 255};  // Blanco
+  SDL_Color backgroundColor = {0, 0, 0, 255}; // Fondo negro
+  SDL_Surface* textSurface = TTF_RenderText_Blended(font, "End of Round Results", textColor);
+  SDL_Texture* textTexture = SDL_CreateTextureFromSurface(&renderer, textSurface);
+
+  // Fondo negro para el texto
+  SDL_Rect backgroundRect = { (windowWidth - textSurface->w) / 2 - 10, 20 - 10, textSurface->w + 20, textSurface->h + 20 };
+  SDL_SetRenderDrawColor(&renderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+  SDL_RenderFillRect(&renderer, &backgroundRect);
+
+  SDL_Rect textRect = { (windowWidth - textSurface->w) / 2, 20, textSurface->w, textSurface->h };
+  SDL_RenderCopy(&renderer, textTexture, NULL, &textRect);
+
+  SDL_DestroyTexture(textTexture);
+  SDL_FreeSurface(textSurface);
+}
+
+void EndRoundScene::RenderResultsTable() {
+  // Renderizar los resultados con fondo negro
+  int yOffset = 80; // Inicializamos el desplazamiento de y para los resultados
+  SDL_Color textColor = {255, 255, 255, 255};  // Blanco
+  SDL_Color backgroundColor = {0, 0, 0, 255}; // Fondo negro
+
+  // Ajuste del espaciado para acomodar hasta 6 resultados
+  int maxResults = 6;  // Máximo número de resultados a mostrar
+  int lineSpacing = 40; // Espaciado entre resultados
+  int maxYPosition = yOffset + (maxResults - 1) * lineSpacing; // Ajustar la posición Y del último resultado
+
+  for (const auto& [name, wins] : players) {
+    std::string resultText = name + ": " + std::to_string(wins) + " Wins";
+
+    // Renderizar nombre del jugador con fondo negro
+    SDL_Surface* nameSurface = TTF_RenderText_Blended(font, resultText.c_str(), textColor);
+    SDL_Texture* nameTexture = SDL_CreateTextureFromSurface(&renderer, nameSurface);
+
+    // Fondo negro para los resultados
+    SDL_Rect backgroundRect = { (windowWidth - nameSurface->w) / 2 - 10, yOffset - 10, nameSurface->w + 20, nameSurface->h + 20 };
+    SDL_SetRenderDrawColor(&renderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+    SDL_RenderFillRect(&renderer, &backgroundRect);
+
+    SDL_Rect nameRect = { (windowWidth - nameSurface->w) / 2, yOffset, nameSurface->w, nameSurface->h };
+    SDL_RenderCopy(&renderer, nameTexture, NULL, &nameRect);
+
+    SDL_DestroyTexture(nameTexture);
+    SDL_FreeSurface(nameSurface);
+
+    yOffset += lineSpacing;  // Ajustar el desplazamiento para el siguiente resultado
+
+    // Si hemos alcanzado el máximo número de resultados, detener la renderización
+    if (yOffset > maxYPosition) {
+      break;
+    }
+  }
+}
+
+void EndRoundScene::RenderBorder() {
+  // Dibujar borde negro
+  SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);  // Negro
+  SDL_Rect borderRect = { 0, 0, windowWidth, windowHeight };
+  SDL_RenderDrawRect(&renderer, &borderRect);
+}
+
+void EndRoundScene::Run() {
+  SDL_RenderClear(&renderer);
+
+  RenderBackground();
+  RenderTitle();
+  RenderResultsTable();
+  RenderBorder();
+
+  SDL_RenderPresent(&renderer);
+
+}

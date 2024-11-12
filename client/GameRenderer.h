@@ -27,16 +27,18 @@ private:
   std::list<Box> boxes;
   static SDL2pp::Rect calcularRectanguloDeZoom(std::list<ClientDuck> &ducks);
   void drawBackground(const uint8_t background_id);
-  static void mostrarPantallaVictoria(std::string &winner);
-  static void mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias);
 
 public:
-  explicit GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platforms,
-                        std::list<DTOBoxes> &boxes);
 
+  explicit GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platforms);
   void dibujar(Renderer &renderer, GameState &command);
 
   void actualizarElementos(const GameState &command);
+
+  void mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias,
+                               Renderer &renderer);
+
+  void mostrarPantallaVictoria(std::string &winner, Renderer &renderer);
 };
 
 #endif // GAMERENDERER_H

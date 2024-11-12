@@ -10,8 +10,7 @@
 #define CANT_ZOOM_WIDTH (7 * DUCK_WIDTH)
 #define CANT_ZOOM_HEIGHT (15 * DUCK_HEIGHT)
 
-GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform,
-                           std::list<DTOBoxes> &box)
+GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform)
     : graficos(graficos) {
   // Creo las plataformas por única vez
   for (auto &platformStruct : platform) {
@@ -19,28 +18,14 @@ GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform,
                            platformStruct.type, platformStruct.width,
                            platformStruct.height);
   }
-
-  // Creo las cajas por única vez
-  for (auto &boxStruct : box) {
-    boxes.emplace_back(boxStruct.id, boxStruct.x_pos, boxStruct.y_pos,
-                       graficos);
-  }
 }
 
 void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
-  if(command.action == VICTORY_BYTE){
-    mostrarPantallaVictoria(command.name_winner);
-    return;
-  }else if (command.action == END_ROUND_BYTE) {
-    mostrarPantallaEndRound(command.map_victorias);
-    return;
-  }
-
   // Limpio el renderizador y dibujar el fondo directamente en la pantalla
   renderer.SetTarget();
   renderer.Clear();
-  drawBackground(command.backGround_id);
 
+  drawBackground(command.backGround_id);
   // Creo una textura para dibujar todos los objetos
   SDL2pp::Texture textureDeTodo(renderer, SDL_PIXELFORMAT_RGBA8888,
                                 SDL_TEXTUREACCESS_TARGET, SCENE_WIDTH,
@@ -124,6 +109,12 @@ GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks) {
   // Ajustamos la posición del rectángulo para que no se salga de los bordes
   int zoomMinX = std::max(minX - CANT_ZOOM_WIDTH / 2, MARGIN);
   int zoomMinY = std::max(minY - CANT_ZOOM_HEIGHT / 2, MARGIN);
+
+  //if(//pantalla el alto  && ancho){
+    //proporcion de pantalla ratio tiene q tener el mismo ratio
+    //si me quedo mucho mas anch que alto dibujo mas
+
+  //}
 
   return {zoomMinX, zoomMinY, zoomWidth, zoomHeight};
 }
@@ -331,21 +322,17 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
   renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);
 }
 
-void GameRenderer::mostrarPantallaVictoria(std::string &winner) {
-  char* args[] = { (char*)"AppName" };
-  int argc_ = 1;
-  QApplication a(argc_, args);
-  FinalScene w(winner);
-  w.show();
-  a.exec();
+void GameRenderer::mostrarPantallaVictoria([[maybe_unused]] std::string &winner, Renderer &renderer) {
+  // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
+  SDL_Renderer& sdlRenderer = *renderer.Get();  // Obtiene el SDL_Renderer subyacente
+  FinalScene finalScene(winner, sdlRenderer);  // Pasar el SDL_Renderer a la escena
+  finalScene.Render();  // Ejecutar la escena
 }
 
-void GameRenderer::mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias) {
-  char* args[] = { (char*)"AppName" };
-  int argc_ = 1;
-  QApplication a(argc_, args);
-  EndRoundScene w(map_victorias);
-  w.show();
-  a.exec();
+void GameRenderer::mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias, Renderer &renderer) {
+  // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
+  SDL_Renderer& sdlRenderer = *renderer.Get();  // Obtiene el SDL_Renderer subyacente
+  EndRoundScene endRoundSene(map_victorias, sdlRenderer);  // Pasar el SDL_Renderer a la escena
+  endRoundSene.Run();  // Ejecutar la escena
 }
 
