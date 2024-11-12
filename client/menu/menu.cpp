@@ -156,18 +156,39 @@ void Menu::show_make_game_scene() {
   QWidget *widget_game = new QWidget;
   QVBoxLayout *layout_game = new QVBoxLayout(widget_game);
 
-  /*layout_game->addWidget(new QLabel("IP Address"));
-  QLineEdit* address = new QLineEdit();
-  layout_game->addWidget(address);
-  layout_game->addWidget(new QLabel("Port"));
+  layout_game->addWidget(new QLabel("Game name"));
+  QLineEdit* game_name = new QLineEdit();
+  layout_game->addWidget(game_name);
+  /*layout_game->addWidget(new QLabel("Port"));
   QLineEdit* port = new QLineEdit();
   layout_game->addWidget(port);*/
   QPushButton *make_game_button = new QPushButton("Make game");
   layout_game->addWidget(make_game_button);
   connect(make_game_button, &QPushButton::clicked, this,
           &Menu::show_wait_scene);
-  connect(make_game_button, &QPushButton::clicked, this,
-          [this]() { emit create(); });
+  connect(make_game_button, &QPushButton::clicked, this, [this, name_player_1, name_player_2, game_name]() { 
+    std::string player_1;
+    std::string player_2;
+    std::string game;
+    if(name_player_1->text().isEmpty()){
+      player_1 = std::string("Player 1");
+    }else{
+      player_1 = std::string(name_player_1->text().toStdString());
+    }
+
+    if(name_player_2->text().isEmpty()){
+      player_2 = std::string("Player 2");
+    }else{
+      player_2 = std::string(name_player_2->text().toStdString());
+    }
+
+    if(game_name->text().isEmpty()){
+      game = std::string("Game");
+    }else{
+      game = std::string(game_name->text().toStdString());
+    }
+    emit create(player_1, player_2, game); 
+  });
   // connect(make_game_button, &QPushButton::pressed, menu_controller,
   // &MenuController::start_game);
   QPushButton *back_button = new QPushButton("Back");
@@ -245,9 +266,22 @@ void Menu::show_join_game_scene() {
           [this]() { emit update_games(*this); });
   QPushButton *join_game_button = new QPushButton("Join game");
   layout_games->addWidget(join_game_button);
-  connect(join_game_button, &QPushButton::clicked, this, [this]() {
+  connect(join_game_button, &QPushButton::clicked, this, [this, name_player_1, name_player_2]() {
     this->close();
-    emit join(active_games.take(game_options->currentText()));
+    std::string player_1;
+    std::string player_2;
+    if(name_player_1->text().isEmpty()){
+      player_1 = std::string("Player 1");
+    }else{
+      player_1 = std::string(name_player_1->text().toStdString());
+    }
+
+    if(name_player_2->text().isEmpty()){
+      player_2 = std::string("Player 2");
+    }else{
+      player_2 = std::string(name_player_2->text().toStdString());
+    }
+    emit join(active_games.take(game_options->currentText()), player_1, player_2);
   });
   // connect(join_game_button, &QPushButton::pressed, this,
   // &Menu::show_wait_scene);
