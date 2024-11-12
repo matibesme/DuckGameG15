@@ -11,45 +11,62 @@ GameRunner::GameRunner(BlockingQueue<ClientAction> &queue_sender,
 
 void GameRunner::run() {
   try {
+    // Muestra la ventana y comienza la música
     graficos.show_window();
     reproducirMusica();
 
+    // Obtener el primer comando del receptor
+    GameState command = queue_receiver.pop();
+
+    // Crear el renderizador del juego
+    GameRenderer gameRenderer(graficos, command.lista_plataformas, command.lista_boxes);
+
+    // Dibujar el primer estado del juego
     Renderer &sdl_renderer = graficos.GetRenderer();
-    GameState command;
-    command = queue_receiver.pop();
-    GameRenderer gameRenderer(graficos, command.lista_plataformas,
-                              command.lista_boxes);
     gameRenderer.dibujar(sdl_renderer, command);
 
-    bool actualizar = false;
-    const int frameDelay = 1000 / 60;
-
-    while (true) {
-      auto t1 = std::chrono::high_resolution_clock::now();
-
-      handler.correrHandlers();
-      while (queue_receiver.try_pop(command)) // y nos quedamos con la ultima
-      {
-        actualizar = true;
-      }
-
-      if (actualizar) {
-        gameRenderer.actualizarElementos(command);
-        actualizar = false;
-      }
-      gameRenderer.dibujar(sdl_renderer, command);
-
-      // llamo al metodo delay para que no se ejecute mas de 60 veces por
-      // segundo
-      delayIfNeeded(t1, frameDelay);
+    if (command.action == VICTORY_BYTE) {
+      gameRenderer.mostrarPantallaVictoria(command.name_winner);
+    } else if (command.action == END_ROUND_BYTE) {
+      gameRenderer.mostrarPantallaEndRound(command.map_victorias);
+    }else{
+      runGameLoop(gameRenderer, sdl_renderer);
     }
 
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
     queue_sender.close();
   }
+
   graficos.GetRenderer().Clear();
   sound.limpiar();
+}
+
+void GameRunner::runGameLoop(GameRenderer &gameRenderer, Renderer &sdl_renderer) {
+  bool actualizar = false;
+  const int frameDelay = 1000 / 60;
+  GameState command;
+
+  while (true) {
+    auto t1 = std::chrono::high_resolution_clock::now();
+
+    handler.correrHandlers();
+
+    // Recibimos el comando y actualizamos si es necesario
+    while (queue_receiver.try_pop(command)) {
+      actualizar = true;
+    }
+
+    if (actualizar) {
+      gameRenderer.actualizarElementos(command);
+      actualizar = false;
+    }
+
+    gameRenderer.dibujar(sdl_renderer, command);
+
+    // Llamamos al método de retraso para asegurar la tasa de 60 FPS
+    delayIfNeeded(t1, frameDelay);
+  }
 }
 
 void GameRunner::delayIfNeeded(
@@ -84,12 +101,3 @@ void GameRunner::reproducirMusica() {
   // Reproducir la música de fondo
   sound.reproducirMusica(-1); // Repetir indefinidamente
 }
-
-// correr valgrind con
-// valgrind --tool=callgrind --compress-strings=no --dump-line=yes
-// ./build-relwithdebinfo/tarlike x.xoz a ~/Documents/*pdf en mi caso valgrind
-// --tool=callgrind --compress-strings=no --dump-line=yes ./taller_client
-// localhost 8080 y luego para ver el callgrind kcachegrind callgrind.out.xxxx
-// donde xxxx es el numero de la corrida
-
-// otra app es Linux perf Examples

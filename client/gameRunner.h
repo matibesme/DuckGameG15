@@ -18,6 +18,7 @@ private:
   BlockingQueue<GameState> &queue_receiver;
   Sound sound;
   void reproducirMusica();
+  void runGameLoop(GameRenderer &gameRenderer, Renderer &sdl_renderer);
 
 public:
   GameRunner(BlockingQueue<ClientAction> &queue_sender,
