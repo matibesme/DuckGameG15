@@ -1,7 +1,6 @@
 #include "GameRenderer.h"
-
 #include <algorithm> // para std::min y std::max
-
+#include <QApplication>
 #include <SDL_render.h>
 
 #define IMAGE_CLOUDY_NIGHT DATA_PATH "/backgrounds/Cloudy night.png"
@@ -30,9 +29,10 @@ GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform,
 
 void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   if(command.action == VICTORY_BYTE){
-    FinalScene finalScene("patito");
+    mostrarPantallaVictoria(command.name_winner);
     return;
   }else if (command.action == END_ROUND_BYTE) {
+    mostrarPantallaEndRound(command.map_victorias);
     return;
   }
 
@@ -330,3 +330,22 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
 
   renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);
 }
+
+void GameRenderer::mostrarPantallaVictoria(std::string &winner) {
+  char* args[] = { (char*)"AppName" };
+  int argc_ = 1;
+  QApplication a(argc_, args);
+  FinalScene w(winner);
+  w.show();
+  a.exec();
+}
+
+void GameRenderer::mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias) {
+  char* args[] = { (char*)"AppName" };
+  int argc_ = 1;
+  QApplication a(argc_, args);
+  EndRoundScene w(map_victorias);
+  w.show();
+  a.exec();
+}
+

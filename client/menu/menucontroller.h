@@ -11,16 +11,17 @@ class MenuController : public QObject {
   Q_OBJECT
 private:
   uint8_t type_game;
-  uint8_t number_players;
   Client &client;
   int argc;
   char **argv;
+  std::string player_1_name;
+  std::string player_2_name;
+  bool are_two_players;
 
 public:
   MenuController(Client &client, int argc, char **argv,
                  QObject *parent = nullptr);
   void set_type_game(uint8_t type_game);
-  void set_number_players(uint8_t number_players);
   void start_game();
   ~MenuController();
 
@@ -29,6 +30,7 @@ public slots:
   void create();
   void join(uint8_t id_game);
   void update_games(Menu &menu);
+  void set_number_players(bool are_two_players);
 };
 
 #endif // MENUCONTROLLER_H

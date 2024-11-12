@@ -11,8 +11,9 @@
 #include "Items/Platform.h"
 #include "Items/armor.h"
 #include "Items/helmet.h"
-#include "FinalScene.h"
 #include "dto_definitions.h"
+#include "finalScene.h"
+#include "endRoundscene.h"
 
 class GameRenderer {
 private:
@@ -26,6 +27,8 @@ private:
   std::list<Box> boxes;
   static SDL2pp::Rect calcularRectanguloDeZoom(std::list<ClientDuck> &ducks);
   void drawBackground(const uint8_t background_id);
+  static void mostrarPantallaVictoria(std::string &winner);
+  static void mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias);
 
 public:
   explicit GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platforms,

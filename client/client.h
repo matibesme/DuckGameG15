@@ -27,9 +27,9 @@ private:
 
 public:
   Client(const char *host, const char *port);
-  void createGame();
+  void createGame(bool is_double_player);
   void startGame();
-  void joinGame(uint8_t idPartida);
+  void joinGame(uint8_t idPartida, bool is_double_player);
   std::list<uint8_t> updateGame();
   ~Client();
 };

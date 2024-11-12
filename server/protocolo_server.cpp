@@ -110,8 +110,8 @@ void ProtocoloServer::sendActiveGames(const std::map<uint8_t, uint8_t> &games) {
 
 void ProtocoloServer::sendEndRound(const GameState &command) {
   protocolo.sendByte(END_ROUND_BYTE, dead_connection);
-  protocolo.sendByte(command.lista_victorias.size(), dead_connection);
-  for (const auto &victory_round : command.lista_victorias) {
+  protocolo.sendByte(command.map_victorias.size(), dead_connection);
+  for (const auto &victory_round : command.map_victorias) {
     protocolo.sendString(victory_round.first, dead_connection);
     protocolo.sendByte(victory_round.second, dead_connection);
   }

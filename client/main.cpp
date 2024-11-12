@@ -1,11 +1,8 @@
 #include <QApplication>
 #include <exception>
-#include <iostream>
-
 #include "../common/common_constant.h"
 #include "menu/menu.h"
 #include "menu/menucontroller.h"
-
 #include "client.h"
 
 int main(int argc, char *argv[]) {

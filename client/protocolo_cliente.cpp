@@ -204,7 +204,7 @@ GameState ProtocoloCliente::reciveEndRoundFromServer() {
     uint8_t victorias = protocolo.receiveByte(dead_connection);
     lista_victorias.emplace(id, victorias);
   }
-  command.lista_victorias = lista_victorias;
+  command.map_victorias = lista_victorias;
   return command;
 }
 

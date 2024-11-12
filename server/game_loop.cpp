@@ -321,7 +321,7 @@ void GameLoop::sendEndRound() {
   GameState command;
   command.action = END_ROUND_BYTE;
   for (auto &victory_round : map_victory_rounds) {
-    command.lista_victorias.emplace(map_id_clientes[victory_round.first],
+    command.map_victorias.emplace(map_id_clientes[victory_round.first],
                                     victory_round.second);
   }
   queues_map->sendMessagesToQueues(command);
