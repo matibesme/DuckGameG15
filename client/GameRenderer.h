@@ -38,7 +38,7 @@ public:
   void mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias,
                                Renderer &renderer);
 
-  void mostrarPantallaVictoria(std::string &winner);
+  void mostrarPantallaVictoria(std::string &winner, Renderer &renderer);
 };
 
 #endif // GAMERENDERER_H

@@ -316,8 +316,11 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
   renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);
 }
 
-void GameRenderer::mostrarPantallaVictoria([[maybe_unused]] std::string &winner) {
-
+void GameRenderer::mostrarPantallaVictoria([[maybe_unused]] std::string &winner, Renderer &renderer) {
+  // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
+  SDL_Renderer& sdlRenderer = *renderer.Get();  // Obtiene el SDL_Renderer subyacente
+  FinalScene finalScene(winner, sdlRenderer);  // Pasar el SDL_Renderer a la escena
+  finalScene.Render();  // Ejecutar la escena
 }
 
 void GameRenderer::mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias, Renderer &renderer) {

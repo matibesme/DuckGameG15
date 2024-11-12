@@ -347,7 +347,11 @@ void GameLoop::sendVictory(std::string &winner) {
   GameState command;
   command.action = VICTORY_BYTE;
   command.name_winner = winner;
-  queues_map->sendMessagesToQueues(command);
+
+  for (int i = 0; i < 2500; i++) {
+    queues_map->sendMessagesToQueues(command);
+  }
+
 }
 
 GameLoop::~GameLoop() {}

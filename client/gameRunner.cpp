@@ -50,7 +50,7 @@ void GameRunner::runGameLoop(GameRenderer &gameRenderer) {
       if(command.action == END_ROUND_BYTE){
         gameRenderer.mostrarPantallaEndRound(command.map_victorias, sdl_renderer);
       } else if (command.action == VICTORY_BYTE) {
-        gameRenderer.mostrarPantallaVictoria(command.name_winner);
+        gameRenderer.mostrarPantallaVictoria(command.name_winner, sdl_renderer);
       } else if(command.action == FINALLY_GAME){
         return;
       }
