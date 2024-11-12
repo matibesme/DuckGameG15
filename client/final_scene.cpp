@@ -1,21 +1,15 @@
-#include "final_scene.h"
-#include <iostream>
-#include <string>
+#include "FinalScene.h"
 #include <QGraphicsView>
 #include <QtWidgets>
+#include <iostream>
+#include <string>
 
-final_scene::final_scene(std::string winner, QWidget *parent)
+FinalScene::FinalScene(std::string winner, QWidget *parent)
     : QMainWindow(parent){
     /*
-    * Usar este código donde se quiera poner la escena:
-    *     char* args[] = { (char*)"AppName" };
-           int argc = 1;
-        QApplication a(argc, args);
-        std::string winner("");
-        final_scene w(winner);
-        w.show();
-        a.exec();
-    */
+    * Usar este código donde se quiera poner la escena:*/
+
+
     this->setGeometry(0,0,800,600);
     QGraphicsScene* main_scene = new QGraphicsScene(this);
     QGraphicsView* view = new QGraphicsView(main_scene, this);
@@ -23,7 +17,7 @@ final_scene::final_scene(std::string winner, QWidget *parent)
     view->setGeometry(0, 0, 800, 600);
 
     //Para cambiar al fondo
-    std::string font_path_str = std::string(DATA_PATH) + std::string("/background/") + std::string("City.png");
+    std::string background_path_str_ = std::string(DATA_PATH) + std::string("/background/") + std::string("City.png");
     QPixmap initial_background("../final_scene/Forest.png");
     std::string mensage = std::string("The winner is: ") + winner;
 
@@ -51,7 +45,7 @@ final_scene::final_scene(std::string winner, QWidget *parent)
     view->show();
 }
 
-final_scene::~final_scene()
+FinalScene::~FinalScene()
 {
 }
 

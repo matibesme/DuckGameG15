@@ -11,7 +11,7 @@
 #include "Items/Platform.h"
 #include "Items/armor.h"
 #include "Items/helmet.h"
-#include "Items/pantallaVictoria.h"
+#include "FinalScene.h"
 #include "dto_definitions.h"
 
 class GameRenderer {
