@@ -11,9 +11,12 @@ GranadaBullet::GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
       time_to_explode(time_to_explode_), velocidad(20), continue_moving(true) {}
 
 void GranadaBullet::executeAction() {
-
-  if (time_to_explode > 6 && is_alive && continue_moving) {
-
+  if (is_falling && is_alive && continue_moving) {
+    // La velocidad aumenta debido a la gravedad
+    velocidad += GRAVEDAD;
+    // La posición en y aumenta hacia abajo debido a la velocidad acumulada
+    y_pos += velocidad;
+  } else if (time_to_explode > 6 && is_alive && continue_moving) {
     y_pos -= velocidad;
     velocidad -= GRAVEDAD;
     if (direction == RIGHT) {
@@ -58,3 +61,5 @@ void GranadaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
     }
   }
 }
+
+

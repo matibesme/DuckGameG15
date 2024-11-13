@@ -34,7 +34,7 @@ float RECOIL_GRANADA = 0;
 //BANANA
 uint8_t DAMAGE_BANANA = 10;
 uint8_t RANGE_BANANA = 10;
-uint8_t AMMO_BANANA = 100;
+uint8_t AMMO_BANANA = 1;
 float RECOIL_BANANA = 0;
 //AK47
 uint8_t DAMAGE_AK47 = 10;
@@ -76,6 +76,7 @@ uint8_t DAMAGE_MAGNUM = 10;
 uint8_t RANGE_MAGNUM = 20;
 uint8_t AMMO_MAGNUM = 100;
 float RECOIL_MAGNUM = 2;
+
 
 
 

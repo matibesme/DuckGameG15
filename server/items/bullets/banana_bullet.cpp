@@ -16,31 +16,41 @@ BananaBullet::BananaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
 void BananaBullet::executeAction() {
 
   if (is_alive && continue_moving) {
+    if (is_falling) {
+      y_pos += std::abs(velocidad);
+      velocidad += GRAVEDAD;
 
-    y_pos -= velocidad;
-    velocidad -= GRAVEDAD;
-    if (direction == RIGHT) {
-      x_pos += RANGO_X_MEDIO;
-    } else if (direction == LEFT) {
-      x_pos -= RANGO_X_MEDIO;
+    } else {
+      y_pos -= velocidad;
+      velocidad -= GRAVEDAD;
+      if (direction == RIGHT) {
+        x_pos += RANGO_X_MEDIO;
+      } else if (direction == LEFT) {
+        x_pos -= RANGO_X_MEDIO;
+      }
     }
+
   }
 }
 
 void BananaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
                                         float plat_width, float plat_height) {
-
-  if (continue_moving && x_pos + WIDTH_BULLET >= plat_x_pos &&
-      x_pos <= plat_x_pos + plat_width) {
-
-    if (y_pos + HEIGHT_GUN >= plat_y_pos &&
-        y_pos + HEIGHT_GUN + velocidad <= plat_y_pos) {
-      y_pos = plat_y_pos - HEIGHT_GUN;
-      continue_moving = false;
-
-    } else if (y_pos + HEIGHT_GUN > plat_y_pos &&
-               y_pos + HEIGHT_GUN <= plat_y_pos + plat_height) {
-      is_alive = false;
+  if (is_alive) {
+    if (x_pos >= plat_x_pos && x_pos <= plat_x_pos + plat_width) {
+      if (y_pos >= plat_y_pos && y_pos <= plat_y_pos + plat_height) {
+        if (calculateCollisionSide(plat_x_pos, plat_y_pos, plat_width, plat_height) == BULLET_UP) {
+          continue_moving = false;
+          y_pos = plat_y_pos - HEIGHT_GUN;
+        } else {
+          setIsFalling(true);
+          if (direction == RIGHT) {
+            x_pos -= plat_width;
+          }
+        }
+      }
     }
   }
 }
+
+
+
