@@ -126,24 +126,36 @@ void Menu::show_make_game_scene() {
   layout_name_players->addWidget(new QLabel("Enter your name, player 1"));
   QLineEdit *name_player_1 = new QLineEdit();
   layout_name_players->addWidget(name_player_1);
+  QLabel *label_player_1_error = new QLabel("Error, enter a name");
+  layout_name_players->addWidget(label_player_1_error);
+  label_player_1_error->setVisible(false);
+  label_player_1_error->setStyleSheet("color: red");
 
   QLabel *label_player_2 = new QLabel("Enter your name, player 2");
   layout_name_players->addWidget(label_player_2);
   QLineEdit *name_player_2 = new QLineEdit();
   layout_name_players->addWidget(name_player_2);
+  QLabel *label_player_2_error = new QLabel("Error, enter a name");
+  layout_name_players->addWidget(label_player_2_error);
+  label_player_2_error->setVisible(false);
+  label_player_2_error->setStyleSheet("color: red");
 
   QSpacerItem *spacer =
       new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
   layout_name_players->addItem(spacer);
 
-  connect(single_player, &QPushButton::clicked, [this, name_player_2, label_player_2]() {
+  connect(single_player, &QPushButton::clicked, [this, name_player_2, label_player_2, label_player_1_error, label_player_2_error]() {
     name_player_2->setVisible(false);
     label_player_2->setVisible(false);
+    label_player_1_error->setVisible(false);
+    label_player_2_error->setVisible(false);
     emit number_players_changed(false);
   });
-  connect(two_players, &QPushButton::clicked, [this, name_player_2, label_player_2]() {
+  connect(two_players, &QPushButton::clicked, [this, name_player_2, label_player_2, label_player_1_error, label_player_2_error]() {
     name_player_2->setVisible(true);
     label_player_2->setVisible(true);
+    label_player_1_error->setVisible(false);
+    label_player_2_error->setVisible(false);
     emit number_players_changed(true);
   });
 
@@ -159,32 +171,45 @@ void Menu::show_make_game_scene() {
   layout_game->addWidget(new QLabel("Game name"));
   QLineEdit* game_name = new QLineEdit();
   layout_game->addWidget(game_name);
+  QLabel *label_game_name_error = new QLabel("Error, enter a name");
+  layout_game->addWidget(label_game_name_error);
+  label_game_name_error->setVisible(false);
+  label_game_name_error->setStyleSheet("color: red");
 
   QPushButton *make_game_button = new QPushButton("Make game");
   layout_game->addWidget(make_game_button);
-  connect(make_game_button, &QPushButton::clicked, this, [this, name_player_1, name_player_2, game_name]() { 
-    std::string player_1;
-    std::string player_2;
-    std::string game;
+  connect(make_game_button, &QPushButton::clicked, this, [this, name_player_1, name_player_2, game_name, label_player_1_error, label_player_2_error, label_game_name_error]() { 
+    bool are_fields_empties = false;
+
     if(name_player_1->text().isEmpty()){
-      player_1 = std::string("Player 1");
+      label_player_1_error->setVisible(true);
+      are_fields_empties = true;
     }else{
-      player_1 = std::string(name_player_1->text().toStdString());
+      label_player_1_error->setVisible(false);
     }
 
-    if(name_player_2->text().isEmpty()){
-      player_2 = std::string("Player 2");
+    if(name_player_2->text().isEmpty() && name_player_2->isVisible()){
+      label_player_2_error->setVisible(true);
+      are_fields_empties = true;
     }else{
-      player_2 = std::string(name_player_2->text().toStdString());
+      label_player_2_error->setVisible(false);
     }
 
     if(game_name->text().isEmpty()){
-      game = std::string("Game");
+      label_game_name_error->setVisible(true);
+      are_fields_empties = true;
     }else{
-      game = std::string(game_name->text().toStdString());
+      label_game_name_error->setVisible(false);
     }
-    emit create(player_1, player_2, game); 
+
+    if(!are_fields_empties){
+      std::string player_1 = std::string(name_player_1->text().toStdString());
+      std::string player_2 = std::string(name_player_2->text().toStdString());
+      std::string game = std::string(game_name->text().toStdString());
+      emit create(player_1, player_2, game); 
+    }
   });
+
   QPushButton *back_button = new QPushButton("Back");
   layout_game->addWidget(back_button);
   connect(back_button, &QPushButton::clicked, this, &Menu::show_main_scene);
@@ -221,24 +246,36 @@ void Menu::show_join_game_scene() {
   layout_name_players->addWidget(new QLabel("Enter your name, player 1"));
   QLineEdit *name_player_1 = new QLineEdit();
   layout_name_players->addWidget(name_player_1);
+  QLabel *label_player_1_error = new QLabel("Error, enter a name");
+  layout_name_players->addWidget(label_player_1_error);
+  label_player_1_error->setVisible(false);
+  label_player_1_error->setStyleSheet("color: red");
 
   QLabel *label_player_2 = new QLabel("Enter your name, player 2");
   layout_name_players->addWidget(label_player_2);
   QLineEdit *name_player_2 = new QLineEdit();
   layout_name_players->addWidget(name_player_2);
+  QLabel *label_player_2_error = new QLabel("Error, enter a name");
+  layout_name_players->addWidget(label_player_2_error);
+  label_player_2_error->setVisible(false);
+  label_player_2_error->setStyleSheet("color: red");
 
   QSpacerItem *spacer =
       new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
   layout_name_players->addItem(spacer);
 
-  connect(single_player, &QPushButton::clicked, [this, name_player_2, label_player_2]() {
+  connect(single_player, &QPushButton::clicked, [this, name_player_2, label_player_2, label_player_1_error, label_player_2_error]() {
     name_player_2->setVisible(false);
     label_player_2->setVisible(false);
+    label_player_1_error->setVisible(false);
+    label_player_2_error->setVisible(false);
     emit number_players_changed(false);
   });
-  connect(two_players, &QPushButton::clicked, [this, name_player_2, label_player_2]() {
+  connect(two_players, &QPushButton::clicked, [this, name_player_2, label_player_2, label_player_1_error, label_player_2_error]() {
     name_player_2->setVisible(true);
     label_player_2->setVisible(true);
+    label_player_1_error->setVisible(false);
+    label_player_2_error->setVisible(false);
     emit number_players_changed(true);
   });
 
@@ -254,33 +291,59 @@ void Menu::show_join_game_scene() {
   game_options->setVisible(true);
   layout_games->addWidget(new QLabel("Select a game:"));
   layout_games->addWidget(game_options);
+  QLabel *label_game_name_error = new QLabel("Error, select a game");
+  layout_games->addWidget(label_game_name_error);
+  label_game_name_error->setVisible(false);
+  label_game_name_error->setStyleSheet("color: red");
+
   QPushButton *update_button = new QPushButton("Update games");
   layout_games->addWidget(update_button);
   connect(update_button, &QPushButton::clicked, this,
-          [this]() { emit update_games(*this); });
+          [this,  label_game_name_error]() { 
+            label_game_name_error->setVisible(false);
+            emit update_games(*this); 
+  });
   QPushButton *join_game_button = new QPushButton("Join game");
   layout_games->addWidget(join_game_button);
-  connect(join_game_button, &QPushButton::clicked, this, [this, name_player_1, name_player_2]() {
-    this->close();
-    std::string player_1;
-    std::string player_2;
+  connect(join_game_button, &QPushButton::clicked, this, [this, name_player_1, name_player_2, label_player_1_error, label_player_2_error, label_game_name_error]() {
+    bool are_fields_empties = false;
+
     if(name_player_1->text().isEmpty()){
-      player_1 = std::string("Player 1");
+      label_player_1_error->setVisible(true);
+      are_fields_empties = true;
     }else{
-      player_1 = std::string(name_player_1->text().toStdString());
+      label_player_1_error->setVisible(false);
     }
 
-    if(name_player_2->text().isEmpty()){
-      player_2 = std::string("Player 2");
+    if(name_player_2->text().isEmpty() && name_player_2->isVisible()){
+      label_player_2_error->setVisible(true);
+      are_fields_empties = true;
     }else{
-      player_2 = std::string(name_player_2->text().toStdString());
+      label_player_2_error->setVisible(false);
     }
-    emit join(active_games.take(game_options->currentText()), player_1, player_2);
+
+    if(game_options->currentText().isEmpty()){
+      label_game_name_error->setVisible(true);
+      are_fields_empties = true;
+    }else{
+      label_game_name_error->setVisible(false);
+    }
+
+    if(!are_fields_empties){
+      std::string player_1 = std::string(name_player_1->text().toStdString());
+      std::string player_2 = std::string(name_player_2->text().toStdString());
+      std::string game = std::string(active_games.take(game_options->currentText()));
+      this->close();
+      emit join(game, player_1, player_2);
+    }
   });
   QPushButton *back_button = new QPushButton("Back");
   connect(back_button, &QPushButton::clicked, this, &Menu::show_main_scene);
   layout_games->addWidget(back_button);
 
+    QSpacerItem *spacer_2 =
+      new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+  layout_games->addItem(spacer_2);
   widget_games->setGeometry(400, 200, 200, 100);
 
   join_game_scene->addWidget(widget_games);
