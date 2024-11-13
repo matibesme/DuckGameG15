@@ -18,6 +18,8 @@ GameLoop::GameLoop(
       factory_weapons(), map_bullets(), id_balas(0), id_weapons(0), id_boxes(0),
       id_defense(0), list_plataformas(), map_defense(),
       respawn_defense_points(), time_defense_last_respawn(),
+list_colors({"red", "blue", "green", "yellow", "pink", "purple", "orange",
+             "brown", "black", "white"}),
       duck_action(map_personajes, map_free_weapons, respawn_weapon_points,
                   time_weapon_last_respawn, map_bullets, id_balas, id_weapons,
                   map_defense, respawn_defense_points, id_defense,
@@ -25,15 +27,15 @@ GameLoop::GameLoop(
       load_game_config(factory_weapons, list_plataformas, respawn_weapon_points,
                        map_defense, respawn_defense_points, id_defense,
                        id_weapons, id_boxes, map_free_weapons, list_boxes,
-                       map_bullets, id_balas, map_personajes, map_id_clientes),
+                       map_bullets, id_balas, map_personajes, map_id_clientes,list_colors),
       map_victory_rounds() {}
 
 void GameLoop::run() {
   try {
     load_game_config.loadConfigurations();
-    for (auto &id : map_id_clientes) {
-      map_victory_rounds.emplace(id.first, VICTORY_ROUNDS_INICIAL);
-    }
+    sendColorPresentation();
+
+
     if (map_id_clientes.size() == 1) {
       sendVictory(map_id_clientes.begin()->second);
       end_game = true;
@@ -355,6 +357,20 @@ void GameLoop::sendVictory(std::string &winner) {
     queues_map->sendMessagesToQueues(command);
   }
 
+}
+
+void GameLoop::sendColorPresentation() {
+  GameState command;
+  command.action = COLOR_PRESENTATION_BYTE;
+  uint8_t indice=0;
+  for (auto &player : map_id_clientes) {
+    command.players_color.emplace(player.second, list_colors[indice++]);
+    map_victory_rounds.emplace(player.first, VICTORY_ROUNDS_INICIAL);
+  }
+  for (int i = 0; i < 2000; i++)
+  {
+    queues_map->sendMessagesToQueues(command);
+  }
 }
 
 GameLoop::~GameLoop() {}

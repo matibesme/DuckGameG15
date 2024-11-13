@@ -52,6 +52,8 @@ private:
   std::map<uint16_t, Protection> map_defense;
   std::map<uint16_t, Protection> respawn_defense_points;
   std::map<uint16_t, int> time_defense_last_respawn;
+    std::vector<std::string> list_colors;
+
   DuckAction duck_action;
   LoadGameFile load_game_config;
 
@@ -76,6 +78,6 @@ public:
   bool checkWinner(std::string &winner);
   void sendEndRound();
   void sendVictory(std::string &winner);
-
+  void sendColorPresentation();
   virtual ~GameLoop();
 };
