@@ -286,6 +286,7 @@ void GameLoop::respawnWeapon() {
       it = time_weapon_last_respawn.erase(it);
     } else {
       it->second--;
+
       ++it;
     }
   }

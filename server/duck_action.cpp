@@ -8,13 +8,13 @@ DuckAction::DuckAction(
     std::map<uint8_t, DuckPlayer> &map_personajes,
     std::map<uint16_t, std::shared_ptr<Weapon>> &map_free_weapons,
     std::map<uint16_t, RespawnPoint> &respawn_weapon_points,
-    std::map<uint16_t, uint8_t> &time_weapon_last_respawn,
+    std::map<uint16_t, int> &time_weapon_last_respawn,
     std::map<uint16_t, std::unique_ptr<Bullet>> &map_bullets,
     uint16_t &id_balas, uint16_t &id_weapons,
     std::map<uint16_t, Protection> &map_defense,
     std::map<uint16_t, Protection> &respawn_defense_points,
     uint16_t &id_defense,
-    std::map<uint16_t, uint8_t> &time_defense_last_respawn)
+    std::map<uint16_t, int> &time_defense_last_respawn)
     : map_personajes(map_personajes), map_free_weapons(map_free_weapons),
       respawn_weapon_points(respawn_weapon_points),
       time_weapon_last_respawn(time_weapon_last_respawn),
@@ -89,11 +89,11 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
 
           respawn_weapon_points.emplace(id_weapons, weapon);
           respawn_weapon_points.erase(free_weapon.first);
-
+        //hacer nun rando entre numeros PERO DE 1000 EN 1000 para que no se vea tan seguido
           std::random_device rd;
           std::mt19937 gen(rd());
-          std::uniform_int_distribution<> distrib(300, 600);
-          int random_addition = distrib(gen);
+          std::uniform_int_distribution<> distrib(1, 10);
+          int random_addition = distrib(gen)*800;
 
           time_weapon_last_respawn.emplace(id_weapons, random_addition);
           id_weapons++;
@@ -137,8 +137,8 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
         respawn_defense_points.erase(defense.first);
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> distrib(500, 1000);
-        int random_addition = distrib(gen);
+        std::uniform_int_distribution<> distrib(1, 10);
+        int random_addition = distrib(gen)*800;
 
         time_defense_last_respawn.emplace(id_defense, random_addition);
         id_defense++;
