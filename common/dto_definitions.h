@@ -53,6 +53,10 @@ struct Protection {
 
 struct GameState {
   uint8_t action;
+
+  //player name, color
+  std::map <std::string, std::string> players_color;
+
   // FULL GAME
   uint8_t backGround_id;
 

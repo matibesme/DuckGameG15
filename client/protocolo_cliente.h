@@ -33,5 +33,6 @@ public:
   GameState reciveEndRoundFromServer();
   GameState reciveVictoryFromServer();
   bool reciveMatchWithSameName();
+  GameState reciveColorPresentationFromServer();
   ~ProtocoloCliente();
 };

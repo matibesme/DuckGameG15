@@ -11,7 +11,7 @@ LobbyPartidas::addPartida(uint8_t id_client, std::string &name1,
 
   std::lock_guard<std::mutex> lock(m);
 
-  if (id_hoster_partida.find(id_client) != id_hoster_partida.end()) {
+  if (partidas_sin_arrancar.find(game_name) != partidas_sin_arrancar.end()) {
     return nullptr;
   }
   end_game[id_partida] = false;

@@ -29,52 +29,52 @@ extern float RANGO_X_LARGO;
 //GRANADA
 extern uint8_t DAMAGE_GRANADA;
 extern uint8_t RANGE_GRANADA;
-extern uint8_t AMMO_GRANADA;
+extern int AMMO_GRANADA;
 extern float RECOIL_GRANADA;
 //BANANA
 extern uint8_t DAMAGE_BANANA;
 extern uint8_t RANGE_BANANA;
-extern uint8_t AMMO_BANANA;
+extern int AMMO_BANANA;
 extern float RECOIL_BANANA;
 //AK47
 extern uint8_t DAMAGE_AK47;
 extern uint8_t RANGE_AK47;
-extern uint8_t AMMO_AK47;
+extern int AMMO_AK47;
 extern float RECOIL_AK47;
 //LASER RIFLE
 extern uint8_t DAMAGE_LASER_RIFLE;
 extern uint8_t RANGE_LASER_RIFLE;
-extern uint8_t AMMO_LASER_RIFLE;
+extern int AMMO_LASER_RIFLE;
 extern float RECOIL_LASER_RIFLE;
 //PEW PEW LASER
 extern uint8_t DAMAGE_PEW_PEW_LASER;
 extern uint8_t RANGE_PEW_PEW_LASER;
-extern uint8_t AMMO_PEW_PEW_LASER;
+extern int AMMO_PEW_PEW_LASER;
 extern float RECOIL_PEW_PEW_LASER;
 //ESCOPETA
 extern uint8_t DAMAGE_ESCOPETA;
 extern uint8_t RANGE_ESCOPETA;
-extern uint8_t AMMO_ESCOPETA;
+extern int AMMO_ESCOPETA;
 extern float RECOIL_ESCOPETA;
 //SNIPER
 extern uint8_t DAMAGE_SNIPER;
 extern uint8_t RANGE_SNIPER;
-extern uint8_t AMMO_SNIPER;
+extern int AMMO_SNIPER;
 extern float RECOIL_SNIPER;
 //COWBOY
 extern uint8_t DAMAGE_COWBOY;
 extern uint8_t RANGE_COWBOY;
-extern uint8_t AMMO_COWBOY;
+extern int AMMO_COWBOY;
 extern float RECOIL_COWBOY;
 //PISTOLA DUELOS
 extern uint8_t DAMAGE_PISTOLA_DUELOS;
 extern uint8_t RANGE_PISTOLA_DUELOS;
-extern uint8_t AMMO_PISTOLA_DUELOS;
+extern int AMMO_PISTOLA_DUELOS;
 extern float RECOIL_PISTOLA_DUELOS;
 //MAGNUM
 extern uint8_t DAMAGE_MAGNUM;
 extern uint8_t RANGE_MAGNUM;
-extern uint8_t AMMO_MAGNUM;
+extern int AMMO_MAGNUM;
 extern float RECOIL_MAGNUM;
 
 //

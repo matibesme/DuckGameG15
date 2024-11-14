@@ -40,6 +40,7 @@ constexpr uint8_t FULL_GAME_BYTE = 0x20;
 constexpr uint8_t END_ROUND_BYTE = 0x21;
 constexpr uint8_t VICTORY_BYTE = 0x22;
 constexpr uint8_t FINALLY_GAME = 0x23;
+constexpr uint8_t COLOR_PRESENTATION_BYTE = 0x24;
 
 // Movimientos del pato 1
 constexpr uint8_t MOVEMENT_ACTION = 0x03;
@@ -57,20 +58,7 @@ constexpr uint8_t STOP_AIM_UP = 0x14;
 constexpr uint8_t STOP_SHOOT = 0x15;
 constexpr uint8_t LEAVE_GUN = 0x0A;
 
-// Movimientos del pato 2
-constexpr uint8_t JUMP_J2 = 0x17;
-constexpr uint8_t RIGHT_J2 = 0x18;
-constexpr uint8_t LEFT_J2 = 0x19;
-constexpr uint8_t DOWN_J2 = 0x20;
-constexpr uint8_t STILL_RIGHT_J2 = 0x21;
-constexpr uint8_t STILL_LEFT_J2 = 0x22;
-constexpr uint8_t FLAP_J2 = 0x23;
-constexpr uint8_t SHOOT_J2 = 0x24;
-constexpr uint8_t PICKUP_J2 = 0x25;
-constexpr uint8_t AIM_UP_J2 = 0x26;
-constexpr uint8_t STOP_AIM_UP_J2 = 0x27;
-constexpr uint8_t STOP_SHOOT_J2 = 0x28;
-constexpr uint8_t LEAVE_GUN_J2 = 0x29;
+
 
 // Escenas
 constexpr uint8_t WEAPON_ACTION = 0x08;

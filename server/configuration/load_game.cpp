@@ -14,7 +14,8 @@ LoadGameFile::LoadGameFile(
     std::list<Boxes> &list_boxes,
     std::map<uint16_t, std::unique_ptr<Bullet>> &map_bullets,
     uint16_t &id_balas, std::map<uint8_t, DuckPlayer> &map_personajes,
-    std::map<uint8_t, std::string> &map_id_clientes)
+    std::map<uint8_t, std::string> &map_id_clientes,
+    std::vector<std::string>& list_colors)
     : factory_weapons(factory_weapons), platforms(platforms),
       respawn_weapon_points(respawn_weapon_points), map_defense(map_defense),
       respawn_defense_points(respawn_defense_points), id_defense(id_defense),
@@ -22,8 +23,7 @@ LoadGameFile::LoadGameFile(
       map_free_weapons(map_free_weapons), list_boxes(list_boxes),
       map_bullets(map_bullets), id_bullets(id_balas),
       map_personajes(map_personajes), map_id_clientes(map_id_clientes),
-      list_colors({"red", "blue", "green", "yellow", "pink", "purple", "orange",
-                   "brown", "black", "white"}) {}
+      list_colors(list_colors) {}
 
 void LoadGameFile::loadGame() {
 

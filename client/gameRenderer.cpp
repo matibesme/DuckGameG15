@@ -10,15 +10,8 @@
 #define CANT_ZOOM_WIDTH (7 * DUCK_WIDTH)
 #define CANT_ZOOM_HEIGHT (15 * DUCK_HEIGHT)
 
-GameRenderer::GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platform)
-    : graficos(graficos) {
-  // Creo las plataformas por única vez
-  for (auto &platformStruct : platform) {
-    platforms.emplace_back(platformStruct.x_pos, platformStruct.y_pos, graficos,
-                           platformStruct.type, platformStruct.width,
-                           platformStruct.height);
-  }
-}
+GameRenderer::GameRenderer(Graficos &graficos)
+    : graficos(graficos), plataformasYaCargadas(false) {}
 
 void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   // Limpio el renderizador y dibujo el fondo directamente en la pantalla
@@ -146,6 +139,16 @@ SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks
 
 
 void GameRenderer::actualizarElementos(const GameState &command) {
+  if(!plataformasYaCargadas){
+    // Creo las plataformas por única vez
+    for (auto &platformStruct : command.lista_plataformas) {
+      platforms.emplace_back(platformStruct.x_pos, platformStruct.y_pos, graficos,
+                             platformStruct.type, platformStruct.width,
+                             platformStruct.height);
+    }
+    plataformasYaCargadas = true;
+  }
+
   // PRIMERO ACTUALIZO PATOS
   //  Actualizar y eliminar patos
   for (auto it = ducks.begin(); it != ducks.end();) {
@@ -346,6 +349,13 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
   }
 
   renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);
+}
+
+void GameRenderer::mostrarPantallaColores(std::map<std::string, std::string> &playersColors, Renderer &renderer) {
+  // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
+  SDL_Renderer& sdlRenderer = *renderer.Get();  // Obtiene el SDL_Renderer subyacente
+  ColorScene colorScene(playersColors, sdlRenderer);  // Pasar el SDL_Renderer a la escena
+  colorScene.Run();  // Ejecutar la escena
 }
 
 void GameRenderer::mostrarPantallaVictoria([[maybe_unused]] std::string &winner, Renderer &renderer) {

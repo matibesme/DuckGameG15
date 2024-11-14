@@ -42,6 +42,8 @@ GameState ProtocoloCliente::reciveFromServer() {
       return reciveEndRoundFromServer();
     else if (firstByte == VICTORY_BYTE)
       return reciveVictoryFromServer();
+    else if (firstByte == COLOR_PRESENTATION_BYTE)
+      return reciveColorPresentationFromServer();
 
   } catch (const std::exception &e) {
     dead_connection = true;
@@ -239,5 +241,25 @@ bool ProtocoloCliente::reciveMatchWithSameName() {
   throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
 
+
+GameState ProtocoloCliente::reciveColorPresentationFromServer() {
+  try {
+    GameState command;
+    command.action = COLOR_PRESENTATION_BYTE;
+    uint8_t players_quantity = protocolo.receiveByte(dead_connection);
+    std::map<std::string, std::string> players_color;
+    for (int i = 0; i < players_quantity; i++) {
+      std::string player = protocolo.receiveString(dead_connection);
+      std::string color = protocolo.receiveString(dead_connection);
+      players_color.emplace(player, color);
+    }
+    command.players_color = players_color;
+    return command;
+  } catch (const std::exception &e) {
+    dead_connection = true;
+    std::cerr << e.what() << std::endl;
+  }
+  throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
+}
 
 ProtocoloCliente::~ProtocoloCliente() {}

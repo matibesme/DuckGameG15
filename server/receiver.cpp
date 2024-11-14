@@ -30,6 +30,7 @@ void Receiver::run() {
                              command.player2_name, command.game_name);
         if (queue_comandos == nullptr) {
           protocolo.sendMatchWithSameName(true);
+          continue;
         }
         protocolo.sendMatchWithSameName(false);
         in_lobby = false;
