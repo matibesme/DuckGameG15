@@ -176,6 +176,9 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
       if (!bullet)
         return;
       map_bullets.emplace(id_balas++, std::move(bullet));
+      if (weapon.getType() == BANANA_GUN) {
+        personaje.eraseGun();
+      }
     }
     personaje.setXPos(weapon.getXPos());
     personaje.setYPos(weapon.getYPos());

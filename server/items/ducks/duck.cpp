@@ -100,8 +100,7 @@ std::shared_ptr<Weapon> DuckPlayer::removeWeapon() {
   }
   weapon->setYPos(y_pos + DUCK_HEIGHT - HEIGHT_GUN);
 
-  weapons_list.pop_front();
-  is_weapon_equiped = false;
+  eraseGun();
   return weapon;
 }
 
@@ -163,6 +162,12 @@ void DuckPlayer::aimUp() {
     is_aiming_up = true;
   }
 }
+
+void DuckPlayer::eraseGun() {
+  weapons_list.pop_front();
+  is_weapon_equiped = false;
+}
+
 
 void DuckPlayer::stopAimUp() { is_aiming_up = false; }
 

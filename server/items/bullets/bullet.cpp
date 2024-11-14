@@ -94,8 +94,11 @@ uint8_t Bullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
 
   float min_distance = minimo(up_distance, down_distance, left_distance, right_distance);
 
-  if (min_distance == up_distance) {
-    return BULLET_UP;
+  if (min_distance == up_distance  ) {
+    if (plat_y_pos > y_pos - HEIGHT_BULLET) {
+      return BULLET_UP;
+    }
+    return direction==RIGHT? LEFT: RIGHT;
   } else if (min_distance == down_distance) {
     return DOWN;
   } else if (min_distance == left_distance) {
