@@ -87,9 +87,9 @@ float minimo(float a, float b, float c, float d) {
 
 uint8_t Bullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
                                        float plat_width, float plat_height) {
-  float up_distance = y_pos - plat_y_pos;
+  float up_distance = (y_pos + HEIGHT_BULLET) - plat_y_pos;
   float down_distance = (plat_y_pos + plat_height) - y_pos;
-  float left_distance = x_pos - plat_x_pos;
+  float left_distance = (x_pos + WIDTH_BULLET) - plat_x_pos;
   float right_distance = (plat_x_pos + plat_width) - x_pos;
 
   float min_distance = minimo(up_distance, down_distance, left_distance, right_distance);
