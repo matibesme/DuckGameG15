@@ -15,7 +15,7 @@ banana:
 ak47:
     damage: 20
     range: 5
-    ammo: 30
+    ammo: 100
     recoil: 0.5
 
 laser_rifle:

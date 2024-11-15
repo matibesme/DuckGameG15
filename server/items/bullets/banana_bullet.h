@@ -19,6 +19,7 @@ public:
   void executeAction() override;
     void colisionWithPlatform(float plat_x_pos, float plat_y_pos,
                                 float plat_width, float plat_height) override;
+    bool colisionWithDuck(float duck_x_pos, float duck_y_pos, float duck_width, float duck_height) override;
 };
 
 #endif // BANANA_BULLET_H
