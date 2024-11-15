@@ -39,7 +39,7 @@ public:
   bool isFlapping();
   uint8_t &getHelmet();
   uint8_t &getArmor();
-    bool receiveShoot();
+  bool receiveShoot();
   std::string &getColor();
   float &getVelocidadY();
 
@@ -63,7 +63,6 @@ public:
   void aimUp();
   bool isAimingUp();
   void stopAimUp();
-
 
   // Destructor
   ~DuckPlayer();

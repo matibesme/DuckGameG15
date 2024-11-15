@@ -95,14 +95,14 @@ void ProtocoloServer::sendFullGame(const GameState &command) {
   }
 }
 
-void ProtocoloServer::sendActiveGames(const std::map<std::string, uint8_t> &games) {
+void ProtocoloServer::sendActiveGames(
+    const std::map<std::string, uint8_t> &games) {
   try {
 
     protocolo.sendByte(games.size(), dead_connection);
 
     for (const auto &game : games) {
       protocolo.sendString(game.first, dead_connection);
-
     }
   } catch (const std::exception &e) {
     dead_connection = true;
@@ -186,8 +186,8 @@ void ProtocoloServer::sendMatchWithSameName(bool same_name) {
   }
 }
 
-
-void ProtocoloServer::sendPlayersColor(const std::map<std::string, std::string> &players_color) {
+void ProtocoloServer::sendPlayersColor(
+    const std::map<std::string, std::string> &players_color) {
   try {
     protocolo.sendByte(COLOR_PRESENTATION_BYTE, dead_connection);
     protocolo.sendByte(players_color.size(), dead_connection);
@@ -200,6 +200,5 @@ void ProtocoloServer::sendPlayersColor(const std::map<std::string, std::string> 
     std::cerr << e.what() << std::endl;
   }
 }
-
 
 ProtocoloServer::~ProtocoloServer() {}

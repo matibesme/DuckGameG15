@@ -18,8 +18,8 @@ GameLoop::GameLoop(
       factory_weapons(), map_bullets(), id_balas(0), id_weapons(0), id_boxes(0),
       id_defense(0), list_plataformas(), map_defense(),
       respawn_defense_points(), time_defense_last_respawn(),
-list_colors({"red", "blue", "green", "yellow", "pink", "purple", "orange",
-             "brown", "black", "white"}),
+      list_colors({"red", "blue", "green", "yellow", "pink", "purple", "orange",
+                   "brown", "black", "white"}),
       duck_action(map_personajes, map_free_weapons, respawn_weapon_points,
                   time_weapon_last_respawn, map_bullets, id_balas, id_weapons,
                   map_defense, respawn_defense_points, id_defense,
@@ -27,14 +27,14 @@ list_colors({"red", "blue", "green", "yellow", "pink", "purple", "orange",
       load_game_config(factory_weapons, list_plataformas, respawn_weapon_points,
                        map_defense, respawn_defense_points, id_defense,
                        id_weapons, id_boxes, map_free_weapons, list_boxes,
-                       map_bullets, id_balas, map_personajes, map_id_clientes,list_colors),
+                       map_bullets, id_balas, map_personajes, map_id_clientes,
+                       list_colors),
       map_victory_rounds() {}
 
 void GameLoop::run() {
   try {
     load_game_config.loadConfigurations();
     sendColorPresentation();
-
 
     if (map_id_clientes.size() == 1) {
       sendVictory(map_id_clientes.begin()->second);
@@ -160,7 +160,7 @@ void GameLoop::sendCompleteScene() {
 
 void GameLoop::paraCadaPatoAction() {
 
-  for (auto it = map_personajes.begin(); it != map_personajes.end(); ) {
+  for (auto it = map_personajes.begin(); it != map_personajes.end();) {
     checkCoalitionDuckPlatform(it->second);
     it->second.executeAction();
 
@@ -170,7 +170,7 @@ void GameLoop::paraCadaPatoAction() {
     }
 
     if (!it->second.isWeaponEquipped()) {
-      ++it;  // Solo avanza el iterador si no hay eliminación
+      ++it; // Solo avanza el iterador si no hay eliminación
       continue;
     }
 
@@ -181,7 +181,7 @@ void GameLoop::paraCadaPatoAction() {
           it->second.getWeapon().shoot(it->second.isAimingUp());
       map_bullets.emplace(id_balas, std::move(bullet));
       id_balas++;
-        }
+    }
 
     ++it;
   }
@@ -198,7 +198,7 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
       bool colision = bullet->colisionWithDuck(
           it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
       if (colision) {
-        if (it -> second.receiveShoot()){
+        if (it->second.receiveShoot()) {
           it->second.applyDamage(bullet->getDamage());
         }
         if (!it->second.isAlive()) {
@@ -339,13 +339,12 @@ void GameLoop::sendEndRound() {
   command.action = END_ROUND_BYTE;
   for (auto &victory_round : map_victory_rounds) {
     command.map_victorias.emplace(map_id_clientes[victory_round.first],
-                                    victory_round.second);
+                                  victory_round.second);
   }
 
   for (int i = 0; i < 200; i++) {
     queues_map->sendMessagesToQueues(command);
   }
-
 }
 
 void GameLoop::sendVictory(std::string &winner) {
@@ -356,19 +355,17 @@ void GameLoop::sendVictory(std::string &winner) {
   for (int i = 0; i < 2000; i++) {
     queues_map->sendMessagesToQueues(command);
   }
-
 }
 
 void GameLoop::sendColorPresentation() {
   GameState command;
   command.action = COLOR_PRESENTATION_BYTE;
-  uint8_t indice=0;
+  uint8_t indice = 0;
   for (auto &player : map_id_clientes) {
     command.players_color.emplace(player.second, list_colors[indice++]);
     map_victory_rounds.emplace(player.first, VICTORY_ROUNDS_INICIAL);
   }
-  for (int i = 0; i < 200; i++)
-  {
+  for (int i = 0; i < 200; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }

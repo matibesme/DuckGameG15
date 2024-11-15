@@ -2,8 +2,6 @@
 
 #include <random>
 
-
-
 Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
                uint8_t damage, uint8_t range, float spread)
     : Objeto(type, id, x_pos, y_pos), damage(damage), range(range),
@@ -67,7 +65,8 @@ void Bullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
       if (y_pos >= plat_y_pos && y_pos <= plat_y_pos + plat_height) {
 
         if (type == LASER_RIFLE_BULLET) {
-          changeDirection(calculateCollisionSide(plat_x_pos, plat_y_pos, plat_width, plat_height));
+          changeDirection(calculateCollisionSide(plat_x_pos, plat_y_pos,
+                                                 plat_width, plat_height));
 
         } else {
           kill();
@@ -90,7 +89,8 @@ uint8_t Bullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
   float left_distance = x_pos - plat_x_pos;
   float right_distance = (plat_x_pos + plat_width) - x_pos;
 
-  float min_distance = minimo(up_distance, down_distance, left_distance, right_distance);
+  float min_distance =
+      minimo(up_distance, down_distance, left_distance, right_distance);
 
   if (min_distance == up_distance) {
     return BULLET_UP;
@@ -105,33 +105,28 @@ uint8_t Bullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
   return 0; // En caso de que ninguna coincidencia sea encontrada
 }
 
-
-
-
 void Bullet::kill() { is_alive = false; }
 
 void Bullet::setSpread(float spread) { this->spread = spread; }
 
 void Bullet::changeDirection(uint8_t where_colision) {
   switch (where_colision) {
-    case BULLET_UP:
-      spread_direction = !spread_direction;
-      break;
-    case DOWN:
-      spread_direction = !spread_direction;
-      break;
-    case LEFT:
-      direction = LEFT;
-      break;
-    case RIGHT:
-      direction = RIGHT;
-      break;
-    default:
-      break;
+  case BULLET_UP:
+    spread_direction = !spread_direction;
+    break;
+  case DOWN:
+    spread_direction = !spread_direction;
+    break;
+  case LEFT:
+    direction = LEFT;
+    break;
+  case RIGHT:
+    direction = RIGHT;
+    break;
+  default:
+    break;
   }
 }
-
-
 
 bool Bullet::colisionWithDuck(float duck_x_pos, float duck_y_pos,
                               float duck_width, float duck_height) {

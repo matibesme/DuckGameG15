@@ -15,8 +15,8 @@ protected:
   bool is_alive;
   float spread;
   bool spread_direction;
-    uint8_t calculateCollisionSide(float plat_x_pos, float plat_y_pos,
-                                    float plat_width, float plat_height);
+  uint8_t calculateCollisionSide(float plat_x_pos, float plat_y_pos,
+                                 float plat_width, float plat_height);
 
 public:
   Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
@@ -32,7 +32,6 @@ public:
                                float box_width, float box_height);
 
   void setSpread(float spread);
-
 
   uint8_t getTypeOfBullet();
   bool isAlive();

@@ -11,10 +11,10 @@
 #include "Items/Platform.h"
 #include "Items/armor.h"
 #include "Items/helmet.h"
+#include "client/Scenes/colorsScene.h"
 #include "client/Scenes/endRoundscene.h"
 #include "client/Scenes/finalScene.h"
 #include "dto_definitions.h"
-#include "client/Scenes/colorsScene.h"
 
 class GameRenderer {
 private:
@@ -31,7 +31,6 @@ private:
   void drawBackground(const uint8_t background_id);
 
 public:
-
   explicit GameRenderer(Graficos &graficos);
   void dibujar(Renderer &renderer, GameState &command);
 

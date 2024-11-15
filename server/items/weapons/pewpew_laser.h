@@ -15,8 +15,7 @@ private:
 
 public:
   PewPewLaser(uint8_t type, uint8_t id, float x_pos, float y_pos,
-              uint8_t damage, uint8_t range, int ammo_quantity,
-              float recoil);
+              uint8_t damage, uint8_t range, int ammo_quantity, float recoil);
 
   bool isEmptyAmmo() override;
 

@@ -28,10 +28,10 @@ public:
   void sendEndRound(const GameState &command);
   void sendVictory(const GameState &command);
   void sendMatchWithSameName(bool same_name);
-  void sendPlayersColor(const std::map<std::string, std::string> &players_color);
+  void
+  sendPlayersColor(const std::map<std::string, std::string> &players_color);
   CommandClient receiveCommandFromClients(bool &two_players);
   GameAccess receiveAccessFromClients();
-
 
   void closeSocket();
   ~ProtocoloServer();

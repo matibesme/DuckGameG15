@@ -1,10 +1,10 @@
-#include "gtest/gtest.h"
 #include "common/foo.h"
+#include "gtest/gtest.h"
 
 #include "gmock/gmock.h"
 
-    using ::testing::HasSubstr;
 using ::testing::AllOf;
+using ::testing::HasSubstr;
 using ::testing::ThrowsMessage;
 
 namespace {

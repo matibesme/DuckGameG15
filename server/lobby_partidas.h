@@ -26,18 +26,17 @@ private:
 
 public:
   LobbyPartidas();
-  std::shared_ptr<BlockingQueue<CommandClient>> addPartida(uint8_t id_cliente,
-                                                           std::string &name1,
-                                                           bool double_player,
-                                                           std::string &name2, std::string &game_name);
+  std::shared_ptr<BlockingQueue<CommandClient>>
+  addPartida(uint8_t id_cliente, std::string &name1, bool double_player,
+             std::string &name2, std::string &game_name);
   void removePartida(uint8_t id_partida);
   std::shared_ptr<BlockingQueue<CommandClient>>
-  joinGame(std::string& id_partida, uint8_t id_cliente, std::string &name1,
+  joinGame(std::string &id_partida, uint8_t id_cliente, std::string &name1,
            bool double_player, std::string &name2);
   void addQueueSender(uint8_t id_player,
                       std::shared_ptr<BlockingQueue<GameState>> queue);
   bool isHoster(uint8_t id_cliente);
-  void startGame(uint8_t id_client, std::string& game_name);
+  void startGame(uint8_t id_client, std::string &game_name);
   void removeQueue(uint8_t id);
   void removeGame(uint8_t id);
   std::map<std::string, uint8_t> &getIdPartidas();
