@@ -144,20 +144,24 @@ void Menu::show_make_game_scene() {
       new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
   layout_name_players->addItem(spacer);
 
-  connect(single_player, &QPushButton::clicked, [this, name_player_2, label_player_2, label_player_1_error, label_player_2_error]() {
-    name_player_2->setVisible(false);
-    label_player_2->setVisible(false);
-    label_player_1_error->setVisible(false);
-    label_player_2_error->setVisible(false);
-    emit number_players_changed(false);
-  });
-  connect(two_players, &QPushButton::clicked, [this, name_player_2, label_player_2, label_player_1_error, label_player_2_error]() {
-    name_player_2->setVisible(true);
-    label_player_2->setVisible(true);
-    label_player_1_error->setVisible(false);
-    label_player_2_error->setVisible(false);
-    emit number_players_changed(true);
-  });
+  connect(single_player, &QPushButton::clicked,
+          [this, name_player_2, label_player_2, label_player_1_error,
+           label_player_2_error]() {
+            name_player_2->setVisible(false);
+            label_player_2->setVisible(false);
+            label_player_1_error->setVisible(false);
+            label_player_2_error->setVisible(false);
+            emit number_players_changed(false);
+          });
+  connect(two_players, &QPushButton::clicked,
+          [this, name_player_2, label_player_2, label_player_1_error,
+           label_player_2_error]() {
+            name_player_2->setVisible(true);
+            label_player_2->setVisible(true);
+            label_player_1_error->setVisible(false);
+            label_player_2_error->setVisible(false);
+            emit number_players_changed(true);
+          });
 
   layout_players->addWidget(widget_choose_players);
   layout_players->addWidget(widget_name_players);
@@ -169,7 +173,7 @@ void Menu::show_make_game_scene() {
   QVBoxLayout *layout_game = new QVBoxLayout(widget_game);
 
   layout_game->addWidget(new QLabel("Game name"));
-  QLineEdit* game_name = new QLineEdit();
+  QLineEdit *game_name = new QLineEdit();
   layout_game->addWidget(game_name);
   QLabel *label_game_name_error = new QLabel("Error, enter a name");
   layout_game->addWidget(label_game_name_error);
@@ -178,37 +182,41 @@ void Menu::show_make_game_scene() {
 
   QPushButton *make_game_button = new QPushButton("Make game");
   layout_game->addWidget(make_game_button);
-  connect(make_game_button, &QPushButton::clicked, this, [this, name_player_1, name_player_2, game_name, label_player_1_error, label_player_2_error, label_game_name_error]() { 
-    bool are_fields_empties = false;
+  connect(make_game_button, &QPushButton::clicked, this,
+          [this, name_player_1, name_player_2, game_name, label_player_1_error,
+           label_player_2_error, label_game_name_error]() {
+            bool are_fields_empties = false;
 
-    if(name_player_1->text().isEmpty()){
-      label_player_1_error->setVisible(true);
-      are_fields_empties = true;
-    }else{
-      label_player_1_error->setVisible(false);
-    }
+            if (name_player_1->text().isEmpty()) {
+              label_player_1_error->setVisible(true);
+              are_fields_empties = true;
+            } else {
+              label_player_1_error->setVisible(false);
+            }
 
-    if(name_player_2->text().isEmpty() && name_player_2->isVisible()){
-      label_player_2_error->setVisible(true);
-      are_fields_empties = true;
-    }else{
-      label_player_2_error->setVisible(false);
-    }
+            if (name_player_2->text().isEmpty() && name_player_2->isVisible()) {
+              label_player_2_error->setVisible(true);
+              are_fields_empties = true;
+            } else {
+              label_player_2_error->setVisible(false);
+            }
 
-    if(game_name->text().isEmpty()){
-      label_game_name_error->setVisible(true);
-      are_fields_empties = true;
-    }else{
-      label_game_name_error->setVisible(false);
-    }
+            if (game_name->text().isEmpty()) {
+              label_game_name_error->setVisible(true);
+              are_fields_empties = true;
+            } else {
+              label_game_name_error->setVisible(false);
+            }
 
-    if(!are_fields_empties){
-      std::string player_1 = std::string(name_player_1->text().toStdString());
-      std::string player_2 = std::string(name_player_2->text().toStdString());
-      std::string game = std::string(game_name->text().toStdString());
-      emit create(player_1, player_2, game); 
-    }
-  });
+            if (!are_fields_empties) {
+              std::string player_1 =
+                  std::string(name_player_1->text().toStdString());
+              std::string player_2 =
+                  std::string(name_player_2->text().toStdString());
+              std::string game = std::string(game_name->text().toStdString());
+              emit create(player_1, player_2, game);
+            }
+          });
 
   QPushButton *back_button = new QPushButton("Back");
   layout_game->addWidget(back_button);
@@ -264,20 +272,24 @@ void Menu::show_join_game_scene() {
       new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
   layout_name_players->addItem(spacer);
 
-  connect(single_player, &QPushButton::clicked, [this, name_player_2, label_player_2, label_player_1_error, label_player_2_error]() {
-    name_player_2->setVisible(false);
-    label_player_2->setVisible(false);
-    label_player_1_error->setVisible(false);
-    label_player_2_error->setVisible(false);
-    emit number_players_changed(false);
-  });
-  connect(two_players, &QPushButton::clicked, [this, name_player_2, label_player_2, label_player_1_error, label_player_2_error]() {
-    name_player_2->setVisible(true);
-    label_player_2->setVisible(true);
-    label_player_1_error->setVisible(false);
-    label_player_2_error->setVisible(false);
-    emit number_players_changed(true);
-  });
+  connect(single_player, &QPushButton::clicked,
+          [this, name_player_2, label_player_2, label_player_1_error,
+           label_player_2_error]() {
+            name_player_2->setVisible(false);
+            label_player_2->setVisible(false);
+            label_player_1_error->setVisible(false);
+            label_player_2_error->setVisible(false);
+            emit number_players_changed(false);
+          });
+  connect(two_players, &QPushButton::clicked,
+          [this, name_player_2, label_player_2, label_player_1_error,
+           label_player_2_error]() {
+            name_player_2->setVisible(true);
+            label_player_2->setVisible(true);
+            label_player_1_error->setVisible(false);
+            label_player_2_error->setVisible(false);
+            emit number_players_changed(true);
+          });
 
   layout_players->addWidget(widget_choose_players);
   layout_players->addWidget(widget_name_players);
@@ -299,49 +311,54 @@ void Menu::show_join_game_scene() {
   QPushButton *update_button = new QPushButton("Update games");
   layout_games->addWidget(update_button);
   connect(update_button, &QPushButton::clicked, this,
-          [this,  label_game_name_error]() { 
+          [this, label_game_name_error]() {
             label_game_name_error->setVisible(false);
-            emit update_games(*this); 
-  });
+            emit update_games(*this);
+          });
   QPushButton *join_game_button = new QPushButton("Join game");
   layout_games->addWidget(join_game_button);
-  connect(join_game_button, &QPushButton::clicked, this, [this, name_player_1, name_player_2, label_player_1_error, label_player_2_error, label_game_name_error]() {
-    bool are_fields_empties = false;
+  connect(join_game_button, &QPushButton::clicked, this,
+          [this, name_player_1, name_player_2, label_player_1_error,
+           label_player_2_error, label_game_name_error]() {
+            bool are_fields_empties = false;
 
-    if(name_player_1->text().isEmpty()){
-      label_player_1_error->setVisible(true);
-      are_fields_empties = true;
-    }else{
-      label_player_1_error->setVisible(false);
-    }
+            if (name_player_1->text().isEmpty()) {
+              label_player_1_error->setVisible(true);
+              are_fields_empties = true;
+            } else {
+              label_player_1_error->setVisible(false);
+            }
 
-    if(name_player_2->text().isEmpty() && name_player_2->isVisible()){
-      label_player_2_error->setVisible(true);
-      are_fields_empties = true;
-    }else{
-      label_player_2_error->setVisible(false);
-    }
+            if (name_player_2->text().isEmpty() && name_player_2->isVisible()) {
+              label_player_2_error->setVisible(true);
+              are_fields_empties = true;
+            } else {
+              label_player_2_error->setVisible(false);
+            }
 
-    if(game_options->currentText().isEmpty()){
-      label_game_name_error->setVisible(true);
-      are_fields_empties = true;
-    }else{
-      label_game_name_error->setVisible(false);
-    }
+            if (game_options->currentText().isEmpty()) {
+              label_game_name_error->setVisible(true);
+              are_fields_empties = true;
+            } else {
+              label_game_name_error->setVisible(false);
+            }
 
-    if(!are_fields_empties){
-      std::string player_1 = std::string(name_player_1->text().toStdString());
-      std::string player_2 = std::string(name_player_2->text().toStdString());
-      std::string game = std::string(active_games.take(game_options->currentText()));
-      this->close();
-      emit join(game, player_1, player_2);
-    }
-  });
+            if (!are_fields_empties) {
+              std::string player_1 =
+                  std::string(name_player_1->text().toStdString());
+              std::string player_2 =
+                  std::string(name_player_2->text().toStdString());
+              std::string game =
+                  std::string(active_games.take(game_options->currentText()));
+              this->close();
+              emit join(game, player_1, player_2);
+            }
+          });
   QPushButton *back_button = new QPushButton("Back");
   connect(back_button, &QPushButton::clicked, this, &Menu::show_main_scene);
   layout_games->addWidget(back_button);
 
-    QSpacerItem *spacer_2 =
+  QSpacerItem *spacer_2 =
       new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
   layout_games->addItem(spacer_2);
   widget_games->setGeometry(400, 200, 200, 100);
@@ -391,9 +408,10 @@ void Menu::show_update_games(std::list<std::string> active_games) {
   show_join_game_scene();
 }
 
-void Menu::show_wait(bool is_available_game){
-  if(!(is_available_game)){
-    std::cout << "El juego esta disponible (Manda 0 si no)" << (int) is_available_game << std::endl;
+void Menu::show_wait(bool is_available_game) {
+  if (!(is_available_game)) {
+    std::cout << "El juego esta disponible (Manda 0 si no)"
+              << (int)is_available_game << std::endl;
     show_wait_scene();
   }
 }
