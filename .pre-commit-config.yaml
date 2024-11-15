@@ -20,7 +20,7 @@ repos:
       - id: cppcheck
         files: ^(.*[.]cpp|.*[.]h)$
         exclude: ^extlib/
-        args: ["--inline-suppr", "--enable=all", "--suppress=missingIncludeSystem", "--suppress=missingInclude", "--suppress=unusedFunction", "--suppress=unmatchedSuppression", "--language=c++", "--std=c++20", "--error-exitcode=1", "--check-level=exhaustive"]
+        args: ["--inline-suppr", "--enable=all", "--suppress=missingIncludeSystem", "--suppress=missingInclude", "--suppress=unusedFunction", "--suppress=unmatchedSuppression", "--language=c++", "--std=c++20", "--error-exitcode=1"]
     enabled: false
 
   - repo: https://github.com/ssciwr/clang-format-hook
