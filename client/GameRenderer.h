@@ -11,13 +11,15 @@
 #include "Items/Platform.h"
 #include "Items/armor.h"
 #include "Items/helmet.h"
+#include "client/Scenes/endRoundscene.h"
+#include "client/Scenes/finalScene.h"
 #include "dto_definitions.h"
-#include "finalScene.h"
-#include "endRoundscene.h"
+#include "client/Scenes/colorsScene.h"
 
 class GameRenderer {
 private:
   Graficos &graficos;
+  bool plataformasYaCargadas;
   std::list<ClientDuck> ducks;
   std::list<Bullet> bullets;
   std::list<Gun> guns;
@@ -30,10 +32,13 @@ private:
 
 public:
 
-  explicit GameRenderer(Graficos &graficos, std::list<DTOPlatform> &platforms);
+  explicit GameRenderer(Graficos &graficos);
   void dibujar(Renderer &renderer, GameState &command);
 
   void actualizarElementos(const GameState &command);
+
+  void mostrarPantallaColores(std::map<std::string, std::string> &playersColors,
+                              Renderer &renderer);
 
   void mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias,
                                Renderer &renderer);

@@ -12,8 +12,10 @@ void ProtocoloServer::sendToClient(const GameState &command) {
       sendFullGame(command);
     else if (command.action == END_ROUND_BYTE)
       sendEndRound(command);
-    else
+    else if (command.action == VICTORY_BYTE)
       sendVictory(command);
+    else if (command.action == COLOR_PRESENTATION_BYTE)
+      sendPlayersColor(command.players_color);
 
   } catch (const SocketClose &e) {
     std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
@@ -184,6 +186,20 @@ void ProtocoloServer::sendMatchWithSameName(bool same_name) {
   }
 }
 
+
+void ProtocoloServer::sendPlayersColor(const std::map<std::string, std::string> &players_color) {
+  try {
+    protocolo.sendByte(COLOR_PRESENTATION_BYTE, dead_connection);
+    protocolo.sendByte(players_color.size(), dead_connection);
+    for (const auto &player : players_color) {
+      protocolo.sendString(player.first, dead_connection);
+      protocolo.sendString(player.second, dead_connection);
+    }
+  } catch (const std::exception &e) {
+    dead_connection = true;
+    std::cerr << e.what() << std::endl;
+  }
+}
 
 
 ProtocoloServer::~ProtocoloServer() {}

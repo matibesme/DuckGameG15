@@ -11,14 +11,14 @@ class Weapon : public Objeto {
 protected:
   uint8_t damage;
   uint8_t range;
-  uint8_t ammo_quantity;
+  int ammo_quantity;
   float recoil;
   int reload_time;
   int bullet_count;
 
 public:
   Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
-         uint8_t range, uint8_t ammo_quantity, float recoil);
+         uint8_t range, int ammo_quantity, float recoil);
 
   virtual bool isEmptyAmmo() = 0;
   virtual std::unique_ptr<Bullet> shoot(bool is_aiming_up) = 0;

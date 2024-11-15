@@ -37,7 +37,7 @@ private:
 
   // WEAPONS SECTION
   std::map<uint16_t, RespawnPoint> respawn_weapon_points;
-  std::map<uint16_t, uint8_t> time_weapon_last_respawn;
+  std::map<uint16_t, int> time_weapon_last_respawn;
   std::map<uint16_t, std::shared_ptr<Weapon>> map_free_weapons;
   std::list<Boxes> list_boxes;
   FactoryWeapons factory_weapons;
@@ -51,7 +51,9 @@ private:
 
   std::map<uint16_t, Protection> map_defense;
   std::map<uint16_t, Protection> respawn_defense_points;
-  std::map<uint16_t, uint8_t> time_defense_last_respawn;
+  std::map<uint16_t, int> time_defense_last_respawn;
+    std::vector<std::string> list_colors;
+
   DuckAction duck_action;
   LoadGameFile load_game_config;
 
@@ -76,6 +78,6 @@ public:
   bool checkWinner(std::string &winner);
   void sendEndRound();
   void sendVictory(std::string &winner);
-
+  void sendColorPresentation();
   virtual ~GameLoop();
 };

@@ -14,14 +14,15 @@ void GameRunner::run() {
     // Muestra la ventana y comienza la música
     graficos.show_window();
     reproducirMusica();
-
-    // Obtener el primer comando del receptor
-    GameState command = queue_receiver.pop();
-
     // Crear el renderizador del juego
-    GameRenderer gameRenderer(graficos, command.lista_plataformas);
-    auto &sdl_renderer = graficos.GetRenderer();
-    gameRenderer.dibujar(sdl_renderer, command);
+    GameRenderer gameRenderer(graficos);
+    GameState command;
+
+    // Recibir los colores de los jugadores
+    do {
+      command = queue_receiver.pop();
+      gameRenderer.mostrarPantallaColores(command.players_color, graficos.GetRenderer());
+    } while(command.action == COLOR_PRESENTATION_BYTE);
 
     runGameLoop(gameRenderer);
 
@@ -29,7 +30,6 @@ void GameRunner::run() {
     std::cerr << e.what() << std::endl;
     queue_sender.close();
   }
-
   graficos.GetRenderer().Clear();
   sound.limpiar();
 }
@@ -47,14 +47,13 @@ void GameRunner::runGameLoop(GameRenderer &gameRenderer) {
 
     // Recibimos el comando y actualizamos si es necesario
     while (queue_receiver.try_pop(command)) {
-      if(command.action == END_ROUND_BYTE){
+      if(command.action == END_ROUND_BYTE)
         gameRenderer.mostrarPantallaEndRound(command.map_victorias, sdl_renderer);
-      } else if (command.action == VICTORY_BYTE) {
+      else if (command.action == VICTORY_BYTE)
         gameRenderer.mostrarPantallaVictoria(command.name_winner, sdl_renderer);
-      } else if(command.action == FINALLY_GAME){
+      else if(command.action == FINALLY_GAME)
         return;
-      }
-      actualizar = true;
+      else actualizar = true;
     }
 
     if (actualizar) {
