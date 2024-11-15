@@ -68,6 +68,7 @@ public:
   void stopAimUp();
   void eraseGun();
   bool isSliding();
+  uint8_t checkSlideColision();
 
 
   // Destructor

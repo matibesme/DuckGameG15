@@ -193,7 +193,12 @@ void DuckPlayer::eraseGun() {
 
 void DuckPlayer::stopAimUp() { is_aiming_up = false; }
 
-void DuckPlayer::setIsSliding(bool sliding) { is_sliding = sliding; }
+void DuckPlayer::setIsSliding(bool sliding) {
+  if (!sliding) {
+    slide_counter = SLIDE_COUNTER;
+  }
+  is_sliding = sliding;
+}
 
 bool DuckPlayer::isSliding() { return is_sliding; }
 

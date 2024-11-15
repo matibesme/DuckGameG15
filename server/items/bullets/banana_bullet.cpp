@@ -56,6 +56,7 @@ bool BananaBullet::colisionWithDuck(float duck_x_pos, float duck_y_pos, float du
   if (is_alive) {
     if ((duck_x_pos < x_pos and x_pos < duck_x_pos + duck_width) or (duck_x_pos < x_pos + WIDTH_BIG_BULLET and x_pos + WIDTH_BIG_BULLET < duck_x_pos + duck_width)) {
       if ((duck_y_pos < y_pos and y_pos < duck_y_pos + duck_height) or (duck_y_pos < y_pos + HEIGHT_BIG_BULLET and y_pos + HEIGHT_BIG_BULLET < duck_y_pos + duck_height)) {
+        is_alive =  false;
         return true;
       }
     }

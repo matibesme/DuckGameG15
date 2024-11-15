@@ -157,7 +157,7 @@ bool Bullet::colisionWithDuck(float duck_x_pos, float duck_y_pos,
 
 bool Bullet::colisionWithBox(float box_x_pos, float box_y_pos, float box_width,
                              float box_height) {
-  if (is_alive) {
+  if (is_alive and type != BANANA_BULLET and type != GRANADA_BULLET) {
     if (x_pos >= box_x_pos && x_pos <= box_x_pos + box_width) {
       if (y_pos >= box_y_pos && y_pos <= box_y_pos + box_height) {
         kill();

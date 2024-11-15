@@ -278,7 +278,8 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
     }
   }
 
-  if (!is_on_platform && !personaje.estaSaltando()) {
+  if (!is_on_platform && (!personaje.estaSaltando() or personaje.isSliding())) {
+    personaje.setIsSliding(false);
     personaje.setEnSalto(true);
     personaje.setVelocidadY(0);
   }
