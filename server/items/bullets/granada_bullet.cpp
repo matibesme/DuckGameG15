@@ -76,4 +76,7 @@ void GranadaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
   }
 }
 
-
+void GranadaBullet::boxExplosion(float x_pos, float y_pos, uint8_t time_to_explode_) {
+  release(x_pos, y_pos, 0, 0);
+  time_to_explode = time_to_explode_;
+}
