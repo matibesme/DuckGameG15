@@ -117,7 +117,7 @@ void EventHandler::correrHandlers() {
         action.player = 2;
         queue_sender.push(action); // Detener disparo continuo
         break;
-      case SDLK_RETURN:
+      case SDLK_m:
         action.type_of_movement = STOP_AIM_UP;
         action.player = 2;
         queue_sender.push(action); // Dejar de apuntar arriba
