@@ -219,7 +219,6 @@ if(TALLER_EDITOR)
     target_include_directories(taller_editor PRIVATE ${libSDL2pp_SOURCE_DIR})
 endif()
 
-
 # Testing section
 # ---------------
 
@@ -250,6 +249,11 @@ if(TALLER_TESTS)
             client/protocolo_cliente.cpp
             server/protocolo_server.cpp
             common/protocolo.cpp
+            common/socket.cpp
+            common/resolver.cpp  # ¡Agregado!
+            common/liberror.cpp
+            common/resolvererror.cpp
+            tests/testsProtocol.cpp
     )
 
     # Include all test files in the tests folder
