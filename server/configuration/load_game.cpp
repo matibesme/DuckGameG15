@@ -107,10 +107,7 @@ void LoadGameFile::loadGame() {
 void LoadGameFile::loadConfigurations() {
   YAML::Node config = YAML::LoadFile("../server/configuration/config.yaml");
 
-  GRAVEDAD = config["gravity"].as<float>();
-  VELOCIDAD_INICIAL = config["initial_speed"].as<float>();
-  GRAVITY_FLAP = config["gravity_flap"].as<float>();
-  CANT_FLAP = config["flap_quantity"].as<uint8_t>();
+
   LIFE = config["life"].as<uint8_t>();
 
 

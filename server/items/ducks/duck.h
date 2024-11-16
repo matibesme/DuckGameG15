@@ -17,7 +17,7 @@ private:
   bool is_alive;
   float gravity;
   std::list<std::shared_ptr<Weapon>> weapons_list;
-  uint8_t counter_flapping;
+  int counter_flapping;
   bool is_flapping;
   uint8_t helmet;
   uint8_t armor;
@@ -63,6 +63,7 @@ public:
   void aimUp();
   bool isAimingUp();
   void stopAimUp();
+  void eraseGun();
 
 
   // Destructor

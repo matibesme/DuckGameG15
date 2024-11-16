@@ -4,10 +4,7 @@ float MAP_LIMIT_X = 640;
 float MAP_LIMIT_Y = 480;
 uint8_t SCENE_ID = 0x02;
 
-float GRAVEDAD = 1;
-float VELOCIDAD_INICIAL = 15;
-float GRAVITY_FLAP = 0.001;
-uint8_t CANT_FLAP = 100;
+
 
 // duck editor
 float POSICION_INICIAL_X = 0;
@@ -34,7 +31,7 @@ float RECOIL_GRANADA = 0;
 //BANANA
 uint8_t DAMAGE_BANANA = 10;
 uint8_t RANGE_BANANA = 10;
-int AMMO_BANANA = 100;
+int AMMO_BANANA = 3;
 float RECOIL_BANANA = 0;
 //AK47
 uint8_t DAMAGE_AK47 = 10;

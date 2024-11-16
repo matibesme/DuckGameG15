@@ -24,10 +24,10 @@ bool Granada::isActive() {
 }
 
 std::unique_ptr<Bullet> Granada::shoot(bool is_aiming_up) {
-  (void)is_aiming_up;
   if (bullet_count > 0) {
     return nullptr;
   }
+  bullet_count++;
   if (counter_to_shoot != 0) {
     counter_to_shoot--;
     return nullptr;
@@ -35,16 +35,16 @@ std::unique_ptr<Bullet> Granada::shoot(bool is_aiming_up) {
   bullet_count += 1;
   ammo_quantity--;
   if (is_aiming_up and direction == RIGHT) {
-    bala.release(x_pos + DUCK_WIDTH - WIDTH_GUN / 2, y_pos - WIDTH_BULLET,
+    bala.release_granada(x_pos + DUCK_WIDTH - WIDTH_GUN / 2, y_pos - WIDTH_BULLET,
                  BULLET_UP, time_to_explode);
   } else if (is_aiming_up and direction == LEFT) {
-    bala.release(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET, BULLET_UP,
+    bala.release_granada(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET, BULLET_UP,
                  time_to_explode);
   } else if (direction == RIGHT) {
-    bala.release(x_pos + DUCK_WIDTH + WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2),
+    bala.release_granada(x_pos + DUCK_WIDTH + WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2),
                  direction, time_to_explode);
   } else if (direction == LEFT) {
-    bala.release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2), direction,
+    bala.release_granada(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2), direction,
                  time_to_explode);
   }
   if (direction == RIGHT) {

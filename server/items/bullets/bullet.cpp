@@ -2,12 +2,13 @@
 
 #include <random>
 
+#include "granada_bullet.h"
 
 
 Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
                uint8_t damage, uint8_t range, float spread)
     : Objeto(type, id, x_pos, y_pos), damage(damage), range(range),
-      is_alive(true), spread(spread), spread_direction(false) {}
+      is_alive(true), spread(spread), spread_direction(false), is_falling(false){}
 
 uint8_t Bullet::getDamage() { return damage; }
 
@@ -69,6 +70,7 @@ void Bullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
         if (type == LASER_RIFLE_BULLET) {
           changeDirection(calculateCollisionSide(plat_x_pos, plat_y_pos, plat_width, plat_height));
 
+
         } else {
           kill();
         }
@@ -85,15 +87,18 @@ float minimo(float a, float b, float c, float d) {
 
 uint8_t Bullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
                                        float plat_width, float plat_height) {
-  float up_distance = y_pos - plat_y_pos;
+  float up_distance = (y_pos + HEIGHT_BULLET) - plat_y_pos;
   float down_distance = (plat_y_pos + plat_height) - y_pos;
-  float left_distance = x_pos - plat_x_pos;
+  float left_distance = (x_pos + WIDTH_BULLET) - plat_x_pos;
   float right_distance = (plat_x_pos + plat_width) - x_pos;
 
   float min_distance = minimo(up_distance, down_distance, left_distance, right_distance);
 
-  if (min_distance == up_distance) {
-    return BULLET_UP;
+  if (min_distance == up_distance  ) {
+    if (plat_y_pos > y_pos - HEIGHT_BULLET) {
+      return BULLET_UP;
+    }
+    return direction==RIGHT? LEFT: RIGHT;
   } else if (min_distance == down_distance) {
     return DOWN;
   } else if (min_distance == left_distance) {
@@ -158,3 +163,5 @@ bool Bullet::colisionWithBox(float box_x_pos, float box_y_pos, float box_width,
   }
   return false;
 }
+
+void Bullet::setIsFalling(bool is_falling) { this->is_falling = is_falling; }
