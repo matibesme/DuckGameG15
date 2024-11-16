@@ -14,24 +14,24 @@ BananaBullet::BananaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
       velocidad(VELOCIDAD_INICIAL), continue_moving(true) {}
 
 void BananaBullet::executeAction() {
-
   if (is_alive && continue_moving) {
+    // Actualización de la posición vertical (y_pos)
     if (is_falling) {
       y_pos += std::abs(velocidad);
       velocidad += GRAVEDAD;
-
     } else {
       y_pos -= velocidad;
       velocidad -= GRAVEDAD;
-      if (direction == RIGHT) {
-        x_pos += RANGO_X_MEDIO;
-      } else if (direction == LEFT) {
-        x_pos -= RANGO_X_MEDIO;
+      if (velocidad == 0) {
+        is_falling = true;
       }
     }
 
+    // Actualización de la posición horizontal (x_pos)
+    x_pos += (direction == RIGHT ? RANGO_X_MEDIO : -RANGO_X_MEDIO);
   }
 }
+
 
 void BananaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
                                         float plat_width, float plat_height) {

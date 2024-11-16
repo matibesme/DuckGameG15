@@ -102,11 +102,7 @@ uint8_t Bullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
       minimo(up_distance, down_distance, left_distance, right_distance);
 
   if (min_distance == up_distance) {
-    if (plat_y_pos > y_pos - (type == LASER_RIFLE_BULLET ? HEIGHT_BULLET
-                                                         : HEIGHT_BIG_BULLET)) {
-      return BULLET_UP;
-    }
-    return direction == RIGHT ? LEFT : RIGHT;
+    return BULLET_UP;
   } else if (min_distance == down_distance) {
     if (is_falling) {
       return BULLET_UP;
