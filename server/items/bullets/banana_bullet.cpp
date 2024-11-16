@@ -43,6 +43,11 @@ void BananaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
           y_pos = plat_y_pos - HEIGHT_GUN;
         } else {
           setIsFalling(true);
+          if (direction == RIGHT) {
+            x_pos -= WIDTH_BIG_BULLET;
+          } else if (direction == LEFT) {
+            x_pos += WIDTH_BIG_BULLET;
+          }
         }
       }
     }

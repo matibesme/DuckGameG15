@@ -395,6 +395,21 @@ void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
       ++it;
     }
   }
+  for (auto it = list_boxes.begin(); it != list_boxes.end();) {
+    if (grenade_bullet.getXPos() - (2 * WIDTH_BOX) < it->getXPos() &&
+        grenade_bullet.getXPos() + (2 * WIDTH_BOX) > it->getXPos() &&
+        grenade_bullet.getYPos() - (HEIGHT_BOX) < it->getYPos() &&
+        grenade_bullet.getYPos() + (HEIGHT_BOX) > it->getYPos()) {
+      it->takeDamage(grenade_bullet.getDamage());
+      if (it->isDestroyed()) {
+        it = list_boxes.erase(it);
+      } else {
+        ++it;
+      }
+    } else {
+      ++it;
+    }
+  }
 }
 
 GameLoop::~GameLoop() {}
