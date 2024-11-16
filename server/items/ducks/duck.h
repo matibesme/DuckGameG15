@@ -23,6 +23,8 @@ private:
   uint8_t armor;
   std::string color;
   bool is_aiming_up;
+  bool is_sliding;
+  int slide_counter;
 
 public:
   // Constructors
@@ -39,7 +41,7 @@ public:
   bool isFlapping();
   uint8_t &getHelmet();
   uint8_t &getArmor();
-    bool receiveShoot();
+  bool receiveShoot();
   std::string &getColor();
   float &getVelocidadY();
 
@@ -51,6 +53,7 @@ public:
   void setGravity(float gravity_);
   void setHelmet(uint8_t type);
   void setArmor(uint8_t type);
+  void setIsSliding(bool sliding);
 
   // Actions
   void incrementXPos(float pos_x);
@@ -64,7 +67,8 @@ public:
   bool isAimingUp();
   void stopAimUp();
   void eraseGun();
-
+  bool isSliding();
+  uint8_t checkSlideColision();
 
   // Destructor
   ~DuckPlayer();

@@ -5,8 +5,7 @@
 #include "granada.h"
 
 Granada::Granada(uint8_t type, uint8_t id, float x_pos, float y_pos,
-                 uint8_t damage, uint8_t range, int ammo_quantity,
-                 float recoil)
+                 uint8_t damage, uint8_t range, int ammo_quantity, float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       bala(GRANADA_BULLET, 1, 0, 0, 10, range, 0.3, GRANADA_TIME_TO_EXPLODE),
       counter_to_shoot(COUNTER_TO_SHOOT_GRANADA),
@@ -35,17 +34,17 @@ std::unique_ptr<Bullet> Granada::shoot(bool is_aiming_up) {
   bullet_count += 1;
   ammo_quantity--;
   if (is_aiming_up and direction == RIGHT) {
-    bala.release_granada(x_pos + DUCK_WIDTH - WIDTH_GUN / 2, y_pos - WIDTH_BULLET,
-                 BULLET_UP, time_to_explode);
+    bala.release_granada(x_pos + DUCK_WIDTH - WIDTH_GUN / 2,
+                         y_pos - WIDTH_BULLET, BULLET_UP, time_to_explode);
   } else if (is_aiming_up and direction == LEFT) {
-    bala.release_granada(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET, BULLET_UP,
-                 time_to_explode);
+    bala.release_granada(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET,
+                         BULLET_UP, time_to_explode);
   } else if (direction == RIGHT) {
-    bala.release_granada(x_pos + DUCK_WIDTH + WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2),
-                 direction, time_to_explode);
+    bala.release_granada(x_pos + DUCK_WIDTH + WIDTH_BULLET,
+                         y_pos + (DUCK_HEIGHT / 2), direction, time_to_explode);
   } else if (direction == LEFT) {
-    bala.release_granada(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2), direction,
-                 time_to_explode);
+    bala.release_granada(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2),
+                         direction, time_to_explode);
   }
   if (direction == RIGHT) {
     setXPos(x_pos - recoil);

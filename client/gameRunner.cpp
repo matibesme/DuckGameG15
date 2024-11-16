@@ -21,8 +21,9 @@ void GameRunner::run() {
     // Recibir los colores de los jugadores
     do {
       command = queue_receiver.pop();
-      gameRenderer.mostrarPantallaColores(command.players_color, graficos.GetRenderer());
-    } while(command.action == COLOR_PRESENTATION_BYTE);
+      gameRenderer.mostrarPantallaColores(command.players_color,
+                                          graficos.GetRenderer());
+    } while (command.action == COLOR_PRESENTATION_BYTE);
 
     runGameLoop(gameRenderer);
 
@@ -47,13 +48,15 @@ void GameRunner::runGameLoop(GameRenderer &gameRenderer) {
 
     // Recibimos el comando y actualizamos si es necesario
     while (queue_receiver.try_pop(command)) {
-      if(command.action == END_ROUND_BYTE)
-        gameRenderer.mostrarPantallaEndRound(command.map_victorias, sdl_renderer);
+      if (command.action == END_ROUND_BYTE)
+        gameRenderer.mostrarPantallaEndRound(command.map_victorias,
+                                             sdl_renderer);
       else if (command.action == VICTORY_BYTE)
         gameRenderer.mostrarPantallaVictoria(command.name_winner, sdl_renderer);
-      else if(command.action == FINALLY_GAME)
+      else if (command.action == FINALLY_GAME)
         return;
-      else actualizar = true;
+      else
+        actualizar = true;
     }
 
     if (actualizar) {

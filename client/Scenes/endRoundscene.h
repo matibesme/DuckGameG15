@@ -9,7 +9,8 @@
 class EndRoundScene {
 public:
   // Constructor: recibe una referencia a un renderer
-  EndRoundScene(std::map<std::string, uint8_t>& players, SDL_Renderer& renderer);
+  EndRoundScene(std::map<std::string, uint8_t> &players,
+                SDL_Renderer &renderer);
 
   // Destructor
   ~EndRoundScene();
@@ -30,11 +31,12 @@ public:
   void Run();
 
 private:
-  std::map<std::string, uint8_t>& players;  // Referencia al mapa de jugadores y sus victorias
-  SDL_Renderer& renderer;  // Referencia al renderer recibido
+  std::map<std::string, uint8_t>
+      &players;           // Referencia al mapa de jugadores y sus victorias
+  SDL_Renderer &renderer; // Referencia al renderer recibido
 
   // Propiedades de la ventana y la fuente
-  TTF_Font* font;
+  TTF_Font *font;
   int windowWidth = 800;
   int windowHeight = 600;
 };

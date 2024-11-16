@@ -13,7 +13,9 @@ void Client::execute() {
   game.run();
 }
 
-void Client::createGame(bool is_double_player, std::string player_1, std::string player_2, std::string game_name, bool& is_available_game) {
+void Client::createGame(bool is_double_player, std::string player_1,
+                        std::string player_2, std::string game_name,
+                        bool &is_available_game) {
   GameAccess game_access;
   game_access.action_type = CREATE_GAME;
   game_access.game_name = game_name;
@@ -22,8 +24,8 @@ void Client::createGame(bool is_double_player, std::string player_1, std::string
   game_access.double_player = is_double_player;
   protocolo.sendCreateJoinGameToServer(game_access);
   is_available_game = protocolo.reciveMatchWithSameName();
-  //si devuelve true ya existe una partida con el mismo nombre
-  //si devuelve false se creo la partida
+  // si devuelve true ya existe una partida con el mismo nombre
+  // si devuelve false se creo la partida
 }
 
 void Client::startGame() {
@@ -33,7 +35,8 @@ void Client::startGame() {
   execute();
 }
 
-void Client::joinGame(std::string game_name, bool is_double_player, std::string player_1, std::string player_2) {
+void Client::joinGame(std::string game_name, bool is_double_player,
+                      std::string player_1, std::string player_2) {
   GameAccess game_access;
   game_access.action_type = JOIN_GAME;
   game_access.game_name = game_name;

@@ -1,7 +1,7 @@
 #include "GameRenderer.h"
-#include <algorithm> // para std::min y std::max
 #include <QApplication>
 #include <SDL_render.h>
+#include <algorithm> // para std::min y std::max
 
 #define IMAGE_CLOUDY_NIGHT DATA_PATH "/backgrounds/Cloudy night.png"
 #define IMAGE_CITY DATA_PATH "/backgrounds/City.png"
@@ -31,7 +31,8 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
 
   // Cambio el objetivo de renderizado a textureDeTodo
   renderer.SetTarget(textureDeTodo);
-  renderer.SetDrawColor(0, 0, 0, 0); // Limpio la textura con un color transparente
+  renderer.SetDrawColor(0, 0, 0,
+                        0); // Limpio la textura con un color transparente
   renderer.Clear();
 
   // Dibujo los objetos en la textura
@@ -66,7 +67,8 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   renderer.Present();
 }
 
-SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks) {
+SDL2pp::Rect
+GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks) {
   if (ducks.empty()) {
     return {0, 0, SCENE_WIDTH, SCENE_HEIGHT};
   }
@@ -113,7 +115,8 @@ SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks
   int centerX = (minX + maxX) / 2;
   int centerY = (minY + maxY) / 2;
 
-  // Permitir que el rectángulo de zoom se salga de los límites de los patos y muestre más fondo
+  // Permitir que el rectángulo de zoom se salga de los límites de los patos y
+  // muestre más fondo
   int zoomMinX = centerX - width / 2;
   int zoomMinY = centerY - height / 2;
 
@@ -122,7 +125,8 @@ SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks
   zoomMinX = std::max(zoomMinX, 0); // No puede ser menor que 0
   zoomMinY = std::max(zoomMinY, 0); // No puede ser menor que 0
 
-  // Ampliamos el área de fondo permitiendo que el zoom se extienda más allá del mapa
+  // Ampliamos el área de fondo permitiendo que el zoom se extienda más allá del
+  // mapa
   int zoomMaxX = zoomMinX + width;
   int zoomMaxY = zoomMinY + height;
 
@@ -136,15 +140,13 @@ SDL2pp::Rect GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks
   return {zoomMinX, zoomMinY, width, height};
 }
 
-
-
 void GameRenderer::actualizarElementos(const GameState &command) {
-  if(!plataformasYaCargadas){
+  if (!plataformasYaCargadas) {
     // Creo las plataformas por única vez
     for (auto &platformStruct : command.lista_plataformas) {
-      platforms.emplace_back(platformStruct.x_pos, platformStruct.y_pos, graficos,
-                             platformStruct.type, platformStruct.width,
-                             platformStruct.height);
+      platforms.emplace_back(platformStruct.x_pos, platformStruct.y_pos,
+                             graficos, platformStruct.type,
+                             platformStruct.width, platformStruct.height);
     }
     plataformasYaCargadas = true;
   }
@@ -351,24 +353,32 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
   renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);
 }
 
-void GameRenderer::mostrarPantallaColores(std::map<std::string, std::string> &playersColors, Renderer &renderer) {
+void GameRenderer::mostrarPantallaColores(
+    std::map<std::string, std::string> &playersColors, Renderer &renderer) {
   // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
-  SDL_Renderer& sdlRenderer = *renderer.Get();  // Obtiene el SDL_Renderer subyacente
-  ColorScene colorScene(playersColors, sdlRenderer);  // Pasar el SDL_Renderer a la escena
-  colorScene.Run();  // Ejecutar la escena
+  SDL_Renderer &sdlRenderer =
+      *renderer.Get(); // Obtiene el SDL_Renderer subyacente
+  ColorScene colorScene(playersColors,
+                        sdlRenderer); // Pasar el SDL_Renderer a la escena
+  colorScene.Run();                   // Ejecutar la escena
 }
 
-void GameRenderer::mostrarPantallaVictoria([[maybe_unused]] std::string &winner, Renderer &renderer) {
+void GameRenderer::mostrarPantallaVictoria([[maybe_unused]] std::string &winner,
+                                           Renderer &renderer) {
   // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
-  SDL_Renderer& sdlRenderer = *renderer.Get();  // Obtiene el SDL_Renderer subyacente
-  FinalScene finalScene(winner, sdlRenderer);  // Pasar el SDL_Renderer a la escena
-  finalScene.Render();  // Ejecutar la escena
+  SDL_Renderer &sdlRenderer =
+      *renderer.Get(); // Obtiene el SDL_Renderer subyacente
+  FinalScene finalScene(winner,
+                        sdlRenderer); // Pasar el SDL_Renderer a la escena
+  finalScene.Render();                // Ejecutar la escena
 }
 
-void GameRenderer::mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias, Renderer &renderer) {
+void GameRenderer::mostrarPantallaEndRound(
+    std::map<std::string, uint8_t> &map_victorias, Renderer &renderer) {
   // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
-  SDL_Renderer& sdlRenderer = *renderer.Get();  // Obtiene el SDL_Renderer subyacente
-  EndRoundScene endRoundSene(map_victorias, sdlRenderer);  // Pasar el SDL_Renderer a la escena
-  endRoundSene.Run();  // Ejecutar la escena
+  SDL_Renderer &sdlRenderer =
+      *renderer.Get(); // Obtiene el SDL_Renderer subyacente
+  EndRoundScene endRoundSene(map_victorias,
+                             sdlRenderer); // Pasar el SDL_Renderer a la escena
+  endRoundSene.Run();                      // Ejecutar la escena
 }
-

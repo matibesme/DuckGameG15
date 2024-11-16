@@ -20,8 +20,10 @@ constexpr int HEIGHT_GRENADE_BANANA = 13;
 constexpr int WIDTH_GRENADE_BANANA = 15;
 constexpr int HEIGHT_GRENADE_EXPLOTION = 40;
 constexpr int WIDTH_GRENADE_EXPLOTION = 40;
-constexpr int HEIGHT_BULLET = 10;
-constexpr int WIDTH_BULLET = 10;
+constexpr int HEIGHT_BULLET = 3;
+constexpr int WIDTH_BULLET = 3;
+constexpr int HEIGHT_BIG_BULLET = 10;
+constexpr int WIDTH_BIG_BULLET = 10;
 constexpr uint8_t WIDTH_ARMOR = 24;
 constexpr uint8_t HEIGHT_ARMOR = 38;
 constexpr uint8_t WIDTH_HELMET = 39;
@@ -32,7 +34,6 @@ constexpr int MAP_HEIGHT = 64 * DUCK_HEIGHT;
 constexpr int MAP_WIDTH = 64 * DUCK_WIDTH;
 constexpr int WIDTH_BOX = 17;
 constexpr int HEIGHT_BOX = 20;
-
 
 // Protocolo
 
@@ -58,8 +59,6 @@ constexpr uint8_t AIM_UP = 0x13;
 constexpr uint8_t STOP_AIM_UP = 0x14;
 constexpr uint8_t STOP_SHOOT = 0x15;
 constexpr uint8_t LEAVE_GUN = 0x0A;
-
-
 
 // Escenas
 constexpr uint8_t WEAPON_ACTION = 0x08;

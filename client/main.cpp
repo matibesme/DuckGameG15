@@ -1,9 +1,9 @@
-#include <QApplication>
-#include <exception>
 #include "../common/common_constant.h"
+#include "client.h"
 #include "menu/menu.h"
 #include "menu/menucontroller.h"
-#include "client.h"
+#include <QApplication>
+#include <exception>
 
 int main(int argc, char *argv[]) {
   if (argc != CANT_ARGUMENTS) {

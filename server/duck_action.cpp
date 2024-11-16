@@ -13,8 +13,7 @@ DuckAction::DuckAction(
     uint16_t &id_balas, uint16_t &id_weapons,
     std::map<uint16_t, Protection> &map_defense,
     std::map<uint16_t, Protection> &respawn_defense_points,
-    uint16_t &id_defense,
-    std::map<uint16_t, int> &time_defense_last_respawn)
+    uint16_t &id_defense, std::map<uint16_t, int> &time_defense_last_respawn)
     : map_personajes(map_personajes), map_free_weapons(map_free_weapons),
       respawn_weapon_points(respawn_weapon_points),
       time_weapon_last_respawn(time_weapon_last_respawn),
@@ -25,7 +24,9 @@ DuckAction::DuckAction(
 
 void DuckAction::movementComand(uint8_t comando, uint8_t id) {
   DuckPlayer &personaje = map_personajes[id];
-
+  if (personaje.isSliding()) {
+    return;
+  }
   switch (comando) {
   case RIGHT:
     personaje.incrementXPos(MOVEMENT_QUANTITY_X);
@@ -89,11 +90,12 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
 
           respawn_weapon_points.emplace(id_weapons, weapon);
           respawn_weapon_points.erase(free_weapon.first);
-        //hacer nun rando entre numeros PERO DE 1000 EN 1000 para que no se vea tan seguido
+          // hacer nun rando entre numeros PERO DE 1000 EN 1000 para que no se
+          // vea tan seguido
           std::random_device rd;
           std::mt19937 gen(rd());
           std::uniform_int_distribution<> distrib(1, 10);
-          int random_addition = distrib(gen)*800;
+          int random_addition = distrib(gen) * 800;
 
           time_weapon_last_respawn.emplace(id_weapons, random_addition);
           id_weapons++;
@@ -138,7 +140,7 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> distrib(1, 10);
-        int random_addition = distrib(gen)*800;
+        int random_addition = distrib(gen) * 800;
 
         time_defense_last_respawn.emplace(id_defense, random_addition);
         id_defense++;
