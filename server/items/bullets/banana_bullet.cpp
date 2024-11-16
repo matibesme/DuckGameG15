@@ -29,16 +29,20 @@ void BananaBullet::executeAction() {
         x_pos -= RANGO_X_MEDIO;
       }
     }
-
   }
 }
 
 void BananaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
                                         float plat_width, float plat_height) {
   if (is_alive) {
-    if ((plat_x_pos < x_pos and x_pos < plat_x_pos + plat_width) or (plat_x_pos < x_pos + WIDTH_BIG_BULLET and x_pos + WIDTH_BIG_BULLET < plat_x_pos + plat_width)) {
-      if ((plat_y_pos < y_pos and y_pos < plat_y_pos + plat_height) or (plat_y_pos < y_pos + HEIGHT_BIG_BULLET and y_pos + HEIGHT_BIG_BULLET < plat_y_pos + plat_height)) {
-        if (calculateCollisionSide(plat_x_pos, plat_y_pos, plat_width, plat_height) == BULLET_UP) {
+    if ((plat_x_pos < x_pos and x_pos < plat_x_pos + plat_width) or
+        (plat_x_pos < x_pos + WIDTH_BIG_BULLET and
+         x_pos + WIDTH_BIG_BULLET < plat_x_pos + plat_width)) {
+      if ((plat_y_pos < y_pos and y_pos < plat_y_pos + plat_height) or
+          (plat_y_pos < y_pos + HEIGHT_BIG_BULLET and
+           y_pos + HEIGHT_BIG_BULLET < plat_y_pos + plat_height)) {
+        if (calculateCollisionSide(plat_x_pos, plat_y_pos, plat_width,
+                                   plat_height) == BULLET_UP) {
           continue_moving = false;
           y_pos = plat_y_pos - HEIGHT_GUN;
         } else {
@@ -49,20 +53,22 @@ void BananaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
   }
 }
 
-bool BananaBullet::colisionWithDuck(float duck_x_pos, float duck_y_pos, float duck_width, float duck_height) {
+bool BananaBullet::colisionWithDuck(float duck_x_pos, float duck_y_pos,
+                                    float duck_width, float duck_height) {
   if (continue_moving) {
     return false;
   }
   if (is_alive) {
-    if ((duck_x_pos < x_pos and x_pos < duck_x_pos + duck_width) or (duck_x_pos < x_pos + WIDTH_BIG_BULLET and x_pos + WIDTH_BIG_BULLET < duck_x_pos + duck_width)) {
-      if ((duck_y_pos < y_pos and y_pos < duck_y_pos + duck_height) or (duck_y_pos < y_pos + HEIGHT_BIG_BULLET and y_pos + HEIGHT_BIG_BULLET < duck_y_pos + duck_height)) {
-        is_alive =  false;
+    if ((duck_x_pos < x_pos and x_pos < duck_x_pos + duck_width) or
+        (duck_x_pos < x_pos + WIDTH_BIG_BULLET and
+         x_pos + WIDTH_BIG_BULLET < duck_x_pos + duck_width)) {
+      if ((duck_y_pos < y_pos and y_pos < duck_y_pos + duck_height) or
+          (duck_y_pos < y_pos + HEIGHT_BIG_BULLET and
+           y_pos + HEIGHT_BIG_BULLET < duck_y_pos + duck_height)) {
+        is_alive = false;
         return true;
       }
     }
   }
   return false;
 }
-
-
-

@@ -76,12 +76,12 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer &renderer) {
                     Rect(pos_x, pos_y, with, height), 0.0, SDL2pp::NullOpt,
                     SDL_FLIP_HORIZONTAL);
     else
-      //16 x 32 de la imagen IMAGE_BANANA_GUN
-      //tomoo de la textura desde el pixel 0 en x al 16 en x y del 32 al 64 en y
-      if (typeOfGun == BANANA_GUN){
+      // 16 x 32 de la imagen IMAGE_BANANA_GUN
+      // tomoo de la textura desde el pixel 0 en x al 16 en x y del 32 al 64 en
+      // y
+      if (typeOfGun == BANANA_GUN) {
         // destRect es el rectángulo donde se dibujará el pato
-        SDL2pp::Rect destRect(pos_x, pos_y, WIDTH_GUN,
-                              HEIGHT_GUN);
+        SDL2pp::Rect destRect(pos_x, pos_y, WIDTH_GUN, HEIGHT_GUN);
         // srcRect es el rectángulo que se tomará de la textura
         SDL2pp::Rect srcRect(0, 32, 16, 16);
 
@@ -89,8 +89,8 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer &renderer) {
       }
 
       else
-            renderer.Copy(texture_not_equipped, SDL2pp::NullOpt,
-                    Rect(pos_x, pos_y, with, height));
+        renderer.Copy(texture_not_equipped, SDL2pp::NullOpt,
+                      Rect(pos_x, pos_y, with, height));
   }
 }
 
