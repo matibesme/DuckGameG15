@@ -14,6 +14,10 @@
 #include "items/weapons/pewpew_laser.h"
 #include "items/weapons/shotgun.h"
 
+constexpr int SLIDE_VELOCITY = 3;
+
+constexpr int SLIDE_COUNTER = 40;
+
 DuckPlayer::DuckPlayer()
     : Objeto(0, 0, 0, 0), is_weapon_equiped(false), typeOfMove(STILL_RIGHT),
       saltando(false), velocidad(VELOCIDAD_INICIAL), life(LIFE), is_alive(true),
@@ -25,7 +29,8 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos,
       typeOfMove(STILL_RIGHT), saltando(false), velocidad(VELOCIDAD_INICIAL),
       life(LIFE), is_alive(true), gravity(GRAVEDAD), weapons_list(),
       counter_flapping(0), is_flapping(false), helmet(NO_HELMET),
-      armor(NO_ARMOR), color(color_), is_aiming_up(false) {}
+      armor(NO_ARMOR), color(color_), is_aiming_up(false), is_sliding(false),
+      slide_counter(SLIDE_COUNTER) {}
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() { return typeOfMove; }
 
@@ -57,6 +62,19 @@ void DuckPlayer::stopJump(float y_pos_) {
 }
 
 void DuckPlayer::executeAction() {
+  if (is_sliding) {
+    if (direction == RIGHT) {
+      x_pos += SLIDE_VELOCITY;
+    } else if (direction == LEFT) {
+      x_pos -= SLIDE_VELOCITY;
+    }
+    slide_counter--;
+    if (slide_counter == 0) {
+      is_sliding = false;
+      slide_counter = SLIDE_COUNTER;
+    }
+    return;
+  }
   if (saltando) {
     if (is_flapping) {
       gravity = GRAVITY_FLAP;
@@ -100,8 +118,7 @@ std::shared_ptr<Weapon> DuckPlayer::removeWeapon() {
   }
   weapon->setYPos(y_pos + DUCK_HEIGHT - HEIGHT_GUN);
 
-  weapons_list.pop_front();
-  is_weapon_equiped = false;
+  eraseGun();
   return weapon;
 }
 
@@ -112,7 +129,10 @@ void DuckPlayer::pickUpWeapon(std::shared_ptr<Weapon> weapon) {
 
 bool DuckPlayer::isWeaponEquipped() { return is_weapon_equiped; }
 
-bool DuckPlayer::isAlive() { return is_alive; }
+bool DuckPlayer::isAlive() {
+  std::cout << (int)life << std::endl;
+  return is_alive;
+}
 
 void DuckPlayer::applyDamage(uint8_t damage) {
   life -= damage;
@@ -163,6 +183,20 @@ void DuckPlayer::aimUp() {
   }
 }
 
+void DuckPlayer::eraseGun() {
+  weapons_list.pop_front();
+  is_weapon_equiped = false;
+}
+
 void DuckPlayer::stopAimUp() { is_aiming_up = false; }
+
+void DuckPlayer::setIsSliding(bool sliding) {
+  if (!sliding) {
+    slide_counter = SLIDE_COUNTER;
+  }
+  is_sliding = sliding;
+}
+
+bool DuckPlayer::isSliding() { return is_sliding; }
 
 DuckPlayer::~DuckPlayer() {}

@@ -16,8 +16,11 @@
 #include "laser_rifle.h"
 #include "magnum.h"
 #include "pewpew_laser.h"
+#include "server_constant.h"
 #include "shotgun.h"
 #include "sniper.h"
+
+constexpr int TILE_CONSTANT = 4;
 
 FactoryWeapons::FactoryWeapons() {}
 
@@ -27,40 +30,47 @@ std::shared_ptr<Weapon> FactoryWeapons::createWeapon(uint8_t type, float x,
 
   case GRANADA_GUN:
     return std::make_shared<Granada>(GRANADA_GUN, 1, x, y, DAMAGE_GRANADA,
-                                     RANGE_GRANADA, AMMO_GRANADA,
-                                     RECOIL_GRANADA);
+                                     RANGE_GRANADA * TILE_CONSTANT,
+                                     AMMO_GRANADA, RECOIL_GRANADA);
   case BANANA_GUN:
     return std::make_shared<Banana>(BANANA_GUN, 1, x, y, DAMAGE_BANANA,
-                                    RANGE_BANANA, AMMO_BANANA, RECOIL_BANANA);
+                                    RANGE_BANANA * TILE_CONSTANT, AMMO_BANANA,
+                                    RECOIL_BANANA);
   case AK47_GUN:
-    return std::make_shared<Ak47>(AK47_GUN, 1, x, y, DAMAGE_AK47, RANGE_AK47,
-                                  AMMO_AK47, RECOIL_AK47);
+    return std::make_shared<Ak47>(AK47_GUN, 1, x, y, DAMAGE_AK47,
+                                  RANGE_AK47 * TILE_CONSTANT, AMMO_AK47,
+                                  RECOIL_AK47);
   case LASER_RIFLE_GUN:
     return std::make_shared<LaserRifle>(LASER_RIFLE_GUN, 1, x, y,
-                                        DAMAGE_LASER_RIFLE, RANGE_LASER_RIFLE,
+                                        DAMAGE_LASER_RIFLE,
+                                        RANGE_LASER_RIFLE * TILE_CONSTANT,
                                         AMMO_LASER_RIFLE, RECOIL_LASER_RIFLE);
   case PEW_PEW_LASER_GUN:
     return std::make_shared<PewPewLaser>(
-        PEW_PEW_LASER_GUN, 1, x, y, DAMAGE_PEW_PEW_LASER, RANGE_PEW_PEW_LASER,
-        AMMO_PEW_PEW_LASER, RECOIL_PEW_PEW_LASER);
+        PEW_PEW_LASER_GUN, 1, x, y, DAMAGE_PEW_PEW_LASER,
+        RANGE_PEW_PEW_LASER * TILE_CONSTANT, AMMO_PEW_PEW_LASER,
+        RECOIL_PEW_PEW_LASER);
   case ESCOPETA_GUN:
     return std::make_shared<Shotgun>(ESCOPETA_GUN, 1, x, y, DAMAGE_ESCOPETA,
-                                     RANGE_ESCOPETA, AMMO_ESCOPETA,
-                                     RECOIL_ESCOPETA);
+                                     RANGE_ESCOPETA * TILE_CONSTANT,
+                                     AMMO_ESCOPETA, RECOIL_ESCOPETA);
   case SNIPER_GUN:
     return std::make_shared<Sniper>(SNIPER_GUN, 1, x, y, DAMAGE_SNIPER,
-                                    RANGE_SNIPER, AMMO_SNIPER, RECOIL_SNIPER);
+                                    RANGE_SNIPER * TILE_CONSTANT, AMMO_SNIPER,
+                                    RECOIL_SNIPER);
   case COWBOY_GUN:
     return std::make_shared<CowboyPistol>(COWBOY_GUN, 1, x, y, DAMAGE_COWBOY,
-                                          RANGE_COWBOY, AMMO_COWBOY,
-                                          RECOIL_COWBOY);
+                                          RANGE_COWBOY * TILE_CONSTANT,
+                                          AMMO_COWBOY, RECOIL_COWBOY);
   case PISTOLA_DUELOS_GUN:
     return std::make_shared<DuelPistol>(
         PISTOLA_DUELOS_GUN, 1, x, y, DAMAGE_PISTOLA_DUELOS,
-        RANGE_PISTOLA_DUELOS, AMMO_PISTOLA_DUELOS, RECOIL_PISTOLA_DUELOS);
+        RANGE_PISTOLA_DUELOS * TILE_CONSTANT, AMMO_PISTOLA_DUELOS,
+        RECOIL_PISTOLA_DUELOS);
   case MAGNUM_GUN:
     return std::make_shared<Magnum>(MAGNUM_GUN, 1, x, y, DAMAGE_MAGNUM,
-                                    RANGE_MAGNUM, AMMO_MAGNUM, RECOIL_MAGNUM);
+                                    RANGE_MAGNUM * TILE_CONSTANT, AMMO_MAGNUM,
+                                    RECOIL_MAGNUM);
 
   default:
     return nullptr;

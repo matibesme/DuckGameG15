@@ -17,12 +17,14 @@ private:
   bool is_alive;
   float gravity;
   std::list<std::shared_ptr<Weapon>> weapons_list;
-  uint8_t counter_flapping;
+  int counter_flapping;
   bool is_flapping;
   uint8_t helmet;
   uint8_t armor;
   std::string color;
   bool is_aiming_up;
+  bool is_sliding;
+  int slide_counter;
 
 public:
   // Constructors
@@ -51,6 +53,7 @@ public:
   void setGravity(float gravity_);
   void setHelmet(uint8_t type);
   void setArmor(uint8_t type);
+  void setIsSliding(bool sliding);
 
   // Actions
   void incrementXPos(float pos_x);
@@ -63,6 +66,9 @@ public:
   void aimUp();
   bool isAimingUp();
   void stopAimUp();
+  void eraseGun();
+  bool isSliding();
+  uint8_t checkSlideColision();
 
   // Destructor
   ~DuckPlayer();

@@ -79,5 +79,6 @@ public:
   void sendEndRound();
   void sendVictory(std::string &winner);
   void sendColorPresentation();
+  void checkGrenadeExplosion(GranadaBullet &grenade_bullet);
   virtual ~GameLoop();
 };

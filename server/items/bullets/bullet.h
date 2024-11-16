@@ -17,6 +17,7 @@ protected:
   bool spread_direction;
   uint8_t calculateCollisionSide(float plat_x_pos, float plat_y_pos,
                                  float plat_width, float plat_height);
+  bool is_falling;
 
 public:
   Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
@@ -41,6 +42,7 @@ public:
   virtual void executeAction();
   void changeDirection(uint8_t where_colision);
   void kill();
+  void setIsFalling(bool is_falling);
 };
 
 #endif // BULLET_H

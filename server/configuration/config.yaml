@@ -1,24 +1,21 @@
-gravity: 0.5
-initial_speed: 10
-gravity_flap: 0.5
-flap_quantity: 3
+
 life: 100
 granade:
   damage: 50
   range: 5
-  ammo: 3
+  ammo: 10
   recoil: 0.5
 
 banana:
     damage: 30
     range: 5
-    ammo: 3
+    ammo: 1
     recoil: 0.5
 
 ak47:
     damage: 20
     range: 5
-    ammo: 30
+    ammo: 100
     recoil: 0.5
 
 laser_rifle:

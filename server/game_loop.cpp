@@ -92,6 +92,9 @@ void GameLoop::checkCommand(CommandClient comando) {
 void GameLoop::checkBullets() {
   for (auto it = map_bullets.begin(); it != map_bullets.end();) {
     if (!it->second->isAlive()) {
+      if (it->second->getTypeOfBullet() == GRENADE_EXPLOSION) {
+        checkGrenadeExplosion(*(GranadaBullet *)it->second.get());
+      }
       it = map_bullets.erase(it);
     } else {
       checkCoalition(it->second);
@@ -193,11 +196,16 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
                                  plataform.width, plataform.height);
   }
   uint8_t bullet_type = bullet->getTypeOfBullet();
-  if (bullet_type != BANANA_BULLET and bullet_type != GRANADA_BULLET) {
+  if (bullet_type != GRANADA_BULLET) {
+
     for (auto it = map_personajes.begin(); it != map_personajes.end();) {
       bool colision = bullet->colisionWithDuck(
           it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
       if (colision) {
+        if (bullet_type == BANANA_BULLET) {
+          it->second.setIsSliding(true);
+          return;
+        }
         if (it->second.receiveShoot()) {
           it->second.applyDamage(bullet->getDamage());
         }
@@ -270,7 +278,8 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
     }
   }
 
-  if (!is_on_platform && !personaje.estaSaltando()) {
+  if (!is_on_platform && (!personaje.estaSaltando() or personaje.isSliding())) {
+    personaje.setIsSliding(false);
     personaje.setEnSalto(true);
     personaje.setVelocidadY(0);
   }
@@ -367,6 +376,24 @@ void GameLoop::sendColorPresentation() {
   }
   for (int i = 0; i < 200; i++) {
     queues_map->sendMessagesToQueues(command);
+  }
+}
+
+void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
+  for (auto it = map_personajes.begin(); it != map_personajes.end();) {
+    if (grenade_bullet.getXPos() - (3 * DUCK_WIDTH) < it->second.getXPos() &&
+        grenade_bullet.getXPos() + (3 * DUCK_WIDTH) > it->second.getXPos() &&
+        grenade_bullet.getYPos() - (DUCK_HEIGHT) < it->second.getYPos() &&
+        grenade_bullet.getYPos() + (DUCK_HEIGHT) > it->second.getYPos()) {
+      it->second.applyDamage(grenade_bullet.getDamage());
+      if (!it->second.isAlive()) {
+        it = map_personajes.erase(it);
+      } else {
+        ++it;
+      }
+    } else {
+      ++it;
+    }
   }
 }
 

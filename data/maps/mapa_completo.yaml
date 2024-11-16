@@ -1,5 +1,10 @@
 background_type: 145
 plataforms:
+  - pos_x: 440
+    pos_y: 220
+    height: 12
+    width: 64
+    type: 128
   - pos_x: 391
     pos_y: 297
     height: 16

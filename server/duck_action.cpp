@@ -24,7 +24,9 @@ DuckAction::DuckAction(
 
 void DuckAction::movementComand(uint8_t comando, uint8_t id) {
   DuckPlayer &personaje = map_personajes[id];
-
+  if (personaje.isSliding()) {
+    return;
+  }
   switch (comando) {
   case RIGHT:
     personaje.incrementXPos(MOVEMENT_QUANTITY_X);
@@ -176,6 +178,9 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
       if (!bullet)
         return;
       map_bullets.emplace(id_balas++, std::move(bullet));
+      if (weapon.getType() == BANANA_GUN) {
+        personaje.eraseGun();
+      }
     }
     personaje.setXPos(weapon.getXPos());
     personaje.setYPos(weapon.getYPos());

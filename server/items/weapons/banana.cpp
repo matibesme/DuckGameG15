@@ -14,12 +14,14 @@ bool Banana::isEmptyAmmo() { return ammo_quantity == 0; }
 bool Banana::isActive() { return false; }
 
 std::unique_ptr<Bullet> Banana::shoot(bool is_aiming_up) {
-  (void)is_aiming_up;
   if (bullet_count > 0) {
     return nullptr;
   }
   if (counter_to_shoot != 0) {
     counter_to_shoot--;
+    return nullptr;
+  }
+  if (isEmptyAmmo()) {
     return nullptr;
   }
   bullet_count += 1;
@@ -44,6 +46,7 @@ std::unique_ptr<Bullet> Banana::shoot(bool is_aiming_up) {
     setXPos(x_pos + recoil);
   }
   counter_to_shoot = COUNTER_TO_SHOOT_GRANADA;
+
   return std::make_unique<BananaBullet>(bala);
 }
 
