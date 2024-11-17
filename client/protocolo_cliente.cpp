@@ -15,7 +15,9 @@ ProtocoloCliente::ProtocoloCliente(const char *host, const char *port,
                              {SHOOT, WEAPON_ACTION},
                              {STOP_SHOOT, WEAPON_ACTION},
                              {AIM_UP, WEAPON_ACTION},
-                             {STOP_AIM_UP, WEAPON_ACTION}}) {}
+                             {STOP_AIM_UP, WEAPON_ACTION},
+                              {CHEAT_CHANGE_WEAPON, WEAPON_ACTION},
+                              {CHEAT_STOP_CHANGE_WEAPON, WEAPON_ACTION}}) {}
 
 void ProtocoloCliente::sendInGameToServer(const ClientAction &command) {
   try {
