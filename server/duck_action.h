@@ -26,6 +26,8 @@ private:
   uint16_t &id_defense;
   uint16_t &id_balas;
   uint16_t &id_weapons;
+    uint8_t change_weapon_counter;
+    bool change_weapon_pressed;
 
 public:
   DuckAction(std::map<uint8_t, DuckPlayer> &map_personajes,
@@ -42,6 +44,7 @@ public:
   void weaponComand(uint8_t comando, uint8_t id);
   bool inRangePickUp(float x_pos, float y_pos, float HEIGHT, float WIDTH,
                      DuckPlayer &personaje);
+    void changeWeaponCheat(DuckPlayer& personaje);
 };
 
 #endif // DUCK_ACTION_H
