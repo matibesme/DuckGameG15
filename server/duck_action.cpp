@@ -178,7 +178,7 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
       if (!bullet)
         return;
       map_bullets.emplace(id_balas++, std::move(bullet));
-      if (weapon.getType() == BANANA_GUN) {
+      if (weapon.getType() == BANANA_GUN or weapon.getType() == GRANADA_GUN) {
         personaje.eraseGun();
       }
     }

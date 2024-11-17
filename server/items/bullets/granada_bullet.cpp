@@ -4,6 +4,8 @@
 
 #include "granada_bullet.h"
 
+#include <iostream>
+
 GranadaBullet::GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
                              uint8_t damage, uint8_t range, float spread,
                              uint8_t time_to_explode_)
@@ -12,26 +14,27 @@ GranadaBullet::GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
       continue_moving(true) {}
 
 void GranadaBullet::executeAction() {
-
   if (time_to_explode > 6 && is_alive && continue_moving) {
+    // Actualización de la posición vertical (y_pos)
     if (is_falling) {
       y_pos += std::abs(velocidad);
       velocidad += GRAVEDAD;
-
     } else {
       y_pos -= velocidad;
       velocidad -= GRAVEDAD;
-      if (direction == RIGHT) {
-        x_pos += RANGO_X_MEDIO;
-      } else if (direction == LEFT) {
-        x_pos -= RANGO_X_MEDIO;
+      if (velocidad == 0) {
+        is_falling = true;
       }
     }
+
+    // Actualización de la posición horizontal (x_pos)
+    x_pos += (direction == RIGHT ? RANGO_X_MEDIO : -RANGO_X_MEDIO);
   }
 
-  if (time_to_explode == 6)
+  // Lógica para la explosión y finalización de la vida
+  if (time_to_explode == 6) {
     explode();
-  else if (time_to_explode == 0) {
+  } else if (time_to_explode == 0) {
     is_alive = false;
     return;
   }
@@ -72,4 +75,10 @@ void GranadaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
       }
     }
   }
+}
+
+void GranadaBullet::boxExplosion(float x_pos, float y_pos,
+                                 uint8_t time_to_explode_) {
+  release(x_pos, y_pos, 0, 0);
+  time_to_explode = time_to_explode_;
 }

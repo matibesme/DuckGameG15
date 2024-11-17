@@ -25,6 +25,7 @@ public:
   void explode();
   void colisionWithPlatform(float plat_x_pos, float plat_y_pos,
                             float plat_width, float plat_height) override;
+  void boxExplosion(float x_pos, float y_pos, uint8_t time_to_explode_);
 };
 
 #endif // GRANADA_BULLET_H

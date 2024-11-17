@@ -3,7 +3,7 @@ life: 100
 granade:
   damage: 50
   range: 5
-  ammo: 10
+  ammo: 1
   recoil: 0.5
 
 banana:
