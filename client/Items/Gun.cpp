@@ -2,7 +2,7 @@
 
 #include <SDL_render.h>
 
-#define IMAGE_COWBOY_GUN DATA_PATH "/weapons/CowboyPistol.png"
+#define IMAGE_COWBOY_GUN DATA_PATH "/weapons/cowboyPistol.png"
 #define IMAGE_COWBOY_GUN_EQUIPPED DATA_PATH "/weapons/CowboyPistolEquipped.png"
 #define IMAGE_AK47_GUN DATA_PATH "/weapons/ak47.png"
 #define IMAGE_AK47_GUN_EQUIPPED DATA_PATH "/weapons/ak47Equipped.png"
