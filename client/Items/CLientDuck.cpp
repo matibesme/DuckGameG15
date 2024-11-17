@@ -166,3 +166,8 @@ uint8_t ClientDuck::getId() const { return idDuck; }
 int ClientDuck::getPosX() { return positionX; }
 
 int ClientDuck::getPosY() { return positionY; }
+
+ClientDuck::~ClientDuck() {
+  // La textura se libera automáticamente porque es un std::unique_ptr
+  coloredTexture.reset();
+}

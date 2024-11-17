@@ -50,9 +50,10 @@ void Boxes::generateRandomContent() {
     break;
   case 5:
 
-    map_bullets.emplace(id_balas++,
-      std::dynamic_pointer_cast<Granada>(factory_weapons.createWeapon(GRANADA_GUN, x_pos, y_pos))
-      ->makeBoxExplosion(x_pos, y_pos, 6));
+    map_bullets.emplace(
+        id_balas++, std::dynamic_pointer_cast<Granada>(
+                        factory_weapons.createWeapon(GRANADA_GUN, x_pos, y_pos))
+                        ->makeBoxExplosion(x_pos, y_pos, 6));
   default:
     break;
   }

@@ -7,9 +7,6 @@
 #define IMAGE_CITY DATA_PATH "/backgrounds/City.png"
 #define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
 
-#define CANT_ZOOM_WIDTH (7 * DUCK_WIDTH)
-#define CANT_ZOOM_HEIGHT (15 * DUCK_HEIGHT)
-
 GameRenderer::GameRenderer(Graficos &graficos)
     : graficos(graficos), plataformasYaCargadas(false) {}
 
@@ -381,4 +378,15 @@ void GameRenderer::mostrarPantallaEndRound(
   EndRoundScene endRoundSene(map_victorias,
                              sdlRenderer); // Pasar el SDL_Renderer a la escena
   endRoundSene.Run();                      // Ejecutar la escena
+}
+
+// destructores
+GameRenderer::~GameRenderer() {
+  ducks.clear();
+  bullets.clear();
+  guns.clear();
+  armors.clear();
+  helmets.clear();
+  platforms.clear();
+  boxes.clear();
 }

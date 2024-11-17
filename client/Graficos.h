@@ -13,6 +13,11 @@ public:
   void Clear();
   void show_window();
 
+  Graficos(const Graficos &other) = delete;
+  Graficos &operator=(const Graficos &other) = delete;
+  Graficos(Graficos &&other) = delete;
+  Graficos &operator=(Graficos &&other) = delete;
+
 private:
   Window window;
   Renderer renderer;

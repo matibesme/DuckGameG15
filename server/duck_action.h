@@ -43,7 +43,7 @@ public:
   void weaponComand(uint8_t comando, uint8_t id);
   bool inRangePickUp(float x_pos, float y_pos, float HEIGHT, float WIDTH,
                      DuckPlayer &personaje);
-    void changeWeaponCheat(DuckPlayer& personaje);
+  void changeWeaponCheat(DuckPlayer &personaje);
 };
 
 #endif // DUCK_ACTION_H

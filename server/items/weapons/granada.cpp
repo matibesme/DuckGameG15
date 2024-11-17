@@ -62,7 +62,9 @@ int Granada::getReloadTime() { return reload_time; }
 
 void Granada::stopShooting() { bullet_count = 0; }
 
-std::unique_ptr<Bullet> Granada::makeBoxExplosion(float box_x_pos, float box_y_pos, int time_to_explode_) {
+std::unique_ptr<Bullet> Granada::makeBoxExplosion(float box_x_pos,
+                                                  float box_y_pos,
+                                                  int time_to_explode_) {
   bala.boxExplosion(box_x_pos, box_y_pos, time_to_explode_);
   return std::make_unique<GranadaBullet>(bala);
 }

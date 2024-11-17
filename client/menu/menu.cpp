@@ -410,8 +410,6 @@ void Menu::show_update_games(std::list<std::string> active_games) {
 
 void Menu::show_wait(bool is_available_game) {
   if (!(is_available_game)) {
-    std::cout << "El juego esta disponible (Manda 0 si no)"
-              << (int)is_available_game << std::endl;
     show_wait_scene();
   }
 }
