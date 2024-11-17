@@ -23,7 +23,7 @@ DuckAction::DuckAction(
       map_bullets(map_bullets), map_defense(map_defense),
       respawn_defense_points(respawn_defense_points),
       time_defense_last_respawn(time_defense_last_respawn),
-      id_defense(id_defense), id_balas(id_balas), id_weapons(id_weapons), change_weapon_counter(COWBOY_GUN), change_weapon_pressed(false) {}
+      id_defense(id_defense), id_balas(id_balas), id_weapons(id_weapons), change_weapon_counter(COWBOY_GUN) {}
 
 void DuckAction::movementComand(uint8_t comando, uint8_t id) {
   DuckPlayer &personaje = map_personajes[id];
@@ -210,11 +210,6 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
             break;
         }
 
-        case CHEAT_STOP_CHANGE_WEAPON: {
-            change_weapon_pressed = false;
-            break;
-        }
-
         default: {
             break;
         }
@@ -232,21 +227,17 @@ bool DuckAction::inRangePickUp(float x_pos, float y_pos, float HEIGHT,
 }
 
 void DuckAction::changeWeaponCheat(DuckPlayer &personaje) {
-    if (change_weapon_pressed) {
-        return;
-    }
-    change_weapon_pressed = true;
-    personaje.eraseGun();
-    FactoryWeapons factory_weapons;
-    std::shared_ptr<Weapon> weapon = factory_weapons.createWeapon(change_weapon_counter, personaje.getXPos(), personaje.getYPos());
-    personaje.pickUpWeapon(weapon);
-    if (change_weapon_counter == LASER_RIFLE_GUN) {
-        change_weapon_counter = COWBOY_GUN;
-    } else if (change_weapon_counter == SNIPER_GUN) {
-        change_weapon_counter = GRANADA_GUN;
-    } else {
-        change_weapon_counter++;
-    }
+  personaje.eraseGun();
+  FactoryWeapons factory_weapons;
+  std::shared_ptr<Weapon> weapon = factory_weapons.createWeapon(change_weapon_counter, personaje.getXPos(), personaje.getYPos());
+  personaje.pickUpWeapon(weapon);
+  if (change_weapon_counter == LASER_RIFLE_GUN) {
+      change_weapon_counter = COWBOY_GUN;
+  } else if (change_weapon_counter == SNIPER_GUN) {
+      change_weapon_counter = GRANADA_GUN;
+  } else {
+      change_weapon_counter++;
+  }
 }
 
 

@@ -43,6 +43,19 @@ void EventHandler::correrHandlers() {
           action.type_of_movement = AIM_UP;
           queue_sender.push(action); // Apuntar hacia arriba
           break;
+        case SDLK_2:
+          action.type_of_movement = CHEAT_CHANGE_WEAPON;
+          queue_sender.push(action);
+          std::cout << "Cambio de arma" << std::endl;
+          break;
+        case SDLK_b:
+          action.type_of_movement = CHEAT_SPAWN_BOX;
+          queue_sender.push(action);
+          break;
+        case SDLK_r:
+          action.type_of_movement = CHEAT_SPAWN_ARMOR;
+          queue_sender.push(action);
+          break;
 
           // Controles para Jugador 2
         case SDLK_k:
@@ -74,6 +87,11 @@ void EventHandler::correrHandlers() {
           action.type_of_movement = AIM_UP;
           action.player = 2;
           queue_sender.push(action); // Apuntar hacia arriba
+          break;
+        case SDLK_8:
+          action.type_of_movement = CHEAT_CHANGE_WEAPON;
+          action.player = 2;
+          queue_sender.push(action);
           break;
         }
       }

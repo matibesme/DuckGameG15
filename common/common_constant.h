@@ -44,7 +44,7 @@ constexpr uint8_t VICTORY_BYTE = 0x22;
 constexpr uint8_t FINALLY_GAME = 0x23;
 constexpr uint8_t COLOR_PRESENTATION_BYTE = 0x24;
 
-// Movimientos del pato 1
+// Movimientos del pato
 constexpr uint8_t MOVEMENT_ACTION = 0x03;
 constexpr uint8_t JUMP = 0x04;
 constexpr uint8_t RIGHT = 0x05;
@@ -59,8 +59,6 @@ constexpr uint8_t AIM_UP = 0x13;
 constexpr uint8_t STOP_AIM_UP = 0x14;
 constexpr uint8_t STOP_SHOOT = 0x15;
 constexpr uint8_t LEAVE_GUN = 0x0A;
-constexpr uint8_t CHEAT_CHANGE_WEAPON = 0x0B;
-constexpr uint8_t CHEAT_STOP_CHANGE_WEAPON = 0x0C;
 
 // Escenas
 constexpr uint8_t WEAPON_ACTION = 0x08;
@@ -137,3 +135,9 @@ constexpr uint8_t CREATE_GAME = 0xDD;
 constexpr uint8_t START_GAME = 0xEE;
 constexpr uint8_t LISTAR_PARTIDAS = 0xFF;
 constexpr uint8_t MATCH_WITH_SAME_NAME = 0xBB;
+
+//cheat codes
+constexpr uint8_t CHEAT_CHANGE_WEAPON = 0x110;
+constexpr uint8_t CHEAT_STOP_CHANGE_WEAPON = 0x111;
+constexpr uint8_t CHEAT_SPAWN_BOX = 0x112;
+constexpr uint8_t CHEAT_SPAWN_ARMOR = 0x113;

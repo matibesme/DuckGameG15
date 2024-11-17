@@ -26,8 +26,7 @@ private:
   uint16_t &id_defense;
   uint16_t &id_balas;
   uint16_t &id_weapons;
-    uint8_t change_weapon_counter;
-    bool change_weapon_pressed;
+  uint8_t change_weapon_counter;
 
 public:
   DuckAction(std::map<uint8_t, DuckPlayer> &map_personajes,
