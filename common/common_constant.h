@@ -138,6 +138,5 @@ constexpr uint8_t MATCH_WITH_SAME_NAME = 0xBB;
 
 // cheat codes
 constexpr uint8_t CHEAT_CHANGE_WEAPON = 0x0B;
-constexpr uint8_t CHEAT_STOP_CHANGE_WEAPON = 0x0E;
 constexpr uint8_t CHEAT_SPAWN_BOX = 0x0C;
 constexpr uint8_t CHEAT_SPAWN_ARMOR = 0x0D;

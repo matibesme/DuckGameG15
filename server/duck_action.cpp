@@ -227,7 +227,10 @@ bool DuckAction::inRangePickUp(float x_pos, float y_pos, float HEIGHT,
 }
 
 void DuckAction::changeWeaponCheat(DuckPlayer &personaje) {
-  personaje.eraseGun();
+  if (personaje.isWeaponEquipped()) {
+    personaje.eraseGun();
+  }
+
   FactoryWeapons factory_weapons;
   std::shared_ptr<Weapon> weapon = factory_weapons.createWeapon(
       change_weapon_counter, personaje.getXPos(), personaje.getYPos());
