@@ -88,7 +88,9 @@ void GameLoop::checkCommand(CommandClient comando) {
     duck_action.weaponComand(comando.type_of_movement, comando.id);
   } else if (comando.type_of_action == CHEAT_ACTION) {
     if (comando.type_of_movement == CHEAT_SPAWN_BOX) {
-      //spawnBoxesCheat();
+      spawnBoxesCheat();
+    } else if (comando.type_of_movement == CHEAT_WIN_ROUND) {
+        winRoundCheat();
     } else {
       duck_action.cheatComand(comando.type_of_movement, comando.id);
     }
@@ -382,6 +384,19 @@ void GameLoop::spawnBoxesCheat() {
               map_bullets, id_balas, id_weapons, id_defense));
   }
 }
+
+void GameLoop::winRoundCheat() {
+  auto it = map_personajes.begin(); // Obtén el primer elemento
+  if (it != map_personajes.end()) {
+    ++it; // Mueve el iterador al segundo elemento
+    while (it != map_personajes.end()) {
+      auto to_erase = it; // Guarda el iterador actual
+      ++it; // Avanza al siguiente elemento antes de eliminar
+      map_personajes.erase(to_erase); // Elimina el elemento actual
+    }
+  }
+}
+
 
 
 void GameLoop::sendColorPresentation() {

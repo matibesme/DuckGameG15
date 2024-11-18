@@ -81,5 +81,6 @@ public:
   void sendColorPresentation();
   void checkGrenadeExplosion(GranadaBullet &grenade_bullet);
     void spawnBoxesCheat();
+    void winRoundCheat();
   virtual ~GameLoop();
 };
