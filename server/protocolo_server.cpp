@@ -136,7 +136,7 @@ CommandClient ProtocoloServer::receiveCommandFromClients(bool &two_players) {
 
   } catch (const std::exception &e) {
     dead_connection = true;
-    std::cerr << e.what() << std::endl;
+
   }
   return {0, 0, 0};
 }
@@ -159,7 +159,7 @@ GameAccess ProtocoloServer::receiveAccessFromClients() {
     return {action_type, game_name, name, false, ""};
   } catch (const std::exception &e) {
     dead_connection = true;
-    std::cerr << e.what() << std::endl;
+
   }
   GameAccess null_access;
   return null_access;

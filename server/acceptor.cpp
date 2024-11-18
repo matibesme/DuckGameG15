@@ -63,5 +63,4 @@ Acceptor::~Acceptor() {
     deleteAClient(it);
   }
   lista_clientes.clear();
-  lobby.~LobbyPartidas();
 }
