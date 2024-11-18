@@ -79,24 +79,29 @@ void EventHandler::correrHandlers() {
         // controles cheats
         case SDLK_2:
           action.type_of_movement = CHEAT_CHANGE_WEAPON; // Cambio de arma
-          queue_sender.push(action);                    // Jugador 1
+          queue_sender.push(action);                     // Jugador 1
           break;
         case SDLK_8:
           action.type_of_movement = CHEAT_CHANGE_WEAPON; // Cambio de arma
-          action.player = 2;                            // Jugador 2
+          action.player = 2;                             // Jugador 2
           queue_sender.push(action);
           break;
         case SDLK_b:
-          action.type_of_movement = CHEAT_SPAWN_BOX;    // Spawnear caja
-          queue_sender.push(action);                   // Jugador 1
+          action.type_of_movement = CHEAT_SPAWN_BOX; // Spawnear caja
+          queue_sender.push(action);                 // Jugador 1
           break;
         case SDLK_r:
-          action.type_of_movement = CHEAT_SPAWN_ARMOR;  // Spawnear armadura completa
-          queue_sender.push(action);                   // Jugador 1
+          action.type_of_movement =
+              CHEAT_SPAWN_ARMOR;     // Spawnear armadura completa
+          queue_sender.push(action); // Jugador 1
           break;
         case SDLK_t:
-          //action.type_of_movement = ;
-          queue_sender.push(action);                   // Jugador 1
+          action.type_of_movement = CHEAT_WIN_ROUND; // Ganar ronda
+          queue_sender.push(action);                 // Jugador 1
+          break;
+        case SDLK_v:
+          action.type_of_movement = CHEAT_WIN_GAME; // Ganar juego
+          queue_sender.push(action);                // Jugador 1
           break;
         }
       }
