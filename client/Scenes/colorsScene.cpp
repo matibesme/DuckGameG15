@@ -3,7 +3,7 @@
 #include <iostream>
 
 #define FUENTE DATA_PATH "/fonts/8-bit-hud.ttf"
-#define IMAGEN_END_OF_ROUND DATA_PATH "/pantallaColores2.jpeg"
+#define IMAGEN_END_OF_ROUND DATA_PATH "/scenes/pantallaColores.jpeg"
 
 ColorScene::ColorScene(const std::map<std::string, std::string> &playersColors,
                        SDL_Renderer &renderer)

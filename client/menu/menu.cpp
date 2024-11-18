@@ -32,7 +32,7 @@ void Menu::initialize() {
 void Menu::show_main_scene() {
 
   std::string path =
-      std::string(DATA_PATH) + std::string("/menu/Background.jpg");
+      std::string(DATA_PATH) + std::string("/scenes/Background.jpg");
   QString path_image = QString::fromStdString(path);
   QPixmap initial_background(path_image);
   QPushButton *make_game = new QPushButton("Make game");
@@ -104,7 +104,7 @@ void Menu::show_main_scene() {
 
 void Menu::show_make_game_scene() {
   std::string path =
-      std::string(DATA_PATH) + std::string("/menu/Background.jpg");
+      std::string(DATA_PATH) + std::string("/scenes/Background.jpg");
   QString path_image = QString::fromStdString(path);
   QPixmap initial_background(path_image);
 
@@ -232,7 +232,7 @@ void Menu::show_make_game_scene() {
 
 void Menu::show_join_game_scene() {
   std::string path =
-      std::string(DATA_PATH) + std::string("/menu/Background.jpg");
+      std::string(DATA_PATH) + std::string("/scenes/Background.jpg");
   QString path_image = QString::fromStdString(path);
   QPixmap initial_background(path_image);
 
@@ -372,7 +372,7 @@ void Menu::show_join_game_scene() {
 
 void Menu::show_wait_scene() {
   std::string path =
-      std::string(DATA_PATH) + std::string("/menu/Background.jpg");
+      std::string(DATA_PATH) + std::string("/scenes/Background.jpg");
   QString path_image = QString::fromStdString(path);
   QPixmap initial_background(path_image);
   QWidget *widget_wait = new QWidget;

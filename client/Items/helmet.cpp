@@ -2,7 +2,7 @@
 
 #include <SDL_render.h>
 
-#define IMAGE_HELMET DATA_PATH "/casco.png"
+#define IMAGE_HELMET DATA_PATH "/armour/casco.png"
 
 Helmet::Helmet(Graficos &graficos, float pos_x, float pos_y)
     : graficos(graficos), pos_x(pos_x), pos_y(pos_y) {}

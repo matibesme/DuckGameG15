@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-#define IMAGEN_VICTORIA DATA_PATH "/pantallaVictoria.png"
+#define IMAGEN_VICTORIA DATA_PATH "/scenes/pantallaVictoria.png"
 #define FUENTE DATA_PATH "/fonts/8-bit-hud.ttf"
 
 FinalScene::FinalScene(std::string winner, SDL_Renderer &renderer)

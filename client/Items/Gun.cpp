@@ -27,8 +27,8 @@
   DATA_PATH "/weapons/laserRifleEquipped.png"
 
 Gun::Gun(Graficos &graficos, float pos_x, float pos_y, uint8_t typeOfGun)
-    : graficos(graficos), typeOfGun(typeOfGun), pos_x(pos_x),
-      pos_y(pos_y), lookingUp(false) {
+    : graficos(graficos), typeOfGun(typeOfGun), pos_x(pos_x), pos_y(pos_y),
+      lookingUp(false) {
   cargarTextura();
 }
 
@@ -101,7 +101,6 @@ void Gun::draw(bool isFliped, bool is_equiped, SDL2pp::Renderer &renderer) {
                     Rect(pos_x, pos_y, WIDTH_GUN, HEIGHT_GUN));
   }
 }
-
 
 void Gun::updateGunState(uint8_t gun, bool look_up, float new_x, float new_y) {
   // Actualizar el tipo de arma si es diferente

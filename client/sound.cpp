@@ -61,7 +61,8 @@ void Sound::reproducirEfecto(const std::string &archivo) {
               << std::endl;
   } else {
     Mix_VolumeChunk(efectoSonido,
-                    MIX_MAX_VOLUME / 15); // Establece volumen al máximo inicialmente
+                    MIX_MAX_VOLUME /
+                        15); // Establece volumen al máximo inicialmente
     Mix_PlayChannel(-1, efectoSonido,
                     0); // Usa un canal libre (-1) y reproduce el sonido
   }

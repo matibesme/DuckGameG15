@@ -2,7 +2,7 @@
 
 #include <SDL_image.h>
 
-#define IMAGE_DUCK DATA_PATH "/Duck.png"
+#define IMAGE_DUCK DATA_PATH "/objects/Duck.png"
 const int SPRITE_ANIMATION_RATE = 120;
 const int MAX_SPRITE_FRAMES = 6;
 const int MAX_SPRITE_FRAMES_JUMP = 5;
@@ -121,7 +121,6 @@ void ClientDuck::draw(Renderer &renderer) {
 
   // Dibujar el arma si está equipada
   gun.draw(isFlipped, true, renderer);
-
 }
 
 void ClientDuck::applyColor(SDL2pp::Renderer &renderer,
