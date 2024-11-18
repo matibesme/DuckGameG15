@@ -42,7 +42,7 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   for (auto &bullet : bullets)
     bullet.draw(renderer);
   for (auto &gun : guns)
-    gun.draw(false, renderer);
+    gun.draw(false, false, renderer);
   for (auto &armor : armors)
     armor.draw(false, renderer, false, false);
   for (auto &helmet : helmets)
@@ -253,7 +253,7 @@ void GameRenderer::actualizarElementos(const GameState &command) {
                               armorStruct.y_pos == it->getPosY();
                      });
     if (armorInCommand != command.lista_armors.end()) {
-      // Actualizar si el arma está en ambas listas
+      // Actualizar si la armadura está en ambas listas
       ++it;
     } else {
       // Eliminar si solo está en la lista local
@@ -282,7 +282,7 @@ void GameRenderer::actualizarElementos(const GameState &command) {
                               helmetStruct.y_pos == it->getPosY();
                      });
     if (helmetInCommand != command.lista_helmets.end()) {
-      // Actualizar si el arma está en ambas listas
+      // Actualizar si el casco está en ambas listas
       ++it;
     } else {
       // Eliminar si solo está en la lista local

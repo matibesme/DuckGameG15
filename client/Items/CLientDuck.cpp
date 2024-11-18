@@ -35,7 +35,8 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove,
   isOnGround = false;
   positionX = x_pos;
   positionY = y_pos;
-  gun.setGun(gunEquipped, lookingUp);
+  gun.updateGunState(gunEquipped, lookingUp, positionX + (2 * DUCK_WIDTH / 5),
+                     positionY + DUCK_HEIGHT / 2);
 
   if (typeOfMove == STILL_LEFT)
     isFlipped = true;
@@ -119,10 +120,8 @@ void ClientDuck::draw(Renderer &renderer) {
   }
 
   // Dibujar el arma si está equipada
-  if (gun.isEquipped() && !isOnGround) {
-    gun.update(positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2);
-    gun.draw(isFlipped, renderer);
-  }
+  gun.draw(isFlipped, true, renderer);
+
 }
 
 void ClientDuck::applyColor(SDL2pp::Renderer &renderer,

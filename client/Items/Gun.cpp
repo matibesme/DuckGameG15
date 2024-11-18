@@ -27,7 +27,7 @@
   DATA_PATH "/weapons/laserRifleEquipped.png"
 
 Gun::Gun(Graficos &graficos, float pos_x, float pos_y, uint8_t typeOfGun)
-    : graficos(graficos), typeOfGun(typeOfGun), is_equiped(false), pos_x(pos_x),
+    : graficos(graficos), typeOfGun(typeOfGun), pos_x(pos_x),
       pos_y(pos_y), lookingUp(false) {
   cargarTextura();
 }
@@ -50,7 +50,7 @@ void Gun::cargarTextura() {
   }
 }
 
-void Gun::draw(bool isFliped, SDL2pp::Renderer &renderer) {
+void Gun::draw(bool isFliped, bool is_equiped, SDL2pp::Renderer &renderer) {
   if (!texture_equipped || !texture_not_equipped || typeOfGun == NOGUN) {
     return;
   }
@@ -102,20 +102,14 @@ void Gun::draw(bool isFliped, SDL2pp::Renderer &renderer) {
   }
 }
 
-bool Gun::isEquipped() { return typeOfGun != NOGUN && is_equiped; }
 
-void Gun::setEquip(bool equip) { is_equiped = equip; }
-
-void Gun::setGun(uint8_t gun, bool look_up) {
+void Gun::updateGunState(uint8_t gun, bool look_up, float new_x, float new_y) {
+  // Actualizar el tipo de arma si es diferente
   if (typeOfGun != gun) {
     typeOfGun = gun;
     cargarTextura(); // Recargar texturas si el arma cambia
   }
-  is_equiped = (gun != NOGUN);
   lookingUp = look_up;
-}
-
-void Gun::update(float new_x, float new_y) {
   pos_x = new_x;
   pos_y = new_y;
 }
