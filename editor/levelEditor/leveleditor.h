@@ -19,18 +19,15 @@ public:
   ~LevelEditor();
 
 private:
-  QGraphicsScene *main_menu_scene;
-  QGraphicsScene *level_editor_scene;
-  QGraphicsView *view;
-  LevelEditorController *controller;
-  void add_submenu_weapons(QMenu &menu);
-  void add_submenu_platforms(QMenu &menu);
-  void add_submenu_walls(QMenu &menu);
-  void initialize();
-  void show_main_menu();
-  void show_level_editor();
+    QGraphicsScene *main_menu_scene;
+    QGraphicsScene *level_editor_scene;
+    QGraphicsView *view;
+    LevelEditorController* controller;
+    void initialize();
+    void show_main_menu();
+    void show_level_editor();
 
 private slots:
-  void show_menu_context(const QPoint &pos);
+    void initialize_menus(const QPoint &pos);
 };
 #endif
