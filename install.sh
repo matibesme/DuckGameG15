@@ -62,7 +62,7 @@ cmake --build .
 ./taller_tests
 
 #Mover archivos
-mkdir /var/TallerDuckGame && mv -f taller_client taller_server taller_editor /var/TallerDuckGame
+sudo mkdir /var/TallerDuckGame && sudo cp -p taller_client taller_server taller_editor /var/TallerDuckGame
 cd ..
-mkdir /etc/TallerDuckGame && mv -f /data/editor/menu_config.yaml /server/configuration/config.yaml /etc/TallerDuckGame
-mv -f data /usr/bin
+sudo mkdir /etc/TallerDuckGame && sudo cp -p  /data/editor/menu_config.yaml /server/configuration/config.yaml /etc/TallerDuckGame
+sudo cp -p data /usr/bin
