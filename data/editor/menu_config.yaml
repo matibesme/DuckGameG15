@@ -1,0 +1,34 @@
+Backgrounds:
+  - City
+  - Forest
+  - Cloudy night
+
+Armour:
+  - chestplate
+  - knightsHelmet
+
+Weapons:
+  - ak47
+  - banana
+  - cowboyPistol
+  - duelingPistol
+  - grenade
+  - laserRifle
+  - magnum
+  - pewPewLaser
+  - shotgun
+  - sniper
+
+Platforms:
+  - Industrial
+  - Donut
+  - Nature
+  - Space
+  - Underground
+  - Donut long
+  - Nature long
+
+Walls:
+  - Donut
+  - Nature
+  - Underground

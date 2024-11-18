@@ -55,3 +55,11 @@ pre-commit run --all-files
 ```
 git commit -m "Mensaje" --no-verify
 ```
+
+**Instalación**
+Se instalaran dependencias necesarias para el funcionamiento del juego, se compilará y se correran los tests unitarios.
+Correr por línea de comando:
+```
+chmod +x install.sh
+./install.sh
+```
