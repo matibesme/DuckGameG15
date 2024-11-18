@@ -9,14 +9,11 @@
 #include <QPoint>
 #include <QtWidgets>
 #include <yaml-cpp/yaml.h>
-#include "leveleditorcontroller.h"
-static const char* CONFIG_MENU_YAML_REL_PATH = "/editor/menu_config.yaml";
+static const char *CONFIG_MENU_YAML_REL_PATH = "/editor/menu_config.yaml";
 
-LevelEditor::LevelEditor(QWidget *parent)
-    : QMainWindow(parent)
-{
-    this->setGeometry(0, 0, 640, 480);
-    initialize();
+LevelEditor::LevelEditor(QWidget *parent) : QMainWindow(parent) {
+  this->setGeometry(0, 0, 640, 480);
+  initialize();
 }
 
 void LevelEditor::initialize() {
@@ -63,60 +60,62 @@ void LevelEditor::show_main_menu() {
   view->show();
 }
 
-void LevelEditor::show_level_editor(){
-    setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &QMainWindow::customContextMenuRequested, this, &LevelEditor::initialize_menus);
-    view->setScene(level_editor_scene);
-    view->show();
+void LevelEditor::show_level_editor() {
+  setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(this, &QMainWindow::customContextMenuRequested, this,
+          &LevelEditor::initialize_menus);
+  view->setScene(level_editor_scene);
+  view->show();
 }
-void LevelEditor::initialize_menus(const QPoint &pos){
-    QMenu menu(this);
-    std::string yaml_path = std::string(DATA_PATH) + std::string(CONFIG_MENU_YAML_REL_PATH);
-    YAML::Node file = YAML::LoadFile(yaml_path);
+void LevelEditor::initialize_menus(const QPoint &pos) {
+  QMenu menu(this);
+  std::string yaml_path =
+      std::string(DATA_PATH) + std::string(CONFIG_MENU_YAML_REL_PATH);
+  YAML::Node file = YAML::LoadFile(yaml_path);
 
-    for (const auto& submenu : file) {
-        QString submenu_name = QString::fromStdString(submenu.first.as<std::string>());
-        QMenu* submenu_option = new QMenu(submenu_name, &menu);
+  for (const auto &submenu : file) {
+    QString submenu_name =
+        QString::fromStdString(submenu.first.as<std::string>());
+    QMenu *submenu_option = new QMenu(submenu_name, &menu);
 
-            for (const auto& option : submenu.second) {
-                QAction* action = new QAction(QString::fromStdString(option.as<std::string>()), submenu_option);
-                connect(action, &QAction::triggered, [this, action, submenu_option, submenu_name]() {
-                    QString action_name = action->text();
-                    if (submenu_name == "Weapons") {
-                        controller->set_spawn_weapon(action_name);
-                    } else if (submenu_name == "Platforms") {
-                        controller->set_platform(action_name);
-                    } else if (submenu_name == "Walls") {
-                        controller->set_wall(action_name);
-                    } else if (submenu_name == "Backgrounds") {
-                        controller->set_background(action_name);
-                    } else if (submenu_name == "Armour") {
-                        controller->set_spawn_armour(action_name);
-                    }
-            });
-                submenu_option->addAction(action);
-            }
+    for (const auto &option : submenu.second) {
+      QAction *action = new QAction(
+          QString::fromStdString(option.as<std::string>()), submenu_option);
+      connect(action, &QAction::triggered,
+              [this, action, submenu_option, submenu_name]() {
+                QString action_name = action->text();
+                if (submenu_name == "Weapons") {
+                  controller->set_spawn_weapon(action_name);
+                } else if (submenu_name == "Platforms") {
+                  controller->set_platform(action_name);
+                } else if (submenu_name == "Walls") {
+                  controller->set_wall(action_name);
+                } else if (submenu_name == "Backgrounds") {
+                  controller->set_background(action_name);
+                } else if (submenu_name == "Armour") {
+                  controller->set_spawn_armour(action_name);
+                }
+              });
+      submenu_option->addAction(action);
+    }
 
-            menu.addMenu(submenu_option);
-        }
+    menu.addMenu(submenu_option);
+  }
 
-        QAction *action_spawn_duck = new QAction("Spawn", this);
-        connect(action_spawn_duck, &QAction::triggered, [this, action_spawn_duck]() {
-        controller->set_spawn_duck();
-        });
-        menu.addAction(action_spawn_duck);
+  QAction *action_spawn_duck = new QAction("Spawn", this);
+  connect(action_spawn_duck, &QAction::triggered,
+          [this, action_spawn_duck]() { controller->set_spawn_duck(); });
+  menu.addAction(action_spawn_duck);
 
-        QAction *action_itemBox_spawn = new QAction("itemBox", this);
-        connect(action_itemBox_spawn, &QAction::triggered, [this, action_itemBox_spawn]() {
-        controller->set_spawn_box();
-        });
-        menu.addAction(action_itemBox_spawn);
+  QAction *action_itemBox_spawn = new QAction("itemBox", this);
+  connect(action_itemBox_spawn, &QAction::triggered,
+          [this, action_itemBox_spawn]() { controller->set_spawn_box(); });
+  menu.addAction(action_itemBox_spawn);
 
-        QAction *action_save = new QAction("Save", this);
-        connect(action_save, &QAction::triggered, [this, action_save]() {
-        controller->save_map();
-        });
-        menu.addAction(action_save);
+  QAction *action_save = new QAction("Save", this);
+  connect(action_save, &QAction::triggered,
+          [this, action_save]() { controller->save_map(); });
+  menu.addAction(action_save);
 
   menu.exec(mapToGlobal(pos));
 }
