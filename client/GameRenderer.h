@@ -43,6 +43,8 @@ public:
                                Renderer &renderer);
 
   void mostrarPantallaVictoria(std::string &winner, Renderer &renderer);
+
+  ~GameRenderer();
 };
 
 #endif // GAMERENDERER_H

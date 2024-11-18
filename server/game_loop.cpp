@@ -86,6 +86,12 @@ void GameLoop::checkCommand(CommandClient comando) {
     duck_action.movementComand(comando.type_of_movement, comando.id);
   } else if (comando.type_of_action == WEAPON_ACTION) {
     duck_action.weaponComand(comando.type_of_movement, comando.id);
+  } else if (comando.type_of_action == CHEAT_ACTION) {
+    if (comando.type_of_movement == CHEAT_SPAWN_BOX) {
+      // spawnBoxesCheat();
+    } else {
+      duck_action.cheatComand(comando.type_of_movement, comando.id);
+    }
   }
 }
 
@@ -351,7 +357,7 @@ void GameLoop::sendEndRound() {
                                   victory_round.second);
   }
 
-  for (int i = 0; i < 200; i++) {
+  for (int i = 0; i < 1200; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }
@@ -366,6 +372,15 @@ void GameLoop::sendVictory(std::string &winner) {
   }
 }
 
+void GameLoop::spawnBoxesCheat() {
+  for (auto &personaje : map_personajes) {
+    list_boxes.emplace_back(
+        Boxes(TYPE_BOX, id_boxes++, personaje.second.getXPos(),
+              personaje.second.getYPos(), 100, map_free_weapons, map_defense,
+              map_bullets, id_balas, id_weapons, id_defense));
+  }
+}
+
 void GameLoop::sendColorPresentation() {
   GameState command;
   command.action = COLOR_PRESENTATION_BYTE;
@@ -374,7 +389,7 @@ void GameLoop::sendColorPresentation() {
     command.players_color.emplace(player.second, list_colors[indice++]);
     map_victory_rounds.emplace(player.first, VICTORY_ROUNDS_INICIAL);
   }
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 1200; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }

@@ -2,7 +2,7 @@
 
 #include <SDL_image.h>
 
-#define IMAGE_DUCK DATA_PATH "/Duck.png"
+#define IMAGE_DUCK DATA_PATH "/objects/Duck.png"
 const int SPRITE_ANIMATION_RATE = 120;
 const int MAX_SPRITE_FRAMES = 6;
 const int MAX_SPRITE_FRAMES_JUMP = 5;
@@ -35,7 +35,8 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove,
   isOnGround = false;
   positionX = x_pos;
   positionY = y_pos;
-  gun.setGun(gunEquipped, lookingUp);
+  gun.updateGunState(gunEquipped, lookingUp, positionX + (2 * DUCK_WIDTH / 5),
+                     positionY + DUCK_HEIGHT / 2);
 
   if (typeOfMove == STILL_LEFT)
     isFlipped = true;
@@ -117,11 +118,9 @@ void ClientDuck::draw(Renderer &renderer) {
     armor.update(positionX, positionY);
     armor.draw(isFlipped, renderer, isOnGround, true);
   }
+
   // Dibujar el arma si está equipada
-  if (gun.isEquipped() && !isOnGround) {
-    gun.update(positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2);
-    gun.draw(isFlipped, renderer);
-  }
+  gun.draw(isFlipped, true, renderer);
 }
 
 void ClientDuck::applyColor(SDL2pp::Renderer &renderer,
@@ -166,3 +165,8 @@ uint8_t ClientDuck::getId() const { return idDuck; }
 int ClientDuck::getPosX() { return positionX; }
 
 int ClientDuck::getPosY() { return positionY; }
+
+ClientDuck::~ClientDuck() {
+  // La textura se libera automáticamente porque es un std::unique_ptr
+  coloredTexture.reset();
+}

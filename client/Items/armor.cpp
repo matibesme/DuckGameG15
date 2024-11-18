@@ -2,7 +2,7 @@
 
 #include <SDL_render.h>
 
-#define IMAGE_ARMOR DATA_PATH "/pechera.png"
+#define IMAGE_ARMOR DATA_PATH "/armour/pechera.png"
 
 Armor::Armor(Graficos &graficos, float pos_x, float pos_y)
     : graficos(graficos), pos_x(pos_x), pos_y(pos_y) {}

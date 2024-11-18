@@ -31,8 +31,6 @@ void GameRunner::run() {
     std::cerr << e.what() << std::endl;
     queue_sender.close();
   }
-  graficos.GetRenderer().Clear();
-  sound.limpiar();
 }
 
 void GameRunner::runGameLoop(GameRenderer &gameRenderer) {

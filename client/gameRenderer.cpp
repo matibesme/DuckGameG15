@@ -7,9 +7,6 @@
 #define IMAGE_CITY DATA_PATH "/backgrounds/City.png"
 #define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
 
-#define CANT_ZOOM_WIDTH (7 * DUCK_WIDTH)
-#define CANT_ZOOM_HEIGHT (15 * DUCK_HEIGHT)
-
 GameRenderer::GameRenderer(Graficos &graficos)
     : graficos(graficos), plataformasYaCargadas(false) {}
 
@@ -45,7 +42,7 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   for (auto &bullet : bullets)
     bullet.draw(renderer);
   for (auto &gun : guns)
-    gun.draw(false, renderer);
+    gun.draw(false, false, renderer);
   for (auto &armor : armors)
     armor.draw(false, renderer, false, false);
   for (auto &helmet : helmets)
@@ -256,7 +253,7 @@ void GameRenderer::actualizarElementos(const GameState &command) {
                               armorStruct.y_pos == it->getPosY();
                      });
     if (armorInCommand != command.lista_armors.end()) {
-      // Actualizar si el arma está en ambas listas
+      // Actualizar si la armadura está en ambas listas
       ++it;
     } else {
       // Eliminar si solo está en la lista local
@@ -285,7 +282,7 @@ void GameRenderer::actualizarElementos(const GameState &command) {
                               helmetStruct.y_pos == it->getPosY();
                      });
     if (helmetInCommand != command.lista_helmets.end()) {
-      // Actualizar si el arma está en ambas listas
+      // Actualizar si el casco está en ambas listas
       ++it;
     } else {
       // Eliminar si solo está en la lista local
@@ -381,4 +378,15 @@ void GameRenderer::mostrarPantallaEndRound(
   EndRoundScene endRoundSene(map_victorias,
                              sdlRenderer); // Pasar el SDL_Renderer a la escena
   endRoundSene.Run();                      // Ejecutar la escena
+}
+
+// destructores
+GameRenderer::~GameRenderer() {
+  ducks.clear();
+  bullets.clear();
+  guns.clear();
+  armors.clear();
+  helmets.clear();
+  platforms.clear();
+  boxes.clear();
 }

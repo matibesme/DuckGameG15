@@ -26,6 +26,7 @@ public:
   uint8_t getId() const;
   int getPosX();
   int getPosY();
+  ~ClientDuck();
 
 private:
   uint8_t idDuck;
@@ -45,7 +46,6 @@ private:
   bool helmetEquipped;
   bool isOnGround;
   void applyColor(Renderer &renderer, const std::string &color);
-  // defineme un mapa de colores para los patos
   std::map<std::string, SDL_Color> colorMap = {
       {"red", {255, 0, 0, 255}},      {"blue", {0, 0, 255, 255}},
       {"green", {0, 255, 0, 255}},    {"yellow", {255, 255, 0, 255}},

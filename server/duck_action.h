@@ -13,6 +13,8 @@
 #include <map>
 #include <memory>
 
+#include "items/boxes.h"
+
 class DuckAction {
 private:
   std::map<uint8_t, DuckPlayer> &map_personajes;
@@ -26,6 +28,7 @@ private:
   uint16_t &id_defense;
   uint16_t &id_balas;
   uint16_t &id_weapons;
+  uint8_t change_weapon_counter;
 
 public:
   DuckAction(std::map<uint8_t, DuckPlayer> &map_personajes,
@@ -40,8 +43,11 @@ public:
              std::map<uint16_t, int> &time_defense_last_respawn);
   void movementComand(uint8_t comando, uint8_t id);
   void weaponComand(uint8_t comando, uint8_t id);
+  void cheatComand(uint8_t comando, uint8_t id);
   bool inRangePickUp(float x_pos, float y_pos, float HEIGHT, float WIDTH,
                      DuckPlayer &personaje);
+  void changeWeaponCheat(DuckPlayer &personaje);
+  void equipDefenseCheat();
 };
 
 #endif // DUCK_ACTION_H

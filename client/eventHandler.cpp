@@ -5,7 +5,7 @@ EventHandler::EventHandler(BlockingQueue<ClientAction> &queue_sender)
 
 void EventHandler::correrHandlers() {
   SDL_Event event;
-  ClientAction action;
+  ClientAction action{};
   action.player = 1;
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
@@ -74,6 +74,34 @@ void EventHandler::correrHandlers() {
           action.type_of_movement = AIM_UP;
           action.player = 2;
           queue_sender.push(action); // Apuntar hacia arriba
+          break;
+
+        // controles cheats
+        case SDLK_2:
+          action.type_of_movement = CHEAT_CHANGE_WEAPON; // Cambio de arma
+          queue_sender.push(action);                     // Jugador 1
+          break;
+        case SDLK_8:
+          action.type_of_movement = CHEAT_CHANGE_WEAPON; // Cambio de arma
+          action.player = 2;                             // Jugador 2
+          queue_sender.push(action);
+          break;
+        case SDLK_b:
+          action.type_of_movement = CHEAT_SPAWN_BOX; // Spawnear caja
+          queue_sender.push(action);                 // Jugador 1
+          break;
+        case SDLK_r:
+          action.type_of_movement =
+              CHEAT_SPAWN_ARMOR;     // Spawnear armadura completa
+          queue_sender.push(action); // Jugador 1
+          break;
+        case SDLK_t:
+          action.type_of_movement = CHEAT_WIN_ROUND; // Ganar ronda
+          queue_sender.push(action);                 // Jugador 1
+          break;
+        case SDLK_v:
+          action.type_of_movement = CHEAT_WIN_GAME; // Ganar juego
+          queue_sender.push(action);                // Jugador 1
           break;
         }
       }
