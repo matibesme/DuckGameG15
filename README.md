@@ -56,9 +56,14 @@ pre-commit run --all-files
 git commit -m "Mensaje" --no-verify
 ```
 
-**Instalación**
-Se instalaran dependencias necesarias para el funcionamiento del juego, se compilará y se correran los tests unitarios.
-Correr por línea de comando:
+## **Instalación**
+Para instalar las dependencias necesarias para el correcto funcionamiento del juego se debe correr el comando:
+```
+chmod +x download.sh
+./download.sh
+```
+
+Luego para compilar, correr los tests e instalar lo necesario en el sistema se debe correr el comando:
 ```
 chmod +x install.sh
 ./install.sh
