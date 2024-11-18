@@ -45,6 +45,7 @@ private:
   bool armorEquipped;
   bool helmetEquipped;
   bool isOnGround;
+  bool isLookingUp;
   void applyColor(Renderer &renderer, const std::string &color);
   std::map<std::string, SDL_Color> colorMap = {
       {"red", {255, 0, 0, 255}},      {"blue", {0, 0, 255, 255}},

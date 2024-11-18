@@ -23,7 +23,7 @@ ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos,
       pixelDuckSpriteY(SRC_Y_MOVING), coloredTexture(nullptr),
       armor(graficos, positionX, positionY),
       helmet(graficos, positionX, positionY), armorEquipped(false),
-      helmetEquipped(false), isOnGround(false) {
+      helmetEquipped(false), isOnGround(false), isLookingUp(false) {
   applyColor(graficos.GetRenderer(), color);
   update(y_pos, x_pos, typeOfMove, gunEquipped, armorEquipped, helmetEquipped,
          false, RIGHT);
@@ -33,10 +33,10 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove,
                         uint8_t gunEquipped, uint8_t armor_, uint8_t helmet_,
                         bool lookingUp, uint8_t orientacion) {
   isOnGround = false;
+  isLookingUp = lookingUp;
   positionX = x_pos;
   positionY = y_pos;
-  gun.updateGunState(gunEquipped, lookingUp, positionX + (2 * DUCK_WIDTH / 5),
-                     positionY + DUCK_HEIGHT / 2);
+  typeOfGun = gunEquipped;
 
   if (typeOfMove == STILL_LEFT)
     isFlipped = true;
@@ -120,7 +120,8 @@ void ClientDuck::draw(Renderer &renderer) {
   }
 
   // Dibujar el arma si está equipada
-  gun.draw(isFlipped, true, renderer);
+  gun.drawOnDuck(positionX + (2 * DUCK_WIDTH / 5), positionY + DUCK_HEIGHT / 2,
+                 isFlipped, typeOfGun, isLookingUp, renderer);
 }
 
 void ClientDuck::applyColor(SDL2pp::Renderer &renderer,

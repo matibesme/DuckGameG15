@@ -27,8 +27,7 @@
   DATA_PATH "/weapons/laserRifleEquipped.png"
 
 Gun::Gun(Graficos &graficos, float pos_x, float pos_y, uint8_t typeOfGun)
-    : graficos(graficos), typeOfGun(typeOfGun), pos_x(pos_x), pos_y(pos_y),
-      lookingUp(false) {
+    : graficos(graficos), posX(pos_x), posY(pos_y), typeGun(typeOfGun) {
   cargarTextura();
 }
 
@@ -39,88 +38,80 @@ void Gun::cargarTextura() {
 
   actualizarTextura(texture_path_equipped, texture_path_not_equipped, width,
                     height);
+  if (typeGun == NOGUN)
+    return;
+  texture_equipped = std::make_unique<SDL2pp::Texture>(
+      graficos.LoadTexture(texture_path_equipped));
 
-  if (texture_path_equipped) {
-    texture_equipped = std::make_unique<SDL2pp::Texture>(
-        graficos.LoadTexture(texture_path_equipped));
-  }
-  if (texture_path_not_equipped) {
-    texture_not_equipped = std::make_unique<SDL2pp::Texture>(
-        graficos.LoadTexture(texture_path_not_equipped));
-  }
+  texture_not_equipped = std::make_unique<SDL2pp::Texture>(
+      graficos.LoadTexture(texture_path_not_equipped));
 }
 
-void Gun::draw(bool isFliped, bool is_equiped, SDL2pp::Renderer &renderer) {
-  if (!texture_equipped || !texture_not_equipped || typeOfGun == NOGUN) {
+void Gun::drawOnDuck(float newX, float newY, bool isFliped, uint8_t gun,
+                     bool lookingUp, SDL2pp::Renderer &renderer) {
+  if (gun != typeGun) {
+    typeGun = gun;
+    cargarTextura();
+  }
+  if (!texture_equipped || typeGun == NOGUN) {
     return;
   }
-  auto &active_texture = is_equiped ? *texture_equipped : *texture_not_equipped;
+  posX = newX;
+  posY = newY;
+  auto &active_texture = *texture_equipped;
 
-  if (is_equiped) {
-    // si esta flippeado dibujo a todas por igual
-    if (isFliped) {
-      if (lookingUp) {
-        renderer.Copy(active_texture, SDL2pp::NullOpt,
-                      Rect(pos_x - DUCK_WIDTH / 2.5, pos_y - DUCK_HEIGHT / 2.5,
-                           WIDTH_GUN, HEIGHT_GUN),
-                      90.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
-      } else
-        renderer.Copy(
-            active_texture, SDL2pp::NullOpt,
-            Rect(pos_x - DUCK_WIDTH / 2.5, pos_y, WIDTH_GUN, HEIGHT_GUN), 0.0,
-            SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
-    } else if (lookingUp) {
-      renderer.Copy(
-          active_texture, SDL2pp::NullOpt,
-          Rect(pos_x + 3, pos_y - DUCK_HEIGHT / 2.5, WIDTH_GUN, HEIGHT_GUN),
-          90.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
-    }
-    // si no esta flippeado dibujo a las granadas y bananas distinto
-    else if (typeOfGun == GRANADA_GUN || typeOfGun == BANANA_GUN)
+  // si esta flippeado dibujo a todas por igual
+  if (isFliped) {
+    if (lookingUp) {
       renderer.Copy(active_texture, SDL2pp::NullOpt,
-                    Rect(pos_x + 5, pos_y, WIDTH_GUN, HEIGHT_GUN));
-    else
-      renderer.Copy(active_texture, SDL2pp::NullOpt,
-                    Rect(pos_x, pos_y, WIDTH_GUN, HEIGHT_GUN));
-
-  } else {
-    if (isFliped) // no tendría que usarlo por que estaría en el piso pero por
-                  // las dudas
-      renderer.Copy(active_texture, SDL2pp::NullOpt,
-                    Rect(pos_x, pos_y, WIDTH_GUN, HEIGHT_GUN), 0.0,
-                    SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
-    else if (typeOfGun == BANANA_GUN) {
-      // destRect es el rectángulo donde se dibujará el pato
-      SDL2pp::Rect destRect(pos_x, pos_y, WIDTH_GUN, HEIGHT_GUN);
-      // srcRect es el rectángulo que se tomará de la textura
-      SDL2pp::Rect srcRect(0, 32, 16, 16);
-
-      renderer.Copy(active_texture, srcRect, destRect);
+                    Rect(posX - DUCK_WIDTH / 2.5, posY - DUCK_HEIGHT / 2.5,
+                         WIDTH_GUN, HEIGHT_GUN),
+                    90.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
     } else
       renderer.Copy(active_texture, SDL2pp::NullOpt,
-                    Rect(pos_x, pos_y, WIDTH_GUN, HEIGHT_GUN));
+                    Rect(posX - DUCK_WIDTH / 2.5, posY, WIDTH_GUN, HEIGHT_GUN),
+                    0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+  } else if (lookingUp) {
+    renderer.Copy(
+        active_texture, SDL2pp::NullOpt,
+        Rect(posX + 3, posY - DUCK_HEIGHT / 2.5, WIDTH_GUN, HEIGHT_GUN), 90.0,
+        SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
   }
+  // si no esta flippeado dibujo a las granadas y bananas distinto
+  else if (typeGun == GRANADA_GUN || typeGun == BANANA_GUN)
+    renderer.Copy(active_texture, SDL2pp::NullOpt,
+                  Rect(posX + 5, posY, WIDTH_GUN, HEIGHT_GUN));
+  else
+    renderer.Copy(active_texture, SDL2pp::NullOpt,
+                  Rect(posX, posY, WIDTH_GUN, HEIGHT_GUN));
 }
 
-void Gun::updateGunState(uint8_t gun, bool look_up, float new_x, float new_y) {
-  // Actualizar el tipo de arma si es diferente
-  if (typeOfGun != gun) {
-    typeOfGun = gun;
-    cargarTextura(); // Recargar texturas si el arma cambia
+void Gun::drawOnSpawn(SDL2pp::Renderer &renderer) {
+  if (!texture_not_equipped || typeGun == NOGUN) {
+    return;
   }
-  lookingUp = look_up;
-  pos_x = new_x;
-  pos_y = new_y;
+  auto &active_texture = *texture_not_equipped;
+
+  if (typeGun == BANANA_GUN) {
+    // destRect es el rectángulo donde se dibujará el pato
+    SDL2pp::Rect destRect(posX, posY, WIDTH_GUN, HEIGHT_GUN);
+    // srcRect es el rectángulo que se tomará de la textura
+    SDL2pp::Rect srcRect(0, 32, 16, 16);
+
+    renderer.Copy(active_texture, srcRect, destRect);
+  } else
+    renderer.Copy(active_texture, SDL2pp::NullOpt,
+                  Rect(posX, posY, WIDTH_GUN, HEIGHT_GUN));
 }
 
-float Gun::getPosX() { return pos_x; }
+float Gun::getPosX() { return posX; }
 
-float Gun::getPosY() { return pos_y; }
+float Gun::getPosY() { return posY; }
 
 void Gun::actualizarTextura(const char *&texture_path_equipped,
                             const char *&texture_path_not_equipped, int &width,
                             int &height) {
-  switch (typeOfGun) {
+  switch (typeGun) {
   case NOGUN:
     break;
   case COWBOY_GUN:
