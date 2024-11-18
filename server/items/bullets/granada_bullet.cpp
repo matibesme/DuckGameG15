@@ -32,7 +32,7 @@ void GranadaBullet::executeAction() {
   }
 
   // Lógica para la explosión y finalización de la vida
-  if (time_to_explode == 6) {
+  if (time_to_explode == 15) {
     explode();
   } else if (time_to_explode == 0) {
     is_alive = false;

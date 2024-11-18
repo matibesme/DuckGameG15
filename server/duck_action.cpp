@@ -206,14 +206,25 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
     break;
   }
 
-  case CHEAT_CHANGE_WEAPON: {
-    changeWeaponCheat(personaje);
-    break;
-  }
+
 
   default: {
     break;
   }
+  }
+}
+
+void DuckAction::cheatComand(uint8_t comando, uint8_t id) {
+  DuckPlayer &personaje = map_personajes[id];
+  switch (comando) {
+    case CHEAT_CHANGE_WEAPON: {
+      changeWeaponCheat(personaje);
+      break;
+    }
+    case CHEAT_SPAWN_ARMOR: {
+      equipDefenseCheat();
+      break;
+    }
   }
 }
 
@@ -243,3 +254,13 @@ void DuckAction::changeWeaponCheat(DuckPlayer &personaje) {
     change_weapon_counter++;
   }
 }
+
+void DuckAction::equipDefenseCheat() {
+  for (auto &personaje: map_personajes) {
+    personaje.second.setArmor(ARMOR_EQUIPPED);
+    personaje.second.setHelmet(HELMET_EQUIPPED);
+  }
+}
+
+
+
