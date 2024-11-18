@@ -62,7 +62,8 @@ constexpr uint8_t LEAVE_GUN = 0x0A;
 
 // Escenas
 constexpr uint8_t WEAPON_ACTION = 0x08;
-constexpr uint8_t SCENE = 0x0C;
+constexpr uint8_t CHEAT_ACTION = 0x1A;
+constexpr uint8_t SCENE = 0x0E;
 
 // Orientación de balas
 constexpr uint8_t BULLET_RIGHT = 0x05;
@@ -140,3 +141,5 @@ constexpr uint8_t MATCH_WITH_SAME_NAME = 0xBB;
 constexpr uint8_t CHEAT_CHANGE_WEAPON = 0x0B;
 constexpr uint8_t CHEAT_SPAWN_BOX = 0x0C;
 constexpr uint8_t CHEAT_SPAWN_ARMOR = 0x0D;
+constexpr uint8_t CHEAT_WIN_ROUND = 0x0E;
+constexpr uint8_t CHEAT_WIN_GAME = 0x0F;
