@@ -65,7 +65,7 @@ public:
            bool &end_game, std::shared_ptr<ProtectedQueuesMap> &queues_map,
            std::map<uint8_t, std::string> &map_id_clientes);
   virtual void run() override;
-  void checkCommand(CommandClient comando);
+  void checkCommand(CommandClient comando, uint8_t& rounds);
   void movementComand(uint8_t comando);
   void weaponComand(uint8_t comando);
   void checkBullets();
@@ -80,7 +80,8 @@ public:
   void sendVictory(std::string &winner);
   void sendColorPresentation();
   void checkGrenadeExplosion(GranadaBullet &grenade_bullet);
-    void spawnBoxesCheat();
-    void winRoundCheat();
+  void spawnBoxesCheat();
+  void winRoundCheat();
+  void winGameCheat(uint8_t& rounds);
   virtual ~GameLoop();
 };

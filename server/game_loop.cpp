@@ -50,7 +50,7 @@ void GameLoop::run() {
 
           CommandClient comando;
           while (queue_comandos->try_pop(comando)) {
-            checkCommand(comando);
+            checkCommand(comando, rounds);
           }
           paraCadaPatoAction();
           checkBullets();
@@ -81,7 +81,7 @@ void GameLoop::run() {
   }
 }
 
-void GameLoop::checkCommand(CommandClient comando) {
+void GameLoop::checkCommand(CommandClient comando, uint8_t& rounds) {
   if (comando.type_of_action == MOVEMENT_ACTION) {
     duck_action.movementComand(comando.type_of_movement, comando.id);
   } else if (comando.type_of_action == WEAPON_ACTION) {
@@ -91,11 +91,12 @@ void GameLoop::checkCommand(CommandClient comando) {
       spawnBoxesCheat();
     } else if (comando.type_of_movement == CHEAT_WIN_ROUND) {
         winRoundCheat();
+    } else if (comando.type_of_movement == CHEAT_WIN_GAME) {
+        winGameCheat(rounds);
     } else {
       duck_action.cheatComand(comando.type_of_movement, comando.id);
     }
   }
-
 }
 
 void GameLoop::checkBullets() {
@@ -392,12 +393,16 @@ void GameLoop::winRoundCheat() {
     while (it != map_personajes.end()) {
       auto to_erase = it; // Guarda el iterador actual
       ++it; // Avanza al siguiente elemento antes de eliminar
-      map_personajes.erase(to_erase); // Elimina el elemento actual
+      map_personajes.erase(to_erase); // Elimina el elemento
     }
   }
 }
 
-
+void GameLoop::winGameCheat(uint8_t& rounds) {
+  map_victory_rounds[map_personajes.begin()->first] = 9;
+  rounds = 4;
+  winRoundCheat();
+}
 
 void GameLoop::sendColorPresentation() {
   GameState command;
