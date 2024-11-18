@@ -13,6 +13,7 @@ void Acceptor::run() {
       accept_new_client();
     } catch (const std::exception &e) {
       if (!close) {
+        std::cout << "Error en el accept" << std::endl;
         std::cerr << e.what() << std::endl;
       }
       // sino cerro el socket por el close de forma esperada
@@ -27,6 +28,7 @@ void Acceptor::accept_new_client() {
   ThreadCliente &cliente = lista_clientes.back();
   cliente.start();
   reapDead();
+  lobby.removeGame();
 
   cantidad_clientes += 2;
 }

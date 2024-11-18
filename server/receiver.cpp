@@ -11,7 +11,7 @@ Receiver::Receiver(ProtocoloServer &protocolo, bool &dead_connection,
 void Receiver::run() {
   try {
     std::string game_name;
-    while (in_lobby) {
+    while (in_lobby && !dead_connection) {
       GameAccess command = protocolo.receiveAccessFromClients();
       if (command.action_type == JOIN_GAME) {
         queue_comandos =
@@ -43,7 +43,7 @@ void Receiver::run() {
     }
 
     if (lobby.isHoster(id)) {
-      while (!start_game) {
+      while (!start_game&& !dead_connection) {
         GameAccess command = protocolo.receiveAccessFromClients();
         if (command.action_type == START_GAME) {
           lobby.startGame(id, game_name);
