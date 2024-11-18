@@ -81,7 +81,7 @@ void GameLoop::run() {
   }
 }
 
-void GameLoop::checkCommand(CommandClient comando, uint8_t& rounds) {
+void GameLoop::checkCommand(CommandClient comando, uint8_t &rounds) {
   if (comando.type_of_action == MOVEMENT_ACTION) {
     duck_action.movementComand(comando.type_of_movement, comando.id);
   } else if (comando.type_of_action == WEAPON_ACTION) {
@@ -90,9 +90,9 @@ void GameLoop::checkCommand(CommandClient comando, uint8_t& rounds) {
     if (comando.type_of_movement == CHEAT_SPAWN_BOX) {
       spawnBoxesCheat();
     } else if (comando.type_of_movement == CHEAT_WIN_ROUND) {
-        winRoundCheat();
+      winRoundCheat();
     } else if (comando.type_of_movement == CHEAT_WIN_GAME) {
-        winGameCheat(rounds);
+      winGameCheat(rounds);
     } else {
       duck_action.cheatComand(comando.type_of_movement, comando.id);
     }
@@ -376,9 +376,8 @@ void GameLoop::sendVictory(std::string &winner) {
   }
 }
 
-
 void GameLoop::spawnBoxesCheat() {
-  for (auto& personaje: map_personajes) {
+  for (auto &personaje : map_personajes) {
     list_boxes.emplace_back(
         Boxes(TYPE_BOX, id_boxes++, personaje.second.getXPos(),
               personaje.second.getYPos(), 100, map_free_weapons, map_defense,
@@ -392,13 +391,13 @@ void GameLoop::winRoundCheat() {
     ++it; // Mueve el iterador al segundo elemento
     while (it != map_personajes.end()) {
       auto to_erase = it; // Guarda el iterador actual
-      ++it; // Avanza al siguiente elemento antes de eliminar
+      ++it;               // Avanza al siguiente elemento antes de eliminar
       map_personajes.erase(to_erase); // Elimina el elemento
     }
   }
 }
 
-void GameLoop::winGameCheat(uint8_t& rounds) {
+void GameLoop::winGameCheat(uint8_t &rounds) {
   map_victory_rounds[map_personajes.begin()->first] = 9;
   rounds = 4;
   winRoundCheat();

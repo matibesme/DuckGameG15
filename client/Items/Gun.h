@@ -11,7 +11,7 @@ using namespace SDL2pp;
 class Gun {
 private:
   Graficos &graficos;
-  //Me tira error el pre-commit como que no lo uso
+  // Me tira error el pre-commit como que no lo uso
   float posX;
   float posY;
   uint8_t typeGun;

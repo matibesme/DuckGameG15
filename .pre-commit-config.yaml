@@ -2,28 +2,28 @@ repos:
   - repo: https://github.com/commitizen-tools/commitizen
     rev: v3.27.0
     hooks:
-        - id: commitizen
+      - id: commitizen
 
   - repo: https://github.com/cpplint/cpplint
     rev: 1.6.1
     hooks:
       - id: cpplint
-        files: ^(.*[.]cpp|.*[.]h)$
-        exclude: ^extlib/
-        args: [--filter=-,+build/class,+build/deprecated,+build/include_what_you_use,+build/namespaces,+build/printf_format,+readability/braces,+readability/check,+readability/fn_size,+readability/function,+readability/multiline_comment,+readability/multiline_string,+readability/utf8,+runtime/arrays,+runtime/casting,+runtime/explicit,+runtime/init,+runtime/invalid_increment,+runtime/memset,+runtime/operator,+runtime/printf,+runtime/printf_format,+runtime/rtti,+runtime/string,+whitespace/blank_line,+whitespace/empty_loop_body,+whitespace/ending_newline,+whitespace/line_length,+whitespace/newline,+whitespace/parens,+whitespace/semicolon]
+        files: ^.*\.cpp|.*\.h$  # Reemplazar esto para que coincida con los archivos .cpp y .h en cualquier lugar
+        exclude: ^extlib/sdl2/.*  # Excluir SDL2
+        args: ["--filter=-,+build/class,+build/deprecated,+build/include_what_you_use,+build/namespaces,+build/printf_format,+readability/braces,+readability/check,+readability/fn_size,+readability/function,+readability/multiline_comment,+readability/multiline_string,+readability/utf8,+runtime/arrays,+runtime/casting,+runtime/explicit,+runtime/init,+runtime/invalid_increment,+runtime/memset,+runtime/operator,+runtime/printf,+runtime/printf_format,+runtime/rtti,+runtime/string,+whitespace/blank_line,+whitespace/empty_loop_body,+whitespace/ending_newline,+whitespace/line_length,+whitespace/newline,+whitespace/parens,+whitespace/semicolon"]
 
   - repo: https://github.com/pocc/pre-commit-hooks
     rev: v1.3.5
     hooks:
       - id: cppcheck
-        files: ^(.*[.]cpp|.*[.]h)$
-        exclude: ^extlib/
+        files: ^.*\.cpp|.*\.h$  # Reemplazar esto para que coincida con los archivos .cpp y .h en cualquier lugar
+        exclude: ^extlib/sdl2/.*  # Excluir SDL2
         args: ["--inline-suppr", "--enable=all", "--suppress=missingIncludeSystem", "--suppress=missingInclude", "--suppress=unusedFunction", "--suppress=unmatchedSuppression", "--language=c++", "--std=c++20", "--error-exitcode=1"]
 
   - repo: https://github.com/ssciwr/clang-format-hook
     rev: v16.0.2
     hooks:
       - id: clang-format
-        files: ^(.*[.]cpp|.*[.]h)$
-        exclude: ^extlib/
+        files: ^.*\.cpp|.*\.h$  # Reemplazar esto para que coincida con los archivos .cpp y .h en cualquier lugar
+        exclude: ^extlib/sdl2/.*  # Excluir SDL2
         args: ["--style=file", "-i"]
