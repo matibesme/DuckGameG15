@@ -39,12 +39,13 @@ void Acceptor::deleteAClient(ThreadCliente &cliente) {
 }
 
 void Acceptor::reapDead() {
-
   for (auto it = lista_clientes.begin(); it != lista_clientes.end();) {
-    if (it->isDead()) {
-      it->join();
+    if ((*it).isDead()) { // Nota: Si `it` es un puntero, asegúrate de usar
+                          // `(*it)`
+      (*it).join();
       deleteAClient(*it);
-      lista_clientes.erase(it);
+      it = lista_clientes.erase(
+          it); // Actualiza el iterador con el valor devuelto por erase
     } else {
       ++it;
     }

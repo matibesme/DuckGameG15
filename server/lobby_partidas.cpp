@@ -73,29 +73,25 @@ void LobbyPartidas::addQueueSender(
 
 void LobbyPartidas::removeQueue(uint8_t id) {
   std::lock_guard<std::mutex> lock(m);
-  protected_queues_sender[id]->removeQueue(id);
+  queues_sender.erase(id);
 }
 
 void LobbyPartidas::removeGame() {
   std::lock_guard<std::mutex> lock(m);
   for (auto &it : partidas) {
-    if (end_game[it.first])
-    {
+    if (end_game[it.first]) {
       queues_game_loop[it.first]->close();
       queues_game_loop.erase(it.first);
       partidas[it.first]->join();
       partidas.erase(it.first);
     }
   }
-
 }
 
 std::map<std::string, uint8_t> &LobbyPartidas::getIdPartidas() {
   std::lock_guard<std::mutex> lock(m);
   return partidas_sin_arrancar;
 }
-
-
 
 LobbyPartidas::~LobbyPartidas() {
   for (auto &it : partidas) {

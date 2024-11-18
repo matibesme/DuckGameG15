@@ -43,7 +43,7 @@ void Receiver::run() {
     }
 
     if (lobby.isHoster(id)) {
-      while (!start_game&& !dead_connection) {
+      while (!start_game && !dead_connection) {
         GameAccess command = protocolo.receiveAccessFromClients();
         if (command.action_type == START_GAME) {
           lobby.startGame(id, game_name);
