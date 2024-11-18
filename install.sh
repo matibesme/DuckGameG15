@@ -61,3 +61,8 @@ cmake --build .
 #Correr los tests unitarios
 ./taller_tests
 
+#Mover archivos
+mkdir /var/TallerDuckGame && mv -f taller_client taller_server taller_editor /var/TallerDuckGame
+cd ..
+mkdir /etc/TallerDuckGame && mv -f /data/editor/menu_config.yaml /server/configuration/config.yaml /etc/TallerDuckGame
+mv -f data /usr/bin
