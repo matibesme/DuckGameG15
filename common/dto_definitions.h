@@ -102,11 +102,6 @@ struct ClientAction {
   uint8_t player; // si es el jugador 1 o 2
 };
 
-struct CommandBackGround {
-  uint8_t background_id;
-  std::list<DTOPlatform> lista_plataformas;
-};
-
 struct RespawnPoint {
   float x_pos;
   float y_pos;

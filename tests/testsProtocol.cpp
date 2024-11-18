@@ -13,7 +13,7 @@ TEST(ProtocoloTest, CreateAndStartGame) {
   game_access.double_player = true;
   bool dead_connection = false;
 
-  // creo el hilo del cliente
+  /// creo el hilo del cliente
   std::thread client([game_access, &dead_connection]() {
     ProtocoloCliente protocolo("localhost", "8080", dead_connection);
     protocolo.sendCreateJoinGameToServer(game_access);
