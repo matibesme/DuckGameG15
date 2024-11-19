@@ -1,19 +1,18 @@
 #pragma once
-#include <list>
-#include <string>
-#include <utility>
-
 #include "../common/blocking_queue.h"
 #include "../common/dto_definitions.h"
 #include "../common/socket.h"
 #include "../common/thread.h"
+#include <list>
+#include <memory>
+#include <string>
+#include <utility>
 
 #include "lobby_partidas.h"
 #include "receiver.h"
 #include "sender.h"
 
 class ThreadCliente : public Thread {
-
 private:
   bool dead_connection;
   std::shared_ptr<BlockingQueue<GameState>> queue_sender;

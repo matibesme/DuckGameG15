@@ -1,7 +1,7 @@
 #ifndef COYBOY_PISTOL_H
 #define COYBOY_PISTOL_H
-
 #include "weapon.h"
+#include <memory>
 
 class CowboyPistol : public Weapon {
 private:

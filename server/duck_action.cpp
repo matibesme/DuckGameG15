@@ -83,7 +83,6 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
       if (inRangePickUp(free_weapon.second->getXPos(),
                         free_weapon.second->getYPos(), HEIGHT_GUN, WIDTH_GUN,
                         personaje)) {
-
         personaje.pickUpWeapon(std::move(free_weapon.second));
 
         if (respawn_weapon_points.find(free_weapon.first) !=
@@ -125,7 +124,6 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
           break;
         if (inRangePickUp(defense.second.x_pos, defense.second.y_pos,
                           HEIGHT_ARMOR, WIDTH_ARMOR, personaje)) {
-
           personaje.setArmor(ARMOR_EQUIPPED);
           map_defense.erase(defense.first);
           pick = true;
@@ -146,8 +144,9 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
         time_defense_last_respawn.emplace(id_defense, random_addition);
         id_defense++;
         break;
-      } else if (pick)
+      } else if (pick) {
         break;
+      }
     }
 
     break;
@@ -228,7 +227,6 @@ void DuckAction::cheatComand(uint8_t comando, uint8_t id) {
 
 bool DuckAction::inRangePickUp(float x_pos, float y_pos, float HEIGHT,
                                float WIDTH, DuckPlayer &personaje) {
-
   return personaje.getXPos() + DUCK_WIDTH >= x_pos &&
          personaje.getXPos() <= x_pos + WIDTH &&
          personaje.getYPos() + DUCK_HEIGHT >= y_pos &&

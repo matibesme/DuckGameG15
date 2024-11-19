@@ -5,6 +5,7 @@
 #ifndef AK47_H
 #define AK47_H
 #include "weapon.h"
+#include <memory>
 #include <vector>
 
 class Ak47 : public Weapon {

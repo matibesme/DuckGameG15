@@ -7,7 +7,6 @@ ProtocoloCliente::ProtocoloCliente(const char *host, const char *port,
                              {LEFT, MOVEMENT_ACTION},
                              {JUMP, MOVEMENT_ACTION},
                              {DOWN, MOVEMENT_ACTION},
-
                              {STILL_LEFT, MOVEMENT_ACTION},
                              {STILL_RIGHT, MOVEMENT_ACTION},
                              {PICKUP, WEAPON_ACTION},
@@ -17,7 +16,10 @@ ProtocoloCliente::ProtocoloCliente(const char *host, const char *port,
                              {AIM_UP, WEAPON_ACTION},
                              {STOP_AIM_UP, WEAPON_ACTION},
                              {CHEAT_CHANGE_WEAPON, CHEAT_ACTION},
-                             {CHEAT_SPAWN_ARMOR, CHEAT_ACTION}}) {}
+                             {CHEAT_SPAWN_ARMOR, CHEAT_ACTION},
+                             {CHEAT_SPAWN_BOX, CHEAT_ACTION},
+                             {CHEAT_WIN_ROUND, CHEAT_ACTION},
+                             {CHEAT_WIN_GAME, CHEAT_ACTION}}) {}
 
 void ProtocoloCliente::sendInGameToServer(const ClientAction &command) {
   try {
@@ -25,7 +27,6 @@ void ProtocoloCliente::sendInGameToServer(const ClientAction &command) {
                        dead_connection);
     protocolo.sendByte(command.type_of_movement, dead_connection);
     protocolo.sendByte(command.player, dead_connection);
-
   } catch (const SocketClose &e) {
     std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
   } catch (const std::exception &e) {
@@ -37,16 +38,19 @@ void ProtocoloCliente::sendInGameToServer(const ClientAction &command) {
 GameState ProtocoloCliente::reciveFromServer() {
   try {
     uint8_t firstByte = protocolo.receiveByte(dead_connection);
-
     if (firstByte == FULL_GAME_BYTE)
       return reciveFullGameFromServer();
-    else if (firstByte == END_ROUND_BYTE)
+    if (firstByte == END_ROUND_BYTE)
       return reciveEndRoundFromServer();
-    else if (firstByte == VICTORY_BYTE)
+    if (firstByte == VICTORY_BYTE)
       return reciveVictoryFromServer();
-    else if (firstByte == COLOR_PRESENTATION_BYTE)
+    if (firstByte == COLOR_PRESENTATION_BYTE)
       return reciveColorPresentationFromServer();
-
+    if (firstByte == FINALLY_GAME) {
+      GameState command;
+      command.action = FINALLY_GAME;
+      return command;
+    }
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
@@ -55,7 +59,6 @@ GameState ProtocoloCliente::reciveFromServer() {
 }
 
 GameState ProtocoloCliente::reciveFullGameFromServer() {
-
   GameState command;
   command.action = FULL_GAME_BYTE;
   uint8_t background_id = protocolo.receiveByte(dead_connection);
@@ -72,7 +75,6 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
     lista_plataformas.push_back({typeOfPlataform, x_pos, y_pos, width, height});
   }
   command.lista_plataformas = lista_plataformas;
-
   // recivo personajes
   uint8_t patos_quantity = protocolo.receiveByte(dead_connection);
   std::list<DTODuck> lista_patos;
@@ -105,7 +107,6 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
     bullets.push_back({id, bala_type, x_pos, y_pos, orientation});
   }
   command.lista_balas = bullets;
-
   // recivo armas libres
   uint8_t guns_quantity = protocolo.receiveByte(dead_connection);
   std::list<DTOGuns> guns;
@@ -116,7 +117,6 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
     guns.push_back({gun_type, x_pos, y_pos});
   }
   command.lista_guns = guns;
-
   std::list<DTOBoxes> lista_boxes;
   uint8_t boxes_quantity = protocolo.receiveByte(dead_connection);
   for (int i = 0; i < boxes_quantity; i++) {
@@ -126,7 +126,6 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
     lista_boxes.push_back({id, x_pos, y_pos});
   }
   command.lista_boxes = lista_boxes;
-
   uint8_t helmets_quantity = protocolo.receiveByte(dead_connection);
   std::list<Protection> lista_helemets;
   for (int i = 0; i < helmets_quantity; i++) {
@@ -182,7 +181,6 @@ void ProtocoloCliente::sendRequestGameToServer(const GameAccess &game_access) {
 std::list<std::string> ProtocoloCliente::reciveActiveGamesFromServer() {
   try {
     uint8_t games_quantity = protocolo.receiveByte(dead_connection);
-
     std::list<std::string> games;
     for (int i = 0; i < games_quantity; i++) {
       std::string game_name = protocolo.receiveString(dead_connection);
@@ -190,7 +188,6 @@ std::list<std::string> ProtocoloCliente::reciveActiveGamesFromServer() {
       games.push_back(game_name);
     }
     return games;
-
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;

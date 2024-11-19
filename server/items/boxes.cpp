@@ -29,7 +29,6 @@ bool Boxes::isDestroyed() const { return health <= 0; }
 void Boxes::generateRandomContent() {
   srand(time(NULL));
   int random_number = rand() % 5 + 1;
-  random_number = 5;
   FactoryWeapons factory_weapons;
   switch (random_number) {
   case 1:

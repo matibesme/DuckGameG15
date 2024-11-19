@@ -1,4 +1,5 @@
 #pragma once
+#include "../common/blocking_queue.h"
 #include <chrono>
 #include <iostream>
 #include <list>
@@ -6,9 +7,8 @@
 #include <memory>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
-
-#include "../common/blocking_queue.h"
 
 #include "../common/dto_definitions.h"
 #include "../common/game_exception.h"
@@ -18,7 +18,7 @@
 #include "items/ducks/duck.h"
 #include "items/weapons/weapon.h"
 #include "protected_queues_map.h"
-// eliminar dsp
+
 #include "items/bullets/bullet.h"
 
 #include "configuration/load_game.h"
@@ -27,7 +27,6 @@
 #include "items/weapons/factory_weapons.h"
 #include "server_constant.h"
 class GameLoop : public Thread {
-
 private:
   std::map<uint8_t, std::string> &map_id_clientes;
   std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;
@@ -65,7 +64,7 @@ public:
            bool &end_game, std::shared_ptr<ProtectedQueuesMap> &queues_map,
            std::map<uint8_t, std::string> &map_id_clientes);
   virtual void run() override;
-  void checkCommand(CommandClient comando);
+  void checkCommand(CommandClient comando, uint8_t &rounds);
   void movementComand(uint8_t comando);
   void weaponComand(uint8_t comando);
   void checkBullets();
@@ -81,5 +80,12 @@ public:
   void sendColorPresentation();
   void checkGrenadeExplosion(GranadaBullet &grenade_bullet);
   void spawnBoxesCheat();
+  void winRoundCheat();
+  void winGameCheat(uint8_t &rounds);
+  bool sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &plataforma);
+  void coalisionSuperiorEinferior(DuckPlayer &personaje,
+                                  DTOPlatform &plataforma, bool &is_on_platform,
+                                  bool &is_on_platform_down);
+  void coalisonWalls(DuckPlayer &personaje, DTOPlatform &plataforma);
   virtual ~GameLoop();
 };

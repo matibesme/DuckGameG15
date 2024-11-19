@@ -1,7 +1,7 @@
 #ifndef DUEL_PISTOL_H
 #define DUEL_PISTOL_H
-
 #include "weapon.h"
+#include <memory>
 
 class DuelPistol : public Weapon {
 private:

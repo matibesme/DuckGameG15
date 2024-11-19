@@ -4,12 +4,11 @@
 
 #ifndef SHOTGUN_H
 #define SHOTGUN_H
-
 #include "weapon.h"
+#include <memory>
 #include <vector>
 
 class Shotgun : public Weapon {
-
 private:
   std::vector<Bullet> pellets_vector;
   int pellet_count;

@@ -3,7 +3,7 @@
 //
 
 #include "banana.h"
-
+#include <memory>
 Banana::Banana(uint8_t type, uint8_t id, float x_pos, float y_pos,
                uint8_t damage, uint8_t range, int ammo_quantity, float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
@@ -40,7 +40,6 @@ std::unique_ptr<Bullet> Banana::shoot(bool is_aiming_up) {
                  bala.randomSpread());
   }
   if (direction == RIGHT) {
-
     setXPos(x_pos - recoil);
   } else if (direction == LEFT) {
     setXPos(x_pos + recoil);

@@ -27,7 +27,6 @@ FactoryWeapons::FactoryWeapons() {}
 std::shared_ptr<Weapon> FactoryWeapons::createWeapon(uint8_t type, float x,
                                                      float y) {
   switch (type) {
-
   case GRANADA_GUN:
     return std::make_shared<Granada>(GRANADA_GUN, 1, x, y, DAMAGE_GRANADA,
                                      RANGE_GRANADA * TILE_CONSTANT,

@@ -1,10 +1,9 @@
 #ifndef MAGNUM_H
 #define MAGNUM_H
-
 #include "weapon.h"
+#include <memory>
 
 class Magnum : public Weapon {
-
 private:
   Bullet bala;
 

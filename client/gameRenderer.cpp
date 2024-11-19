@@ -42,7 +42,7 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   for (auto &bullet : bullets)
     bullet.draw(renderer);
   for (auto &gun : guns)
-    gun.draw(false, false, renderer);
+    gun.drawOnSpawn(renderer);
   for (auto &armor : armors)
     armor.draw(false, renderer, false, false);
   for (auto &helmet : helmets)

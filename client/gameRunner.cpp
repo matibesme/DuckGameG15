@@ -26,11 +26,12 @@ void GameRunner::run() {
     } while (command.action == COLOR_PRESENTATION_BYTE);
 
     runGameLoop(gameRenderer);
-
+  } catch (const ClosedQueue &e) {
+    std::cerr << "Se cerró la cola de mensajes" << std::endl;
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
-    queue_sender.close();
   }
+  queue_sender.close();
 }
 
 void GameRunner::runGameLoop(GameRenderer &gameRenderer) {

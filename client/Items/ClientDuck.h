@@ -5,14 +5,12 @@
 #include <memory>
 
 #include "../common/common_constant.h"
-#include "SDL2pp/SDL2pp.hh"
-
 #include "Graficos.h"
 #include "Gun.h"
+#include "SDL2pp/SDL2pp.hh"
 #include "armor.h"
 #include "helmet.h"
-
-using namespace SDL2pp;
+#include <string>
 
 class ClientDuck {
 public:
@@ -45,6 +43,7 @@ private:
   bool armorEquipped;
   bool helmetEquipped;
   bool isOnGround;
+  bool isLookingUp;
   void applyColor(Renderer &renderer, const std::string &color);
   std::map<std::string, SDL_Color> colorMap = {
       {"red", {255, 0, 0, 255}},      {"blue", {0, 0, 255, 255}},

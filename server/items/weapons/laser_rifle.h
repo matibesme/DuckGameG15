@@ -3,8 +3,8 @@
 //
 #ifndef LASER_RIFLE_H
 #define LASER_RIFLE_H
-
 #include "weapon.h"
+#include <memory>
 #include <vector>
 
 class LaserRifle : public Weapon {

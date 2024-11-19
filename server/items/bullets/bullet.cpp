@@ -66,7 +66,6 @@ void Bullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
   if (is_alive) {
     if (x_pos >= plat_x_pos && x_pos <= plat_x_pos + plat_width) {
       if (y_pos >= plat_y_pos && y_pos <= plat_y_pos + plat_height) {
-
         if (type == LASER_RIFLE_BULLET) {
           changeDirection(calculateCollisionSide(plat_x_pos, plat_y_pos,
                                                  plat_width, plat_height));
@@ -87,7 +86,6 @@ float minimo(float a, float b, float c, float d) {
 
 uint8_t Bullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
                                        float plat_width, float plat_height) {
-
   float up_distance =
       (y_pos +
        (type == LASER_RIFLE_BULLET ? HEIGHT_BULLET : HEIGHT_BIG_BULLET)) -

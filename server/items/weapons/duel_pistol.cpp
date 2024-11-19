@@ -32,7 +32,6 @@ std::unique_ptr<Bullet> DuelPistol::shoot(bool is_aiming_up) {
   }
 
   if (direction == RIGHT) {
-
     setXPos(x_pos - recoil);
   } else if (direction == LEFT) {
     setXPos(x_pos + recoil);

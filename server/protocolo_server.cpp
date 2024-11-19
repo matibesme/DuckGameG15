@@ -16,7 +16,8 @@ void ProtocoloServer::sendToClient(const GameState &command) {
       sendVictory(command);
     else if (command.action == COLOR_PRESENTATION_BYTE)
       sendPlayersColor(command.players_color);
-
+    else if (command.action == FINALLY_GAME)
+      sendFinallyGame();
   } catch (const SocketClose &e) {
     std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
   } catch (const std::exception &e) {
@@ -26,7 +27,6 @@ void ProtocoloServer::sendToClient(const GameState &command) {
 }
 
 void ProtocoloServer::sendFullGame(const GameState &command) {
-
   protocolo.sendByte(FULL_GAME_BYTE, dead_connection);
   protocolo.sendByte(command.backGround_id, dead_connection);
   protocolo.sendByte(command.lista_plataformas.size(), dead_connection);
@@ -98,7 +98,6 @@ void ProtocoloServer::sendFullGame(const GameState &command) {
 void ProtocoloServer::sendActiveGames(
     const std::map<std::string, uint8_t> &games) {
   try {
-
     protocolo.sendByte(games.size(), dead_connection);
 
     for (const auto &game : games) {
@@ -124,6 +123,10 @@ void ProtocoloServer::sendVictory(const GameState &command) {
   protocolo.sendString(command.name_winner, dead_connection);
 }
 
+void ProtocoloServer::sendFinallyGame() {
+  protocolo.sendByte(FINALLY_GAME, dead_connection);
+}
+
 CommandClient ProtocoloServer::receiveCommandFromClients(bool &two_players) {
   try {
     uint8_t type_of_action = protocolo.receiveByte(dead_connection);
@@ -131,12 +134,9 @@ CommandClient ProtocoloServer::receiveCommandFromClients(bool &two_players) {
     uint8_t player = protocolo.receiveByte(dead_connection);
     if (player == 2 && two_players)
       return {type_of_action, type_of_movement, static_cast<uint8_t>(id + 1)};
-
     return {type_of_action, type_of_movement, id};
-
   } catch (const std::exception &e) {
     dead_connection = true;
-    std::cerr << e.what() << std::endl;
   }
   return {0, 0, 0};
 }
@@ -159,7 +159,6 @@ GameAccess ProtocoloServer::receiveAccessFromClients() {
     return {action_type, game_name, name, false, ""};
   } catch (const std::exception &e) {
     dead_connection = true;
-    std::cerr << e.what() << std::endl;
   }
   GameAccess null_access;
   return null_access;
@@ -177,7 +176,6 @@ void ProtocoloServer::closeSocket() {
 void ProtocoloServer::sendMatchWithSameName(bool same_name) {
   try {
     protocolo.sendBool(same_name, dead_connection);
-
   } catch (const SocketClose &e) {
     std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
   } catch (const std::exception &e) {
@@ -200,5 +198,4 @@ void ProtocoloServer::sendPlayersColor(
     std::cerr << e.what() << std::endl;
   }
 }
-
 ProtocoloServer::~ProtocoloServer() {}
