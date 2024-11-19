@@ -4,61 +4,61 @@ granade:
   damage: 50
   range: 5
   ammo: 1
-  recoil: 0.5
+  recoil: 0
   radius_explosion: 3
 
 banana:
-    damage: 30
+    damage: 0
     range: 5
     ammo: 1
-    recoil: 0.5
+    recoil: 0
 
 ak47:
-    damage: 20
-    range: 5
-    ammo: 100
-    recoil: 0.5
+    damage: 8
+    range: 13
+    ammo: 30
+    recoil: 1
 
 laser_rifle:
     damage: 20
-    range: 5
-    ammo: 30
-    recoil: 0.5
+    range: 30
+    ammo: 10
+    recoil: 0
 
 pew_pew_laser:
-    damage: 20
-    range: 5
-    ammo: 30
-    recoil: 0.5
+    damage: 12
+    range: 38
+    ammo: 12
+    recoil: 0
 
 escopeta:
-    damage: 20
+    damage: 10
     range: 5
     ammo: 30
-    recoil: 0.5
+    recoil: 0
 
 sniper:
-    damage: 20
+    damage: 80
     range: 5
     ammo: 30
-    recoil: 0.5
+    recoil: 0
 
 cowboy:
-    damage: 20
-    range: 5
-    ammo: 30
-    recoil: 0.5
+    damage: 15
+    range: 20
+    ammo: 6
+    recoil: 0
 
 pistola_de_duelos:
-    damage: 20
+    damage: 50
     range: 5
-    ammo: 30
-    recoil: 0.5
+    ammo: 1
+    recoil: 0
 
 magnum:
-    damage: 20
-    range: 5
-    ammo: 30
+    damage: 25
+    range: 20
+    ammo: 6
     recoil: 0.5
 
 
