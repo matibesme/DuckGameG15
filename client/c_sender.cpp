@@ -17,7 +17,7 @@ void Sender::run() {
       protocolo.sendInGameToServer(command);
     }
   } catch (const std::exception &e) {
-    std::cerr << "Error en el sender: " << e.what() << '\n';
+    std::cerr << "Sender: " << e.what() << '\n';
     _keep_running = false;
   } catch (...) {
     std::cerr << "Error desconocido.\n";

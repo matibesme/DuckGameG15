@@ -9,9 +9,12 @@ void Receiver::run() {
     while (_keep_running) {
       GameState command = protocolo.reciveFromServer();
       queue_receiver.push(command);
+      if(command.action == FINALLY_GAME){
+        return;
+      }
     }
   } catch (const std::exception &e) {
-    std::cerr << "Error en el receiver: " << e.what() << '\n';
+    std::cerr << "Receiver: " << e.what() << '\n';
     queue_receiver.close();
   } catch (...) {
     std::cerr << "Error desconocido.\n";

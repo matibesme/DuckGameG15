@@ -46,10 +46,6 @@ duck spawns:
     pos_y: 241
     height: 24
     width: 32
-  - pos_x: 202
-    pos_y: 243
-    height: 24
-    width: 32
 weapon spawns:
   []
 box spawns:

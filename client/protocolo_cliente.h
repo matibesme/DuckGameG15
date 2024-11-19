@@ -34,5 +34,6 @@ public:
   GameState reciveVictoryFromServer();
   bool reciveMatchWithSameName();
   GameState reciveColorPresentationFromServer();
+  bool isDeadConnection();
   ~ProtocoloCliente();
 };

@@ -52,8 +52,7 @@ void GameRunner::runGameLoop(GameRenderer &gameRenderer) {
       else if (command.action == VICTORY_BYTE)
         gameRenderer.mostrarPantallaVictoria(command.name_winner, sdl_renderer);
       else if (command.action == FINALLY_GAME)
-        queue_receiver.close();
-        //throw std::runtime_error("Termino el juego el server");
+        throw std::runtime_error("Termino el juego el server");
       else
         actualizar = true;
     }

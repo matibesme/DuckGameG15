@@ -49,6 +49,7 @@ GameState ProtocoloCliente::reciveFromServer() {
     if (firstByte == FINALLY_GAME) {
       GameState command;
       command.action = FINALLY_GAME;
+      dead_connection = true;
       return command;
     }
   } catch (const std::exception &e) {
@@ -57,6 +58,8 @@ GameState ProtocoloCliente::reciveFromServer() {
   }
   throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
+
+bool ProtocoloCliente::isDeadConnection() { return dead_connection; }
 
 GameState ProtocoloCliente::reciveFullGameFromServer() {
   GameState command;
