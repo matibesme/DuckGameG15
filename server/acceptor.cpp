@@ -57,9 +57,9 @@ void Acceptor::closeSocket() {
 }
 
 Acceptor::~Acceptor() {
-  for (auto &it : lista_clientes) {
-    it.join();
-    deleteAClient(it);
+  for (auto it = lista_clientes.begin(); it != lista_clientes.end();) {
+    (*it).join();
+    deleteAClient(*it);
+    it = lista_clientes.erase(it);
   }
-  lista_clientes.clear();
 }

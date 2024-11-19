@@ -47,7 +47,6 @@ void GameLoop::run() {
         load_game_config.loadGame();
 
         while (!end_game && map_personajes.size() != 1) {
-
           CommandClient comando;
           while (queue_comandos->try_pop(comando)) {
             checkCommand(comando, rounds);
@@ -126,7 +125,6 @@ void GameLoop::sendCompleteScene() {
   }
 
   for (auto &personaje : map_personajes) {
-
     uint8_t weapon_type = NOGUN;
     if (personaje.second.isWeaponEquipped()) {
       weapon_type = personaje.second.getWeapon().getType();
@@ -174,7 +172,6 @@ void GameLoop::sendCompleteScene() {
 }
 
 void GameLoop::paraCadaPatoAction() {
-
   for (auto it = map_personajes.begin(); it != map_personajes.end();) {
     checkCoalitionDuckPlatform(it->second);
     it->second.executeAction();
@@ -191,7 +188,6 @@ void GameLoop::paraCadaPatoAction() {
 
     if (it->second.getWeapon().getType() == GRANADA_GUN &&
         it->second.getWeapon().isActive()) {
-
       std::unique_ptr<Bullet> bullet =
           it->second.getWeapon().shoot(it->second.isAimingUp());
       map_bullets.emplace(id_balas, std::move(bullet));
@@ -209,7 +205,6 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
   }
   uint8_t bullet_type = bullet->getTypeOfBullet();
   if (bullet_type != GRANADA_BULLET) {
-
     for (auto it = map_personajes.begin(); it != map_personajes.end();) {
       bool colision = bullet->colisionWithDuck(
           it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
@@ -253,7 +248,6 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
 void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
   bool is_on_platform = false;
   for (auto &platform : list_plataformas) {
-
     if (sobrePlataformaX(personaje, platform)) {
       bool is_on_platform_down = false;
       coalisionSuperiorEinferior(personaje, platform, is_on_platform,
@@ -309,7 +303,6 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
 void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
   if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 > platform.y_pos &&
       personaje.getYPos() < platform.y_pos + platform.height) {
-
     if (personaje.isWeaponEquipped()) {
       if (personaje.getXPos() + DUCK_WIDTH - 5 > platform.x_pos &&
           personaje.getXPos() < platform.x_pos &&
@@ -336,7 +329,6 @@ void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
   }
 }
 void GameLoop::respawnWeapon() {
-
   for (auto it = time_weapon_last_respawn.begin();
        it != time_weapon_last_respawn.end();) {
     if (it->second == 0) {

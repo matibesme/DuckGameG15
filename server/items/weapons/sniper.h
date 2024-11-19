@@ -4,8 +4,8 @@
 
 #ifndef SNIPER_H
 #define SNIPER_H
-
 #include "weapon.h"
+#include <memory>
 
 class Sniper : public Weapon {
 private:

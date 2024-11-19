@@ -1,4 +1,5 @@
 #pragma once
+#include "../common/blocking_queue.h"
 #include <chrono>
 #include <iostream>
 #include <list>
@@ -6,9 +7,8 @@
 #include <memory>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
-
-#include "../common/blocking_queue.h"
 
 #include "../common/dto_definitions.h"
 #include "../common/game_exception.h"
@@ -18,7 +18,7 @@
 #include "items/ducks/duck.h"
 #include "items/weapons/weapon.h"
 #include "protected_queues_map.h"
-// eliminar dsp
+
 #include "items/bullets/bullet.h"
 
 #include "configuration/load_game.h"
@@ -27,7 +27,6 @@
 #include "items/weapons/factory_weapons.h"
 #include "server_constant.h"
 class GameLoop : public Thread {
-
 private:
   std::map<uint8_t, std::string> &map_id_clientes;
   std::shared_ptr<BlockingQueue<CommandClient>> queue_comandos;

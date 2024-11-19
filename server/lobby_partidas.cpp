@@ -9,7 +9,6 @@ std::shared_ptr<BlockingQueue<CommandClient>>
 LobbyPartidas::addPartida(uint8_t id_client, std::string &name1,
                           bool double_player, std::string &name2,
                           std::string &game_name) {
-
   std::lock_guard<std::mutex> lock(m);
 
   if (partidas_sin_arrancar.find(game_name) != partidas_sin_arrancar.end()) {
@@ -55,7 +54,6 @@ LobbyPartidas::joinGame(std::string &id_partida, uint8_t id_cliente,
 }
 
 bool LobbyPartidas::isHoster(uint8_t id_cliente) {
-
   return id_hoster_partida.find(id_cliente) != id_hoster_partida.end();
 }
 
@@ -94,11 +92,12 @@ std::map<std::string, uint8_t> &LobbyPartidas::getIdPartidas() {
 }
 
 LobbyPartidas::~LobbyPartidas() {
-  for (auto &it : partidas) {
-    end_game[it.first] = true;
-    queues_game_loop[it.first]->close();
-    queues_game_loop.erase(it.first);
-    partidas[it.first]->join();
-    partidas.erase(it.first);
+  auto it = partidas.begin();
+  while (it != partidas.end()) {
+    end_game[it->first] = true;
+    queues_game_loop[it->first]->close();
+    queues_game_loop.erase(it->first);
+    it->second->join();
+    it = partidas.erase(it);
   }
 }

@@ -52,7 +52,6 @@ void GranadaBullet::explode() { type = GRENADE_EXPLOSION; }
 
 void GranadaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
                                          float plat_width, float plat_height) {
-
   if (is_alive) {
     if ((plat_x_pos < x_pos and x_pos < plat_x_pos + plat_width) or
         (plat_x_pos < x_pos + WIDTH_BIG_BULLET and

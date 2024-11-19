@@ -5,11 +5,9 @@
 #include "../common/dto_definitions.h"
 #include "../common/socket.h"
 #include "../common/thread.h"
-
 #include "protocolo_server.h"
-
+#include <memory>
 class Sender : public Thread {
-
 private:
   ProtocoloServer &protocolo;
   std::shared_ptr<BlockingQueue<GameState>> queue_sender;

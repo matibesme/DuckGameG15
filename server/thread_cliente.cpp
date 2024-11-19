@@ -16,7 +16,6 @@ void ThreadCliente::run() {
     lobby.addQueueSender(id, queue_sender);
     receiver.start();
     sender.start();
-
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
   }

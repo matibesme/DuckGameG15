@@ -9,8 +9,8 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 #include <yaml-cpp/yaml.h>
-
 class LoadGameFile {
 private:
   FactoryWeapons &factory_weapons;

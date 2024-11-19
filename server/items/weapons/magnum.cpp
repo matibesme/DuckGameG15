@@ -7,9 +7,7 @@ Magnum::Magnum(uint8_t type, uint8_t id, float x_pos, float y_pos,
       bala(MAGNUM_BULLET, 1, 0, 0, 10, range, 0.3) {}
 
 bool Magnum::isEmptyAmmo() { return ammo_quantity == 0; }
-
 std::unique_ptr<Bullet> Magnum::shoot(bool is_aiming_up) {
-
   if (isEmptyAmmo()) {
     return nullptr;
   }
@@ -33,7 +31,6 @@ std::unique_ptr<Bullet> Magnum::shoot(bool is_aiming_up) {
   }
 
   if (direction == RIGHT) {
-
     setXPos(x_pos - recoil);
   } else if (direction == LEFT) {
     setXPos(x_pos + recoil);

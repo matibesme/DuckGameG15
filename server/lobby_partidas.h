@@ -6,10 +6,9 @@
 #include <map>
 #include <memory>
 #include <mutex>
-
+#include <string>
 class ThreadCliente;
 class LobbyPartidas {
-
 private:
   uint8_t id_partida;
   std::map<uint8_t, std::unique_ptr<GameLoop>> partidas;

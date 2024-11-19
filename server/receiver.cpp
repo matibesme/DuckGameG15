@@ -24,7 +24,6 @@ void Receiver::run() {
         two_players = command.double_player;
         game_name = command.game_name;
       } else if (command.action_type == CREATE_GAME) {
-
         queue_comandos =
             lobby.addPartida(id, command.player1_name, command.double_player,
                              command.player2_name, command.game_name);

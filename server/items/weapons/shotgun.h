@@ -9,7 +9,6 @@
 #include <vector>
 
 class Shotgun : public Weapon {
-
 private:
   std::vector<Bullet> pellets_vector;
   int pellet_count;
