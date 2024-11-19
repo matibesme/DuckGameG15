@@ -293,6 +293,10 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
              personaje.getYPos() + DUCK_HEIGHT >
                  platform.y_pos + platform.height &&
              personaje.getVelocidadY() > 0) {
+    if (personaje.getXPos() >= platform.x_pos+platform.width-12)
+    {
+      return;
+    }
     personaje.setYPos(platform.y_pos + platform.height);
     personaje.setVelocidadY(0);
     is_on_platform_down = true;
