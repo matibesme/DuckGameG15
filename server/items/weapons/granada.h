@@ -6,6 +6,7 @@
 #define GRANADA_H
 #include "../bullets/granada_bullet.h"
 #include "weapon.h"
+#include <memory>
 
 class Granada : public Weapon {
 private:

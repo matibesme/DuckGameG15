@@ -9,7 +9,7 @@
 #include "duel_pistol.h"
 #include "granada.h"
 #include "magnum.h"
-
+#include <memory>
 class FactoryWeapons {
 
 public:
