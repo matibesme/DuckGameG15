@@ -1,18 +1,18 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <utility>
-#include <list>
 #include "../common/common_constant.h"
 #include "../common/game_exception.h"
 #include "c_receiver.h"
 #include "c_sender.h"
 #include "gameRunner.h"
 #include "protocolo_cliente.h"
+#include <fstream>
+#include <iostream>
+#include <list>
+#include <sstream>
+#include <string>
+#include <utility>
 
 class Client {
 private:

@@ -1,17 +1,17 @@
 #pragma once
+#include "../common/common_constant.h"
 #include "../common/dto_definitions.h"
 #include "../common/game_exception.h"
+#include "../common/protocolo.h"
+#include "../common/socket.h"
 #include <cstdint>
 #include <iostream>
+#include <list>
 #include <map>
 #include <ostream>
 #include <string>
 #include <utility>
-#include "../common/protocolo.h"
-#include "../common/socket.h"
-#include "../common/common_constant.h"
 #include <vector>
-#include <list>
 
 class ProtocoloCliente {
   Socket socket;

@@ -5,12 +5,12 @@
 #include <memory>
 
 #include "../common/common_constant.h"
-#include "SDL2pp/SDL2pp.hh"
-#include <string>
 #include "Graficos.h"
 #include "Gun.h"
+#include "SDL2pp/SDL2pp.hh"
 #include "armor.h"
 #include "helmet.h"
+#include <string>
 
 class ClientDuck {
 public:

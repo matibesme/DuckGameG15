@@ -48,8 +48,7 @@ void Bullet::draw(SDL2pp::Renderer &renderer) {
   if (typeOfBullet == GRANADA_BULLET || typeOfBullet == BANANA_BULLET) {
     area =
         SDL2pp::Rect(pos_x, pos_y, WIDTH_GRENADE_BANANA, HEIGHT_GRENADE_BANANA);
-  }
-  else if (typeOfBullet == GRENADE_EXPLOSION) {
+  } else if (typeOfBullet == GRENADE_EXPLOSION) {
     explosionSpriteX = (explosionSpriteX + 1);
     if (explosionSpriteX == 0) {
       reproducirSonido();

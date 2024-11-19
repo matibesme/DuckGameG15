@@ -6,6 +6,7 @@
 #include "SDL2pp/SDL2pp.hh"
 #include <memory>
 
+using SDL2pp::Rect;
 using SDL2pp::Renderer;
 using SDL2pp::Texture;
 

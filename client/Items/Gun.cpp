@@ -38,8 +38,9 @@ void Gun::cargarTextura() {
 
   actualizarTextura(texture_path_equipped, texture_path_not_equipped, width,
                     height);
-  if (typeGun == NOGUN)
+  if (typeGun == NOGUN) {
     return;
+  }
   texture_equipped = std::make_unique<SDL2pp::Texture>(
       graficos.LoadTexture(texture_path_equipped));
 
@@ -77,13 +78,10 @@ void Gun::drawOnDuck(float newX, float newY, bool isFliped, uint8_t gun,
         active_texture, SDL2pp::NullOpt,
         Rect(posX + 3, posY - DUCK_HEIGHT / 2.5, WIDTH_GUN, HEIGHT_GUN), 90.0,
         SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
-  }
-  // si no esta flippeado dibujo a las granadas y bananas distinto
-  else if (typeGun == GRANADA_GUN || typeGun == BANANA_GUN) {
+  } else if (typeGun == GRANADA_GUN || typeGun == BANANA_GUN) {
     renderer.Copy(active_texture, SDL2pp::NullOpt,
                   Rect(posX + 5, posY, WIDTH_GUN, HEIGHT_GUN));
-  }
-  else {
+  } else {
     renderer.Copy(active_texture, SDL2pp::NullOpt,
                   Rect(posX, posY, WIDTH_GUN, HEIGHT_GUN));
   }
@@ -100,11 +98,11 @@ void Gun::drawOnSpawn(SDL2pp::Renderer &renderer) {
     SDL2pp::Rect destRect(posX, posY, WIDTH_GUN, HEIGHT_GUN);
     // srcRect es el rectángulo que se tomará de la textura
     SDL2pp::Rect srcRect(0, 32, 16, 16);
-
     renderer.Copy(active_texture, srcRect, destRect);
-  } else
+  } else {
     renderer.Copy(active_texture, SDL2pp::NullOpt,
                   Rect(posX, posY, WIDTH_GUN, HEIGHT_GUN));
+  }
 }
 
 float Gun::getPosX() { return posX; }
