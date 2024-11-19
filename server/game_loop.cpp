@@ -248,25 +248,24 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
   }
 }
 
+
 void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
   bool is_on_platform = false;
   for (auto &platform : list_plataformas) {
-    coalisonWalls(personaje, platform);
-    if (sobrePlataformaX(personaje, platform)) {
-      coalisionSuperiorEinferior(personaje, platform, is_on_platform);
-    }
 
+    if (sobrePlataformaX(personaje, platform)) {
+      bool is_on_platform_down = false;
+      coalisionSuperiorEinferior(personaje, platform, is_on_platform, is_on_platform_down);
+      if (is_on_platform_down)return;
+    }
+    coalisonWalls(personaje, platform);
   }
 
   if (!is_on_platform && (!personaje.estaSaltando() || personaje.isSliding())) {
     personaje.setIsSliding(false);
     personaje.setEnSalto(true);
     personaje.setVelocidadY(0);
-    if (personaje.getDirection() == RIGHT) {
-      //spersonaje.setXPos(personaje.getXPos() + DUCK_WIDTH-10);
-    } else if (personaje.getDirection() == LEFT) {
-      //personaje.setXPos(personaje.getXPos() - DUCK_WIDTH+10);
-    }
+
   }
 }
 
@@ -281,7 +280,7 @@ bool GameLoop::sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &platform) {
 
 void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
                                           DTOPlatform &platform,
-                                          bool &is_on_platform) {
+                                          bool &is_on_platform, bool &is_on_platform_down) {
   if (personaje.getYPos() + DUCK_HEIGHT >= platform.y_pos &&
       personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos) {
     if (personaje.getVelocidadY() < 0) {
@@ -296,6 +295,7 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
              personaje.getVelocidadY() > 0) {
     personaje.setYPos(platform.y_pos + platform.height);
     personaje.setVelocidadY(0);
+    is_on_platform_down = true;
   }
 }
 
@@ -330,7 +330,6 @@ void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
     }
   }
 }
-
 void GameLoop::respawnWeapon() {
 
   for (auto it = time_weapon_last_respawn.begin();

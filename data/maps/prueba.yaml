@@ -10,6 +10,21 @@ plataforms:
     height: 15
     width: 96
     type: 131
+  - pos_x: 170
+    pos_y: 162
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 302
+    pos_y: 202
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 418
+    pos_y: 333
+    height: 9
+    width: 32
+    type: 129
 walls:
   - pos_x: 247
     pos_y: 223
@@ -21,6 +36,11 @@ walls:
     height: 47
     width: 14
     type: 134
+  - pos_x: 306
+    pos_y: 219
+    height: 45
+    width: 17
+    type: 135
 duck spawns:
   - pos_x: 201
     pos_y: 241
