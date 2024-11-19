@@ -8,6 +8,7 @@
 
 using SDL2pp::Renderer;
 using SDL2pp::Texture;
+using SDL2pp::Rect;
 
 class Armor {
 private:
@@ -15,7 +16,6 @@ private:
   bool is_equipped;
   float pos_x;
   float pos_y;
-  void setEquip(bool equip);
 
 public:
   Armor(Graficos &graficos, float pos_x, float pos_y);
