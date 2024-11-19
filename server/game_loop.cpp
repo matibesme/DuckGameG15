@@ -251,73 +251,63 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
 void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
   bool is_on_platform = false;
   for (auto &platform : list_plataformas) {
-
-    if (sobrePlataformaX(personaje, platform))
-    {
+    if (sobrePlataformaX(personaje, platform)) {
       coalisionSuperiorEinferior(personaje, platform, is_on_platform);
     }
     coalisonWalls(personaje, platform);
-    }
+  }
 
-  if (!is_on_platform && (!personaje.estaSaltando() or personaje.isSliding())) {
+  if (!is_on_platform && (!personaje.estaSaltando() || personaje.isSliding())) {
     personaje.setIsSliding(false);
     personaje.setEnSalto(true);
     personaje.setVelocidadY(0);
     if (personaje.getDirection() == RIGHT) {
       personaje.setXPos(personaje.getXPos() + DUCK_WIDTH);
-    } else if(personaje.getDirection() == LEFT) {
+    } else if (personaje.getDirection() == LEFT) {
       personaje.setXPos(personaje.getXPos() - DUCK_WIDTH);
     }
   }
 }
 
 bool GameLoop::sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &platform) {
-return (personaje.getXPos()  >= platform.x_pos &&
-      personaje.getXPos()  <= platform.x_pos + platform.width)||
-      (personaje.getXPos()  <= platform.x_pos &&
-      personaje.getXPos()+DUCK_WIDTH  >= platform.x_pos)||
-      (personaje.getXPos()  <= platform.x_pos+platform.width &&
-      personaje.getXPos()+DUCK_WIDTH  >= platform.x_pos+platform.width);
-
+  return (personaje.getXPos() >= platform.x_pos &&
+          personaje.getXPos() <= platform.x_pos + platform.width) ||
+         (personaje.getXPos() <= platform.x_pos &&
+          personaje.getXPos() + DUCK_WIDTH >= platform.x_pos) ||
+         (personaje.getXPos() <= platform.x_pos + platform.width &&
+          personaje.getXPos() + DUCK_WIDTH >= platform.x_pos + platform.width);
 }
 
-
-void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje, DTOPlatform &platform, bool &is_on_platform)
-{
+void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje, DTOPlatform &platform, bool &is_on_platform) {
   if (personaje.getYPos() + DUCK_HEIGHT >= platform.y_pos &&
-          personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos) {
+      personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos) {
     if (personaje.getVelocidadY() < 0) {
       personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
     } else {
       personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
     }
     is_on_platform = true;
-          } else if (personaje.getYPos() <= platform.y_pos + platform.height &&
-                     personaje.getYPos() + DUCK_HEIGHT >
-                         platform.y_pos + platform.height &&
-                     personaje.getVelocidadY() > 0) {
-            personaje.setYPos(platform.y_pos + platform.height);
-            personaje.setVelocidadY(0);
-                     }
+  } else if (personaje.getYPos() <= platform.y_pos + platform.height &&
+             personaje.getYPos() + DUCK_HEIGHT > platform.y_pos + platform.height &&
+             personaje.getVelocidadY() > 0) {
+    personaje.setYPos(platform.y_pos + platform.height);
+    personaje.setVelocidadY(0);
+  }
 }
 
-
 void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
-
-  if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 >
-              platform.y_pos &&
-          personaje.getYPos() < platform.y_pos + platform.height) {
-
+  if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 > platform.y_pos &&
+      personaje.getYPos() < platform.y_pos + platform.height) {
     if (personaje.getXPos() + DUCK_WIDTH > platform.x_pos &&
         personaje.getXPos() < platform.x_pos &&
         personaje.getDirection() == RIGHT) {
       personaje.setXPos(platform.x_pos - DUCK_WIDTH);
-        } else if (personaje.getXPos() < platform.x_pos + platform.width &&
-                   personaje.getXPos() > platform.x_pos &&
-                   personaje.getDirection() == LEFT) {
-          personaje.setXPos(platform.x_pos + platform.width);
-                   }
-          }
+    } else if (personaje.getXPos() < platform.x_pos + platform.width &&
+               personaje.getXPos() > platform.x_pos &&
+               personaje.getDirection() == LEFT) {
+      personaje.setXPos(platform.x_pos + platform.width);
+    }
+  }
 }
 
 
