@@ -5,8 +5,6 @@
 sudo apt install build-essential
 sudo apt install cmake
 #SDL2
-sudo apt install libsdl2-dev
-sudo apt install libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
 sudo apt install libjpeg-dev libpng-dev libfreetype-dev libopusfile-dev libflac-dev libxmp-dev libfluidsynth-dev libwavpack-dev cmake libmodplug-dev libsdl2-dev
 mkdir sdl2
 cd sdl2
