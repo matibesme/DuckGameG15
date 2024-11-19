@@ -4,7 +4,7 @@
 
 #ifndef SHOTGUN_H
 #define SHOTGUN_H
-
+#include <memory>
 #include "weapon.h"
 #include <vector>
 

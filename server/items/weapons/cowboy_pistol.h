@@ -1,6 +1,6 @@
 #ifndef COYBOY_PISTOL_H
 #define COYBOY_PISTOL_H
-
+#include <memory>
 #include "weapon.h"
 
 class CowboyPistol : public Weapon {

@@ -1,6 +1,6 @@
 #ifndef DUEL_PISTOL_H
 #define DUEL_PISTOL_H
-
+#include <memory>
 #include "weapon.h"
 
 class DuelPistol : public Weapon {

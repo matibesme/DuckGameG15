@@ -5,7 +5,9 @@
 #include "../items/weapons/weapon.h"
 #include <list>
 #include <yaml-cpp/yaml.h>
-
+#include <map>
+#include <memory>
+#include <string>
 #include "items/boxes.h"
 #include "items/weapons/factory_weapons.h"
 

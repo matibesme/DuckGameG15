@@ -7,7 +7,6 @@ Acceptor::Acceptor(const char *port, bool &close)
       cantidad_clientes(1), lobby() {}
 
 void Acceptor::run() {
-
   while (!close) {
     try {
       accept_new_client();

@@ -85,6 +85,6 @@ constexpr uint8_t GAMES_PER_ROUND = 5;
 constexpr float BULLET_VEL = 8;
 constexpr float MOVEMENT_QUANTITY_X = 2;
 constexpr float MOVEMENT_QUANTITY_Y = 2;
-constexpr float MARGEN_PLATAFORMA_X=15;
+constexpr float MARGEN_PLATAFORMA_X = 15;
 // TIMES
 constexpr int TIME_TO_RESPAWN = 10;

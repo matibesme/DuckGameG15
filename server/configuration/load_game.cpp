@@ -26,7 +26,6 @@ LoadGameFile::LoadGameFile(
       list_colors(list_colors) {}
 
 void LoadGameFile::loadGame() {
-
   const std::string directory_path = "../data/maps";
   std::vector<std::string> files;
   for (const auto &entry :
@@ -53,7 +52,6 @@ void LoadGameFile::loadGame() {
   POSICION_INICIAL_Y = map["duck spawns"][0]["pos_y"].as<float>();
 
   for (const auto &platform : map["plataforms"]) {
-
     DTOPlatform dto_platform = {
         platform["type"].as<uint8_t>(), platform["pos_x"].as<float>(),
         platform["pos_y"].as<float>(), platform["width"].as<float>(),
@@ -69,7 +67,6 @@ void LoadGameFile::loadGame() {
   }
 
   for (const auto &wall : map["walls"]) {
-
     DTOPlatform dto_wall = {
         wall["type"].as<uint8_t>(), wall["pos_x"].as<float>(),
         wall["pos_y"].as<float>(), wall["width"].as<float>(),
