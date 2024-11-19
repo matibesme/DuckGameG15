@@ -3,7 +3,10 @@
 
 #include <SDL2pp/SDL2pp.hh>
 
-using namespace SDL2pp;
+using SDL2pp::Renderer;
+using SDL2pp::Texture;
+using SDL2pp::Window;
+using SDL2pp::Surface;
 
 class Graficos {
 public:

@@ -67,10 +67,11 @@ void Gun::drawOnDuck(float newX, float newY, bool isFliped, uint8_t gun,
                     Rect(posX - DUCK_WIDTH / 2.5, posY - DUCK_HEIGHT / 2.5,
                          WIDTH_GUN, HEIGHT_GUN),
                     90.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
-    } else
+    } else {
       renderer.Copy(active_texture, SDL2pp::NullOpt,
                     Rect(posX - DUCK_WIDTH / 2.5, posY, WIDTH_GUN, HEIGHT_GUN),
                     0.0, SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
+    }
   } else if (lookingUp) {
     renderer.Copy(
         active_texture, SDL2pp::NullOpt,
@@ -78,12 +79,14 @@ void Gun::drawOnDuck(float newX, float newY, bool isFliped, uint8_t gun,
         SDL2pp::NullOpt, SDL_FLIP_HORIZONTAL);
   }
   // si no esta flippeado dibujo a las granadas y bananas distinto
-  else if (typeGun == GRANADA_GUN || typeGun == BANANA_GUN)
+  else if (typeGun == GRANADA_GUN || typeGun == BANANA_GUN) {
     renderer.Copy(active_texture, SDL2pp::NullOpt,
                   Rect(posX + 5, posY, WIDTH_GUN, HEIGHT_GUN));
-  else
+  }
+  else {
     renderer.Copy(active_texture, SDL2pp::NullOpt,
                   Rect(posX, posY, WIDTH_GUN, HEIGHT_GUN));
+  }
 }
 
 void Gun::drawOnSpawn(SDL2pp::Renderer &renderer) {

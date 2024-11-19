@@ -7,12 +7,11 @@
 #include <ostream>
 #include <string>
 #include <utility>
-// #include "../common/liberror.h"
 #include "../common/protocolo.h"
 #include "../common/socket.h"
-
 #include "../common/common_constant.h"
 #include <vector>
+#include <list>
 
 class ProtocoloCliente {
   Socket socket;

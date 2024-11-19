@@ -6,7 +6,8 @@
 
 #include "Graficos.h"
 
-using namespace SDL2pp;
+using SDL2pp::Renderer;
+using SDL2pp::Texture;
 
 class Armor {
 private:

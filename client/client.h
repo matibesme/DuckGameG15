@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 #include <utility>
-
+#include <list>
 #include "../common/common_constant.h"
 #include "../common/game_exception.h"
 #include "c_receiver.h"

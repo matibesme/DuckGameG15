@@ -9,7 +9,6 @@
 #include "protocolo_cliente.h"
 
 class Sender : public Thread {
-
 private:
   BlockingQueue<ClientAction> &queue_sender;
   ProtocoloCliente &protocolo;

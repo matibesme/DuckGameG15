@@ -6,7 +6,8 @@
 #include "SDL2pp/SDL2pp.hh"
 #include <memory>
 
-using namespace SDL2pp;
+using SDL2pp::Renderer;
+using SDL2pp::Texture;
 
 class Gun {
 private:

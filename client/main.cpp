@@ -10,7 +10,6 @@ int main(int argc, char *argv[]) {
     std::cerr << "Ingrese correctamente la IP o host y el puerto o servicio.\n";
     return EXIT_FAILURE;
   }
-
   try {
     const char *host = argv[HOST];
     const char *port = argv[PORT];
@@ -18,7 +17,6 @@ int main(int argc, char *argv[]) {
     Client client(host, port);
     MenuController menu_controller(client, argc, argv);
     menu_controller.start_game();
-
   } catch (const std::exception &e) {
     std::cerr << "Error: " << e.what() << '\n';
     return EXIT_FAILURE;

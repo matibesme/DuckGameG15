@@ -6,13 +6,11 @@
 
 #include "../common/common_constant.h"
 #include "SDL2pp/SDL2pp.hh"
-
+#include <string>
 #include "Graficos.h"
 #include "Gun.h"
 #include "armor.h"
 #include "helmet.h"
-
-using namespace SDL2pp;
 
 class ClientDuck {
 public:
