@@ -83,6 +83,9 @@ void GameLoop::run() {
 }
 
 void GameLoop::checkCommand(CommandClient comando, uint8_t &rounds) {
+  if (map_personajes.find(comando.id) == map_personajes.end()) {
+    return;
+  }
   if (comando.type_of_action == MOVEMENT_ACTION) {
     duck_action.movementComand(comando.type_of_movement, comando.id);
   } else if (comando.type_of_action == WEAPON_ACTION) {
