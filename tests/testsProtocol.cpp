@@ -18,7 +18,7 @@ TEST(ProtocoloTest, CreateAndStartGame) {
     ProtocoloCliente protocolo("localhost", "8080", dead_connection);
     protocolo.sendCreateJoinGameToServer(game_access);
     bool same_name = protocolo.reciveMatchWithSameName();
-    ASSERT_TRUE(same_name == false);
+    ASSERT_EQ(same_name, false);
 
     GameAccess game_start;
     // Envio el mensaje de start game
@@ -32,16 +32,16 @@ TEST(ProtocoloTest, CreateAndStartGame) {
   ProtocoloServer protocolo(std::move(peer), dead_connection, 1);
   GameAccess command = protocolo.receiveAccessFromClients();
 
-  ASSERT_TRUE(command.action_type == CREATE_GAME);
-  ASSERT_TRUE(command.game_name == "game1");
-  ASSERT_TRUE(command.player1_name == "player1");
-  ASSERT_TRUE(command.player2_name == "player2");
-  ASSERT_TRUE(command.double_player == true);
+  ASSERT_EQ(command.action_type, CREATE_GAME);
+  ASSERT_EQ(command.game_name, "game1");
+  ASSERT_EQ(command.player1_name, "player1");
+  ASSERT_EQ(command.player2_name, "player2");
+  ASSERT_EQ(command.double_player, true);
 
   protocolo.sendMatchWithSameName(false);
 
   command = protocolo.receiveAccessFromClients();
-  ASSERT_TRUE(command.action_type == CREATE_GAME);
+  ASSERT_EQ(command.action_type, CREATE_GAME);
   client.join();
 }
 
@@ -56,8 +56,8 @@ TEST(ProtocoloTest, ListAndJoinGame) {
     ProtocoloCliente protocolo("localhost", "8080", dead_connection);
     protocolo.sendRequestGameToServer(game_access);
     std::list<std::string> list = protocolo.reciveActiveGamesFromServer();
-    ASSERT_TRUE(list.size() == 1);
-    ASSERT_TRUE(list.front() == "game1");
+    ASSERT_EQ(list.size(), 1);
+    ASSERT_EQ(list.front(), "game1");
 
     GameAccess game_join;
     game_join.action_type = JOIN_GAME;
@@ -74,18 +74,18 @@ TEST(ProtocoloTest, ListAndJoinGame) {
   ProtocoloServer protocolo(std::move(peer), dead_connection, 1);
   GameAccess command = protocolo.receiveAccessFromClients();
 
-  ASSERT_TRUE(command.action_type == LISTAR_PARTIDAS);
+  ASSERT_EQ(command.action_type, LISTAR_PARTIDAS);
 
   std::map<std::string, uint8_t> partidas;
   partidas.emplace("game1", 1);
   protocolo.sendActiveGames(partidas);
 
   command = protocolo.receiveAccessFromClients();
-  ASSERT_TRUE(command.action_type == JOIN_GAME);
-  ASSERT_TRUE(command.game_name == "game1");
-  ASSERT_TRUE(command.player1_name == "player1");
-  ASSERT_TRUE(command.player2_name == "player2");
-  ASSERT_TRUE(command.double_player == true);
+  ASSERT_EQ(command.action_type, JOIN_GAME);
+  ASSERT_EQ(command.game_name, "game1");
+  ASSERT_EQ(command.player1_name, "player1");
+  ASSERT_EQ(command.player2_name, "player2");
+  ASSERT_EQ(command.double_player, true);
 
   protocolo.sendMatchWithSameName(false);
   client.join();
@@ -109,8 +109,8 @@ TEST(ProtocoloTest, proccesHandler) {
   ProtocoloServer protocolo(std::move(peer), dead_connection, 1);
   bool two_players = false;
   CommandClient command = protocolo.receiveCommandFromClients(two_players);
-  ASSERT_TRUE(command.type_of_movement == RIGHT);
-  ASSERT_TRUE(command.id == 1);
+  ASSERT_EQ(command.type_of_movement, RIGHT);
+  ASSERT_EQ(command.id, 1);
   client.join();
 }
 
@@ -123,84 +123,84 @@ TEST(ProtocoloTest, proccesSnapshot) {
 
     // Recibo y verifico presentación de colores
     GameState command = protocolo.reciveFromServer();
-    ASSERT_TRUE(command.action == COLOR_PRESENTATION_BYTE);
-    ASSERT_TRUE(command.players_color.size() == 1);
-    ASSERT_TRUE(command.players_color["player1"] == "color1");
+    ASSERT_EQ(command.action, COLOR_PRESENTATION_BYTE);
+    ASSERT_EQ(command.players_color.size(), 1);
+    ASSERT_EQ(command.players_color["player1"], "color1");
 
     // Recibo y verifico estado completo del juego
     command = protocolo.reciveFromServer();
-    ASSERT_TRUE(command.action == FULL_GAME_BYTE);
-    ASSERT_TRUE(command.backGround_id == 1);
+    ASSERT_EQ(command.action, FULL_GAME_BYTE);
+    ASSERT_EQ(command.backGround_id, 1);
 
     // Verifico lista de plataformas
-    ASSERT_TRUE(command.lista_plataformas.size() == 1);
+    ASSERT_EQ(command.lista_plataformas.size(), 1);
     auto platform =
         command.lista_plataformas.front(); // Acceso al primer elemento
-    ASSERT_TRUE(platform.type == TYPE_PLATFORM_DONUT);
-    ASSERT_TRUE(platform.x_pos == 1);
-    ASSERT_TRUE(platform.y_pos == 1);
-    ASSERT_TRUE(platform.width == 32);
-    ASSERT_TRUE(platform.height == 32);
+    ASSERT_EQ(platform.type, TYPE_PLATFORM_DONUT);
+    ASSERT_EQ(platform.x_pos, 1);
+    ASSERT_EQ(platform.y_pos, 1);
+    ASSERT_EQ(platform.width, 32);
+    ASSERT_EQ(platform.height, 32);
 
     // Verifico lista de patos
-    ASSERT_TRUE(command.lista_patos.size() == 1);
+    ASSERT_EQ(command.lista_patos.size(), 1);
     const auto &duck = command.lista_patos.front(); // Acceso al primer elemento
-    ASSERT_TRUE(duck.id == 1);
-    ASSERT_TRUE(duck.x_pos == 1);
-    ASSERT_TRUE(duck.y_pos == 1);
-    ASSERT_TRUE(duck.typeOfMove == 1);
-    ASSERT_TRUE(duck.typeOfGun == 1);
-    ASSERT_TRUE(duck.helmet == 1);
-    ASSERT_TRUE(duck.armor == 1);
-    ASSERT_TRUE(duck.is_aiming_up);
-    ASSERT_TRUE(duck.direction == RIGHT);
+    ASSERT_EQ(duck.id, 1);
+    ASSERT_EQ(duck.x_pos, 1);
+    ASSERT_EQ(duck.y_pos, 1);
+    ASSERT_EQ(duck.typeOfMove, 1);
+    ASSERT_EQ(duck.typeOfGun, 1);
+    ASSERT_EQ(duck.helmet, 1);
+    ASSERT_EQ(duck.armor, 1);
+    ASSERT_EQ(duck.is_aiming_up, true);
+    ASSERT_EQ(duck.direction, RIGHT);
 
     // Verifico lista de balas
-    ASSERT_TRUE(command.lista_balas.size() == 1);
+    ASSERT_EQ(command.lista_balas.size(), 1);
     const auto &bullet = command.lista_balas.front();
-    ASSERT_TRUE(bullet.id == 1);
-    ASSERT_TRUE(bullet.typeOfBullet == 1);
-    ASSERT_TRUE(bullet.x_pos == 1);
-    ASSERT_TRUE(bullet.y_pos == 1);
-    ASSERT_TRUE(bullet.orientation == RIGHT);
+    ASSERT_EQ(bullet.id, 1);
+    ASSERT_EQ(bullet.typeOfBullet, 1);
+    ASSERT_EQ(bullet.x_pos, 1);
+    ASSERT_EQ(bullet.y_pos, 1);
+    ASSERT_EQ(bullet.orientation, RIGHT);
 
     // Verifico lista de armas
-    ASSERT_TRUE(command.lista_guns.size() == 1);
+    ASSERT_EQ(command.lista_guns.size(), 1);
     const auto &gun = command.lista_guns.front();
-    ASSERT_TRUE(gun.typeOfGun == 1);
-    ASSERT_TRUE(gun.x_pos == 1);
-    ASSERT_TRUE(gun.y_pos == 1);
+    ASSERT_EQ(gun.typeOfGun, 1);
+    ASSERT_EQ(gun.x_pos, 1);
+    ASSERT_EQ(gun.y_pos, 1);
 
     // Verifico lista de cajas
-    ASSERT_TRUE(command.lista_boxes.size() == 1);
+    ASSERT_EQ(command.lista_boxes.size(), 1);
     const auto &box = command.lista_boxes.front();
-    ASSERT_TRUE(box.id == 1);
-    ASSERT_TRUE(box.x_pos == 1);
-    ASSERT_TRUE(box.y_pos == 1);
+    ASSERT_EQ(box.id, 1);
+    ASSERT_EQ(box.x_pos, 1);
+    ASSERT_EQ(box.y_pos, 1);
 
     // Verifico lista de cascos
-    ASSERT_TRUE(command.lista_helmets.size() == 1);
+    ASSERT_EQ(command.lista_helmets.size(), 1);
     const auto &helmet = command.lista_helmets.front();
-    ASSERT_TRUE(helmet.type == 1);
-    ASSERT_TRUE(helmet.x_pos == 1);
-    ASSERT_TRUE(helmet.y_pos == 1);
+    ASSERT_EQ(helmet.type, 1);
+    ASSERT_EQ(helmet.x_pos, 1);
+    ASSERT_EQ(helmet.y_pos, 1);
 
     // Verifico lista de armaduras
-    ASSERT_TRUE(command.lista_armors.size() == 1);
+    ASSERT_EQ(command.lista_armors.size(), 1);
     const auto &armor = command.lista_armors.front();
-    ASSERT_TRUE(armor.type == 1);
-    ASSERT_TRUE(armor.x_pos == 1);
-    ASSERT_TRUE(armor.y_pos == 1);
+    ASSERT_EQ(armor.type, 1);
+    ASSERT_EQ(armor.x_pos, 1);
+    ASSERT_EQ(armor.y_pos, 1);
 
     // Recibo y verifico fin de ronda
     command = protocolo.reciveFromServer();
-    ASSERT_TRUE(command.action == END_ROUND_BYTE);
-    ASSERT_TRUE(command.map_victorias.size() == 1);
-    ASSERT_TRUE(command.map_victorias["player1"] == 1);
+    ASSERT_EQ(command.action, END_ROUND_BYTE);
+    ASSERT_EQ(command.map_victorias.size(), 1);
+    ASSERT_EQ(command.map_victorias["player1"], 1);
 
     // Recibo y verifico victoria
     command = protocolo.reciveFromServer();
-    ASSERT_TRUE(command.name_winner == "player1");
+    ASSERT_EQ(command.name_winner, "player1");
   });
 
   // Código de configuración del servidor (proporcionado en tu ejemplo)
