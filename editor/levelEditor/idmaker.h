@@ -7,7 +7,6 @@
 #include <string>
 
 class IDMaker {
-
 private:
   std::map<std::string, int> backgrounds_id;
   std::map<std::string, int> platforms_id;

@@ -15,7 +15,7 @@ class LevelEditor : public QMainWindow {
   Q_OBJECT
 
 public:
-  LevelEditor(QWidget *parent = nullptr);
+  explicit LevelEditor(QWidget *parent = nullptr);
   ~LevelEditor();
 
 private:

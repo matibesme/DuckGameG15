@@ -7,7 +7,6 @@
 #include <string>
 
 class TypeMaker {
-
 private:
   std::map<uint8_t, std::string> backgrounds_id;
   std::map<uint8_t, std::string> platforms_id;

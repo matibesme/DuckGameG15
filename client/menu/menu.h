@@ -8,9 +8,10 @@
 #include <iostream>
 #include <list>
 #include <map>
-
+#include <string>
 class Menu : public QMainWindow {
   Q_OBJECT
+
 private:
   QGraphicsView *view;
   QGraphicsScene *main_scene;
@@ -27,7 +28,7 @@ private:
   void show_wait_scene();
 
 public:
-  Menu(QWidget *parent = nullptr);
+  explicit Menu(QWidget *parent = nullptr);
   void show_update_games(std::list<std::string> active_games);
   ~Menu();
 

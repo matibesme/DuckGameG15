@@ -11,12 +11,14 @@
 #include <QLabel>
 #include <QList>
 #include <QMainWindow>
+#include <string>
 
 static const int DEFAULT_POS_X = 100;
 static const int DEFAULT_POS_Y = 100;
 
 class LevelEditorController : public QObject {
   Q_OBJECT
+
 private:
   QMainWindow *window;
   QGraphicsScene &scene;

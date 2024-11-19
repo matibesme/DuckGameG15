@@ -1,7 +1,7 @@
 #include "menucontroller.h"
 #include "menu.h"
-
 #include <QApplication>
+#include <string>
 
 MenuController::MenuController(Client &client, Menu &menu, QApplication &a,
                                int argc, char **argv, QObject *parent)

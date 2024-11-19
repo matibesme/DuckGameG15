@@ -8,6 +8,7 @@
 #include <QMimeData>
 #include <QPoint>
 #include <QtWidgets>
+#include <string>
 #include <yaml-cpp/yaml.h>
 static const char *CONFIG_MENU_YAML_REL_PATH = "/editor/menu_config.yaml";
 

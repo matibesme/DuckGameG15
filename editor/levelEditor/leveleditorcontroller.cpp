@@ -34,7 +34,6 @@ void LevelEditorController::set_platform(const QString &platform_type,
                                          int pos_x, int pos_y) {
   QString platform_path = QString::fromStdString(
       path_maker.get_platform_path(platform_type.toStdString()));
-  ;
 
   QPixmap platform(platform_path);
   MapObject *platform_item = new MapObject(platform, platform_type);
@@ -64,7 +63,6 @@ void LevelEditorController::set_spawn_weapon(const QString &gun_type, int pos_x,
                                              int pos_y) {
   QString weapon_path = QString::fromStdString(
       path_maker.get_weapon_path(gun_type.toStdString()));
-  ;
 
   QPixmap weapon(weapon_path);
   MapObject *weapon_item = new MapObject(weapon, gun_type);
@@ -91,7 +89,6 @@ void LevelEditorController::set_spawn_armour(const QString &armour_type,
                                              int pos_x, int pos_y) {
   QString armour_path = QString::fromStdString(
       path_maker.get_armour_path(armour_type.toStdString()));
-  ;
 
   QPixmap armour(armour_path);
   MapObject *armour_item = new MapObject(armour, armour_type);
@@ -105,7 +102,6 @@ void LevelEditorController::set_wall(const QString &wall_type, int pos_x,
                                      int pos_y) {
   QString wall_path =
       QString::fromStdString(path_maker.get_wall_path(wall_type.toStdString()));
-  ;
 
   QPixmap wall(wall_path);
   MapObject *wall_item = new MapObject(wall, wall_type);
