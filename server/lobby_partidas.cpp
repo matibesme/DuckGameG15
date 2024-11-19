@@ -76,12 +76,14 @@ void LobbyPartidas::removeQueue(uint8_t id) {
 
 void LobbyPartidas::removeGame() {
   std::lock_guard<std::mutex> lock(m);
-  for (auto &it : partidas) {
-    if (end_game[it.first]) {
-      queues_game_loop[it.first]->close();
-      queues_game_loop.erase(it.first);
-      partidas[it.first]->join();
-      partidas.erase(it.first);
+  for (auto it = partidas.begin(); it != partidas.end();) {
+    if (end_game[it->first]) {
+      queues_game_loop[it->first]->close();
+      queues_game_loop.erase(it->first);
+      partidas[it->first]->join();
+      it = partidas.erase(it);
+    } else {
+      ++it;
     }
   }
 }
