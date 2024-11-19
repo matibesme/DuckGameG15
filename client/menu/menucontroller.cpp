@@ -7,6 +7,7 @@ MenuController::MenuController(Client &client, Menu &menu, QApplication &a,
                                int argc, char **argv, QObject *parent)
     : QObject(parent), client(client), w(menu), a(a), argc(argc), argv(argv) {
   this->are_two_players = true;
+  this->was_game_initialized = false;
 }
 
 void MenuController::start_game() {
@@ -37,8 +38,8 @@ void MenuController::create(const std::string &player_1,
 
 void MenuController::start() {
   is_new_game = true;
+  this->was_game_initialized = true;
   QCoreApplication::quit();
-  // client.startGame();
 }
 
 void MenuController::join(const std::string &id_game,
@@ -48,8 +49,8 @@ void MenuController::join(const std::string &id_game,
   this->player_1_name = player_1;
   this->player_2_name = player_2;
   this->is_new_game = false;
+  this->was_game_initialized = true;
   QCoreApplication::quit();
-  // client.joinGame(id_game, are_two_players, player_1, player_2);
 }
 
 void MenuController::update_games(Menu &menu) {
@@ -57,10 +58,12 @@ void MenuController::update_games(Menu &menu) {
 }
 
 void MenuController::game() {
-  if (is_new_game) {
-    client.startGame();
-  } else {
-    client.joinGame(id_game, are_two_players, player_1_name, player_2_name);
+  if (was_game_initialized) {
+    if (is_new_game) {
+      client.startGame();
+    } else {
+      client.joinGame(id_game, are_two_players, player_1_name, player_2_name);
+    }
   }
 }
 MenuController::~MenuController() {}
