@@ -31,7 +31,6 @@ void GameRunner::run() {
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
   }
-  queue_sender.close();
 }
 
 void GameRunner::runGameLoop(GameRenderer &gameRenderer) {
@@ -53,7 +52,7 @@ void GameRunner::runGameLoop(GameRenderer &gameRenderer) {
       else if (command.action == VICTORY_BYTE)
         gameRenderer.mostrarPantallaVictoria(command.name_winner, sdl_renderer);
       else if (command.action == FINALLY_GAME)
-        return;
+        queue_receiver.close();
       else
         actualizar = true;
     }
