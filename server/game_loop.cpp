@@ -272,10 +272,14 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
 
 bool GameLoop::sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &platform) {
   return (personaje.getXPos() >= platform.x_pos &&
-          personaje.getXPos() <= platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X) ||
+          personaje.getXPos() <=
+              platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X) ||
          (personaje.getXPos() <= platform.x_pos &&
-          personaje.getXPos() + (DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X) / 2 >= platform.x_pos) ||
-         (personaje.getXPos() <= platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X &&
+          personaje.getXPos() +
+                  (DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X) / 2 >=
+              platform.x_pos) ||
+         (personaje.getXPos() <=
+              platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X &&
           personaje.getXPos() + DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X >=
               platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X);
 }
@@ -296,7 +300,8 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
              personaje.getYPos() + DUCK_HEIGHT >
                  platform.y_pos + platform.height &&
              personaje.getVelocidadY() > 0) {
-    if (personaje.getXPos() >= platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PLATAFORMA_X_IZQ) {
+    if (personaje.getXPos() >= platform.x_pos + platform.width -
+                                   MARGEN_DESPLAZAMIENTO_PLATAFORMA_X_IZQ) {
       return;
     }
     personaje.setYPos(platform.y_pos + platform.height);
@@ -309,27 +314,35 @@ void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
   if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 > platform.y_pos &&
       personaje.getYPos() < platform.y_pos + platform.height) {
     if (personaje.isWeaponEquipped()) {
-      if (personaje.getXPos() + DUCK_WIDTH - DESPLAZAMIENTO_CON_ARMA_X > platform.x_pos &&
+      if (personaje.getXPos() + DUCK_WIDTH - DESPLAZAMIENTO_CON_ARMA_X >
+              platform.x_pos &&
           personaje.getXPos() < platform.x_pos &&
           personaje.getDirection() == RIGHT) {
-        personaje.setXPos(platform.x_pos - DUCK_WIDTH + DESPLAZAMIENTO_CON_ARMA_X);
+        personaje.setXPos(platform.x_pos - DUCK_WIDTH +
+                          DESPLAZAMIENTO_CON_ARMA_X);
       } else if (personaje.getXPos() - MARGEN_DESPLAZAMIENTO_PLATAFORMA_X <
-                     platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PLATAFORMA_X &&
-                 personaje.getXPos() - MARGEN_DESPLAZAMIENTO_PLATAFORMA_X > platform.x_pos &&
+                     platform.x_pos + platform.width -
+                         MARGEN_DESPLAZAMIENTO_PLATAFORMA_X &&
+                 personaje.getXPos() - MARGEN_DESPLAZAMIENTO_PLATAFORMA_X >
+                     platform.x_pos &&
                  personaje.getDirection() == LEFT) {
         personaje.setXPos(platform.x_pos + platform.width);
       }
       return;
     }
 
-    if (personaje.getXPos() + DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X > platform.x_pos &&
+    if (personaje.getXPos() + DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X >
+            platform.x_pos &&
         personaje.getXPos() < platform.x_pos &&
         personaje.getDirection() == RIGHT) {
-      personaje.setXPos(platform.x_pos - DUCK_WIDTH + MARGEN_DESPLAZAMIENTO_PATO_X);
-    } else if (personaje.getXPos() < platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PLATAFORMA_X &&
+      personaje.setXPos(platform.x_pos - DUCK_WIDTH +
+                        MARGEN_DESPLAZAMIENTO_PATO_X);
+    } else if (personaje.getXPos() < platform.x_pos + platform.width -
+                                         MARGEN_DESPLAZAMIENTO_PLATAFORMA_X &&
                personaje.getXPos() > platform.x_pos &&
                personaje.getDirection() == LEFT) {
-      personaje.setXPos(platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PLATAFORMA_X);
+      personaje.setXPos(platform.x_pos + platform.width -
+                        MARGEN_DESPLAZAMIENTO_PLATAFORMA_X);
     }
   }
 }
@@ -408,7 +421,7 @@ void GameLoop::sendVictory(std::string &winner) {
   command.action = VICTORY_BYTE;
   command.name_winner = winner;
 
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 600; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }
