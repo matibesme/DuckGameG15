@@ -4,7 +4,6 @@
 #include <string>
 
 class PathMaker {
-
 public:
   PathMaker();
   std::string get_platform_path(std::string platform_type);

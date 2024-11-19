@@ -5,10 +5,11 @@
 #include <QObject>
 #include <cstdint>
 #include <iostream>
+#include <string>
 #include <vector>
-
 class MenuController : public QObject {
   Q_OBJECT
+
 private:
   Client &client;
   Menu &w;

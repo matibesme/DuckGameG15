@@ -12,7 +12,6 @@
 #include "thread_cliente.h"
 
 class Acceptor : public Thread {
-
 private:
   Socket socket_servidor;
   std::list<ThreadCliente> lista_clientes;

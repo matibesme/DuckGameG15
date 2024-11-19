@@ -5,7 +5,7 @@
 #include <QVBoxLayout>
 #include <QtWidgets>
 #include <iostream>
-
+#include <string>
 Menu::Menu(QWidget *parent) : QMainWindow(parent) {
   // menu_controller = new MenuController();
   initialize();
@@ -30,7 +30,6 @@ void Menu::initialize() {
 }
 
 void Menu::show_main_scene() {
-
   std::string path =
       std::string(DATA_PATH) + std::string("/scenes/Background.jpg");
   QString path_image = QString::fromStdString(path);
@@ -398,7 +397,6 @@ void Menu::show_update_games(std::list<std::string> active_games) {
   game_options->clear();
 
   for (auto game : active_games) {
-
     QString game_name = QString::fromStdString(game);
 
     this->active_games.insert(game_name, game);
