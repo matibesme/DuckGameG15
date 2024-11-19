@@ -5,9 +5,9 @@
 
 #include "Graficos.h"
 
+using SDL2pp::Rect;
 using SDL2pp::Renderer;
 using SDL2pp::Texture;
-using SDL2pp::Rect;
 
 class Helmet {
 private:
