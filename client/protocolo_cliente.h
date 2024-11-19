@@ -8,10 +8,10 @@
 #include <string>
 #include <utility>
 // #include "../common/liberror.h"
+#include "../common/common_constant.h"
 #include "../common/protocolo.h"
 #include "../common/socket.h"
 #include <list>
-#include "../common/common_constant.h"
 #include <vector>
 
 class ProtocoloCliente {

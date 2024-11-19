@@ -4,8 +4,8 @@
 
 #ifndef PEWPEW_LASER_H
 #define PEWPEW_LASER_H
-#include <memory>
 #include "weapon.h"
+#include <memory>
 #include <vector>
 
 class PewPewLaser : public Weapon {

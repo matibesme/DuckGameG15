@@ -250,7 +250,8 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
   for (auto &platform : list_plataformas) {
     if (sobrePlataformaX(personaje, platform)) {
       bool is_on_platform_down = false;
-      coalisionSuperiorEinferior(personaje, platform, is_on_platform,is_on_platform_down);
+      coalisionSuperiorEinferior(personaje, platform, is_on_platform,
+                                 is_on_platform_down);
       if (is_on_platform_down)
         return;
     }

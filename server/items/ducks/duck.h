@@ -1,11 +1,11 @@
 #pragma once
+#include "../common/common_constant.h"
+#include "../objeto.h"
+#include "../weapons/weapon.h"
 #include <cstdint>
 #include <list>
 #include <memory>
 #include <string>
-#include "../common/common_constant.h"
-#include "../objeto.h"
-#include "../weapons/weapon.h"
 
 class DuckPlayer : public Objeto {
 private:

@@ -1,4 +1,5 @@
 #pragma once
+#include "../common/blocking_queue.h"
 #include <chrono>
 #include <iostream>
 #include <list>
@@ -6,9 +7,8 @@
 #include <memory>
 #include <string>
 #include <thread>
-#include <vector>
 #include <utility>
-#include "../common/blocking_queue.h"
+#include <vector>
 
 #include "../common/dto_definitions.h"
 #include "../common/game_exception.h"

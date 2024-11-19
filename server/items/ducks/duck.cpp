@@ -21,7 +21,9 @@ constexpr int SLIDE_COUNTER = 40;
 DuckPlayer::DuckPlayer()
     : Objeto(0, 0, 0, 0), is_weapon_equiped(false), typeOfMove(STILL_RIGHT),
       saltando(false), velocidad(VELOCIDAD_INICIAL), life(LIFE), is_alive(true),
-      gravity(GRAVEDAD) {}
+      gravity(GRAVEDAD), weapons_list(), counter_flapping(0),
+      is_flapping(false), helmet(NO_HELMET), armor(NO_ARMOR), color(),
+      is_aiming_up(false), is_sliding(false), slide_counter(SLIDE_COUNTER) {}
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos,
                        std::string color_)
