@@ -39,7 +39,7 @@ void LevelEditorController::set_platform(const QString &platform_type, int pos_x
 }
 
 void LevelEditorController::set_spawn_duck(int pos_x, int pos_y){
-    QString duck_path = QString::fromStdString(std::string(DATA_PATH) + std::string("/Duck.png"));
+    QString duck_path = QString::fromStdString(std::string(DATA_PATH) + std::string("/objects/Duck.png"));
 
     QRect rect(0, 7, 32, 24);
     QPixmap sprite(duck_path);
