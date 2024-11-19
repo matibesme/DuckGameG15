@@ -393,7 +393,7 @@ void GameLoop::sendEndRound() {
                                   victory_round.second);
   }
 
-  for (int i = 0; i < 1500; i++) {
+  for (int i = 0; i < 100; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }
@@ -403,7 +403,7 @@ void GameLoop::sendVictory(std::string &winner) {
   command.action = VICTORY_BYTE;
   command.name_winner = winner;
 
-  for (int i = 0; i < 2000; i++) {
+  for (int i = 0; i < 100; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }
@@ -443,7 +443,7 @@ void GameLoop::sendColorPresentation() {
     command.players_color.emplace(player.second, list_colors[indice++]);
     map_victory_rounds.emplace(player.first, VICTORY_ROUNDS_INICIAL);
   }
-  for (int i = 0; i < 1500; i++) {
+  for (int i = 0; i < 100; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }
