@@ -3,9 +3,9 @@
 //
 
 #include "banana.h"
-#include <memory>
-Banana::Banana(uint8_t type, uint8_t id, float x_pos, float y_pos,
-               uint8_t damage, uint8_t range, int ammo_quantity, float recoil)
+
+Banana::Banana(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
+               uint8_t range, int ammo_quantity, float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       bala(BANANA_BULLET, 1, 0, 0, 10, 35, 0.3),
       counter_to_shoot(COUNTER_TO_SHOOT_GRANADA) {}
@@ -28,16 +28,15 @@ std::unique_ptr<Bullet> Banana::shoot(bool is_aiming_up) {
   ammo_quantity--;
   if (is_aiming_up and direction == RIGHT) {
     bala.release(x_pos + DUCK_WIDTH - WIDTH_GUN / 2, y_pos - WIDTH_BULLET,
-                 BULLET_UP, bala.randomSpread());
+                 BULLET_UP, true);
   } else if (is_aiming_up and direction == LEFT) {
-    bala.release(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET, BULLET_UP,
-                 bala.randomSpread());
+    bala.release(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET, BULLET_UP, true);
   } else if (direction == RIGHT) {
     bala.release(x_pos + DUCK_WIDTH + WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2),
-                 direction, bala.randomSpread());
+                 direction, true);
   } else if (direction == LEFT) {
     bala.release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2), direction,
-                 bala.randomSpread());
+                 true);
   }
   if (direction == RIGHT) {
     setXPos(x_pos - recoil);
