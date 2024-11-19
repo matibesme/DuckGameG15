@@ -30,7 +30,7 @@ DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos,
       life(LIFE), is_alive(true), gravity(GRAVEDAD), weapons_list(),
       counter_flapping(0), is_flapping(false), helmet(NO_HELMET),
       armor(NO_ARMOR), color(color_), is_aiming_up(false), is_sliding(false),
-      slide_counter(SLIDE_COUNTER) {}
+      slide_counter(SLIDE_COUNTER), respond_after_sliding(0) {}
 
 uint8_t DuckPlayer::getTypeOfMoveSprite() { return typeOfMove; }
 
@@ -76,6 +76,9 @@ void DuckPlayer::executeAction() {
       slide_counter = SLIDE_COUNTER;
     }
     return;
+  }
+  if (respond_after_sliding > 0) {
+    respond_after_sliding--;
   }
   if (saltando) {
     if (is_flapping) {
@@ -133,7 +136,7 @@ bool DuckPlayer::isWeaponEquipped() { return is_weapon_equiped; }
 
 bool DuckPlayer::isAlive() { return is_alive; }
 
-void DuckPlayer::applyDamage(uint8_t damage) {
+void DuckPlayer::applyDamage(int damage) {
   life -= damage;
   if (life <= 0) {
     is_alive = false;
@@ -197,5 +200,11 @@ void DuckPlayer::setIsSliding(bool sliding) {
 }
 
 bool DuckPlayer::isSliding() { return is_sliding; }
+
+void DuckPlayer::setRespondAfterSliding(int respond_after_sliding_) {
+  respond_after_sliding = respond_after_sliding_;
+}
+
+int DuckPlayer::getRespondAfterSliding() { return respond_after_sliding; }
 
 DuckPlayer::~DuckPlayer() {}

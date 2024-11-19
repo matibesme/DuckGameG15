@@ -28,7 +28,7 @@ DuckAction::DuckAction(
 
 void DuckAction::movementComand(uint8_t comando, uint8_t id) {
   DuckPlayer &personaje = map_personajes[id];
-  if (personaje.isSliding()) {
+  if (personaje.isSliding() || personaje.getRespondAfterSliding() > 0) {
     return;
   }
   switch (comando) {

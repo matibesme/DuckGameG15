@@ -8,8 +8,8 @@ private:
   Bullet bala;
 
 public:
-  CowboyPistol(uint8_t type, uint8_t id, float x_pos, float y_pos,
-               uint8_t damage, uint8_t range, int ammo_quantity, float recoil);
+  CowboyPistol(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
+               uint8_t range, int ammo_quantity, float recoil);
 
   bool isEmptyAmmo() override;
 

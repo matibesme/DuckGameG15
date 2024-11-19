@@ -9,7 +9,7 @@
 
 class Weapon : public Objeto {
 protected:
-  uint8_t damage;
+  int damage;
   uint8_t range;
   int ammo_quantity;
   float recoil;
@@ -17,7 +17,7 @@ protected:
   int bullet_count;
 
 public:
-  Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
+  Weapon(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
          uint8_t range, int ammo_quantity, float recoil);
 
   virtual bool isEmptyAmmo() = 0;
