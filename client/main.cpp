@@ -16,8 +16,11 @@ int main(int argc, char *argv[]) {
     const char *port = argv[PORT];
 
     Client client(host, port);
-    MenuController menu_controller(client, argc, argv);
+    QApplication a(argc, argv);
+    Menu menu;
+    MenuController menu_controller(client, menu, a, argc, argv);
     menu_controller.start_game();
+    menu_controller.game();
 
   } catch (const std::exception &e) {
     std::cerr << "Error: " << e.what() << '\n';

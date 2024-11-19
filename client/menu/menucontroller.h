@@ -11,17 +11,22 @@ class MenuController : public QObject {
   Q_OBJECT
 private:
   Client &client;
+  Menu &w;
+  QApplication &a;
   int argc;
   char **argv;
   std::string player_1_name;
   std::string player_2_name;
   bool are_two_players;
+  bool is_new_game;
+  std::string id_game;
 
 public:
-  MenuController(Client &client, int argc, char **argv,
+  MenuController(Client &client, Menu& menu, QApplication &a, int argc, char **argv,
                  QObject *parent = nullptr);
   void set_type_game(uint8_t type_game);
   void start_game();
+  void game();
   ~MenuController();
 
 public slots:
