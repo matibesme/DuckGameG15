@@ -51,7 +51,7 @@ sudo apt-get install libyaml-cpp-dev
 ```
 pre-commit run --all-files
 ```
-** Si quieren ignorar los pre-commits para poder commitear**
+**Si quieren ignorar los pre-commits para poder commitear**
 ```
 git commit -m "Mensaje" --no-verify
 ```
