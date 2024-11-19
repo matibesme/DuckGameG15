@@ -11,7 +11,6 @@
 #include "magnum.h"
 #include <memory>
 class FactoryWeapons {
-
 public:
   FactoryWeapons();
   std::shared_ptr<Weapon> createWeapon(uint8_t type, float x_pos, float y_pos);

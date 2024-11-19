@@ -6,7 +6,7 @@
 #define BANANA_H
 #include "../bullets/banana_bullet.h"
 #include "weapon.h"
-
+#include <memory>
 class Banana : public Weapon {
 private:
   BananaBullet bala;

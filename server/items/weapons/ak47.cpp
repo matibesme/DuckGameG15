@@ -42,7 +42,6 @@ std::unique_ptr<Bullet> Ak47::shoot(bool is_aiming_up) {
   }
   if (spread_counter > MAX_SPREAD_COUNTER) {
     spread_counter -= 0.1;
-    ;
   }
   bullets_vector.pop_back();
   bullets_vector.emplace_back(AK47_BULLET, 1, 0, 0, damage, range,

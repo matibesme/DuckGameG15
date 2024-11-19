@@ -10,7 +10,6 @@
 #include "server_constant.h"
 
 class Server {
-
 private:
   bool close;
 

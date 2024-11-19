@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-
+#include <memory>
 #include "../common/blocking_queue.h"
 #include "../common/common_constant.h"
 #include "../common/dto_definitions.h"
@@ -8,9 +8,8 @@
 #include "../common/thread.h"
 #include "lobby_partidas.h"
 #include "protocolo_server.h"
-
+#include <map>
 class Receiver : public Thread {
-
 private:
   ProtocoloServer &protocolo;
   bool &dead_connection;

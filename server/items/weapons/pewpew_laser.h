@@ -4,7 +4,7 @@
 
 #ifndef PEWPEW_LASER_H
 #define PEWPEW_LASER_H
-
+#include <memory>
 #include "weapon.h"
 #include <vector>
 

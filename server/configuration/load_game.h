@@ -10,7 +10,7 @@
 #include <memory>
 #include <string>
 #include <yaml-cpp/yaml.h>
-
+#include <vector>
 class LoadGameFile {
 private:
   FactoryWeapons &factory_weapons;

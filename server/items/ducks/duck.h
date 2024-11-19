@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <list>
 #include <memory>
-
+#include <string>
 #include "../common/common_constant.h"
 #include "../objeto.h"
 #include "../weapons/weapon.h"

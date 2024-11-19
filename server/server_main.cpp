@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "server.h"
-
 #define S_EXIT_FAILURE 1
 #define S_EXIT_SUCCESS 0
 #define S_CANT_ARGUMENTS 2
@@ -15,11 +14,9 @@ int main(int argc, char *argv[]) {
                  "conexión \n";
     return S_EXIT_FAILURE;
   }
-
   const char *port = argv[S_PORT];
 
   try {
-
     Server server(port);
     server.run();
   } catch (const std::exception &e) {
