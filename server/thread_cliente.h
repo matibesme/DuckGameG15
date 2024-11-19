@@ -1,12 +1,12 @@
 #pragma once
-#include <list>
-#include <string>
-#include <utility>
-#include <memory>
 #include "../common/blocking_queue.h"
 #include "../common/dto_definitions.h"
 #include "../common/socket.h"
 #include "../common/thread.h"
+#include <list>
+#include <memory>
+#include <string>
+#include <utility>
 
 #include "lobby_partidas.h"
 #include "receiver.h"

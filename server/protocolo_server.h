@@ -14,10 +14,13 @@
 #include <map>
 
 class ProtocoloServer {
+private:
   Socket socket_server;
   bool &dead_connection;
   Protocolo protocolo;
   uint8_t id;
+
+  void sendFinallyGame();
 
 public:
   ProtocoloServer(Socket socket, bool &dead_connection, uint8_t id_);

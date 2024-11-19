@@ -3,13 +3,13 @@
 #include "../common/common_constant.h"
 #include "../items/ducks/duck.h"
 #include "../items/weapons/weapon.h"
+#include "items/boxes.h"
+#include "items/weapons/factory_weapons.h"
 #include <list>
-#include <yaml-cpp/yaml.h>
 #include <map>
 #include <memory>
 #include <string>
-#include "items/boxes.h"
-#include "items/weapons/factory_weapons.h"
+#include <yaml-cpp/yaml.h>
 
 class LoadGameFile {
 private:

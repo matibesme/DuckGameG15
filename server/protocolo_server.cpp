@@ -16,6 +16,8 @@ void ProtocoloServer::sendToClient(const GameState &command) {
       sendVictory(command);
     else if (command.action == COLOR_PRESENTATION_BYTE)
       sendPlayersColor(command.players_color);
+    else if (command.action == FINALLY_GAME)
+      sendFinallyGame();
 
   } catch (const SocketClose &e) {
     std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
@@ -124,6 +126,10 @@ void ProtocoloServer::sendVictory(const GameState &command) {
   protocolo.sendString(command.name_winner, dead_connection);
 }
 
+void ProtocoloServer::sendFinallyGame() {
+  protocolo.sendByte(FINALLY_GAME, dead_connection);
+}
+
 CommandClient ProtocoloServer::receiveCommandFromClients(bool &two_players) {
   try {
     uint8_t type_of_action = protocolo.receiveByte(dead_connection);
@@ -198,5 +204,4 @@ void ProtocoloServer::sendPlayersColor(
     std::cerr << e.what() << std::endl;
   }
 }
-
 ProtocoloServer::~ProtocoloServer() {}

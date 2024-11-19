@@ -84,7 +84,9 @@ public:
   void winRoundCheat();
   void winGameCheat(uint8_t &rounds);
   bool sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &plataforma);
-  void coalisionSuperiorEinferior(DuckPlayer &personaje, DTOPlatform &plataforma,bool &is_on_platform, bool& is_on_platform_down);
-    void coalisonWalls(DuckPlayer &personaje, DTOPlatform &plataforma);
+  void coalisionSuperiorEinferior(DuckPlayer &personaje,
+                                  DTOPlatform &plataforma, bool &is_on_platform,
+                                  bool &is_on_platform_down);
+  void coalisonWalls(DuckPlayer &personaje, DTOPlatform &plataforma);
   virtual ~GameLoop();
 };

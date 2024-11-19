@@ -27,10 +27,12 @@ void GameRunner::run() {
 
     runGameLoop(gameRenderer);
 
+  } catch (const ClosedQueue &e) {
+    std::cerr << "Se cerró la cola de mensajes" << std::endl;
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
-    queue_sender.close();
   }
+  queue_sender.close();
 }
 
 void GameRunner::runGameLoop(GameRenderer &gameRenderer) {

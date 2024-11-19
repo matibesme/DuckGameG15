@@ -38,15 +38,19 @@ void ProtocoloCliente::sendInGameToServer(const ClientAction &command) {
 GameState ProtocoloCliente::reciveFromServer() {
   try {
     uint8_t firstByte = protocolo.receiveByte(dead_connection);
-
     if (firstByte == FULL_GAME_BYTE)
       return reciveFullGameFromServer();
-    else if (firstByte == END_ROUND_BYTE)
+    if (firstByte == END_ROUND_BYTE)
       return reciveEndRoundFromServer();
-    else if (firstByte == VICTORY_BYTE)
+    if (firstByte == VICTORY_BYTE)
       return reciveVictoryFromServer();
-    else if (firstByte == COLOR_PRESENTATION_BYTE)
+    if (firstByte == COLOR_PRESENTATION_BYTE)
       return reciveColorPresentationFromServer();
+    if (firstByte == FINALLY_GAME) {
+      GameState command;
+      command.action = FINALLY_GAME;
+      return command;
+    }
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
