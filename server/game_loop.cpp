@@ -248,53 +248,92 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
   }
 }
 
+
 void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
   bool is_on_platform = false;
   for (auto &platform : list_plataformas) {
 
-    if (personaje.getXPos() + MARGEN_PLATAFORMA_X >= platform.x_pos &&
-        personaje.getXPos() + DUCK_WIDTH - MARGEN_PLATAFORMA_X <=
-            platform.x_pos + platform.width) {
-      // caso plataformas inferior y superior
-      if (personaje.getYPos() + DUCK_HEIGHT == platform.y_pos ||
-          (personaje.getYPos() + DUCK_HEIGHT > platform.y_pos &&
-           personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos)) {
-        if (personaje.getVelocidadY() < 0) {
-          personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
-        } else {
-          personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
-        }
-        is_on_platform = true;
-      } else if (personaje.getYPos() <= platform.y_pos + platform.height &&
-                 personaje.getYPos() + DUCK_HEIGHT >
-                     platform.y_pos + platform.height &&
-                 personaje.getVelocidadY() > 0) {
-        personaje.setYPos(platform.y_pos + platform.height);
-        personaje.setVelocidadY(0);
-      }
-    } else if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 >
-                   platform.y_pos &&
-               personaje.getYPos() < platform.y_pos + platform.height) {
-      // caso paredes de plataformas
-      if (personaje.getXPos() + DUCK_WIDTH > platform.x_pos &&
-          personaje.getXPos() < platform.x_pos &&
-          personaje.getDirection() == RIGHT) {
-        personaje.setXPos(platform.x_pos - DUCK_WIDTH);
-      } else if (personaje.getXPos() < platform.x_pos + platform.width &&
-                 personaje.getXPos() > platform.x_pos &&
-                 personaje.getDirection() == LEFT) {
-        personaje.setXPos(platform.x_pos + platform.width);
-      }
+    if (sobrePlataformaX(personaje, platform)) {
+      bool is_on_platform_down = false;
+      coalisionSuperiorEinferior(personaje, platform, is_on_platform, is_on_platform_down);
+      if (is_on_platform_down)return;
     }
+    coalisonWalls(personaje, platform);
   }
 
-  if (!is_on_platform && (!personaje.estaSaltando() or personaje.isSliding())) {
+  if (!is_on_platform && (!personaje.estaSaltando() || personaje.isSliding())) {
     personaje.setIsSliding(false);
     personaje.setEnSalto(true);
     personaje.setVelocidadY(0);
+
   }
 }
 
+bool GameLoop::sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &platform) {
+  return (personaje.getXPos() >= platform.x_pos &&
+          personaje.getXPos() <= platform.x_pos + platform.width-10) ||
+         (personaje.getXPos() <= platform.x_pos &&
+          personaje.getXPos() + (DUCK_WIDTH-10)/2 >= platform.x_pos) ||
+         (personaje.getXPos() <= platform.x_pos + platform.width-10 &&
+          personaje.getXPos() + DUCK_WIDTH-10 >= platform.x_pos + platform.width-10);
+}
+
+void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
+                                          DTOPlatform &platform,
+                                          bool &is_on_platform, bool &is_on_platform_down) {
+  if (personaje.getYPos() + DUCK_HEIGHT >= platform.y_pos &&
+      personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos) {
+    if (personaje.getVelocidadY() < 0) {
+      personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
+    } else {
+      personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
+    }
+    is_on_platform = true;
+  } else if (personaje.getYPos() <= platform.y_pos + platform.height &&
+             personaje.getYPos() + DUCK_HEIGHT >
+                 platform.y_pos + platform.height &&
+             personaje.getVelocidadY() > 0) {
+    if (personaje.getXPos() >= platform.x_pos+platform.width-12)
+    {
+      return;
+    }
+    personaje.setYPos(platform.y_pos + platform.height);
+    personaje.setVelocidadY(0);
+    is_on_platform_down = true;
+  }
+}
+
+void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
+  if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 > platform.y_pos &&
+      personaje.getYPos() < platform.y_pos + platform.height) {
+
+
+  if (personaje.isWeaponEquipped())
+  {
+    if (personaje.getXPos() + DUCK_WIDTH-5> platform.x_pos &&
+      personaje.getXPos() < platform.x_pos &&
+      personaje.getDirection() == RIGHT) {
+      personaje.setXPos(platform.x_pos - DUCK_WIDTH+5);
+      } else if (personaje.getXPos()-8 < platform.x_pos + platform.width-8 &&
+                 personaje.getXPos()-8 > platform.x_pos &&
+                 personaje.getDirection() == LEFT) {
+        personaje.setXPos(platform.x_pos + platform.width);
+                 }
+    return;
+  }
+
+
+    if (personaje.getXPos() + DUCK_WIDTH-10 > platform.x_pos &&
+        personaje.getXPos() < platform.x_pos &&
+        personaje.getDirection() == RIGHT) {
+      personaje.setXPos(platform.x_pos - DUCK_WIDTH+10);
+    } else if (personaje.getXPos() < platform.x_pos + platform.width-8 &&
+               personaje.getXPos() > platform.x_pos &&
+               personaje.getDirection() == LEFT) {
+      personaje.setXPos(platform.x_pos + platform.width-8);
+    }
+  }
+}
 void GameLoop::respawnWeapon() {
 
   for (auto it = time_weapon_last_respawn.begin();
@@ -418,10 +457,14 @@ void GameLoop::sendColorPresentation() {
 
 void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
   for (auto it = map_personajes.begin(); it != map_personajes.end();) {
-    if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) < it->second.getXPos() &&
-        grenade_bullet.getXPos() + (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) > it->second.getXPos() &&
-        grenade_bullet.getYPos() - (RADIO_EXPLOTION_GRANADA*DUCK_HEIGHT) < it->second.getYPos() &&
-        grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA*DUCK_HEIGHT) > it->second.getYPos()) {
+    if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) <
+            it->second.getXPos() &&
+        grenade_bullet.getXPos() + (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) >
+            it->second.getXPos() &&
+        grenade_bullet.getYPos() - (RADIO_EXPLOTION_GRANADA * DUCK_HEIGHT) <
+            it->second.getYPos() &&
+        grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA * DUCK_HEIGHT) >
+            it->second.getYPos()) {
       it->second.applyDamage(grenade_bullet.getDamage());
       if (!it->second.isAlive()) {
         it = map_personajes.erase(it);
@@ -433,10 +476,14 @@ void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
     }
   }
   for (auto it = list_boxes.begin(); it != list_boxes.end();) {
-    if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * WIDTH_BOX) < it->getXPos() &&
-        grenade_bullet.getXPos() + (RADIO_EXPLOTION_GRANADA * WIDTH_BOX) > it->getXPos() &&
-        grenade_bullet.getYPos() - (RADIO_EXPLOTION_GRANADA*HEIGHT_BOX) < it->getYPos() &&
-        grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA*HEIGHT_BOX) > it->getYPos()) {
+    if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * WIDTH_BOX) <
+            it->getXPos() &&
+        grenade_bullet.getXPos() + (RADIO_EXPLOTION_GRANADA * WIDTH_BOX) >
+            it->getXPos() &&
+        grenade_bullet.getYPos() - (RADIO_EXPLOTION_GRANADA * HEIGHT_BOX) <
+            it->getYPos() &&
+        grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA * HEIGHT_BOX) >
+            it->getYPos()) {
       it->takeDamage(grenade_bullet.getDamage());
       if (it->isDestroyed()) {
         it = list_boxes.erase(it);
