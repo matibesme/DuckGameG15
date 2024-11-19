@@ -114,6 +114,7 @@ void LoadGameFile::loadConfigurations() {
   RANGE_GRANADA = config["granade"]["range"].as<uint8_t>();
   AMMO_GRANADA = config["granade"]["ammo"].as<uint8_t>();
   RECOIL_GRANADA = config["granade"]["recoil"].as<float>();
+  RADIO_EXPLOTION_GRANADA = config["granade"]["radius_explosion"].as<float>();
   // BANANA
   DAMAGE_BANANA = config["banana"]["damage"].as<uint8_t>();
   RANGE_BANANA = config["banana"]["range"].as<uint8_t>();

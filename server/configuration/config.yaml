@@ -5,6 +5,7 @@ granade:
   range: 5
   ammo: 1
   recoil: 0.5
+  radius_explosion: 3
 
 banana:
     damage: 30

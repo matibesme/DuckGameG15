@@ -252,8 +252,8 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
   bool is_on_platform = false;
   for (auto &platform : list_plataformas) {
 
-    if (personaje.getXPos() + 15 >= platform.x_pos &&
-        personaje.getXPos() + DUCK_WIDTH - 15 <=
+    if (personaje.getXPos() + MARGEN_PLATAFORMA_X >= platform.x_pos &&
+        personaje.getXPos() + DUCK_WIDTH - MARGEN_PLATAFORMA_X <=
             platform.x_pos + platform.width) {
       // caso plataformas inferior y superior
       if (personaje.getYPos() + DUCK_HEIGHT == platform.y_pos ||
@@ -418,10 +418,10 @@ void GameLoop::sendColorPresentation() {
 
 void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
   for (auto it = map_personajes.begin(); it != map_personajes.end();) {
-    if (grenade_bullet.getXPos() - (3 * DUCK_WIDTH) < it->second.getXPos() &&
-        grenade_bullet.getXPos() + (3 * DUCK_WIDTH) > it->second.getXPos() &&
-        grenade_bullet.getYPos() - (DUCK_HEIGHT) < it->second.getYPos() &&
-        grenade_bullet.getYPos() + (DUCK_HEIGHT) > it->second.getYPos()) {
+    if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) < it->second.getXPos() &&
+        grenade_bullet.getXPos() + (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) > it->second.getXPos() &&
+        grenade_bullet.getYPos() - (RADIO_EXPLOTION_GRANADA*DUCK_HEIGHT) < it->second.getYPos() &&
+        grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA*DUCK_HEIGHT) > it->second.getYPos()) {
       it->second.applyDamage(grenade_bullet.getDamage());
       if (!it->second.isAlive()) {
         it = map_personajes.erase(it);
@@ -433,10 +433,10 @@ void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
     }
   }
   for (auto it = list_boxes.begin(); it != list_boxes.end();) {
-    if (grenade_bullet.getXPos() - (2 * WIDTH_BOX) < it->getXPos() &&
-        grenade_bullet.getXPos() + (2 * WIDTH_BOX) > it->getXPos() &&
-        grenade_bullet.getYPos() - (HEIGHT_BOX) < it->getYPos() &&
-        grenade_bullet.getYPos() + (HEIGHT_BOX) > it->getYPos()) {
+    if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * WIDTH_BOX) < it->getXPos() &&
+        grenade_bullet.getXPos() + (RADIO_EXPLOTION_GRANADA * WIDTH_BOX) > it->getXPos() &&
+        grenade_bullet.getYPos() - (RADIO_EXPLOTION_GRANADA*HEIGHT_BOX) < it->getYPos() &&
+        grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA*HEIGHT_BOX) > it->getYPos()) {
       it->takeDamage(grenade_bullet.getDamage());
       if (it->isDestroyed()) {
         it = list_boxes.erase(it);
