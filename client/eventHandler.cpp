@@ -9,9 +9,7 @@ void EventHandler::correrHandlers() {
   action.player = 1;
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
-
     case SDL_KEYDOWN: {
-
       SDL_Keycode key = event.key.keysym.sym;
       if (teclas_presionadas.find(key) == teclas_presionadas.end()) {
         teclas_presionadas.insert(key);

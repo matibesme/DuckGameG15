@@ -10,7 +10,7 @@
 #include <cstdint>
 class Bullet : public Objeto {
 protected:
-  uint8_t damage;
+  int damage;
   uint8_t range;
   bool is_alive;
   float spread;
@@ -20,7 +20,7 @@ protected:
   bool is_falling;
 
 public:
-  Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, uint8_t damage,
+  Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
          uint8_t range, float spread);
   uint8_t getDamage();
   uint8_t getRange();

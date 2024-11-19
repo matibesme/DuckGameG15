@@ -59,7 +59,6 @@ GameState ProtocoloCliente::reciveFromServer() {
 }
 
 GameState ProtocoloCliente::reciveFullGameFromServer() {
-
   GameState command;
   command.action = FULL_GAME_BYTE;
   uint8_t background_id = protocolo.receiveByte(dead_connection);
@@ -182,7 +181,6 @@ void ProtocoloCliente::sendRequestGameToServer(const GameAccess &game_access) {
 std::list<std::string> ProtocoloCliente::reciveActiveGamesFromServer() {
   try {
     uint8_t games_quantity = protocolo.receiveByte(dead_connection);
-
     std::list<std::string> games;
     for (int i = 0; i < games_quantity; i++) {
       std::string game_name = protocolo.receiveString(dead_connection);
@@ -190,7 +188,6 @@ std::list<std::string> ProtocoloCliente::reciveActiveGamesFromServer() {
       games.push_back(game_name);
     }
     return games;
-
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;

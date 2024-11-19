@@ -5,14 +5,12 @@
 #include <memory>
 
 #include "../common/common_constant.h"
-#include "SDL2pp/SDL2pp.hh"
-
 #include "Graficos.h"
 #include "Gun.h"
+#include "SDL2pp/SDL2pp.hh"
 #include "armor.h"
 #include "helmet.h"
-
-using namespace SDL2pp;
+#include <string>
 
 class ClientDuck {
 public:

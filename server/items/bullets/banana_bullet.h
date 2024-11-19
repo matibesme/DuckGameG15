@@ -14,8 +14,8 @@ private:
   bool continue_moving;
 
 public:
-  BananaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
-               uint8_t damage, uint8_t range, float spread);
+  BananaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
+               uint8_t range, float spread);
   void executeAction() override;
   void colisionWithPlatform(float plat_x_pos, float plat_y_pos,
                             float plat_width, float plat_height) override;

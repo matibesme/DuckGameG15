@@ -15,6 +15,8 @@
 #include "client/Scenes/endRoundscene.h"
 #include "client/Scenes/finalScene.h"
 #include "dto_definitions.h"
+#include <map>
+#include <string>
 
 class GameRenderer {
 private:

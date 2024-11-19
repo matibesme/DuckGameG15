@@ -6,8 +6,8 @@
 
 constexpr int PELLET_COUNT = 6;
 
-Shotgun::Shotgun(uint8_t type, uint8_t id, float x_pos, float y_pos,
-                 uint8_t damage, uint8_t range, int ammo_quantity, float recoil)
+Shotgun::Shotgun(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
+                 uint8_t range, int ammo_quantity, float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       pellets_vector(), pellet_count(PELLET_COUNT) {
   float maxSpread = 1;

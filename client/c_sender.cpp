@@ -10,7 +10,6 @@ Sender::Sender(ProtocoloCliente &protocolo,
     : queue_sender(queue_sender), protocolo(protocolo) {}
 
 void Sender::run() {
-
   while (_keep_running) {
     try {
       ClientAction command = queue_sender.pop();

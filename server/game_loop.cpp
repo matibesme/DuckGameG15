@@ -195,6 +195,7 @@ void GameLoop::paraCadaPatoAction() {
           it->second.getWeapon().shoot(it->second.isAimingUp());
       map_bullets.emplace(id_balas, std::move(bullet));
       id_balas++;
+      it->second.eraseGun();
     }
 
     ++it;
@@ -262,6 +263,7 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
   }
 
   if (!is_on_platform && (!personaje.estaSaltando() || personaje.isSliding())) {
+    personaje.setRespondAfterSliding(15);
     personaje.setIsSliding(false);
     personaje.setEnSalto(true);
     personaje.setVelocidadY(0);

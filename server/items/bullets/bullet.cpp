@@ -4,8 +4,8 @@
 
 #include "granada_bullet.h"
 
-Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
-               uint8_t damage, uint8_t range, float spread)
+Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
+               uint8_t range, float spread)
     : Objeto(type, id, x_pos, y_pos), damage(damage), range(range),
       is_alive(true), spread(spread), spread_direction(false),
       is_falling(false) {}

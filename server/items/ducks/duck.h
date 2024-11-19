@@ -13,7 +13,7 @@ private:
   uint8_t typeOfMove;
   bool saltando;
   float velocidad;
-  uint8_t life;
+  int life;
   bool is_alive;
   float gravity;
   std::list<std::shared_ptr<Weapon>> weapons_list;
@@ -25,6 +25,7 @@ private:
   bool is_aiming_up;
   bool is_sliding;
   int slide_counter;
+  int respond_after_sliding;
 
 public:
   // Constructors
@@ -44,6 +45,7 @@ public:
   bool receiveShoot();
   std::string &getColor();
   float &getVelocidadY();
+  int getRespondAfterSliding();
 
   // Setters
   void setVelocidadY(float velocidad);
@@ -54,13 +56,14 @@ public:
   void setHelmet(uint8_t type);
   void setArmor(uint8_t type);
   void setIsSliding(bool sliding);
+  void setRespondAfterSliding(int respond_after_sliding_);
 
   // Actions
   void incrementXPos(float pos_x);
   void pickUpWeapon(std::shared_ptr<Weapon> weapon);
   void stopJump(float y_pos_);
   void executeAction();
-  void applyDamage(uint8_t damage);
+  void applyDamage(int damage);
   void increaseFlappingCounter();
   std::shared_ptr<Weapon> removeWeapon();
   void aimUp();
