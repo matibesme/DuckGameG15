@@ -51,10 +51,6 @@ sudo apt-get install libyaml-cpp-dev
 ```
 pre-commit run --all-files
 ```
-**Si quieren ignorar los pre-commits para poder commitear**
-```
-git commit -m "Mensaje" --no-verify
-```
 
 ## **Instalación**
 Para instalar las dependencias necesarias para el correcto funcionamiento del juego se debe correr el comando:
