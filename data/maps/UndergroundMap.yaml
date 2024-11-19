@@ -1,0 +1,190 @@
+background_type: 144
+plataforms:
+  - pos_x: 8
+    pos_y: 215
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 37
+    pos_y: 215
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 119
+    pos_y: 184
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 148
+    pos_y: 183
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 176
+    pos_y: 184
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 272
+    pos_y: 183
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 301
+    pos_y: 183
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 330
+    pos_y: 183
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 361
+    pos_y: 183
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 440
+    pos_y: 133
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 472
+    pos_y: 132
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 344
+    pos_y: 82
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 313
+    pos_y: 81
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 285
+    pos_y: 82
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 255
+    pos_y: 83
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 233
+    pos_y: 255
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 203
+    pos_y: 256
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 261
+    pos_y: 255
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 290
+    pos_y: 256
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 352
+    pos_y: 353
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 412
+    pos_y: 314
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 472
+    pos_y: 256
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 440
+    pos_y: 256
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 501
+    pos_y: 257
+    height: 9
+    width: 32
+    type: 129
+  - pos_x: 530
+    pos_y: 257
+    height: 9
+    width: 32
+    type: 129
+walls:
+  - pos_x: 249
+    pos_y: 43
+    height: 47
+    width: 14
+    type: 134
+  - pos_x: 489
+    pos_y: 214
+    height: 47
+    width: 14
+    type: 134
+  - pos_x: 57
+    pos_y: 171
+    height: 47
+    width: 14
+    type: 134
+duck spawns:
+  - pos_x: 123
+    pos_y: 158
+    height: 24
+    width: 32
+weapon spawns:
+  - pos_x: 356
+    pos_y: 328
+    height: 30
+    width: 30
+    type: 53
+  - pos_x: 265
+    pos_y: 67
+    height: 11
+    width: 15
+    type: 54
+  - pos_x: 355
+    pos_y: 66
+    height: 11
+    width: 15
+    type: 54
+  - pos_x: 471
+    pos_y: 107
+    height: 16
+    width: 30
+    type: 67
+  - pos_x: 530
+    pos_y: 236
+    height: 16
+    width: 30
+    type: 67
+  - pos_x: 13
+    pos_y: 195
+    height: 15
+    width: 8
+    type: 65
+box spawns:
+  - pos_x: 209
+    pos_y: 238
+    height: 17
+    width: 17
+armour spawns:
+  - pos_x: 364
+    pos_y: 160
+    height: 21
+    width: 27
+    type: 116

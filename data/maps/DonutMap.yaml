@@ -1,0 +1,179 @@
+background_type: 146
+plataforms:
+  - pos_x: 6
+    pos_y: 433
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 144
+    pos_y: 360
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 373
+    pos_y: 431
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 283
+    pos_y: 431
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 191
+    pos_y: 431
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 98
+    pos_y: 432
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 277
+    pos_y: 311
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 412
+    pos_y: 265
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 194
+    pos_y: -11
+    height: 15
+    width: 96
+    type: 131
+  - pos_x: 251
+    pos_y: 196
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 161
+    pos_y: 197
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 74
+    pos_y: 196
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 375
+    pos_y: 115
+    height: 19
+    width: 30
+    type: 119
+  - pos_x: 496
+    pos_y: 118
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 519
+    pos_y: 377
+    height: 19
+    width: 30
+    type: 119
+  - pos_x: 579
+    pos_y: 323
+    height: 19
+    width: 30
+    type: 119
+  - pos_x: 282
+    pos_y: 72
+    height: 19
+    width: 30
+    type: 119
+  - pos_x: 105
+    pos_y: 72
+    height: 15
+    width: 99
+    type: 130
+  - pos_x: 27
+    pos_y: 70
+    height: 19
+    width: 30
+    type: 119
+walls:
+  - pos_x: 401
+    pos_y: 86
+    height: 45
+    width: 14
+    type: 133
+  - pos_x: 601
+    pos_y: 279
+    height: 45
+    width: 14
+    type: 133
+  - pos_x: 160
+    pos_y: 164
+    height: 45
+    width: 14
+    type: 133
+  - pos_x: 252
+    pos_y: 165
+    height: 45
+    width: 14
+    type: 133
+duck spawns:
+  - pos_x: 10
+    pos_y: 407
+    height: 24
+    width: 32
+weapon spawns:
+  - pos_x: 25
+    pos_y: 42
+    height: 30
+    width: 30
+    type: 53
+  - pos_x: 290
+    pos_y: 44
+    height: 24
+    width: 20
+    type: 64
+  - pos_x: 588
+    pos_y: 302
+    height: 15
+    width: 8
+    type: 65
+  - pos_x: 140
+    pos_y: 55
+    height: 10
+    width: 30
+    type: 56
+  - pos_x: 450
+    pos_y: 247
+    height: 11
+    width: 30
+    type: 66
+  - pos_x: 309
+    pos_y: 295
+    height: 10
+    width: 35
+    type: 57
+  - pos_x: 501
+    pos_y: 98
+    height: 11
+    width: 30
+    type: 66
+box spawns:
+  - pos_x: 575
+    pos_y: 97
+    height: 17
+    width: 17
+  - pos_x: 449
+    pos_y: 413
+    height: 17
+    width: 17
+armour spawns:
+  - pos_x: 80
+    pos_y: 168
+    height: 25
+    width: 20
+    type: 118
+  - pos_x: 197
+    pos_y: 171
+    height: 21
+    width: 27
+    type: 116

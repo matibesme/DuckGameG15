@@ -19,6 +19,7 @@ private:
   std::string player_1_name;
   std::string player_2_name;
   bool are_two_players;
+  bool was_game_initialized;
   bool is_new_game;
   std::string id_game;
 
