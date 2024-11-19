@@ -9,7 +9,7 @@ void Receiver::run() {
     while (_keep_running) {
       GameState command = protocolo.reciveFromServer();
       queue_receiver.push(command);
-      if(command.action == FINALLY_GAME){
+      if (command.action == FINALLY_GAME) {
         return;
       }
     }

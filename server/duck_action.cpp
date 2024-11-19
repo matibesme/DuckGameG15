@@ -215,7 +215,8 @@ void DuckAction::cheatComand(uint8_t comando, uint8_t id) {
   if (map_personajes.find(id) == map_personajes.end()) {
     return;
   }
-  DuckPlayer &personaje = map_personajes[id]; //falta chequear que este en el mapa
+  DuckPlayer &personaje =
+      map_personajes[id]; // falta chequear que este en el mapa
 
   switch (comando) {
   case CHEAT_CHANGE_WEAPON: {
