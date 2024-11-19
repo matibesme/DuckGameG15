@@ -62,7 +62,5 @@ void MenuController::game() {
   } else {
     client.joinGame(id_game, are_two_players, player_1_name, player_2_name);
   }
-  client.~Client();
 }
-
 MenuController::~MenuController() {}

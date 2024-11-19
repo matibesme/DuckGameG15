@@ -22,8 +22,8 @@ private:
   std::string id_game;
 
 public:
-  MenuController(Client &client, Menu& menu, QApplication &a, int argc, char **argv,
-                 QObject *parent = nullptr);
+  MenuController(Client &client, Menu &menu, QApplication &a, int argc,
+                 char **argv, QObject *parent = nullptr);
   void set_type_game(uint8_t type_game);
   void start_game();
   void game();
