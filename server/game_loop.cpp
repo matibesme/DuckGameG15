@@ -252,48 +252,74 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
   bool is_on_platform = false;
   for (auto &platform : list_plataformas) {
 
-    if (personaje.getXPos() + MARGEN_PLATAFORMA_X >= platform.x_pos &&
-        personaje.getXPos() + DUCK_WIDTH - MARGEN_PLATAFORMA_X <=
-            platform.x_pos + platform.width) {
-      // caso plataformas inferior y superior
-      if (personaje.getYPos() + DUCK_HEIGHT == platform.y_pos ||
-          (personaje.getYPos() + DUCK_HEIGHT > platform.y_pos &&
-           personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos)) {
-        if (personaje.getVelocidadY() < 0) {
-          personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
-        } else {
-          personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
-        }
-        is_on_platform = true;
-      } else if (personaje.getYPos() <= platform.y_pos + platform.height &&
-                 personaje.getYPos() + DUCK_HEIGHT >
-                     platform.y_pos + platform.height &&
-                 personaje.getVelocidadY() > 0) {
-        personaje.setYPos(platform.y_pos + platform.height);
-        personaje.setVelocidadY(0);
-      }
-    } else if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 >
-                   platform.y_pos &&
-               personaje.getYPos() < platform.y_pos + platform.height) {
-      // caso paredes de plataformas
-      if (personaje.getXPos() + DUCK_WIDTH > platform.x_pos &&
-          personaje.getXPos() < platform.x_pos &&
-          personaje.getDirection() == RIGHT) {
-        personaje.setXPos(platform.x_pos - DUCK_WIDTH);
-      } else if (personaje.getXPos() < platform.x_pos + platform.width &&
-                 personaje.getXPos() > platform.x_pos &&
-                 personaje.getDirection() == LEFT) {
-        personaje.setXPos(platform.x_pos + platform.width);
-      }
+    if (sobrePlataformaX(personaje, platform))
+    {
+      coalisionSuperiorEinferior(personaje, platform, is_on_platform);
     }
-  }
+    coalisonWalls(personaje, platform);
+    }
 
   if (!is_on_platform && (!personaje.estaSaltando() or personaje.isSliding())) {
     personaje.setIsSliding(false);
     personaje.setEnSalto(true);
     personaje.setVelocidadY(0);
+    if (personaje.getDirection() == RIGHT) {
+      personaje.setXPos(personaje.getXPos() + DUCK_WIDTH);
+    } else if(personaje.getDirection() == LEFT) {
+      personaje.setXPos(personaje.getXPos() - DUCK_WIDTH);
+    }
   }
 }
+
+bool GameLoop::sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &platform) {
+return (personaje.getXPos()  >= platform.x_pos &&
+      personaje.getXPos()  <= platform.x_pos + platform.width)||
+      (personaje.getXPos()  <= platform.x_pos &&
+      personaje.getXPos()+DUCK_WIDTH  >= platform.x_pos)||
+      (personaje.getXPos()  <= platform.x_pos+platform.width &&
+      personaje.getXPos()+DUCK_WIDTH  >= platform.x_pos+platform.width);
+
+}
+
+
+void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje, DTOPlatform &platform, bool &is_on_platform)
+{
+  if (personaje.getYPos() + DUCK_HEIGHT >= platform.y_pos &&
+          personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos) {
+    if (personaje.getVelocidadY() < 0) {
+      personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
+    } else {
+      personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
+    }
+    is_on_platform = true;
+          } else if (personaje.getYPos() <= platform.y_pos + platform.height &&
+                     personaje.getYPos() + DUCK_HEIGHT >
+                         platform.y_pos + platform.height &&
+                     personaje.getVelocidadY() > 0) {
+            personaje.setYPos(platform.y_pos + platform.height);
+            personaje.setVelocidadY(0);
+                     }
+}
+
+
+void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
+
+  if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 >
+              platform.y_pos &&
+          personaje.getYPos() < platform.y_pos + platform.height) {
+
+    if (personaje.getXPos() + DUCK_WIDTH > platform.x_pos &&
+        personaje.getXPos() < platform.x_pos &&
+        personaje.getDirection() == RIGHT) {
+      personaje.setXPos(platform.x_pos - DUCK_WIDTH);
+        } else if (personaje.getXPos() < platform.x_pos + platform.width &&
+                   personaje.getXPos() > platform.x_pos &&
+                   personaje.getDirection() == LEFT) {
+          personaje.setXPos(platform.x_pos + platform.width);
+                   }
+          }
+}
+
 
 void GameLoop::respawnWeapon() {
 
