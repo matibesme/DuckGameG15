@@ -18,7 +18,7 @@ LevelEditorController::LevelEditorController(QGraphicsScene &scene,
                                              QMainWindow *window,
                                              QObject *parent)
     : QObject(parent), window(window), scene(scene) {
-  std::string background_type("");
+  this->background_type = "";
 }
 
 void LevelEditorController::set_background(const QString &background_name) {
@@ -248,7 +248,7 @@ void LevelEditorController::save_map() {
   }
 }
 
-void LevelEditorController::load_map(const std::string path_map) {
+void LevelEditorController::load_map(const std::string &path_map) {
   std::string path = std::string(DATA_PATH) + std::string("/maps/") +
                      std::string(path_map) + std::string(".yaml");
   YAML::Node map = YAML::LoadFile(path);
@@ -314,8 +314,8 @@ void LevelEditorController::load_map(const std::string path_map) {
   }
 }
 
-void LevelEditorController::set_default_duck_spawn(){
-    if(duck_spawns.isEmpty()){
-        set_spawn_duck();
-    }
+void LevelEditorController::set_default_duck_spawn() {
+  if (duck_spawns.isEmpty()) {
+    set_spawn_duck();
+  }
 }
