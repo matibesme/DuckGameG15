@@ -5,41 +5,7 @@
 sudo apt install build-essential
 sudo apt install cmake
 #SDL2
-sudo apt install libjpeg-dev libpng-dev libfreetype-dev libopusfile-dev libflac-dev libxmp-dev libfluidsynth-dev libwavpack-dev cmake libmodplug-dev libsdl2-dev
-mkdir sdl2
-cd sdl2
-wget https://github.com/libsdl-org/SDL_ttf/releases/download/release-2.22.0/SDL2_ttf-2.22.0.zip
-wget https://github.com/libsdl-org/SDL_mixer/releases/download/release-2.8.0/SDL2_mixer-2.8.0.zip
-wget https://github.com/libsdl-org/SDL_image/releases/download/release-2.8.2/SDL2_image-2.8.2.zip
-
-unzip SDL2_ttf-2.22.0.zip
-unzip SDL2_mixer-2.8.0.zip
-unzip SDL2_image-2.8.2.zip 
-
-cd SDL_image-release-2.8.2
-mkdir build
-cd build
-cmake ..
-make -j4
-sudo make install
-cd ..
-
-cd SDL_mixer-release-2.8.0
-mkdir build
-cd build
-cmake ..
-make -j4
-sudo make install
-cd ..
-
-cd SDL_ttf-release-2.22.0
-mkdir build
-cd build
-cmake ..
-make -j4
-sudo make install
-cd ../../
-
+sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libjpeg-dev libpng-dev libfreetype-dev libopusfile-dev libflac-dev libxmp-dev libfluidsynth-dev libwavpack-dev cmake libmodplug-dev
 
 #QT
 sudo apt install qtcreator qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
