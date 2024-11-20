@@ -22,6 +22,8 @@ public:
   Platform(float initial_pos_x, float initial_pos_y, Graficos &graficos,
            uint8_t type, float width, float height);
   void draw();
+  float getX();
+  float getY();
 };
 
 #endif

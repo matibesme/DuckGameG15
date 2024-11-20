@@ -64,3 +64,7 @@ void Platform::draw() {
   SDL2pp::Rect destRect(pos_x, pos_y, width, height);
   renderer.Copy(platform, SDL2pp::NullOpt, destRect);
 }
+
+float Platform::getX() { return pos_x; }
+
+float Platform::getY() { return pos_y; }

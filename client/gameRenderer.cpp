@@ -7,8 +7,7 @@
 #define IMAGE_CITY DATA_PATH "/backgrounds/City.png"
 #define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
 
-GameRenderer::GameRenderer(Graficos &graficos)
-    : graficos(graficos), plataformasYaCargadas(false) {}
+GameRenderer::GameRenderer(Graficos &graficos) : graficos(graficos) {}
 
 void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
   // Limpio el renderizador y dibujo el fondo directamente en la pantalla
@@ -138,16 +137,6 @@ GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks) {
 }
 
 void GameRenderer::actualizarElementos(const GameState &command) {
-  if (!plataformasYaCargadas) {
-    // Creo las plataformas por única vez
-    for (auto &platformStruct : command.lista_plataformas) {
-      platforms.emplace_back(platformStruct.x_pos, platformStruct.y_pos,
-                             graficos, platformStruct.type,
-                             platformStruct.width, platformStruct.height);
-    }
-    plataformasYaCargadas = true;
-  }
-
   // PRIMERO ACTUALIZO PATOS
   //  Actualizar y eliminar patos
   for (auto it = ducks.begin(); it != ducks.end();) {
@@ -326,6 +315,37 @@ void GameRenderer::actualizarElementos(const GameState &command) {
     if (it == boxes.end()) {
       boxes.emplace_back(boxStruct.id, boxStruct.x_pos, boxStruct.y_pos,
                          graficos);
+    }
+  }
+
+  // SEPTIMO ACTUALIZO PLATAFORMAS
+  for (auto it = platforms.begin(); it != platforms.end();) {
+    auto platformInCommand = std::find_if(
+        command.lista_plataformas.begin(), command.lista_plataformas.end(),
+        [it](const DTOPlatform &platformStruct) {
+          return platformStruct.x_pos == it->getX() &&
+                 platformStruct.y_pos == it->getY();
+        });
+    if (platformInCommand != command.lista_plataformas.end()) {
+      // Actualizar si la plataforma está en ambas listas
+      ++it;
+    } else {
+      // Eliminar si solo está en la lista local
+      it = platforms.erase(it);
+    }
+  }
+
+  // Agregar plataformas que están en el comando pero no en la lista local
+  for (const auto &platformStruct : command.lista_plataformas) {
+    auto it = std::find_if(platforms.begin(), platforms.end(),
+                           [&platformStruct](Platform &platform) {
+                             return platform.getX() == platformStruct.x_pos &&
+                                    platform.getY() == platformStruct.y_pos;
+                           });
+    if (it == platforms.end()) {
+      platforms.emplace_back(platformStruct.x_pos, platformStruct.y_pos,
+                             graficos, platformStruct.type,
+                             platformStruct.width, platformStruct.height);
     }
   }
 }

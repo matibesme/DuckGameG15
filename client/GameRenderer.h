@@ -21,7 +21,6 @@
 class GameRenderer {
 private:
   Graficos &graficos;
-  bool plataformasYaCargadas;
   std::list<ClientDuck> ducks;
   std::list<Bullet> bullets;
   std::list<Gun> guns;
