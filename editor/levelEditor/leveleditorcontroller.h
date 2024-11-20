@@ -42,6 +42,7 @@ public:
     void set_wall(const QString &wall_type, int pos_x = DEFAULT_POS_X, int pos_y = DEFAULT_POS_Y);
     void load_map(const std::string path_map);
     void save_map();
+    void set_default_duck_spawn();
 };
 
 #endif
