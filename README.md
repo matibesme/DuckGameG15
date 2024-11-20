@@ -1,66 +1,29 @@
-# Ejemplo de CMAKE para el TP Final
+# Duck Game TP Final
 
-**Importante:** el primer commit de este repositorio tiene el setup
-básico para el TP Final que incluye la instalación de la lib
-`libSDL2pp` (el wrapper de C++).
+## Integrantes
 
-El resto de los commits son a modo de ejemplo de como se pueden
-agregar mas código fuente al proyecto.
+- **Nombre**: Ignacio Ramirez
+- **Legajo**: 111167
 
-Este ejemplo **no** incluye instalarse la librería `SDL2` ni tampoco
-instala otras librerías que puedan ser necesarias ni tampoco un
-instalador (aunque **si** incluye Google Tests)
 
-**Se deben agregar las librerias necesarias y el instalador.**
+- **Nombre**: Matias Besmedrisniki
+- **Legajo**: 110487
 
-También el ejemplo usa una estructura de carpetas muy simple:
 
-```
-client/
-server/
-editor/
-common/
-```
+- **Nombre**: Ezequiel Aragon
+- **Legajo**: 110643
 
-Bien se puede mejorar (cambiando el cmakefile) agregando mas
-sub-carpetas.
 
-Asi tambien **deben** ser cambiados los *targets* del cmake (`taller_client`,
-`taller_server`, ...) por nombres mas acordes al TP que se este
-haciendo.
+- **Nombre**: Lourdes Ramirez Almada
+- **Legajo**: 105900
 
-Tambien, por default solo se compila una version *debug* sin
-optimizar. Si se quiere compilar binarios optimizados
-(lo que cmake llama *release*) se puede, solo hay modificar
-cmake.
+## Manual de usuario
+En este [link](https://github.com/matibesme/DuckGameG15/blob/main/documentacion/Informe_taller_Man_usuario.pdf) se encuentra el manual de usuario, el cual da las indicaciones necesarias para poder jugar al juego.
 
-Aprender del ejemplo para saber como extenderlo!
-
-**Importante:** este repositorio **no** incluye pre-commits hooks,
-ni scripts adicionales (como correr valgrind).
-
-**Eso esta a cargo de los estudiantes,** tal como fue mostrado
-en los tps individuales, recaps y hands-on.
-
-**Instalar Yaml**
-```
-sudo apt-get install libyaml-cpp-dev
-```
-
-**Correr los pre-commits**
-```
-pre-commit run --all-files
-```
-
-## **Instalación**
-Para instalar las dependencias necesarias para el correcto funcionamiento del juego se debe correr el comando:
-```
-chmod +x download.sh
-./download.sh
-```
-
-Luego para compilar, correr los tests e instalar lo necesario en el sistema se debe correr el comando:
-```
-chmod +x install.sh
-./install.sh
-```
+##### Archivos (Thread, queue)
+ fueron tomados del repositorio https://github.com/eldipa/hands-on-threads de la catedra
+ con licencia GPL v2
+##### Archivos (echo_server, liberror, resolve_name, resolver, socket)
+ fueron tomados del repositorio https://github.com/eldipa/sockets-en-cpp de la catedra
+ con licencia GPL v2
+ Tambien utilizo archivos de mi TP1 de Sockets
