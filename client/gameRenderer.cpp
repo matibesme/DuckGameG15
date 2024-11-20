@@ -296,7 +296,8 @@ void GameRenderer::actualizarElementos(const GameState &command) {
     auto boxInCommand =
         std::find_if(command.lista_boxes.begin(), command.lista_boxes.end(),
                      [it](const DTOBoxes &boxStruct) {
-                       return boxStruct.id == it->getId();
+                       return boxStruct.x_pos == it->getX() &&
+                              boxStruct.y_pos == it->getY();
                      });
     if (boxInCommand != command.lista_boxes.end()) {
       // Actualizar si la caja está en ambas listas
@@ -310,7 +311,7 @@ void GameRenderer::actualizarElementos(const GameState &command) {
   // Agregar cajas que están en el comando pero no en la lista local
   for (const auto &boxStruct : command.lista_boxes) {
     auto it = std::find_if(boxes.begin(), boxes.end(), [&boxStruct](Box &box) {
-      return box.getId() == boxStruct.id;
+      return box.getX() == boxStruct.x_pos && box.getY() == boxStruct.y_pos;
     });
     if (it == boxes.end()) {
       boxes.emplace_back(boxStruct.id, boxStruct.x_pos, boxStruct.y_pos,

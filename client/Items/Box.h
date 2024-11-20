@@ -21,8 +21,8 @@ public:
   // Actualiza la posicion de la caja
   void update(uint8_t type);
 
-  // Devuelve el id de la caja
-  uint8_t getId();
+  float getX();
+  float getY();
 
 private:
   Graficos &graficos;

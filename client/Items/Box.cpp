@@ -49,6 +49,8 @@ void Box::draw(SDL2pp::Renderer &renderer) {
 
 void Box::update(uint8_t type_) { typeOfAction = type_; }
 
-uint8_t Box::getId() { return idBox; }
+float Box::getX() { return pos_x; }
+
+float Box::getY() { return pos_y; }
 
 void Box::reproducirSonido() { sound.reproducirEfecto(SOUND_GRANADA); }
