@@ -8,7 +8,7 @@ extern uint8_t SCENE_ID;
 
 // Fisica
 constexpr float GRAVEDAD = 1;
-constexpr float VELOCIDAD_INICIAL = 15;
+constexpr float VELOCIDAD_INICIAL = 13;
 constexpr float GRAVITY_FLAP = 0.001;
 constexpr int CANT_FLAP = 100;
 

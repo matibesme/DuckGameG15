@@ -18,7 +18,9 @@ void BananaBullet::executeAction() {
     // Actualización de la posición vertical (y_pos)
     if (is_falling) {
       y_pos += std::abs(velocidad);
-      velocidad += GRAVEDAD;
+      if (velocidad < 15) {
+        velocidad += GRAVEDAD;
+      }
     } else {
       y_pos -= velocidad;
       velocidad -= GRAVEDAD;
@@ -49,7 +51,7 @@ void BananaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
         } else {
           setIsFalling(true);
           if (min_distance == DOWN) {
-            y_pos = plat_y_pos + plat_height + 1;
+            y_pos = plat_y_pos + plat_height + 15;
           } else if (min_distance == LEFT) {
             x_pos = plat_x_pos - WIDTH_BIG_BULLET;
           } else if (min_distance == RIGHT) {
@@ -81,9 +83,10 @@ bool BananaBullet::colisionWithDuck(float duck_x_pos, float duck_y_pos,
   return false;
 }
 
-uint8_t BananaBullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
-                                             float plat_width,
-                                             float plat_height) {
+uint8_t BananaBullet::calculateCollisionSide(float plat_x_pos,
+                                              float plat_y_pos,
+                                              float plat_width,
+                                              float plat_height) {
   float up_distance =
       (y_pos +
        (type == LASER_RIFLE_BULLET ? HEIGHT_BULLET : HEIGHT_BIG_BULLET)) -
@@ -98,13 +101,13 @@ uint8_t BananaBullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
       minimo(up_distance, down_distance, left_distance, right_distance);
 
   if (min_distance == up_distance) {
-    if (!is_falling) {
+    if (!is_falling && y_pos + HEIGHT_BIG_BULLET > plat_y_pos + plat_height) {
       return DOWN;
     }
     return BULLET_UP;
   }
   if (min_distance == down_distance) {
-    if (is_falling) {
+    if (is_falling && y_pos < plat_y_pos) {
       return BULLET_UP;
     }
     return DOWN;

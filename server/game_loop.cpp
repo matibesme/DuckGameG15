@@ -106,7 +106,8 @@ void GameLoop::checkCommand(CommandClient comando, uint8_t &rounds) {
 void GameLoop::checkBullets() {
   for (auto it = map_bullets.begin(); it != map_bullets.end();) {
     if (!it->second->isAlive()) {
-      if (it->second->getTypeOfBullet() == GRENADE_EXPLOSION) {
+      if (it->second->getTypeOfBullet() == GRENADE_EXPLOSION ) {
+
         checkGrenadeExplosion(*(GranadaBullet *)it->second.get());
       }
       it = map_bullets.erase(it);
@@ -205,7 +206,7 @@ void GameLoop::paraCadaPatoAction() {
 void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
   for (auto &plataform : list_plataformas) {
     bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos,
-                                 plataform.width, plataform.height);
+                                 plataform.width, plataform.height + 5);
   }
   uint8_t bullet_type = bullet->getTypeOfBullet();
   if (bullet_type != GRANADA_BULLET) {
@@ -467,6 +468,10 @@ void GameLoop::sendColorPresentation() {
 }
 
 void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
+  if (grenade_bullet.isExplode()) {
+    return;
+  }
+  grenade_bullet.setIsExplode(true);
   for (auto it = map_personajes.begin(); it != map_personajes.end();) {
     if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) <
             it->second.getXPos() &&

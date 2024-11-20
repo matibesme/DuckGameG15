@@ -14,11 +14,13 @@ GranadaBullet::GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
       continue_moving(true) {}
 
 void GranadaBullet::executeAction() {
-  if (time_to_explode > 6 && is_alive && continue_moving) {
+  if (time_to_explode > 15 && is_alive && continue_moving) {
     // Actualización de la posición vertical (y_pos)
     if (is_falling) {
       y_pos += std::abs(velocidad);
-      velocidad += GRAVEDAD;
+      if (velocidad < 15) {
+        velocidad += GRAVEDAD;
+      }
     } else {
       y_pos -= velocidad;
       velocidad -= GRAVEDAD;
@@ -67,7 +69,7 @@ void GranadaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
         } else {
           setIsFalling(true);
           if (min_distance == DOWN) {
-            y_pos = plat_y_pos + plat_height + 1;
+            y_pos = plat_y_pos + plat_height + 15;
           } else if (min_distance == LEFT) {
             x_pos = plat_x_pos - WIDTH_BIG_BULLET;
           } else if (min_distance == RIGHT) {
@@ -103,13 +105,13 @@ uint8_t GranadaBullet::calculateCollisionSide(float plat_x_pos,
       minimo(up_distance, down_distance, left_distance, right_distance);
 
   if (min_distance == up_distance) {
-    if (!is_falling) {
+    if (!is_falling && y_pos + HEIGHT_BIG_BULLET > plat_y_pos + plat_height) {
       return DOWN;
     }
     return BULLET_UP;
   }
   if (min_distance == down_distance) {
-    if (is_falling) {
+    if (is_falling && y_pos < plat_y_pos) {
       return BULLET_UP;
     }
     return DOWN;
@@ -123,3 +125,7 @@ uint8_t GranadaBullet::calculateCollisionSide(float plat_x_pos,
 
   return 0; // En caso de que ninguna coincidencia sea encontrada
 }
+
+void GranadaBullet::setIsExplode(bool is_explode_) { is_explode = is_explode_; }
+
+bool GranadaBullet::isExplode() { return is_explode; }
