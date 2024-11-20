@@ -288,7 +288,7 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
                                           DTOPlatform &platform,
                                           bool &is_on_platform,
                                           bool &is_on_platform_down) {
-  if (personaje.getYPos() + DUCK_HEIGHT >= platform.y_pos &&
+  if (personaje.getYPos() + DUCK_HEIGHT >= platform.y_pos - PLATAFORMA_LEVEMENTE_LEVANTADA&&
       personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos) {
     if (personaje.getVelocidadY() < 0) {
       personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
