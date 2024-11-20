@@ -61,12 +61,12 @@ void LevelEditor::show_main_menu() {
   view->show();
 }
 
-void LevelEditor::show_level_editor() {
-  setContextMenuPolicy(Qt::CustomContextMenu);
-  connect(this, &QMainWindow::customContextMenuRequested, this,
-          &LevelEditor::initialize_menus);
-  view->setScene(level_editor_scene);
-  view->show();
+void LevelEditor::show_level_editor(){
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, &QMainWindow::customContextMenuRequested, this, &LevelEditor::initialize_menus);
+    controller->set_default_duck_spawn();
+    view->setScene(level_editor_scene);
+    view->show();
 }
 void LevelEditor::initialize_menus(const QPoint &pos) {
   QMenu menu(this);
@@ -103,10 +103,11 @@ void LevelEditor::initialize_menus(const QPoint &pos) {
     menu.addMenu(submenu_option);
   }
 
-  QAction *action_spawn_duck = new QAction("Spawn", this);
-  connect(action_spawn_duck, &QAction::triggered,
-          [this, action_spawn_duck]() { controller->set_spawn_duck(); });
-  menu.addAction(action_spawn_duck);
+        /*QAction *action_spawn_duck = new QAction("Spawn", this);
+        connect(action_spawn_duck, &QAction::triggered, [this, action_spawn_duck]() {
+        controller->set_spawn_duck();
+        });
+        menu.addAction(action_spawn_duck);*/
 
   QAction *action_itemBox_spawn = new QAction("itemBox", this);
   connect(action_itemBox_spawn, &QAction::triggered,

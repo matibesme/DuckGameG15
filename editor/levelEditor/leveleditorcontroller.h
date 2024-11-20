@@ -34,21 +34,17 @@ private:
   TypeMaker type_maker;
 
 public:
-  LevelEditorController(QGraphicsScene &scene, QMainWindow *window,
-                        QObject *parent = nullptr);
-  void set_background(const QString &background_type);
-  void set_platform(const QString &platform_type, int pos_x = DEFAULT_POS_X,
-                    int pos_y = DEFAULT_POS_Y);
-  void set_spawn_duck(int pos_x = DEFAULT_POS_X, int pos_y = DEFAULT_POS_Y);
-  void set_spawn_weapon(const QString &weapon_type, int pos_x = DEFAULT_POS_X,
-                        int pos_y = DEFAULT_POS_Y);
-  void set_spawn_armour(const QString &armour_type, int pos_x = DEFAULT_POS_X,
-                        int pos_y = DEFAULT_POS_Y);
-  void set_spawn_box(int pos_x = DEFAULT_POS_X, int pos_y = DEFAULT_POS_Y);
-  void set_wall(const QString &wall_type, int pos_x = DEFAULT_POS_X,
-                int pos_y = DEFAULT_POS_Y);
-  void load_map(const std::string path_map);
-  void save_map();
+    LevelEditorController(QGraphicsScene& scene, QMainWindow *window, QObject *parent = nullptr);
+    void set_background(const QString &background_type);
+    void set_platform(const QString &platform_type, int pos_x = DEFAULT_POS_X, int pos_y = DEFAULT_POS_Y);
+    void set_spawn_duck(int pos_x = DEFAULT_POS_X, int pos_y = DEFAULT_POS_Y);
+    void set_spawn_weapon(const QString &weapon_type, int pos_x = DEFAULT_POS_X, int pos_y = DEFAULT_POS_Y);
+    void set_spawn_armour(const QString &armour_type, int pos_x = DEFAULT_POS_X, int pos_y = DEFAULT_POS_Y);
+    void set_spawn_box(int pos_x = DEFAULT_POS_X, int pos_y = DEFAULT_POS_Y);
+    void set_wall(const QString &wall_type, int pos_x = DEFAULT_POS_X, int pos_y = DEFAULT_POS_Y);
+    void load_map(const std::string path_map);
+    void save_map();
+    void set_default_duck_spawn();
 };
 
 #endif

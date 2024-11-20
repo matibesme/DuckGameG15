@@ -313,3 +313,9 @@ void LevelEditorController::load_map(const std::string path_map) {
     }
   }
 }
+
+void LevelEditorController::set_default_duck_spawn(){
+    if(duck_spawns.isEmpty()){
+        set_spawn_duck();
+    }
+}
