@@ -7,8 +7,8 @@ extern float MAP_LIMIT_Y;
 extern uint8_t SCENE_ID;
 
 // Fisica
-constexpr float GRAVEDAD = 1;
-constexpr float VELOCIDAD_INICIAL = 13;
+extern float GRAVEDAD;
+extern float VELOCIDAD_INICIAL;
 constexpr float GRAVITY_FLAP = 0.001;
 constexpr int CANT_FLAP = 100;
 
@@ -79,8 +79,8 @@ extern float RECOIL_MAGNUM;
 
 //
 constexpr uint8_t VICTORY_ROUNDS_INICIAL = 0;
-constexpr uint8_t NECESARY_VICTORY_ROUNDS = 10;
-constexpr uint8_t GAMES_PER_ROUND = 5;
+extern uint8_t NECESARY_VICTORY_ROUNDS;
+extern uint8_t GAMES_PER_ROUND;
 
 constexpr float BULLET_VEL = 8;
 constexpr float MOVEMENT_QUANTITY_X = 2;
