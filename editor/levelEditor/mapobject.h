@@ -14,6 +14,9 @@ public:
             QGraphicsItem *parent = nullptr);
   QString get_type();
 
+protected:
+  void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) override;
+
 private:
   QString type;
 };

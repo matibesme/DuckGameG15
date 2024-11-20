@@ -77,9 +77,10 @@ void LevelEditorController::set_spawn_box(int pos_x, int pos_y) {
       std::string(DATA_PATH) + std::string("/objects/itemBox.png"));
   QPixmap box(box_path);
 
-  QGraphicsPixmapItem *box_spawn = new QGraphicsPixmapItem(box);
-  box_spawn->setFlags(QGraphicsItem::ItemIsMovable |
-                      QGraphicsItem::ItemIsSelectable);
+  // QGraphicsPixmapItem *box_spawn = new QGraphicsPixmapItem(box);
+  /*box_spawn->setFlags(QGraphicsItem::ItemIsMovable |
+                      QGraphicsItem::ItemIsSelectable);*/
+  MapObject *box_spawn = new MapObject(box, "itemBox");
   box_spawn->setPos(pos_x, pos_y);
   scene.addItem(box_spawn);
   boxes.push_back(box_spawn);
@@ -126,38 +127,43 @@ void LevelEditorController::save_map() {
   out << YAML::Key << "plataforms";
   out << YAML::Value << YAML::BeginSeq;
   for (int i = 0; i < platforms.size(); i++) {
-    out << YAML::BeginMap;
-    out << YAML::Key << "pos_x";
-    out << YAML::Value << platforms.at(i)->x();
-    out << YAML::Key << "pos_y";
-    out << YAML::Value << platforms.at(i)->y();
-    out << YAML::Key << "height";
-    out << YAML::Value << platforms.at(i)->pixmap().height();
-    out << YAML::Key << "width";
-    out << YAML::Value << platforms.at(i)->pixmap().width();
-    out << YAML::Key << "type";
-    out << YAML::Value
-        << id_maker.get_id_platform(platforms.at(i)->get_type().toStdString());
-    out << YAML::EndMap;
+    if (platforms.at(i)->isVisible()) {
+      out << YAML::BeginMap;
+      out << YAML::Key << "pos_x";
+      out << YAML::Value << platforms.at(i)->x();
+      out << YAML::Key << "pos_y";
+      out << YAML::Value << platforms.at(i)->y();
+      out << YAML::Key << "height";
+      out << YAML::Value << platforms.at(i)->pixmap().height();
+      out << YAML::Key << "width";
+      out << YAML::Value << platforms.at(i)->pixmap().width();
+      out << YAML::Key << "type";
+      out << YAML::Value
+          << id_maker.get_id_platform(
+                 platforms.at(i)->get_type().toStdString());
+      out << YAML::EndMap;
+    }
   }
   out << YAML::EndSeq;
 
   out << YAML::Key << "walls";
   out << YAML::Value << YAML::BeginSeq;
   for (int i = 0; i < walls.size(); i++) {
-    out << YAML::BeginMap;
-    out << YAML::Key << "pos_x";
-    out << YAML::Value << walls.at(i)->x();
-    out << YAML::Key << "pos_y";
-    out << YAML::Value << walls.at(i)->y();
-    out << YAML::Key << "height";
-    out << YAML::Value << walls.at(i)->pixmap().height();
-    out << YAML::Key << "width";
-    out << YAML::Value << walls.at(i)->pixmap().width();
-    out << YAML::Key << "type";
-    out << YAML::Value
-        << id_maker.get_id_wall(walls.at(i)->get_type().toStdString());
-    out << YAML::EndMap;
+    if (walls.at(i)->isVisible()) {
+      out << YAML::BeginMap;
+      out << YAML::Key << "pos_x";
+      out << YAML::Value << walls.at(i)->x();
+      out << YAML::Key << "pos_y";
+      out << YAML::Value << walls.at(i)->y();
+      out << YAML::Key << "height";
+      out << YAML::Value << walls.at(i)->pixmap().height();
+      out << YAML::Key << "width";
+      out << YAML::Value << walls.at(i)->pixmap().width();
+      out << YAML::Key << "type";
+      out << YAML::Value
+          << id_maker.get_id_wall(walls.at(i)->get_type().toStdString());
+      out << YAML::EndMap;
+    }
   }
   out << YAML::EndSeq;
 
@@ -180,54 +186,60 @@ void LevelEditorController::save_map() {
   out << YAML::Key << "weapon spawns";
   out << YAML::Value << YAML::BeginSeq;
   for (int i = 0; i < weapons.size(); i++) {
-    out << YAML::BeginMap;
-    out << YAML::Key << "pos_x";
-    out << YAML::Value << weapons.at(i)->x();
-    out << YAML::Key << "pos_y";
-    out << YAML::Value << weapons.at(i)->y();
-    out << YAML::Key << "height";
-    out << YAML::Value << weapons.at(i)->pixmap().height();
-    out << YAML::Key << "width";
-    out << YAML::Value << weapons.at(i)->pixmap().width();
-    out << YAML::Key << "type";
-    out << YAML::Value
-        << id_maker.get_id_weapon(weapons.at(i)->get_type().toStdString());
-    out << YAML::EndMap;
+    if (weapons.at(i)->isVisible()) {
+      out << YAML::BeginMap;
+      out << YAML::Key << "pos_x";
+      out << YAML::Value << weapons.at(i)->x();
+      out << YAML::Key << "pos_y";
+      out << YAML::Value << weapons.at(i)->y();
+      out << YAML::Key << "height";
+      out << YAML::Value << weapons.at(i)->pixmap().height();
+      out << YAML::Key << "width";
+      out << YAML::Value << weapons.at(i)->pixmap().width();
+      out << YAML::Key << "type";
+      out << YAML::Value
+          << id_maker.get_id_weapon(weapons.at(i)->get_type().toStdString());
+      out << YAML::EndMap;
+    }
   }
   out << YAML::EndSeq;
 
   out << YAML::Key << "box spawns";
   out << YAML::Value << YAML::BeginSeq;
   for (int i = 0; i < boxes.size(); i++) {
-    out << YAML::BeginMap;
-    out << YAML::Key << "pos_x";
-    out << YAML::Value << boxes.at(i)->x();
-    out << YAML::Key << "pos_y";
-    out << YAML::Value << boxes.at(i)->y();
-    out << YAML::Key << "height";
-    out << YAML::Value << boxes.at(i)->pixmap().height();
-    out << YAML::Key << "width";
-    out << YAML::Value << boxes.at(i)->pixmap().width();
-    out << YAML::EndMap;
+    if (boxes.at(i)->isVisible()) {
+      out << YAML::BeginMap;
+      out << YAML::Key << "pos_x";
+      out << YAML::Value << boxes.at(i)->x();
+      out << YAML::Key << "pos_y";
+      out << YAML::Value << boxes.at(i)->y();
+      out << YAML::Key << "height";
+      out << YAML::Value << boxes.at(i)->pixmap().height();
+      out << YAML::Key << "width";
+      out << YAML::Value << boxes.at(i)->pixmap().width();
+      out << YAML::EndMap;
+    }
   }
   out << YAML::EndSeq;
 
   out << YAML::Key << "armour spawns";
   out << YAML::Value << YAML::BeginSeq;
   for (int i = 0; i < armours.size(); i++) {
-    out << YAML::BeginMap;
-    out << YAML::Key << "pos_x";
-    out << YAML::Value << armours.at(i)->x();
-    out << YAML::Key << "pos_y";
-    out << YAML::Value << armours.at(i)->y();
-    out << YAML::Key << "height";
-    out << YAML::Value << armours.at(i)->pixmap().height();
-    out << YAML::Key << "width";
-    out << YAML::Value << armours.at(i)->pixmap().width();
-    out << YAML::Key << "type";
-    out << YAML::Value
-        << id_maker.get_id_armour(armours.at(i)->get_type().toStdString());
-    out << YAML::EndMap;
+    if (armours.at(i)->isVisible()) {
+      out << YAML::BeginMap;
+      out << YAML::Key << "pos_x";
+      out << YAML::Value << armours.at(i)->x();
+      out << YAML::Key << "pos_y";
+      out << YAML::Value << armours.at(i)->y();
+      out << YAML::Key << "height";
+      out << YAML::Value << armours.at(i)->pixmap().height();
+      out << YAML::Key << "width";
+      out << YAML::Value << armours.at(i)->pixmap().width();
+      out << YAML::Key << "type";
+      out << YAML::Value
+          << id_maker.get_id_armour(armours.at(i)->get_type().toStdString());
+      out << YAML::EndMap;
+    }
   }
   out << YAML::EndSeq;
   out << YAML::EndMap;

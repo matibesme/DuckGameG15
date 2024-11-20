@@ -28,7 +28,8 @@ private:
   QList<MapObject *> weapons;
   QList<MapObject *> armours;
   QList<MapObject *> walls;
-  QList<QGraphicsPixmapItem *> boxes;
+  // QList<QGraphicsPixmapItem *> boxes;
+  QList<MapObject *> boxes;
   PathMaker path_maker;
   IDMaker id_maker;
   TypeMaker type_maker;
