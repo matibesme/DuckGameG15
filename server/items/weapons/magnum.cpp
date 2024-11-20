@@ -4,7 +4,7 @@ Magnum::Magnum(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
                int range, int ammo_quantity, float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
 
-      bala(MAGNUM_BULLET, 1, 0, 0, damage, range, 0.3) {}
+      bala(MAGNUM_BULLET, 1, 0, 0, damage, range, MAGNUM_SPREAD) {}
 
 bool Magnum::isEmptyAmmo() { return ammo_quantity == 0; }
 std::unique_ptr<Bullet> Magnum::shoot(bool is_aiming_up) {

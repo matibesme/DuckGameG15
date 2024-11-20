@@ -23,7 +23,8 @@ DuckPlayer::DuckPlayer()
       saltando(false), velocidad(VELOCIDAD_INICIAL), life(LIFE), is_alive(true),
       gravity(GRAVEDAD), weapons_list(), counter_flapping(0),
       is_flapping(false), helmet(NO_HELMET), armor(NO_ARMOR), color(),
-      is_aiming_up(false), is_sliding(false), slide_counter(SLIDE_COUNTER) {}
+      is_aiming_up(false), is_sliding(false), slide_counter(SLIDE_COUNTER),
+      respond_after_sliding(0) {}
 
 DuckPlayer::DuckPlayer(uint8_t type, uint8_t id, float x_pos, float y_pos,
                        std::string color_)
@@ -136,11 +137,7 @@ void DuckPlayer::pickUpWeapon(std::shared_ptr<Weapon> weapon) {
 
 bool DuckPlayer::isWeaponEquipped() { return is_weapon_equiped; }
 
-bool DuckPlayer::isAlive()
-{
-  std::cout << "life " << life << std::endl;
-  return is_alive;
-}
+bool DuckPlayer::isAlive() { return is_alive; }
 
 void DuckPlayer::applyDamage(int damage) {
   life -= damage;

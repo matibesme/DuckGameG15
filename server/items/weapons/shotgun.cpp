@@ -10,7 +10,7 @@ Shotgun::Shotgun(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
                  int range, int ammo_quantity, float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       pellets_vector(), pellet_count(PELLET_COUNT) {
-  float maxSpread = 1;
+  float maxSpread = ESCOPETA_MAX_SPREAD;
   int halfCount =
       PELLET_COUNT / 2; // Para dividir el número de balas a cada lado del cero
 

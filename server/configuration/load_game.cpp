@@ -122,21 +122,25 @@ void LoadGameFile::loadConfigurations() {
   RANGE_AK47 = config["ak47"]["range"].as<int>();
   AMMO_AK47 = config["ak47"]["ammo"].as<int>();
   RECOIL_AK47 = config["ak47"]["recoil"].as<float>();
+  AK47_SPREAD_INITIAL = config["ak47"]["spread_initial"].as<float>();
   // LASER RIFLE
   DAMAGE_LASER_RIFLE = config["laser_rifle"]["damage"].as<int>();
   RANGE_LASER_RIFLE = config["laser_rifle"]["range"].as<int>();
   AMMO_LASER_RIFLE = config["laser_rifle"]["ammo"].as<int>();
   RECOIL_LASER_RIFLE = config["laser_rifle"]["recoil"].as<float>();
+  LASER_RIFLE_SPREAD = config["laser_rifle"]["spread"].as<float>();
   // PEW PEW LASER
   DAMAGE_PEW_PEW_LASER = config["pew_pew_laser"]["damage"].as<int>();
   RANGE_PEW_PEW_LASER = config["pew_pew_laser"]["range"].as<int>();
   AMMO_PEW_PEW_LASER = config["pew_pew_laser"]["ammo"].as<int>();
   RECOIL_PEW_PEW_LASER = config["pew_pew_laser"]["recoil"].as<float>();
+  PEW_PEW_LASER_MAX_SPREAD = config["pew_pew_laser"]["max_spread"].as<float>();
   // ESCOPETA
   DAMAGE_ESCOPETA = config["escopeta"]["damage"].as<int>();
   RANGE_ESCOPETA = config["escopeta"]["range"].as<int>();
   AMMO_ESCOPETA = config["escopeta"]["ammo"].as<int>();
   RECOIL_ESCOPETA = config["escopeta"]["recoil"].as<float>();
+  ESCOPETA_MAX_SPREAD = config["escopeta"]["max_spread"].as<float>();
   // SNIPER
   DAMAGE_SNIPER = config["sniper"]["damage"].as<int>();
   RANGE_SNIPER = config["sniper"]["range"].as<int>();
@@ -153,10 +157,12 @@ void LoadGameFile::loadConfigurations() {
   RANGE_PISTOLA_DUELOS = config["pistola_de_duelos"]["range"].as<int>();
   AMMO_PISTOLA_DUELOS = config["pistola_de_duelos"]["ammo"].as<int>();
   RECOIL_PISTOLA_DUELOS = config["pistola_de_duelos"]["recoil"].as<float>();
+  PISTOLA_DUELOS_SPREAD = config["pistola_de_duelos"]["spread"].as<float>();
 
   // MAGNUM
   DAMAGE_MAGNUM = config["magnum"]["damage"].as<int>();
   RANGE_MAGNUM = config["magnum"]["range"].as<int>();
   AMMO_MAGNUM = config["magnum"]["ammo"].as<int>();
   RECOIL_MAGNUM = config["magnum"]["recoil"].as<float>();
+  MAGNUM_SPREAD = config["magnum"]["spread"].as<float>();
 }

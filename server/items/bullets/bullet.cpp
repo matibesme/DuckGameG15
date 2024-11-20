@@ -78,7 +78,7 @@ void Bullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
   }
 }
 
-float minimo(float a, float b, float c, float d) {
+float Bullet::minimo(float a, float b, float c, float d) {
   float min_ab = (a < b) ? a : b;
   float min_cd = (c < d) ? c : d;
   return (min_ab < min_cd) ? min_ab : min_cd;

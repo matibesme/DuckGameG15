@@ -8,7 +8,7 @@ extern uint8_t SCENE_ID;
 
 // Fisica
 constexpr float GRAVEDAD = 1;
-constexpr float VELOCIDAD_INICIAL = 15;
+constexpr float VELOCIDAD_INICIAL = 13;
 constexpr float GRAVITY_FLAP = 0.001;
 constexpr int CANT_FLAP = 100;
 
@@ -89,5 +89,18 @@ constexpr float DESPLAZAMIENTO_CON_ARMA_X = 5;
 constexpr float MARGEN_DESPLAZAMIENTO_PATO_X = 10;
 constexpr float MARGEN_DESPLAZAMIENTO_PLATAFORMA_X = 8;
 constexpr float MARGEN_DESPLAZAMIENTO_PLATAFORMA_X_IZQ = 12;
+constexpr float PLATAFORMA_LEVEMENTE_LEVANTADA = 5;
 // TIMES
 constexpr int TIME_TO_RESPAWN = 10;
+
+// Spreads
+extern float COWBOY_SPREAD;
+extern float AK47_SPREAD_INITIAL;
+extern float PISTOLA_DUELOS_SPREAD;
+extern float MAGNUM_SPREAD;
+extern float ESCOPETA_MAX_SPREAD;
+extern float SNIPER_SPREAD;
+extern float GRANADA_SPREAD;
+extern float BANANA_SPREAD;
+extern float PEW_PEW_LASER_MAX_SPREAD;
+extern float LASER_RIFLE_SPREAD;

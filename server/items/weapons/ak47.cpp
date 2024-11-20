@@ -12,7 +12,8 @@ Ak47::Ak47(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
            int range, int ammo_quantity, float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       spread_counter(0), bullets_vector() {
-  bullets_vector.emplace_back(AK47_BULLET, 1, 0, 0, damage, range, 0);
+  bullets_vector.emplace_back(AK47_BULLET, 1, 0, 0, damage, range,
+                              AK47_SPREAD_INITIAL);
 }
 bool Ak47::isEmptyAmmo() { return ammo_quantity == 0; }
 

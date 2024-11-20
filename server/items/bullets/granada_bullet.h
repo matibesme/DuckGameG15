@@ -13,6 +13,7 @@ private:
   uint8_t time_to_explode;
   float velocidad;
   bool continue_moving;
+  bool is_explode;
 
 public:
   GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
@@ -25,6 +26,10 @@ public:
   void colisionWithPlatform(float plat_x_pos, float plat_y_pos,
                             float plat_width, float plat_height) override;
   void boxExplosion(float x_pos, float y_pos, uint8_t time_to_explode_);
+  uint8_t calculateCollisionSide(float plat_x_pos, float plat_y_pos,
+                                 float plat_width, float plat_height) override;
+  void setIsExplode(bool is_explode_);
+  bool isExplode();
 };
 
 #endif // GRANADA_BULLET_H

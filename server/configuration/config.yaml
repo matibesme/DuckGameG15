@@ -18,24 +18,28 @@ ak47:
     range: 13
     ammo: 30
     recoil: 1
+    spread_initial: 0
 
 laser_rifle:
     damage: 20
     range: 30
     ammo: 10
     recoil: 0
+    spread: 3
 
 pew_pew_laser:
     damage: 12
     range: 38
     ammo: 12
     recoil: 0
+    max_spread: 0.3
 
 escopeta:
     damage: 10
     range: 5
     ammo: 30
     recoil: 0
+    max_spread: 1
 
 sniper:
     damage: 80
@@ -54,11 +58,13 @@ pistola_de_duelos:
     range: 5
     ammo: 1
     recoil: 0
+    spread: 0.3
 
 magnum:
     damage: 25
     range: 20
     ammo: 6
     recoil: 0.5
+    spread: 0.3
 
 

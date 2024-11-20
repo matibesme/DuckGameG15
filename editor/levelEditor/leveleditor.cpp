@@ -65,6 +65,7 @@ void LevelEditor::show_level_editor() {
   setContextMenuPolicy(Qt::CustomContextMenu);
   connect(this, &QMainWindow::customContextMenuRequested, this,
           &LevelEditor::initialize_menus);
+  controller->set_default_duck_spawn();
   view->setScene(level_editor_scene);
   view->show();
 }
@@ -83,18 +84,18 @@ void LevelEditor::initialize_menus(const QPoint &pos) {
       QAction *action = new QAction(
           QString::fromStdString(option.as<std::string>()), submenu_option);
       connect(action, &QAction::triggered,
-              [this, action, submenu_option, submenu_name]() {
+              [this, action, submenu_option, submenu_name, pos]() {
                 QString action_name = action->text();
                 if (submenu_name == "Weapons") {
-                  controller->set_spawn_weapon(action_name);
+                  controller->set_spawn_weapon(action_name, pos.x(), pos.y());
                 } else if (submenu_name == "Platforms") {
-                  controller->set_platform(action_name);
+                  controller->set_platform(action_name, pos.x(), pos.y());
                 } else if (submenu_name == "Walls") {
-                  controller->set_wall(action_name);
+                  controller->set_wall(action_name, pos.x(), pos.y());
                 } else if (submenu_name == "Backgrounds") {
                   controller->set_background(action_name);
                 } else if (submenu_name == "Armour") {
-                  controller->set_spawn_armour(action_name);
+                  controller->set_spawn_armour(action_name, pos.x(), pos.y());
                 }
               });
       submenu_option->addAction(action);
@@ -103,14 +104,17 @@ void LevelEditor::initialize_menus(const QPoint &pos) {
     menu.addMenu(submenu_option);
   }
 
-  QAction *action_spawn_duck = new QAction("Spawn", this);
-  connect(action_spawn_duck, &QAction::triggered,
-          [this, action_spawn_duck]() { controller->set_spawn_duck(); });
-  menu.addAction(action_spawn_duck);
+  /*QAction *action_spawn_duck = new QAction("Spawn", this);
+  connect(action_spawn_duck, &QAction::triggered, [this, action_spawn_duck]() {
+  controller->set_spawn_duck();
+  });
+  menu.addAction(action_spawn_duck);*/
 
   QAction *action_itemBox_spawn = new QAction("itemBox", this);
   connect(action_itemBox_spawn, &QAction::triggered,
-          [this, action_itemBox_spawn]() { controller->set_spawn_box(); });
+          [this, action_itemBox_spawn, pos]() {
+            controller->set_spawn_box(pos.x(), pos.y());
+          });
   menu.addAction(action_itemBox_spawn);
 
   QAction *action_save = new QAction("Save", this);
