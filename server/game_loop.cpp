@@ -289,7 +289,7 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
                                           DTOPlatform &platform,
                                           bool &is_on_platform,
                                           bool &is_on_platform_down) {
-  if (personaje.getYPos() + DUCK_HEIGHT >= platform.y_pos &&
+  if (personaje.getYPos() + DUCK_HEIGHT >= platform.y_pos - PLATAFORMA_LEVEMENTE_LEVANTADA&&
       personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos) {
     if (personaje.getVelocidadY() < 0) {
       personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
@@ -395,10 +395,17 @@ void GameLoop::cleanGame() {
 
 bool GameLoop::checkWinner(std::string &winner) {
   uint8_t cant_winners = 0;
+  uint8_t max_victories = 0;
   for (auto &victory_round : map_victory_rounds) {
-    if (victory_round.second == NECESARY_VICTORY_ROUNDS) {
-      winner = map_id_clientes[victory_round.first];
-      cant_winners++;
+    if (victory_round.second >= NECESARY_VICTORY_ROUNDS) {
+      if (victory_round.second > max_victories) {
+        max_victories = victory_round.second;
+        winner = map_id_clientes[victory_round.first];
+        cant_winners = 1;
+
+      } else if (victory_round.second == max_victories) {
+            cant_winners++;
+        }
     }
   }
   return cant_winners == 1;
