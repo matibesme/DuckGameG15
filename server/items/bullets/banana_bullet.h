@@ -15,7 +15,7 @@ private:
 
 public:
   BananaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
-               uint8_t range, float spread);
+               int range, float spread);
   void executeAction() override;
   void colisionWithPlatform(float plat_x_pos, float plat_y_pos,
                             float plat_width, float plat_height) override;

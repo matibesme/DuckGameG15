@@ -9,7 +9,7 @@ constexpr float MAX_SPREAD_COUNTER = 0.5;
 constexpr int BURST_INTERVAL = 5;
 
 LaserRifle::LaserRifle(uint8_t type, uint8_t id, float x_pos, float y_pos,
-                       int damage, uint8_t range, int ammo_quantity,
+                       int damage, int range, int ammo_quantity,
                        float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       spread_counter(3), bullets_vector() {
