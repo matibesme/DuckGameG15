@@ -8,6 +8,8 @@ uint8_t SCENE_ID = 0x02;
 float POSICION_INICIAL_X = 0;
 float POSICION_INICIAL_Y = 0;
 int LIFE = 100;
+float GRAVEDAD = 1;
+float VELOCIDAD_INICIAL = 15;
 
 float RANGO_X_MEDIO = 4;
 float RANGO_X_CORTO = 4;
@@ -79,3 +81,7 @@ float GRANADA_SPREAD = 0.3;
 float BANANA_SPREAD = 0.3;
 float PEW_PEW_LASER_MAX_SPREAD = 0.3;
 float LASER_RIFLE_SPREAD = 3;
+
+// partidas
+uint8_t NECESARY_VICTORY_ROUNDS = 10;
+uint8_t GAMES_PER_ROUND = 5;

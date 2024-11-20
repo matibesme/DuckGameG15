@@ -104,8 +104,11 @@ void LoadGameFile::loadGame() {
 void LoadGameFile::loadConfigurations() {
   YAML::Node config = YAML::LoadFile("../server/configuration/config.yaml");
 
+  NECESARY_VICTORY_ROUNDS = config["necesary_victories"].as<uint8_t>();
+  GAMES_PER_ROUND = config["games_per_round"].as<uint8_t>();
   LIFE = config["life"].as<int>();
-
+  VELOCIDAD_INICIAL = config["jump_velocity"].as<float>();
+  GRAVEDAD = config["gravity"].as<float>();
   // GRANADA
   DAMAGE_GRANADA = config["granade"]["damage"].as<int>();
   RANGE_GRANADA = config["granade"]["range"].as<int>();

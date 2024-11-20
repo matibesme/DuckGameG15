@@ -1,5 +1,10 @@
+necesary_victories: 10
+games_per_round: 5
 
 life: 100
+jump_velocity: 15
+gravity: 1
+
 granade:
   damage: 50
   range: 5
