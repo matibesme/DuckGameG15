@@ -394,10 +394,17 @@ void GameLoop::cleanGame() {
 
 bool GameLoop::checkWinner(std::string &winner) {
   uint8_t cant_winners = 0;
+  uint8_t max_victories = 0;
   for (auto &victory_round : map_victory_rounds) {
-    if (victory_round.second == NECESARY_VICTORY_ROUNDS) {
-      winner = map_id_clientes[victory_round.first];
-      cant_winners++;
+    if (victory_round.second >= NECESARY_VICTORY_ROUNDS) {
+      if (victory_round.second > max_victories) {
+        max_victories = victory_round.second;
+        winner = map_id_clientes[victory_round.first];
+        cant_winners = 1;
+
+      } else if (victory_round.second == max_victories) {
+            cant_winners++;
+        }
     }
   }
   return cant_winners == 1;
