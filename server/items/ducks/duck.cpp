@@ -66,10 +66,10 @@ void DuckPlayer::stopJump(float y_pos_) {
 void DuckPlayer::executeAction() {
   if (is_sliding) {
     if (direction == RIGHT) {
-      typeOfMove = STILL_RIGHT;
+      typeOfMove = DOWN;
       x_pos += SLIDE_VELOCITY;
     } else if (direction == LEFT) {
-      typeOfMove = STILL_LEFT;
+      typeOfMove = DOWN;
       x_pos -= SLIDE_VELOCITY;
     }
     slide_counter--;

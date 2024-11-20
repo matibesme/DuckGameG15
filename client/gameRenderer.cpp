@@ -293,12 +293,11 @@ void GameRenderer::actualizarElementos(const GameState &command) {
 
   // SEXTO ACTUALIZO CAJAS
   for (auto it = boxes.begin(); it != boxes.end();) {
-    auto boxInCommand =
-        std::find_if(command.lista_boxes.begin(), command.lista_boxes.end(),
-                     [it](const DTOBoxes &boxStruct) {
-                       return boxStruct.x_pos == it->getX() &&
-                              boxStruct.y_pos == it->getY();
-                     });
+    auto boxInCommand = std::find_if(
+        command.lista_boxes.begin(), command.lista_boxes.end(),
+        [it](const DTOBoxes &boxStruct) {
+          return boxStruct.x_pos == it->getX() && boxStruct.y_pos == it->getY();
+        });
     if (boxInCommand != command.lista_boxes.end()) {
       // Actualizar si la caja está en ambas listas
       ++it;
