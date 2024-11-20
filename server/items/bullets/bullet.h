@@ -15,8 +15,7 @@ protected:
   bool is_alive;
   float spread;
   bool spread_direction;
-  uint8_t calculateCollisionSide(float plat_x_pos, float plat_y_pos,
-                                 float plat_width, float plat_height);
+
   bool is_falling;
 
 public:
@@ -43,6 +42,10 @@ public:
   void changeDirection(uint8_t where_colision);
   void kill();
   void setIsFalling(bool is_falling);
+  virtual uint8_t calculateCollisionSide(float plat_x_pos, float plat_y_pos,
+                                         float plat_width, float plat_height);
+
+  float minimo(float a, float b, float c, float d);
 };
 
 #endif // BULLET_H
