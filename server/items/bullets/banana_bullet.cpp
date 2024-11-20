@@ -83,10 +83,9 @@ bool BananaBullet::colisionWithDuck(float duck_x_pos, float duck_y_pos,
   return false;
 }
 
-uint8_t BananaBullet::calculateCollisionSide(float plat_x_pos,
-                                              float plat_y_pos,
-                                              float plat_width,
-                                              float plat_height) {
+uint8_t BananaBullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
+                                             float plat_width,
+                                             float plat_height) {
   float up_distance =
       (y_pos +
        (type == LASER_RIFLE_BULLET ? HEIGHT_BULLET : HEIGHT_BIG_BULLET)) -

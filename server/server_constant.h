@@ -93,7 +93,7 @@ constexpr float PLATAFORMA_LEVEMENTE_LEVANTADA = 5;
 // TIMES
 constexpr int TIME_TO_RESPAWN = 10;
 
-//Spreads
+// Spreads
 extern float COWBOY_SPREAD;
 extern float AK47_SPREAD_INITIAL;
 extern float PISTOLA_DUELOS_SPREAD;

@@ -106,8 +106,7 @@ void GameLoop::checkCommand(CommandClient comando, uint8_t &rounds) {
 void GameLoop::checkBullets() {
   for (auto it = map_bullets.begin(); it != map_bullets.end();) {
     if (!it->second->isAlive()) {
-      if (it->second->getTypeOfBullet() == GRENADE_EXPLOSION ) {
-
+      if (it->second->getTypeOfBullet() == GRENADE_EXPLOSION) {
         checkGrenadeExplosion(*(GranadaBullet *)it->second.get());
       }
       it = map_bullets.erase(it);
@@ -289,7 +288,8 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
                                           DTOPlatform &platform,
                                           bool &is_on_platform,
                                           bool &is_on_platform_down) {
-  if (personaje.getYPos() + DUCK_HEIGHT >= platform.y_pos - PLATAFORMA_LEVEMENTE_LEVANTADA&&
+  if (personaje.getYPos() + DUCK_HEIGHT >=
+          platform.y_pos - PLATAFORMA_LEVEMENTE_LEVANTADA &&
       personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos) {
     if (personaje.getVelocidadY() < 0) {
       personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
@@ -404,8 +404,8 @@ bool GameLoop::checkWinner(std::string &winner) {
         cant_winners = 1;
 
       } else if (victory_round.second == max_victories) {
-            cant_winners++;
-        }
+        cant_winners++;
+      }
     }
   }
   return cant_winners == 1;
