@@ -11,7 +11,7 @@
 class Bullet : public Objeto {
 protected:
   int damage;
-  uint8_t range;
+  int range;
   bool is_alive;
   float spread;
   bool spread_direction;
@@ -21,7 +21,7 @@ protected:
 
 public:
   Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
-         uint8_t range, float spread);
+         int range, float spread);
   uint8_t getDamage();
   uint8_t getRange();
 

@@ -16,7 +16,7 @@ private:
 
 public:
   Shotgun(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
-          uint8_t range, int ammo_quantity, float recoil);
+          int range, int ammo_quantity, float recoil);
 
   bool isEmptyAmmo() override;
 

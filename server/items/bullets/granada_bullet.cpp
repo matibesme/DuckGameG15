@@ -7,7 +7,7 @@
 #include <iostream>
 
 GranadaBullet::GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
-                             int damage, uint8_t range, float spread,
+                             int damage, int range, float spread,
                              uint8_t time_to_explode_)
     : Bullet(type, id, x_pos, y_pos, damage, range, spread),
       time_to_explode(time_to_explode_), velocidad(VELOCIDAD_INICIAL),

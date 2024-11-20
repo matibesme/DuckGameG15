@@ -16,7 +16,7 @@ private:
 
 public:
   GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
-                uint8_t range, float spread, uint8_t time_to_explode_);
+                int range, float spread, uint8_t time_to_explode_);
   void executeAction() override;
   void release_granada(float x_pos, float y_pos, uint8_t direction,
                        uint8_t time_to_explode);

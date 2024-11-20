@@ -6,7 +6,7 @@
 constexpr int BEAM_COUNT = 3;
 
 PewPewLaser::PewPewLaser(uint8_t type, uint8_t id, float x_pos, float y_pos,
-                         int damage, uint8_t range, int ammo_quantity,
+                         int damage, int range, int ammo_quantity,
                          float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       beams_vector(), beam_count(BEAM_COUNT) {
