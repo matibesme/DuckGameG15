@@ -7,7 +7,7 @@
 Granada::Granada(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
                  int range, int ammo_quantity, float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
-      bala(GRANADA_BULLET, 1, 0, 0, damage, range, 0.3, GRANADA_TIME_TO_EXPLODE),
+      bala(GRANADA_BULLET, 1, 0, 0, damage, range, GRANADA_SPREAD, GRANADA_TIME_TO_EXPLODE),
       counter_to_shoot(COUNTER_TO_SHOOT_GRANADA),
       time_to_explode(GRANADA_TIME_TO_EXPLODE) {}
 

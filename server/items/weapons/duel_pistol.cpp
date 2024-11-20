@@ -4,7 +4,7 @@ DuelPistol::DuelPistol(uint8_t type, uint8_t id, float x_pos, float y_pos,
                        int damage, int range, int ammo_quantity,
                        float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
-      bala(PISTOLA_DUELOS_BULLET, 1, 0, 0, damage, range, 0.3) {}
+      bala(PISTOLA_DUELOS_BULLET, 1, 0, 0, damage, range, PISTOLA_DUELOS_SPREAD) {}
 
 bool DuelPistol::isEmptyAmmo() { return ammo_quantity == 0; }
 

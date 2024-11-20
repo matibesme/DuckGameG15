@@ -13,7 +13,7 @@ LaserRifle::LaserRifle(uint8_t type, uint8_t id, float x_pos, float y_pos,
                        float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       spread_counter(3), bullets_vector() {
-  bullets_vector.emplace_back(LASER_RIFLE_BULLET, 1, 0, 0, damage, range, 3);
+  bullets_vector.emplace_back(LASER_RIFLE_BULLET, 1, 0, 0, damage, range, LASER_RIFLE_SPREAD);
 }
 
 bool LaserRifle::isEmptyAmmo() { return ammo_quantity == 0; }

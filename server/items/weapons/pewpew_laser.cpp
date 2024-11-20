@@ -10,7 +10,7 @@ PewPewLaser::PewPewLaser(uint8_t type, uint8_t id, float x_pos, float y_pos,
                          float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       beams_vector(), beam_count(BEAM_COUNT) {
-  float maxSpread = 0.3;
+  float maxSpread = PEW_PEW_LASER_MAX_SPREAD;
   for (int i = 0; i < BEAM_COUNT; i++) {
     float spread = 0.0;
 
