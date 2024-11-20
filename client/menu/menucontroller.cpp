@@ -8,6 +8,7 @@ MenuController::MenuController(Client &client, Menu &menu, QApplication &a,
     : QObject(parent), client(client), w(menu), a(a), argc(argc), argv(argv) {
   this->are_two_players = true;
   this->was_game_initialized = false;
+  this->is_new_game = false;
 }
 
 void MenuController::start_game() {
