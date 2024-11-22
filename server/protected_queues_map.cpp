@@ -20,7 +20,12 @@ void ProtectedQueuesMap::sendMessagesToQueues(const GameState &command,
   {
     if (it->second->isClosed())
     {
-     
+   /*   map_id_clientes.erase(it->first);
+      uint8_t id_2=it->first+1;
+      if (map_id_clientes.find(id_2) != map_id_clientes.end())
+      {
+        map_id_clientes.erase(id_2);
+      }*/
       it = map_queues_sender.erase(it);
     }
     else
