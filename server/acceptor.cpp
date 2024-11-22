@@ -34,17 +34,17 @@ void Acceptor::accept_new_client() {
 
 void Acceptor::deleteAClient(ThreadCliente &cliente) {
   cliente.delete_client();
-  lobby.removeQueue(cliente.getId());
+
 }
 
 void Acceptor::reapDead() {
   for (auto it = lista_clientes.begin(); it != lista_clientes.end();) {
-    if ((*it).isDead()) { // Nota: Si `it` es un puntero, asegúrate de usar
-                          // `(*it)`
+    if ((*it).isDead()) {
+
       (*it).join();
+      (*it).stop();
       deleteAClient(*it);
-      it = lista_clientes.erase(
-          it); // Actualiza el iterador con el valor devuelto por erase
+      it = lista_clientes.erase(it);
     } else {
       ++it;
     }

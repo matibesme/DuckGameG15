@@ -19,9 +19,11 @@ void Sender::run() {
     }
   } catch (const ClosedQueue &e) {
     dead_connection = true;
+    std::cerr << "Cola cerrada en el sender" << std::endl;
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
   }
+
 }
 
 Sender::~Sender() = default;

@@ -27,6 +27,7 @@ LobbyPartidas::addPartida(uint8_t id_client, std::string &name1,
   id_hoster_partida[id_client] = id_partida;
   protected_queues_sender[id_partida]->addClient(id_client,
                                                  *queues_sender[id_client]);
+
   map_id_clientes[id_partida].emplace(id_client, name1);
   if (double_player) {
     map_id_clientes[id_partida].emplace(id_client + 1, name2);
@@ -69,18 +70,18 @@ void LobbyPartidas::addQueueSender(
   queues_sender.emplace(id_player, queue);
 }
 
-void LobbyPartidas::removeQueue(uint8_t id) {
-  std::lock_guard<std::mutex> lock(m);
-  queues_sender.erase(id);
-}
 
 void LobbyPartidas::removeGame() {
   std::lock_guard<std::mutex> lock(m);
   for (auto it = partidas.begin(); it != partidas.end();) {
     if (end_game[it->first]) {
+      end_game[it->first] = true;
       queues_game_loop[it->first]->close();
       queues_game_loop.erase(it->first);
       partidas[it->first]->join();
+      protected_queues_sender.erase(it->first);
+      end_game.erase(it->first);
+      map_id_clientes.erase(it->first);
       it = partidas.erase(it);
     } else {
       ++it;
@@ -99,6 +100,7 @@ LobbyPartidas::~LobbyPartidas() {
     end_game[it->first] = true;
     queues_game_loop[it->first]->close();
     queues_game_loop.erase(it->first);
+    protected_queues_sender.erase(it->first);
     it->second->join();
     it = partidas.erase(it);
   }
