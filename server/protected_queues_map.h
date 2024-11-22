@@ -16,7 +16,8 @@ public:
   ProtectedQueuesMap();
   void addClient(const uint8_t &id, BlockingQueue<GameState> &queue);
   void removeQueue(const uint8_t &id);
-  void sendMessagesToQueues(const GameState &command);
+  void sendMessagesToQueues(const GameState &command,std::map<uint8_t, std::string> &map_id_clientes);
   bool isEmpty();
+
   ~ProtectedQueuesMap();
 };

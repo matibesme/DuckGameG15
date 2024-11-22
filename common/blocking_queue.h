@@ -176,6 +176,16 @@ public:
     is_not_empty.notify_all();
   }
 
+  bool isClosed() {
+    std::unique_lock<std::mutex> lck(mtx);
+    return closed;
+  }
+
+  bool isFull() {
+    std::unique_lock<std::mutex> lck(mtx);
+    return q.size() == this->max_size;
+  }
+
 private:
   BlockingQueue(const BlockingQueue &) = delete;
   BlockingQueue &operator=(const BlockingQueue &) = delete;

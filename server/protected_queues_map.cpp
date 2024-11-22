@@ -13,19 +13,21 @@ void ProtectedQueuesMap::removeQueue(const uint8_t &id) {
   map_queues_sender.erase(id);
 }
 
-void ProtectedQueuesMap::sendMessagesToQueues(const GameState &command) {
+void ProtectedQueuesMap::sendMessagesToQueues(const GameState &command,
+                                              std::map<uint8_t, std::string> &map_id_clientes) {
   std::lock_guard<std::mutex> lock(m);
-  for (auto it = map_queues_sender.begin(); it != map_queues_sender.end();
-       ++it)
+  for (auto it = map_queues_sender.begin(); it != map_queues_sender.end(); )
   {
-    try
+    if (it->second->isClosed())
     {
+     
+      it = map_queues_sender.erase(it);
+    }
+    else
+    {
+      it->second->try_push(command);
+      ++it;
 
-      it->second->push(command);
-    } catch (const ClosedQueue &e) {
-      std::cerr << "Cola cerrada en el sender" << std::endl;
-      map_queues_sender.erase(it);
-      return;
     }
   }
 }

@@ -51,7 +51,10 @@ void GameLoop::run() {
           while (queue_comandos->try_pop(comando)) {
             checkCommand(comando, rounds);
           }
-
+          if (queues_map->isEmpty()) {
+            end_game = true;
+            break;
+          }
           paraCadaPatoAction();
           checkBullets();
           respawnWeapon();
@@ -75,7 +78,7 @@ void GameLoop::run() {
     // send round status
     GameState command;
     command.action = FINALLY_GAME;
-    queues_map->sendMessagesToQueues(command);
+    queues_map->sendMessagesToQueues(command, map_id_clientes);
   } catch (const ClosedQueue &e) {
     // Queue closed
     std::cerr << "Cola cerrada en el game loop" << std::endl;
@@ -173,7 +176,7 @@ void GameLoop::sendCompleteScene() {
     }
   }
 
-  queues_map->sendMessagesToQueues(command);
+  queues_map->sendMessagesToQueues(command, map_id_clientes);
 }
 
 void GameLoop::paraCadaPatoAction() {
@@ -422,7 +425,7 @@ void GameLoop::sendEndRound() {
   }
 
   for (int i = 0; i < 100; i++) {
-    queues_map->sendMessagesToQueues(command);
+    queues_map->sendMessagesToQueues(command, map_id_clientes);
   }
 }
 
@@ -432,7 +435,7 @@ void GameLoop::sendVictory(std::string &winner) {
   command.name_winner = winner;
 
   for (int i = 0; i < 600; i++) {
-    queues_map->sendMessagesToQueues(command);
+    queues_map->sendMessagesToQueues(command, map_id_clientes);
   }
 }
 
@@ -472,7 +475,7 @@ void GameLoop::sendColorPresentation() {
     map_victory_rounds.emplace(player.first, VICTORY_ROUNDS_INICIAL);
   }
   for (int i = 0; i < 100; i++) {
-    queues_map->sendMessagesToQueues(command);
+    queues_map->sendMessagesToQueues(command, map_id_clientes);
   }
 }
 
