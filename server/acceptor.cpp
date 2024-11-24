@@ -34,13 +34,11 @@ void Acceptor::accept_new_client() {
 
 void Acceptor::deleteAClient(ThreadCliente &cliente) {
   cliente.delete_client();
-
 }
 
 void Acceptor::reapDead() {
   for (auto it = lista_clientes.begin(); it != lista_clientes.end();) {
     if ((*it).isDead()) {
-
       (*it).join();
       (*it).stop();
       deleteAClient(*it);

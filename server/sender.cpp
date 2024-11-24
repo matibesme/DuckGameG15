@@ -23,7 +23,6 @@ void Sender::run() {
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
   }
-
 }
 
 Sender::~Sender() = default;

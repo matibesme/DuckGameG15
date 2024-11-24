@@ -70,7 +70,6 @@ void LobbyPartidas::addQueueSender(
   queues_sender.emplace(id_player, queue);
 }
 
-
 void LobbyPartidas::removeGame() {
   std::lock_guard<std::mutex> lock(m);
   for (auto it = partidas.begin(); it != partidas.end();) {
