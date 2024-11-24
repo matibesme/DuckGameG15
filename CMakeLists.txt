@@ -45,6 +45,9 @@ set_project_warnings(taller_common ${TALLER_MAKE_WARNINGS_AS_ERRORS} FALSE)
 # location (so our dependants will not have to explicitly request this)
 target_include_directories(taller_common PUBLIC .)
 
+add_definitions(-DDATA_PATH="/var/TallerDuckGame")
+add_definitions(-DCONFIG_PATH="/etc/TallerDuckGame")
+
 # Install libSDL2pp (for client or editor)
 # HEY!! TODO XXX: add more dependendies (either for client, server or editor)
 if(TALLER_CLIENT OR TALLER_EDITOR)
@@ -69,7 +72,7 @@ if(TALLER_CLIENT)
     find_package(SDL2_mixer REQUIRED)
     find_package(SDL2_ttf REQUIRED)
     find_package(Qt5Widgets CONFIG REQUIRED)
-    add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
+    
 
     # Incluir directorios 'client' y 'common' para los archivos de encabezado
     include_directories(${CMAKE_SOURCE_DIR}/client)
@@ -280,3 +283,19 @@ if(TALLER_TESTS)
     # Register tests with CTest
     gtest_discover_tests(taller_tests)
 endif()
+
+if(TALLER_CLIENT)
+    install(TARGETS taller_client DESTINATION /usr/bin)
+endif()
+
+if(TALLER_SERVER)
+    install(TARGETS taller_server DESTINATION /usr/bin)
+endif()
+
+if(TALLER_EDITOR)
+    install(TARGETS taller_editor DESTINATION /usr/bin)
+endif()
+
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/ DESTINATION /var/TallerDuckGame FILE_PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE DIRECTORY_PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)
+install(FILES ${PROJECT_SOURCE_DIR}/data/editor/menu_config.yaml DESTINATION /etc/TallerDuckGame PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)
+install(FILES ${PROJECT_SOURCE_DIR}/server/configuration/config.yaml DESTINATION /etc/TallerDuckGame PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)
