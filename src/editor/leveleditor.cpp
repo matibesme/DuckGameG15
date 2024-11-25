@@ -10,7 +10,7 @@
 #include <QtWidgets>
 #include <string>
 #include <yaml-cpp/yaml.h>
-static const char *CONFIG_MENU_YAML_REL_PATH = "/editor/menu_config.yaml";
+static const char *CONFIG_MENU_YAML_REL_PATH = "/menu_config.yaml";
 
 LevelEditor::LevelEditor(QWidget *parent) : QMainWindow(parent) {
   this->setGeometry(0, 0, 640, 480);
@@ -72,7 +72,7 @@ void LevelEditor::show_level_editor() {
 void LevelEditor::initialize_menus(const QPoint &pos) {
   QMenu menu(this);
   std::string yaml_path =
-      std::string(DATA_PATH) + std::string(CONFIG_MENU_YAML_REL_PATH);
+      std::string(CONFIG_PATH) + std::string(CONFIG_MENU_YAML_REL_PATH);
   YAML::Node file = YAML::LoadFile(yaml_path);
 
   for (const auto &submenu : file) {

@@ -2,7 +2,7 @@
 #include <utility>
 TypeMaker::TypeMaker() {
   backgrounds_id.insert(std::pair<uint8_t, std::string>(0x00, ""));
-  backgrounds_id.insert(std::pair<uint8_t, std::string>(0x90, "City"));
+  backgrounds_id.insert(std::pair<uint8_t, std::string>(0x90, "River"));
   backgrounds_id.insert(std::pair<uint8_t, std::string>(0x91, "Forest"));
   backgrounds_id.insert(std::pair<uint8_t, std::string>(0x92, "Cloudy night"));
 
