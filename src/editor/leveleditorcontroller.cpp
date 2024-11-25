@@ -250,7 +250,6 @@ void LevelEditorController::save_map() {
                               std::string(text.toStdString()) +
                               std::string(".yaml");
       std::ofstream fout(file_name);
-      std::cout << "El path es: " << file_name << std::endl;
       fout << out.c_str();
     } else {
       std::string file_name = std::string(DATA_PATH) + std::string("/maps/") +
