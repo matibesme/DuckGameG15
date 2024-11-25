@@ -24,11 +24,8 @@ option(TALLER_MAKE_WARNINGS_AS_ERRORS "Enable / disable warnings as errors." ON)
 
 message(CMAKE_CXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}")
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-file(COPY ${CMAKE_SOURCE_DIR}/data DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 add_definitions(-DDATA_PATH="/var/TallerDuckGame")
 add_definitions(-DCONFIG_PATH="/etc/TallerDuckGame")
-#add_definitions(-DDATA_PATH="${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/data")
 
 # Agregar directorios
 add_subdirectory(src/common)
@@ -54,4 +51,4 @@ endif()
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/ DESTINATION /var/TallerDuckGame FILE_PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE DIRECTORY_PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)
 install(FILES ${PROJECT_SOURCE_DIR}/data/editor/menu_config.yaml DESTINATION /etc/TallerDuckGame PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)
-install(FILES ${PROJECT_SOURCE_DIR}/server/configuration/config.yaml DESTINATION /etc/TallerDuckGame PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)
+install(FILES ${PROJECT_SOURCE_DIR}/src/server/configuration/config.yaml DESTINATION /etc/TallerDuckGame PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)
