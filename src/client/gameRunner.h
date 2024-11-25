@@ -1,12 +1,12 @@
 #ifndef GAMERUNNER_H
 #define GAMERUNNER_H
 
+#include "../common/blocking_queue.h"
 #include "EventHandler.h"
 #include "GameRenderer.h"
 #include "Graficos.h"
 #include "Items/Bullet.h"
 #include "Items/ClientDuck.h"
-#include "../common/blocking_queue.h"
 #include "sound.h"
 #include <list>
 

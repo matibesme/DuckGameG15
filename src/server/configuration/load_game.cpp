@@ -102,7 +102,6 @@ void LoadGameFile::loadGame() {
 }
 
 void LoadGameFile::loadConfigurations() {
-
   YAML::Node config = YAML::LoadFile(CONFIG_PATH "/config.yaml");
 
   NECESARY_VICTORY_ROUNDS = config["necesary_victories"].as<uint8_t>();
