@@ -24,6 +24,11 @@ option(TALLER_MAKE_WARNINGS_AS_ERRORS "Enable / disable warnings as errors." ON)
 
 message(CMAKE_CXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}")
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+file(COPY ${CMAKE_SOURCE_DIR}/data DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
+add_definitions(-DDATA_PATH="${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/data")
+
 # Agregar directorios
 add_subdirectory(src/common)
 

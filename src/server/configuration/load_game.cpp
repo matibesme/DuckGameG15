@@ -26,7 +26,7 @@ LoadGameFile::LoadGameFile(
       list_colors(list_colors) {}
 
 void LoadGameFile::loadGame() {
-  const std::string directory_path = "../../data/maps";
+  const std::string directory_path = "data/maps";
   std::vector<std::string> files;
   for (const auto &entry :
        std::filesystem::directory_iterator(directory_path)) {
@@ -102,7 +102,9 @@ void LoadGameFile::loadGame() {
 }
 
 void LoadGameFile::loadConfigurations() {
-  YAML::Node config = YAML::LoadFile("../server/configuration/config.yaml");
+    //printeo path relativo
+    std::cout << "Path relativo: " << std::filesystem::current_path() << std::endl;
+  YAML::Node config = YAML::LoadFile("../../src/server/configuration/config.yaml");
 
   NECESARY_VICTORY_ROUNDS = config["necesary_victories"].as<uint8_t>();
   GAMES_PER_ROUND = config["games_per_round"].as<uint8_t>();

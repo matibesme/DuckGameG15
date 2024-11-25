@@ -17,7 +17,6 @@ find_package(SDL2_mixer REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(Qt5Widgets CONFIG REQUIRED)
 
-add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
 
 file(GLOB_RECURSE CLIENT_SOURCES
         "${CMAKE_SOURCE_DIR}/src/client/*.cpp"
