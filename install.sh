@@ -10,4 +10,5 @@ cmake ..
 cmake --build .
 sudo make install
 #Correr los tests unitarios
+cd tests
 ./taller_tests
