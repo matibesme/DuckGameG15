@@ -26,7 +26,7 @@ LoadGameFile::LoadGameFile(
       list_colors(list_colors) {}
 
 void LoadGameFile::loadGame() {
-  const std::string directory_path = "../data/maps";
+  const std::string directory_path = "../../data/maps";
   std::vector<std::string> files;
   for (const auto &entry :
        std::filesystem::directory_iterator(directory_path)) {

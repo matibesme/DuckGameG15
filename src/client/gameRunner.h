@@ -6,7 +6,7 @@
 #include "Graficos.h"
 #include "Items/Bullet.h"
 #include "Items/ClientDuck.h"
-#include "common/blocking_queue.h"
+#include "../common/blocking_queue.h"
 #include "sound.h"
 #include <list>
 
