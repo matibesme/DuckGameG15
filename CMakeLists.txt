@@ -8,16 +8,13 @@ if (NOT DEFINED CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD 20)
 endif()
 
-# strongly encouraged to enable this globally to avoid conflicts between
-# -Wpedantic being enabled and -std=c++20 and -std=gnu++20 for example
-# when compiling with PCH enabled
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(taller_tp
-    VERSION 1.0
-    HOMEPAGE_URL "https://github.com/URL-HERE"
-    LANGUAGES CXX
-    )
+        VERSION 1.0
+        HOMEPAGE_URL "https://github.com/URL-HERE"
+        LANGUAGES CXX
+)
 
 option(TALLER_TESTS "Enable / disable tests." ON)
 option(TALLER_CLIENT "Enable / disable client program." ON)
@@ -27,275 +24,31 @@ option(TALLER_MAKE_WARNINGS_AS_ERRORS "Enable / disable warnings as errors." ON)
 
 message(CMAKE_CXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}")
 
-# Define target: lib common between client, server and editor programs
-# HEY TODO XXX: change the name to something that you like
-add_library(taller_common STATIC)
-
-# add the source files that make the lib
-# HEY!! TODO XXX: add more subfolders here
-add_subdirectory(common/)
-
-
-# set compiler warnings to the targets
-include(cmake/CompilerWarnings.cmake)
-set_project_warnings(taller_common ${TALLER_MAKE_WARNINGS_AS_ERRORS} FALSE)
-
-# Say where the headers will be found required by library target
-# Make this PUBLIC so any dependant linking lib will inherit this
-# location (so our dependants will not have to explicitly request this)
-target_include_directories(taller_common PUBLIC .)
-
 add_definitions(-DDATA_PATH="/var/TallerDuckGame")
 add_definitions(-DCONFIG_PATH="/etc/TallerDuckGame")
 
-# Install libSDL2pp (for client or editor)
-# HEY!! TODO XXX: add more dependendies (either for client, server or editor)
-if(TALLER_CLIENT OR TALLER_EDITOR)
-    include(FetchContent)
-    FetchContent_Declare(
-        libSDL2pp
-        URL https://github.com/libSDL2pp/libSDL2pp/archive/cc198c9a5657048bee67ece82de620b2d5661084.zip
-    )
+# Agregar directorios
+add_subdirectory(src/common)
 
-    FetchContent_MakeAvailable(libSDL2pp)
-endif()
-
-# Program section
-# ---------------
-if(TALLER_CLIENT)
-    set(CMAKE_AUTOUIC ON)
-    set(CMAKE_AUTOMOC ON)
-    set(CMAKE_AUTORCC ON)
-    # Cambiar el nombre del ejecutable si es necesario
-    add_executable(taller_client)
-    find_package(SDL2_image REQUIRED)
-    find_package(SDL2_mixer REQUIRED)
-    find_package(SDL2_ttf REQUIRED)
-    find_package(Qt5Widgets CONFIG REQUIRED)
-    
-
-    # Incluir directorios 'client' y 'common' para los archivos de encabezado
-    include_directories(${CMAKE_SOURCE_DIR}/client)
-    include_directories(${CMAKE_SOURCE_DIR}/common)
-    include_directories(${CMAKE_SOURCE_DIR}/client/items)
-    include_directories(${CMAKE_SOURCE_DIR}/client/menu)
-
-
-    # Incluir automáticamente todos los archivos .cpp y .h de las carpetas 'client' y 'common'
-    file(GLOB_RECURSE CLIENT_SOURCES
-            "${CMAKE_SOURCE_DIR}/client/*.cpp"
-            "${CMAKE_SOURCE_DIR}/client/*.h"
-    )
-
-    file(GLOB COMMON_SOURCES
-            "${CMAKE_SOURCE_DIR}/common/*.cpp"
-            "${CMAKE_SOURCE_DIR}/common/*.h"
-    )
-
-    # Agregar los archivos fuentes de 'client' y 'common' al ejecutable
-    target_sources(taller_client PRIVATE ${CLIENT_SOURCES} ${COMMON_SOURCES})
-
-    # Hacer que dependa de la biblioteca común y SDL2pp
-    add_dependencies(taller_client taller_common SDL2pp::SDL2pp)
-
-    # Añadir advertencias al proyecto
-    set_project_warnings(taller_client ${TALLER_MAKE_WARNINGS_AS_ERRORS} FALSE)
-
-    # Incluir las cabeceras de la biblioteca libSDL2pp
-    target_include_directories(taller_client PRIVATE ${libSDL2pp_SOURCE_DIR})
-
-    # Enlazar la biblioteca común y SDL2pp al ejecutable del cliente
-    target_link_libraries(taller_client taller_common SDL2pp::SDL2pp SDL2_image::SDL2_image
-            SDL2_mixer::SDL2_mixer Qt5::Widgets SDL2_ttf::SDL2_ttf)
-endif()
-
-if(TALLER_SERVER)
-    # Cambiar el nombre del ejecutable si es necesario
-    add_executable(taller_server
-            server
-            server/items/weapons/cowboy_pistol.h
-            server/items/weapons/duel_pistol.cpp
-            server/items/weapons/magnum.cpp
-            server/items/weapons/cowboy_pistol.cpp
-            server/duck_action.cpp
-            server/items/weapons/factory_weapons.cpp
-            server/items/weapons/factory_weapons.h
-            server/items/boxes.h
-            server/items/boxes.cpp
-            server/server_constant.cpp
-    )
-
-    # Incluir el directorio 'server' para los archivos de encabezado (opcional)
-    include_directories(${CMAKE_SOURCE_DIR}/server)
-    include_directories(${CMAKE_SOURCE_DIR}/common)
-
-
-    # Incluir automáticamente todos los archivos .cpp y .h de la carpeta 'server'
-    file(GLOB SERVER_SOURCES
-            "${CMAKE_SOURCE_DIR}/server/*.cpp"
-            "${CMAKE_SOURCE_DIR}/server/*.h"
-    )
-
-    file(GLOB COMMON_SOURCES
-            "${CMAKE_SOURCE_DIR}/common/*.cpp"
-            "${CMAKE_SOURCE_DIR}/common/*.h"
-    )
-
-    # Agregar los archivos fuentes al ejecutable
-    target_sources(taller_server PRIVATE ${SERVER_SOURCES} ${COMMON_SOURCES})
-
-    # Hacer que dependa de la biblioteca común
-    add_dependencies(taller_server taller_common)
-
-    # Add source files and enable warnings
-    # HEY!! TODO XXX: add more subfolders here
-    add_subdirectory(server)
-
-    set_project_warnings(taller_server ${TALLER_MAKE_WARNINGS_AS_ERRORS} FALSE)
-
-
-    # Link the taller_common lib target
-    target_link_libraries(taller_server taller_common yaml-cpp)
-endif()
-
-if(TALLER_EDITOR)
-    set(CMAKE_INCLUDE_CURRENT_DIR ON)
-    set(CMAKE_AUTOUIC ON)
-    set(CMAKE_AUTOMOC ON)
-    set(CMAKE_AUTORCC ON)
-
-    find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
-
-    set(PROJECT_SOURCES
-        editor/levelEditor/leveleditor.cpp  
-        editor/levelEditor/leveleditor.h
-        editor/levelEditor/leveleditor.ui
-        editor/levelEditor/leveleditorcontroller.cpp
-        editor/levelEditor/leveleditorcontroller.h
-        editor/levelEditor/pathmaker.h
-        editor/levelEditor/pathmaker.cpp
-        editor/levelEditor/idmaker.h
-        editor/levelEditor/idmaker.cpp
-        editor/levelEditor/mapobject.h
-        editor/levelEditor/mapobject.cpp
-        editor/levelEditor/typemaker.h
-        editor/levelEditor/typemaker.cpp
-        editor/levelEditor/main.cpp
-    )
-
-    if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-        qt_add_executable(taller_editor
-            MANUAL_FINALIZATION
-            ${PROJECT_SOURCES}
-        )
-    else()
-        if(ANDROID)
-            add_library(taller_editor SHARED
-                ${PROJECT_SOURCES}
-            )
-        else()
-            add_executable(taller_editor
-                ${PROJECT_SOURCES}
-            )
-        endif()
-    endif()
-
-    target_link_libraries(taller_editor PRIVATE Qt${QT_VERSION_MAJOR}::Widgets taller_common SDL2pp::SDL2pp yaml-cpp)
-
-    set_target_properties(taller_editor PROPERTIES
-        MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-        MACOSX_BUNDLE TRUE
-        WIN32_EXECUTABLE TRUE
-    )
-
-    if(QT_VERSION_MAJOR EQUAL 6)
-        qt_finalize_executable(taller_editor)
-    endif()
-
-    
-    set_project_warnings(taller_editor ${TALLER_MAKE_WARNINGS_AS_ERRORS} FALSE)
-
-    
-    target_include_directories(taller_editor PRIVATE ${libSDL2pp_SOURCE_DIR})
-endif()
-
-# Testing section
-# ---------------
-
-if(TALLER_TESTS)
-    # Let's use Google Test
-    include(FetchContent)
-    FetchContent_Declare(
-            googletest
-            URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
-    )
-
-    # For Windows: Prevent overriding the parent project's compiler/linker settings
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    FetchContent_MakeAvailable(googletest)
-    include(GoogleTest)
-
-    # Target for testing
-    add_executable(taller_tests)
-
-    # Assume the code under testing is in taller_common
-    add_dependencies(taller_tests taller_common)
-
-    # Say where to find the headers for testing and common code
-    target_include_directories(taller_tests PUBLIC .)
-
-    # Add the source files for client and server protocol implementations
-    target_sources(taller_tests PRIVATE
-            client/protocolo_cliente.cpp
-            server/protocolo_server.cpp
-            common/protocolo.cpp
-            common/socket.cpp
-            common/resolver.cpp  # ¡Agregado!
-            common/liberror.cpp
-            common/resolvererror.cpp
-            tests/testsProtocol.cpp
-    )
-
-    # Include all test files in the tests folder
-    file(GLOB_RECURSE TEST_SOURCES "tests/*.cpp" "tests/*.h")
-    target_sources(taller_tests PRIVATE ${TEST_SOURCES})
-
-    # Set compiler warnings for tests (optional strictness)
-    set_project_warnings(taller_tests ${TALLER_MAKE_WARNINGS_AS_ERRORS} TRUE)
-
-    # Include directories for Google Test and Mock
-    target_include_directories(taller_tests
-            PUBLIC
-            ${gtest_SOURCE_DIR}/include
-            ${gmock_SOURCE_DIR}/include
-    )
-
-    # Link the libraries (common code and Google Test/Mock)
-    target_link_libraries(taller_tests
-            taller_common
-            GTest::gtest_main
-            GTest::gmock
-    )
-
-    # Register tests with CTest
-    gtest_discover_tests(taller_tests)
-endif()
-
-if(TALLER_CLIENT)
+if (TALLER_CLIENT)
+    add_subdirectory(src/client)
     install(TARGETS taller_client DESTINATION /usr/bin)
 endif()
 
-if(TALLER_SERVER)
+if (TALLER_SERVER)
+    add_subdirectory(src/server)
     install(TARGETS taller_server DESTINATION /usr/bin)
 endif()
 
 if(TALLER_EDITOR)
-    install(TARGETS taller_editor DESTINATION /usr/bin)
+    add_subdirectory(src/editor)
+    install(TARGETS levelEditor DESTINATION /usr/bin)
+endif()
+
+if(TALLER_TESTS)
+    add_subdirectory(tests)
 endif()
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/ DESTINATION /var/TallerDuckGame FILE_PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE DIRECTORY_PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)
 install(FILES ${PROJECT_SOURCE_DIR}/data/editor/menu_config.yaml DESTINATION /etc/TallerDuckGame PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)
-install(FILES ${PROJECT_SOURCE_DIR}/server/configuration/config.yaml DESTINATION /etc/TallerDuckGame PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)
+install(FILES ${PROJECT_SOURCE_DIR}/src/server/configuration/config.yaml DESTINATION /etc/TallerDuckGame PERMISSIONS WORLD_WRITE WORLD_READ WORLD_EXECUTE)

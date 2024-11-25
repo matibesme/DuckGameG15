@@ -11,9 +11,9 @@
 #include "Items/Platform.h"
 #include "Items/armor.h"
 #include "Items/helmet.h"
-#include "client/Scenes/colorsScene.h"
-#include "client/Scenes/endRoundscene.h"
-#include "client/Scenes/finalScene.h"
+#include "Scenes/colorsScene.h"
+#include "Scenes/endRoundscene.h"
+#include "Scenes/finalScene.h"
 #include "dto_definitions.h"
 #include <map>
 #include <string>

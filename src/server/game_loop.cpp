@@ -51,6 +51,10 @@ void GameLoop::run() {
           while (queue_comandos->try_pop(comando)) {
             checkCommand(comando, rounds);
           }
+          if (queues_map->isEmpty()) {
+            end_game = true;
+            break;
+          }
           paraCadaPatoAction();
           checkBullets();
           respawnWeapon();
@@ -77,6 +81,7 @@ void GameLoop::run() {
     queues_map->sendMessagesToQueues(command);
   } catch (const ClosedQueue &e) {
     // Queue closed
+    std::cerr << "Cola cerrada en el game loop" << std::endl;
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
   }
