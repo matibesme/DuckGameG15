@@ -35,18 +35,18 @@ set(PROJECT_SOURCES
 
 # Configuración del ejecutable
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(levelEditor
+    qt_add_executable(taller_editor
             MANUAL_FINALIZATION
             ${PROJECT_SOURCES}
     )
 else()
-    add_executable(levelEditor
+    add_executable(taller_editor
             ${PROJECT_SOURCES}
     )
 endif()
 
 # Enlazar librerías
-target_link_libraries(levelEditor PRIVATE
+target_link_libraries(taller_editor PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
         SDL2pp::SDL2pp
         yaml-cpp
@@ -54,5 +54,5 @@ target_link_libraries(levelEditor PRIVATE
 
 # Finalización para Qt 6
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(levelEditor)
+    qt_finalize_executable(taller_editor)
 endif()

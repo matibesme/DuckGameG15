@@ -42,7 +42,7 @@ endif()
 
 if(TALLER_EDITOR)
     add_subdirectory(src/editor)
-    install(TARGETS levelEditor DESTINATION /usr/bin)
+    install(TARGETS taller_editor DESTINATION /usr/bin)
 endif()
 
 if(TALLER_TESTS)
