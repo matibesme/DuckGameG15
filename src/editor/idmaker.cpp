@@ -4,7 +4,7 @@
 
 IDMaker::IDMaker() {
   backgrounds_id.insert(std::pair<std::string, int>("", 0x00));
-  backgrounds_id.insert(std::pair<std::string, int>("City", 0x90));
+  backgrounds_id.insert(std::pair<std::string, int>("River", 0x90));
   backgrounds_id.insert(std::pair<std::string, int>("Forest", 0x91));
   backgrounds_id.insert(std::pair<std::string, int>("Cloudy night", 0x92));
 

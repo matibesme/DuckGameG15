@@ -1,6 +1,6 @@
-#include "protocolo_cliente.h" // Incluir la clase ProtocoloServer
-#include "protocolo_server.h"  // Incluir la clase ProtocoloServer
-#include "socket.h"            // Incluir la clase Socket
+#include "../src/client/protocolo_cliente.h" // Incluir la clase ProtocoloClient
+#include "../src/server/protocolo_server.h"  // Incluir la clase ProtocoloServer
+#include "socket.h"                          // Incluir la clase Socket
 #include <gtest/gtest.h>
 #include <stdexcept> // Para lanzar excepciones
 
