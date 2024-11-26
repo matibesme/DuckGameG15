@@ -437,6 +437,8 @@ void GameLoop::sendVictory(std::string &winner) {
   for (int i = 0; i < 600; i++) {
     queues_map->sendMessagesToQueues(command);
   }
+  command.action = FINALLY_GAME;
+  queues_map->sendMessagesToQueues(command);
 }
 
 void GameLoop::spawnBoxesCheat() {
