@@ -1,4 +1,5 @@
 #include "GameRenderer.h"
+#include "Scenes/esperaScene.h"
 #include <QApplication>
 #include <SDL_render.h>
 #include <algorithm> // para std::min y std::max
@@ -398,6 +399,14 @@ void GameRenderer::mostrarPantallaEndRound(
   EndRoundScene endRoundSene(map_victorias,
                              sdlRenderer); // Pasar el SDL_Renderer a la escena
   endRoundSene.Run();                      // Ejecutar la escena
+}
+
+void GameRenderer::mostrarPantallaDeEspera(Renderer &renderer) {
+  // Castear el renderer de SDL2pp a SDL_Renderer& y pasarlo al constructor
+  SDL_Renderer &sdlRenderer =
+      *renderer.Get();                  // Obtiene el SDL_Renderer subyacente
+  EsperaScene esperaScene(sdlRenderer); // Pasar el SDL_Renderer a la escena
+  esperaScene.Run();                    // Ejecutar la escena
 }
 
 // destructores

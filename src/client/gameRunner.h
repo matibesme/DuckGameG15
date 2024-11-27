@@ -26,8 +26,8 @@ public:
 
   void run();
 
-  void delayIfNeeded(std::chrono::high_resolution_clock::time_point &t1,
-                     const int delay);
+  static void delayIfNeeded(std::chrono::high_resolution_clock::time_point &t1,
+                            const int delay);
 };
 
 #endif // GAMERUNNER_H

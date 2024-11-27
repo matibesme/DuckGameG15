@@ -37,13 +37,17 @@ public:
 
   void actualizarElementos(const GameState &command);
 
-  void mostrarPantallaColores(std::map<std::string, std::string> &playersColors,
-                              Renderer &renderer);
+  static void
+  mostrarPantallaColores(std::map<std::string, std::string> &playersColors,
+                         Renderer &renderer);
 
-  void mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias,
-                               Renderer &renderer);
+  static void
+  mostrarPantallaEndRound(std::map<std::string, uint8_t> &map_victorias,
+                          Renderer &renderer);
 
-  void mostrarPantallaVictoria(std::string &winner, Renderer &renderer);
+  static void mostrarPantallaVictoria(std::string &winner, Renderer &renderer);
+
+  static void mostrarPantallaDeEspera(Renderer &renderer);
 
   ~GameRenderer();
 };

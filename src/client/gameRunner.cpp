@@ -11,19 +11,23 @@ GameRunner::GameRunner(BlockingQueue<ClientAction> &queue_sender,
 
 void GameRunner::run() {
   try {
-    // Muestra la ventana y comienza la música
     graficos.show_window();
-    reproducirMusica();
     // Crear el renderizador del juego
     GameRenderer gameRenderer(graficos);
+    // Muestra la ventana de espera hasta que comience el juego
+    GameRenderer::mostrarPantallaDeEspera(graficos.GetRenderer());
+
     GameState command;
+    command = queue_receiver.pop();
+    // si recibió un comando muestra la ventana y comienza la música
+    reproducirMusica();
 
     // Recibir los colores de los jugadores
-    do {
+    while (command.action == COLOR_PRESENTATION_BYTE) {
+      GameRenderer::mostrarPantallaColores(command.players_color,
+                                           graficos.GetRenderer());
       command = queue_receiver.pop();
-      gameRenderer.mostrarPantallaColores(command.players_color,
-                                          graficos.GetRenderer());
-    } while (command.action == COLOR_PRESENTATION_BYTE);
+    }
 
     runGameLoop(gameRenderer);
   } catch (const ClosedQueue &e) {
@@ -47,10 +51,11 @@ void GameRunner::runGameLoop(GameRenderer &gameRenderer) {
     // Recibimos el comando y actualizamos si es necesario
     while (queue_receiver.try_pop(command)) {
       if (command.action == END_ROUND_BYTE)
-        gameRenderer.mostrarPantallaEndRound(command.map_victorias,
-                                             sdl_renderer);
+        GameRenderer::mostrarPantallaEndRound(command.map_victorias,
+                                              sdl_renderer);
       else if (command.action == VICTORY_BYTE)
-        gameRenderer.mostrarPantallaVictoria(command.name_winner, sdl_renderer);
+        GameRenderer::mostrarPantallaVictoria(command.name_winner,
+                                              sdl_renderer);
       else if (command.action == FINALLY_GAME)
         throw std::runtime_error("Termino el juego el server");
       else
