@@ -36,11 +36,7 @@ void GameLoop::run() {
     load_game_config.loadConfigurations();
     sendColorPresentation();
 
-    if (map_id_clientes.size() == 1) {
-      sendVictory(map_id_clientes.begin()->second);
-      end_game = true;
-      return;
-    }
+  
     while (!end_game) {
       uint8_t rounds = 0;
       while (!end_game && rounds < GAMES_PER_ROUND) {
