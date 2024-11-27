@@ -11,23 +11,22 @@ GameRunner::GameRunner(BlockingQueue<ClientAction> &queue_sender,
 
 void GameRunner::run() {
   try {
+    GameState command;
     graficos.show_window();
-    // Crear el renderizador del juego
-    GameRenderer gameRenderer(graficos);
     // Muestra la ventana de espera hasta que comience el juego
     GameRenderer::mostrarPantallaDeEspera(graficos.GetRenderer());
 
-    GameState command;
-    command = queue_receiver.pop();
-    // si recibió un comando muestra la ventana y comienza la música
-    reproducirMusica();
+    // Crear el renderizador del juego
+    GameRenderer gameRenderer(graficos);
 
-    // Recibir los colores de los jugadores
-    while (command.action == COLOR_PRESENTATION_BYTE) {
-      GameRenderer::mostrarPantallaColores(command.players_color,
+    do{
+        // Recibir los colores de los jugadores
+        command = queue_receiver.pop();
+        GameRenderer::mostrarPantallaColores(command.players_color,
                                            graficos.GetRenderer());
-      command = queue_receiver.pop();
-    }
+    } while (command.action == COLOR_PRESENTATION_BYTE);
+    // inició la partida, comienza la música
+    reproducirMusica();
 
     runGameLoop(gameRenderer);
   } catch (const ClosedQueue &e) {

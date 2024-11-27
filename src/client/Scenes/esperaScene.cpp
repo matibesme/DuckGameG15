@@ -24,12 +24,6 @@ EsperaScene::~EsperaScene() {
   TTF_Quit();
 }
 
-// Renderizar el fondo negro
-void EsperaScene::RenderBackground() {
-  SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255); // Negro
-  SDL_RenderClear(&renderer); // Limpiar con el color establecido
-}
-
 void EsperaScene::RenderMessage() {
     // Mensaje dividido en dos renglones
     const char *messageLine1 = "Esperando a que den inicio";
@@ -110,7 +104,6 @@ void EsperaScene::RenderMessage() {
 
 // Ejecutar la escena
 void EsperaScene::Run() {
-  RenderBackground();
   RenderMessage();
   SDL_RenderPresent(&renderer);
 }

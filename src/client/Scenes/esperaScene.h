@@ -12,9 +12,6 @@ private:
   SDL_Renderer &renderer; // Referencia al renderer
   TTF_Font *font;         // Fuente para el texto
 
-  // Renderizar el fondo negro
-  void RenderBackground();
-
   // Renderizar el mensaje de espera
   void RenderMessage();
 
