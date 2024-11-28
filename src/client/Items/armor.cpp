@@ -7,7 +7,7 @@ Armor::Armor(Graficos &graficos, float pos_x, float pos_y)
 
 void Armor::draw(bool isFliped, SDL2pp::Renderer &renderer, bool isOnGround,
                  bool isOnDuck) {
-  Texture& texture(graficos.getTexture(IMAGE_ARMOR));
+  Texture &texture(graficos.getTexture(IMAGE_ARMOR));
 
   if (isOnDuck) {
     if (isOnGround) {

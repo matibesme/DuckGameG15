@@ -150,6 +150,27 @@ void Graficos::loadTexture() {
   surface = Surface(IMG_Load(IMAGE_BANANA_THROWN));
   textures.emplace(IMAGE_BANANA_THROWN,
                    std::make_unique<SDL2pp::Texture>(renderer, surface));
+  surface = Surface(IMG_Load(IMAGE_GRANADA_GUN));
+  textures.emplace(IMAGE_GRANADA_GUN,
+                   std::make_unique<SDL2pp::Texture>(renderer, surface));
+  surface = Surface(IMG_Load(IMAGE_GRANADA_GUN_EQUIPPED));
+  textures.emplace(IMAGE_GRANADA_GUN_EQUIPPED,
+                   std::make_unique<SDL2pp::Texture>(renderer, surface));
+  surface = Surface(IMG_Load(IMAGE_LASER_RIFLE_GUN));
+  textures.emplace(IMAGE_LASER_RIFLE_GUN,
+                   std::make_unique<SDL2pp::Texture>(renderer, surface));
+  surface = Surface(IMG_Load(IMAGE_LASER_RIFLE_GUN_EQUIPPED));
+  textures.emplace(IMAGE_LASER_RIFLE_GUN_EQUIPPED,
+                   std::make_unique<SDL2pp::Texture>(renderer, surface));
+  surface = Surface(IMG_Load(IMAGE_CLOUDY_NIGHT));
+  textures.emplace(IMAGE_CLOUDY_NIGHT,
+                   std::make_unique<SDL2pp::Texture>(renderer, surface));
+  surface = Surface(IMG_Load(IMAGE_River));
+  textures.emplace(IMAGE_River,
+                   std::make_unique<SDL2pp::Texture>(renderer, surface));
+  surface = Surface(IMG_Load(IMAGE_FOREST));
+  textures.emplace(IMAGE_FOREST,
+                   std::make_unique<SDL2pp::Texture>(renderer, surface));
 }
 
 Texture &Graficos::getTexture(std::string path) { return *textures[path]; }

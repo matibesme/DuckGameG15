@@ -14,7 +14,7 @@ void Platform::draw() {
   Renderer &renderer = graficos.GetRenderer();
   SDL2pp::Texture *platform = nullptr;
 
-    switch (type) {
+  switch (type) {
   case TYPE_PLATFORM_DONUT:
     platform = &graficos.getTexture(IMAGE_PLATAFORMA_DONUT);
     break;

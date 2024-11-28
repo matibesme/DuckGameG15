@@ -4,10 +4,6 @@
 #include <SDL_render.h>
 #include <algorithm> // para std::min y std::max
 
-#define IMAGE_CLOUDY_NIGHT DATA_PATH "/backgrounds/Cloudy night.png"
-#define IMAGE_River DATA_PATH "/backgrounds/River.png"
-#define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
-
 GameRenderer::GameRenderer(Graficos &graficos) : graficos(graficos) {}
 
 void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
@@ -363,7 +359,6 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
   } else if (background_id == TYPE_BACKGROUND_FOREST) {
     background = &graficos.getTexture(IMAGE_FOREST);
   }
-
   renderer.Copy(*background, SDL2pp::NullOpt, SDL2pp::NullOpt);
 }
 

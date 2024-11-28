@@ -10,15 +10,13 @@ void Gun::drawOnDuck(float newX, float newY, bool isFliped, uint8_t gun,
                      bool lookingUp, SDL2pp::Renderer &renderer) {
   const char *texture_equipped = nullptr;
   const char *texture_not_equipped = nullptr;
-  if (gun != typeGun) {
-    typeGun = gun;
-    actualizarTextura(texture_equipped, texture_not_equipped);
-  }
+  typeGun = gun;
   if (typeGun == NOGUN) {
     return;
   }
   posX = newX;
   posY = newY;
+  actualizarTextura(texture_equipped, texture_not_equipped);
   auto &active_texture = graficos.getTexture(texture_equipped);
 
   // si esta flippeado dibujo a todas por igual

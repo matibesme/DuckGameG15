@@ -50,5 +50,8 @@
 #define IMAGE_WALL_DONUT DATA_PATH "/walls/Donut.png"
 #define IMAGE_WALL_NATURE DATA_PATH "/walls/Nature.png"
 #define IMAGE_WALL_UNDERGROUND DATA_PATH "/walls/Underground.png"
+#define IMAGE_CLOUDY_NIGHT DATA_PATH "/backgrounds/Cloudy night.png"
+#define IMAGE_River DATA_PATH "/backgrounds/River.png"
+#define IMAGE_FOREST DATA_PATH "/backgrounds/Forest.png"
 
 #endif // TALLER_TP_CONSTANTTEXTURES_H
