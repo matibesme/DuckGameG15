@@ -186,7 +186,7 @@ void GameLoop::paraCadaPatoAction() {
     checkCoalitionDuckPlatform(it->second);
     it->second.executeAction();
 
-    if (!it->second.isAlive()) {
+    if (!it->second.isAlive() && map_personajes.size() > 1) {
       it = map_personajes.erase(it);
       continue;
     }
@@ -283,7 +283,7 @@ bool GameLoop::sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &platform) {
               platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X) ||
          (personaje.getXPos() <= platform.x_pos &&
           personaje.getXPos() +
-                  (DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X) / 2 >=
+                  (DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X)  >=
               platform.x_pos) ||
          (personaje.getXPos() <=
               platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X &&
