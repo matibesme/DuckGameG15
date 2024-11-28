@@ -28,15 +28,15 @@ void Client::createGame(bool is_double_player, std::string player_1,
   // si devuelve false se creo la partida
 }
 
-void Client::startGame() {
+bool Client::startGame() {
   GameAccess game_access;
   game_access.action_type = START_GAME;
   protocolo.sendRequestGameToServer(game_access);
-  if (!protocolo.reciveGameStarted()) {
-    return;
+  if (protocolo.reciveGameStarted()) {
+      execute();
+      return true;
   }
-  execute();
-
+  return false;
 }
 
 void Client::joinGame(std::string game_name, bool is_double_player,
@@ -62,6 +62,9 @@ std::list<std::string> Client::updateGame() {
 
 Client::~Client() {
   queue_sender.close();
+  if(!queue_receiver.isClosed()) {
+      queue_receiver.close();
+  }
   receiver.stop();
   sender.stop();
   sender.join();
