@@ -12,18 +12,22 @@
 #include "../common/protocolo.h"
 #include "../common/socket.h"
 #include <map>
-
-class ProtocoloServer {
+#include <memory>
+#include "../common/blocking_queue.h"
+class ProtocoloServer
+{
 private:
-  Socket socket_server;
-  bool &dead_connection;
-  Protocolo protocolo;
-  uint8_t id;
+    Socket socket_server;
+    bool &dead_connection;
+    Protocolo protocolo;
+    uint8_t id;
+    std::shared_ptr<BlockingQueue<GameState>>& queue_sender;
 
   void sendFinallyGame();
 
 public:
-  ProtocoloServer(Socket socket, bool &dead_connection, uint8_t id_);
+  ProtocoloServer(Socket socket, bool &dead_connection, uint8_t id_,
+                  std::shared_ptr<BlockingQueue<GameState>>& queue_sender);
 
   void sendToClient(const GameState &command);
   void sendFullGame(const GameState &command);

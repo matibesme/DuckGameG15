@@ -78,7 +78,11 @@ void GameLoop::run() {
   } catch (const ClosedQueue &e) {
     // Queue closed
     std::cerr << "Cola cerrada en el game loop" << std::endl;
-  } catch (const std::exception &e) {
+  } catch (const ClientDisconnected &e){
+    std::cerr << "Cliente desconectado" << std::endl;
+    end_game = true;
+  }
+  catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
   }
 }
