@@ -25,6 +25,7 @@ public:
   Graficos(Graficos &&other) = delete;
   Graficos &operator=(Graficos &&other) = delete;
 
+  ~Graficos();
 private:
   Window window;
   Renderer renderer;

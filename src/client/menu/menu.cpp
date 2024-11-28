@@ -412,4 +412,21 @@ void Menu::show_wait(bool is_available_game) {
   }
 }
 
-Menu::~Menu() {}
+Menu::~Menu() {
+    // Libera las escenas
+    delete main_scene;
+    delete make_game_scene;
+    delete join_game_scene;
+    delete wait_scene;
+
+    // Libera la vista
+    delete view;
+
+    // Libera el combo box de opciones del juego
+    delete game_options;
+
+    // Nota: Los widgets añadidos a las escenas y layouts no necesitan
+    // eliminarse explícitamente porque Qt se encarga de ellos al eliminar
+    // las escenas y los layouts correspondientes.
+}
+

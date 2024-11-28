@@ -182,3 +182,9 @@ void Graficos::loadAllTextures() {
   textures.emplace(IMAGE_FOREST,
                    std::make_unique<SDL2pp::Texture>(renderer, surface));
 }
+
+Graficos::~Graficos() {
+  for (auto &texture : textures) {
+    texture.second.reset();
+  }
+}
