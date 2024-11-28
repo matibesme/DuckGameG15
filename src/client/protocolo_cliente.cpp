@@ -263,4 +263,15 @@ GameState ProtocoloCliente::reciveColorPresentationFromServer() {
   throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
 
+bool ProtocoloCliente::reciveGameStarted() {
+  try {
+    return protocolo.receiveBool(dead_connection);
+  } catch (const std::exception &e) {
+    dead_connection = true;
+    std::cerr << e.what() << std::endl;
+  }
+  throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
+}
+
+
 ProtocoloCliente::~ProtocoloCliente() {}

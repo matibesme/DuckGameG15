@@ -35,5 +35,6 @@ public:
   bool reciveMatchWithSameName();
   GameState reciveColorPresentationFromServer();
   bool isDeadConnection();
+  bool reciveGameStarted();
   ~ProtocoloCliente();
 };

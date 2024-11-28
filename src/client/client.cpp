@@ -32,7 +32,11 @@ void Client::startGame() {
   GameAccess game_access;
   game_access.action_type = START_GAME;
   protocolo.sendRequestGameToServer(game_access);
+  if (!protocolo.reciveGameStarted()) {
+    return;
+  }
   execute();
+
 }
 
 void Client::joinGame(std::string game_name, bool is_double_player,
