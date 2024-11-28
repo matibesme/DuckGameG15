@@ -33,8 +33,8 @@ bool Client::startGame() {
   game_access.action_type = START_GAME;
   protocolo.sendRequestGameToServer(game_access);
   if (protocolo.reciveGameStarted()) {
-      execute();
-      return true;
+    execute();
+    return true;
   }
   return false;
 }
@@ -62,8 +62,8 @@ std::list<std::string> Client::updateGame() {
 
 Client::~Client() {
   queue_sender.close();
-  if(!queue_receiver.isClosed()) {
-      queue_receiver.close();
+  if (!queue_receiver.isClosed()) {
+    queue_receiver.close();
   }
   receiver.stop();
   sender.stop();

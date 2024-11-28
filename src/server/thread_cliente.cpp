@@ -7,8 +7,8 @@ ThreadCliente::ThreadCliente(Socket peer, uint8_t id, LobbyPartidas &lobby)
 
       dead_connection(),
       queue_sender(std::make_shared<BlockingQueue<GameState>>(50)),
-      protocolo(std::move(peer), dead_connection, id,queue_sender), id(id), lobby(lobby),
-      receiver(protocolo, dead_connection, id, lobby),
+      protocolo(std::move(peer), dead_connection, id, queue_sender), id(id),
+      lobby(lobby), receiver(protocolo, dead_connection, id, lobby),
       sender(protocolo, queue_sender, dead_connection) {}
 
 void ThreadCliente::run() {
@@ -40,7 +40,6 @@ void ThreadCliente::delete_client() {
   if (!queue_sender->isClosed()) {
     queue_sender->close();
   }
-
 
   receiver.join();
   sender.join();

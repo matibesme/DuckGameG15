@@ -1,10 +1,11 @@
 #include "protocolo_server.h"
 
 // cppcheck-suppress constParameter
-ProtocoloServer::ProtocoloServer(Socket socket, bool &dead_connection,
-                                 uint8_t id_, std::shared_ptr<BlockingQueue<GameState>>& queue_sender)
+ProtocoloServer::ProtocoloServer(
+    Socket socket, bool &dead_connection, uint8_t id_,
+    std::shared_ptr<BlockingQueue<GameState>> &queue_sender)
     : socket_server(std::move(socket)), dead_connection(dead_connection),
-      protocolo(socket_server), id(id_) , queue_sender(queue_sender) {}
+      protocolo(socket_server), id(id_), queue_sender(queue_sender) {}
 
 void ProtocoloServer::sendToClient(const GameState &command) {
   try {
@@ -20,7 +21,6 @@ void ProtocoloServer::sendToClient(const GameState &command) {
       sendFinallyGame();
     else if (command.action == DISCONNECT_BYTE)
       sendDisconnectInGame();
-
   } catch (const SocketClose &e) {
     std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
     dead_connection = true;
@@ -129,9 +129,7 @@ void ProtocoloServer::sendVictory(const GameState &command) {
 }
 
 void ProtocoloServer::sendFinallyGame() {
-
   protocolo.sendByte(FINALLY_GAME, dead_connection);
-
 }
 
 CommandClient ProtocoloServer::receiveCommandFromClients(bool &two_players) {
@@ -207,8 +205,7 @@ void ProtocoloServer::sendPlayersColor(
   }
 }
 
-
-void ProtocoloServer::sendStartGame(bool& start_game) {
+void ProtocoloServer::sendStartGame(bool &start_game) {
   try {
     protocolo.sendByte(start_game, dead_connection);
   } catch (const std::exception &e) {

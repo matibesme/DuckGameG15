@@ -9,25 +9,24 @@
 #include "../common/dto_definitions.h"
 #include "../common/game_exception.h"
 
+#include "../common/blocking_queue.h"
 #include "../common/protocolo.h"
 #include "../common/socket.h"
 #include <map>
 #include <memory>
-#include "../common/blocking_queue.h"
-class ProtocoloServer
-{
+class ProtocoloServer {
 private:
-    Socket socket_server;
-    bool &dead_connection;
-    Protocolo protocolo;
-    uint8_t id;
-    std::shared_ptr<BlockingQueue<GameState>>& queue_sender;
+  Socket socket_server;
+  bool &dead_connection;
+  Protocolo protocolo;
+  uint8_t id;
+  std::shared_ptr<BlockingQueue<GameState>> &queue_sender;
 
   void sendFinallyGame();
 
 public:
   ProtocoloServer(Socket socket, bool &dead_connection, uint8_t id_,
-                  std::shared_ptr<BlockingQueue<GameState>>& queue_sender);
+                  std::shared_ptr<BlockingQueue<GameState>> &queue_sender);
 
   void sendToClient(const GameState &command);
   void sendFullGame(const GameState &command);
@@ -35,7 +34,7 @@ public:
   void sendEndRound(const GameState &command);
   void sendVictory(const GameState &command);
   void sendMatchWithSameName(bool same_name);
-  void sendStartGame(bool& start_game);
+  void sendStartGame(bool &start_game);
   void sendDisconnectInGame();
   void
   sendPlayersColor(const std::map<std::string, std::string> &players_color);

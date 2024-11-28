@@ -287,5 +287,4 @@ GameState ProtocoloCliente::reciveDisconnectInGame() {
   throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
 
-
 ProtocoloCliente::~ProtocoloCliente() {}

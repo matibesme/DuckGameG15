@@ -17,7 +17,6 @@ void Sender::run() {
       GameState command = queue_sender->pop();
       protocolo.sendToClient(command);
     }
-
   } catch (const ClosedQueue &e) {
     dead_connection = true;
     std::cerr << "Cola cerrada en el sender" << std::endl;

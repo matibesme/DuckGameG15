@@ -19,10 +19,10 @@ void GameRunner::run() {
     // Crear el renderizador del juego
     GameRenderer gameRenderer(graficos);
 
-    do{
-        // Recibir los colores de los jugadores
-        command = queue_receiver.pop();
-        GameRenderer::mostrarPantallaColores(command.players_color,
+    do {
+      // Recibir los colores de los jugadores
+      command = queue_receiver.pop();
+      GameRenderer::mostrarPantallaColores(command.players_color,
                                            graficos.GetRenderer());
     } while (command.action == COLOR_PRESENTATION_BYTE);
     // inició la partida, comienza la música

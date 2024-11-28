@@ -36,7 +36,6 @@ void GameLoop::run() {
     load_game_config.loadConfigurations();
     sendColorPresentation();
 
-  
     while (!end_game) {
       uint8_t rounds = 0;
       while (!end_game && rounds < GAMES_PER_ROUND) {
@@ -78,15 +77,14 @@ void GameLoop::run() {
   } catch (const ClosedQueue &e) {
     // Queue closed
     std::cerr << "Cola cerrada en el game loop" << std::endl;
-  } catch (const ClientDisconnected &e){
+  } catch (const ClientDisconnected &e) {
     std::cerr << "Cliente desconectado" << std::endl;
 
     GameState command;
     command.action = DISCONNECT_BYTE;
     queues_map->sendMessagesToQueues(command);
     end_game = true;
-  }
-  catch (const std::exception &e) {
+  } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
   }
 }
@@ -444,8 +442,6 @@ void GameLoop::sendVictory(std::string &winner) {
 
   command.action = FINALLY_GAME;
   queues_map->sendMessagesToQueues(command);
-
-
 }
 
 void GameLoop::spawnBoxesCheat() {
