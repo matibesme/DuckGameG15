@@ -1,15 +1,14 @@
 #include "helmet.h"
 
-#include <SDL_render.h>
 #include "constantTextures.h"
-
+#include <SDL_render.h>
 
 Helmet::Helmet(Graficos &graficos, float pos_x, float pos_y)
     : graficos(graficos), pos_x(pos_x), pos_y(pos_y) {}
 
 void Helmet::draw(bool isFliped, SDL2pp::Renderer &renderer, bool isOnGround,
                   bool isOnDuck) {
-  Texture texture(graficos.getTexture(IMAGE_HELMET));
+  SDL2pp::Texture &texture = graficos.getTexture(IMAGE_HELMET);
 
   if (isOnDuck) {
     if (isOnGround) {

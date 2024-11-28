@@ -31,7 +31,7 @@ public:
   void sendEndRound(const GameState &command);
   void sendVictory(const GameState &command);
   void sendMatchWithSameName(bool same_name);
-  void sendStartGame(bool& start_game);
+  void sendStartGame(bool &start_game);
 
   void
   sendPlayersColor(const std::map<std::string, std::string> &players_color);

@@ -1,7 +1,7 @@
 #include "ClientDuck.h"
 
-#include <SDL_image.h>
 #include "constantTextures.h"
+#include <SDL_image.h>
 
 const int SPRITE_ANIMATION_RATE = 120;
 const int MAX_SPRITE_FRAMES = 6;

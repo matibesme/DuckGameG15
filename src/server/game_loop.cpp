@@ -36,7 +36,6 @@ void GameLoop::run() {
     load_game_config.loadConfigurations();
     sendColorPresentation();
 
-  
     while (!end_game) {
       uint8_t rounds = 0;
       while (!end_game && rounds < GAMES_PER_ROUND) {

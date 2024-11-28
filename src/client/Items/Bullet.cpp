@@ -1,7 +1,7 @@
 #include "Bullet.h"
 
-#include <SDL_render.h>
 #include "constantTextures.h"
+#include <SDL_render.h>
 
 #define SOUND_COWBOY DATA_PATH "/sound/pistol.wav"
 #define SOUND_AK47 DATA_PATH "/sound/netGunFire.wav"

@@ -199,8 +199,7 @@ void ProtocoloServer::sendPlayersColor(
   }
 }
 
-
-void ProtocoloServer::sendStartGame(bool& start_game) {
+void ProtocoloServer::sendStartGame(bool &start_game) {
   try {
     protocolo.sendByte(start_game, dead_connection);
   } catch (const std::exception &e) {

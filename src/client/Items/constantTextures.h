@@ -51,5 +51,4 @@
 #define IMAGE_WALL_NATURE DATA_PATH "/walls/Nature.png"
 #define IMAGE_WALL_UNDERGROUND DATA_PATH "/walls/Underground.png"
 
-
-#endif //TALLER_TP_CONSTANTTEXTURES_H
+#endif // TALLER_TP_CONSTANTTEXTURES_H

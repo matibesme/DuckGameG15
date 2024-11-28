@@ -353,22 +353,18 @@ void GameRenderer::actualizarElementos(const GameState &command) {
 
 void GameRenderer::drawBackground(const uint8_t background_id) {
   Renderer &renderer = graficos.GetRenderer();
-
-  // creo una textura vacía para dibujar el fondo
-  SDL2pp::Texture background(renderer, SDL_PIXELFORMAT_RGBA8888,
-                             SDL_TEXTUREACCESS_TARGET, SCENE_WIDTH,
-                             SCENE_HEIGHT);
+  SDL2pp::Texture *background = nullptr;
 
   // Cargar y dibujar el fondo
   if (background_id == TYPE_BACKGROUND_CIELO_NUBES) {
-    background = graficos.getTexture(IMAGE_CLOUDY_NIGHT);
+    background = &graficos.getTexture(IMAGE_CLOUDY_NIGHT);
   } else if (background_id == TYPE_BACKGROUND_CITY) {
-    background = graficos.getTexture(IMAGE_River);
+    background = &graficos.getTexture(IMAGE_River);
   } else if (background_id == TYPE_BACKGROUND_FOREST) {
-    background = graficos.getTexture(IMAGE_FOREST);
+    background = &graficos.getTexture(IMAGE_FOREST);
   }
 
-  renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);
+  renderer.Copy(*background, SDL2pp::NullOpt, SDL2pp::NullOpt);
 }
 
 void GameRenderer::mostrarPantallaColores(

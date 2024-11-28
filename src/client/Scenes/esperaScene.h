@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <algorithm>
 #include <iostream>
 
 #define FUENTE DATA_PATH "/fonts/8-bit-hud.ttf"
