@@ -282,8 +282,7 @@ bool GameLoop::sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &platform) {
           personaje.getXPos() <=
               platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X) ||
          (personaje.getXPos() <= platform.x_pos &&
-          personaje.getXPos() +
-                  (DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X)  >=
+          personaje.getXPos() + (DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X) >=
               platform.x_pos) ||
          (personaje.getXPos() <=
               platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X &&

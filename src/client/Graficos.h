@@ -29,7 +29,7 @@ private:
   Window window;
   Renderer renderer;
   std::map<std::string, std::unique_ptr<SDL2pp::Texture>> textures;
-  void loadTexture();
+  void loadAllTextures();
 };
 
 #endif // GRAPHICS_H

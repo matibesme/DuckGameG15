@@ -6,12 +6,22 @@ Graficos::Graficos(const char *title, int width, int height)
     : window(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width,
              height, SDL_WINDOW_HIDDEN | SDL_WINDOW_RESIZABLE),
       renderer(window, -1, SDL_RENDERER_ACCELERATED) {
-  loadTexture();
+  loadAllTextures();
 }
 
 Renderer &Graficos::GetRenderer() { return renderer; }
 
-void Graficos::loadTexture() {
+Texture &Graficos::getTexture(std::string path) { return *textures[path]; }
+
+void Graficos::Clear() {
+  renderer.SetDrawColor(0, 0, 0, 255);
+  renderer.Clear();
+}
+
+void Graficos::show_window() { SDL_ShowWindow(window.Get()); }
+
+void Graficos::loadAllTextures() {
+  // Cargo por unica vez todas las texturas
   Surface surface(IMG_Load(IMAGE_ARMOR));
   textures.emplace(IMAGE_ARMOR,
                    std::make_unique<SDL2pp::Texture>(renderer, surface));
@@ -172,12 +182,3 @@ void Graficos::loadTexture() {
   textures.emplace(IMAGE_FOREST,
                    std::make_unique<SDL2pp::Texture>(renderer, surface));
 }
-
-Texture &Graficos::getTexture(std::string path) { return *textures[path]; }
-
-void Graficos::Clear() {
-  renderer.SetDrawColor(0, 0, 0, 255);
-  renderer.Clear();
-}
-
-void Graficos::show_window() { SDL_ShowWindow(window.Get()); }

@@ -1,8 +1,8 @@
 #include "protocolo_server.h"
 
 // cppcheck-suppress constParameter
-ProtocoloServer::ProtocoloServer(
-    Socket socket, bool &dead_connection, uint8_t id_)
+ProtocoloServer::ProtocoloServer(Socket socket, bool &dead_connection,
+                                 uint8_t id_)
     : socket_server(std::move(socket)), dead_connection(dead_connection),
       protocolo(socket_server), id(id_) {}
 
