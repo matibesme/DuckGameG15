@@ -43,7 +43,7 @@ constexpr uint8_t END_ROUND_BYTE = 0x21;
 constexpr uint8_t VICTORY_BYTE = 0x22;
 constexpr uint8_t FINALLY_GAME = 0x23;
 constexpr uint8_t COLOR_PRESENTATION_BYTE = 0x24;
-
+constexpr uint8_t DISCONNECT_BYTE = 0x25;
 // Movimientos del pato
 constexpr uint8_t MOVEMENT_ACTION = 0x03;
 constexpr uint8_t JUMP = 0x04;

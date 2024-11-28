@@ -77,6 +77,13 @@ void GameLoop::run() {
   } catch (const ClosedQueue &e) {
     // Queue closed
     std::cerr << "Cola cerrada en el game loop" << std::endl;
+  } catch (const ClientDisconnected &e) {
+    std::cerr << "Cliente desconectado" << std::endl;
+
+    GameState command;
+    command.action = DISCONNECT_BYTE;
+    queues_map->sendMessagesToQueues(command);
+    end_game = true;
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
   }
@@ -432,6 +439,7 @@ void GameLoop::sendVictory(std::string &winner) {
   for (int i = 0; i < 600; i++) {
     queues_map->sendMessagesToQueues(command);
   }
+
   command.action = FINALLY_GAME;
   queues_map->sendMessagesToQueues(command);
 }

@@ -1,6 +1,5 @@
 #ifndef ESPERA_SCENE_H
 #define ESPERA_SCENE_H
-
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <algorithm>

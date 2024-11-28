@@ -57,6 +57,8 @@ void GameRunner::runGameLoop(GameRenderer &gameRenderer) {
                                               sdl_renderer);
       else if (command.action == FINALLY_GAME)
         throw std::runtime_error("Termino el juego el server");
+      else if (command.action == DISCONNECT_BYTE)
+        throw std::runtime_error("Se desconectó un jugador");
       else
         actualizar = true;
     }
