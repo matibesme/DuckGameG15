@@ -81,6 +81,9 @@ void GameLoop::run() {
   } catch (const ClientDisconnected &e){
     std::cerr << "Cliente desconectado" << std::endl;
     end_game = true;
+    GameState command;
+    command.action = DISCONNECT_BYTE;
+    queues_map->sendMessagesToQueues(command);
   }
   catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
@@ -439,6 +442,7 @@ void GameLoop::sendVictory(std::string &winner) {
   }
   command.action = FINALLY_GAME;
   queues_map->sendMessagesToQueues(command);
+
 }
 
 void GameLoop::spawnBoxesCheat() {

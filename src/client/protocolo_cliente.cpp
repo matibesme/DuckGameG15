@@ -52,6 +52,8 @@ GameState ProtocoloCliente::reciveFromServer() {
       dead_connection = true;
       return command;
     }
+    if (firstByte == DISCONNECT_BYTE)
+      return reciveDisconnectInGame();
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
@@ -266,6 +268,18 @@ GameState ProtocoloCliente::reciveColorPresentationFromServer() {
 bool ProtocoloCliente::reciveGameStarted() {
   try {
     return protocolo.receiveBool(dead_connection);
+  } catch (const std::exception &e) {
+    dead_connection = true;
+    std::cerr << e.what() << std::endl;
+  }
+  throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
+}
+
+GameState ProtocoloCliente::reciveDisconnectInGame() {
+  try {
+    GameState command;
+    command.action = DISCONNECT_BYTE;
+    return command;
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;

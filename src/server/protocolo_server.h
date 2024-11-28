@@ -36,7 +36,7 @@ public:
   void sendVictory(const GameState &command);
   void sendMatchWithSameName(bool same_name);
   void sendStartGame(bool& start_game);
-
+  void sendDisconnectInGame();
   void
   sendPlayersColor(const std::map<std::string, std::string> &players_color);
   CommandClient receiveCommandFromClients(bool &two_players);

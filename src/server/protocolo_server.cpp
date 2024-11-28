@@ -18,6 +18,9 @@ void ProtocoloServer::sendToClient(const GameState &command) {
       sendPlayersColor(command.players_color);
     else if (command.action == FINALLY_GAME)
       sendFinallyGame();
+    else if (command.action == DISCONNECT_BYTE)
+      sendDisconnectInGame();
+
   } catch (const SocketClose &e) {
     std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
     dead_connection = true;
@@ -206,6 +209,15 @@ void ProtocoloServer::sendPlayersColor(
 void ProtocoloServer::sendStartGame(bool& start_game) {
   try {
     protocolo.sendByte(start_game, dead_connection);
+  } catch (const std::exception &e) {
+    dead_connection = true;
+    std::cerr << e.what() << std::endl;
+  }
+}
+
+void ProtocoloServer::sendDisconnectInGame() {
+  try {
+    protocolo.sendByte(DISCONNECT_BYTE, dead_connection);
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
