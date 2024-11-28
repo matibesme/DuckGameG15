@@ -54,8 +54,8 @@ void Bullet::executeAction() {
       y_pos += BULLET_VEL;
       spread_direction ? x_pos += spread : x_pos -= spread;
     }
-    range--;
-    if (range == 0) {
+    range-= BULLET_VEL;
+    if (range < 0) {
       is_alive = false;
     }
   }
