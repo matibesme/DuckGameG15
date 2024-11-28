@@ -1,30 +1,8 @@
 #include "Gun.h"
 
 #include <SDL_render.h>
+#include "constantTextures.h"
 
-#define IMAGE_COWBOY_GUN DATA_PATH "/weapons/cowboyPistol.png"
-#define IMAGE_COWBOY_GUN_EQUIPPED DATA_PATH "/weapons/CowboyPistolEquipped.png"
-#define IMAGE_AK47_GUN DATA_PATH "/weapons/ak47.png"
-#define IMAGE_AK47_GUN_EQUIPPED DATA_PATH "/weapons/ak47Equipped.png"
-#define IMAGE_PISTOLA_DUELOS_GUN DATA_PATH "/weapons/duelingPistol.png"
-#define IMAGE_PISTOLA_DUELOS_GUN_EQUIPPED                                      \
-  DATA_PATH "/weapons/duelingPistolEquipped.png"
-#define IMAGE_MAGNUM_GUN DATA_PATH "/weapons/magnum.png"
-#define IMAGE_MAGNUM_GUN_EQUIPPED DATA_PATH "/weapons/magnumEquipped.png"
-#define IMAGE_ESCOPETA_GUN DATA_PATH "/weapons/shotgun.png"
-#define IMAGE_ESCOPETA_GUN_EQUIPPED DATA_PATH "/weapons/shotgunEquipped.png"
-#define IMAGE_SNIPER_GUN DATA_PATH "/weapons/sniper.png"
-#define IMAGE_SNIPER_GUN_EQUIPPED DATA_PATH "/weapons/sniperEquipped.png"
-#define IMAGE_GRANADA_GUN DATA_PATH "/weapons/grenade.png"
-#define IMAGE_GRANADA_GUN_EQUIPPED DATA_PATH "/weapons/grenadeEquipped.png"
-#define IMAGE_BANANA_GUN DATA_PATH "/weapons/bananaSpawn.png"
-#define IMAGE_BANANA_GUN_EQUIPPED DATA_PATH "/weapons/bananaEquipped.png"
-#define IMAGE_PEW_PEW_LASER_GUN DATA_PATH "/weapons/PewpewLaser.png"
-#define IMAGE_PEW_PEW_LASER_GUN_EQUIPPED                                       \
-  DATA_PATH "/weapons/PewpewLaserEquipped.png"
-#define IMAGE_LASER_RIFLE_GUN DATA_PATH "/weapons/laserRifle.png"
-#define IMAGE_LASER_RIFLE_GUN_EQUIPPED                                         \
-  DATA_PATH "/weapons/laserRifleEquipped.png"
 
 Gun::Gun(Graficos &graficos, float pos_x, float pos_y, uint8_t typeOfGun)
     : graficos(graficos), posX(pos_x), posY(pos_y), typeGun(typeOfGun) {

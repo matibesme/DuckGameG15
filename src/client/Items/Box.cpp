@@ -1,9 +1,8 @@
 #include "Box.h"
 
 #include "common_constant.h"
+#include "constantTextures.h"
 
-#define IMAGE_BOX_WEAPON DATA_PATH "/objects/itemBox.png"
-#define IMAGE_GRANADA_EXPLOTION DATA_PATH "/bullets/explode.png"
 #define SOUND_GRANADA DATA_PATH "/sound/grenadeFire.wav"
 #define SPRITE_WIDTH_BOX 32
 #define SPRITE_HEIGHT_BOX 32

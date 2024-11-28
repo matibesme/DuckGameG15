@@ -3,17 +3,8 @@
 #include <SDL_render.h>
 
 #include "../common/common_constant.h"
+#include "constantTextures.h"
 
-#define IMAGE_PLATAFORMA_DONUT DATA_PATH "/platforms/Donut.png"
-#define IMAGE_PLATAFORMA_DONUT_LONG DATA_PATH "/platforms/Donut long.png"
-#define IMAGE_PLATAFORMA_INDUSTRIAL DATA_PATH "/platforms/Industrial.png"
-#define IMAGE_PLATAFORMA_NATURE DATA_PATH "/platforms/Nature.png"
-#define IMAGE_PLATAFORMA_NATURE_LONG DATA_PATH "/platforms/Nature long.png"
-#define IMAGE_PLATAFORMA_SPACE DATA_PATH "/platforms/Space.png"
-#define IMAGE_PLATAFORMA_UNDERGROUND DATA_PATH "/platforms/Underground.png"
-#define IMAGE_WALL_DONUT DATA_PATH "/walls/Donut.png"
-#define IMAGE_WALL_NATURE DATA_PATH "/walls/Nature.png"
-#define IMAGE_WALL_UNDERGROUND DATA_PATH "/walls/Underground.png"
 
 Platform::Platform(float initial_pos_x, float initial_pos_y, Graficos &graficos,
                    uint8_t type, float width, float height)

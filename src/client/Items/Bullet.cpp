@@ -1,18 +1,8 @@
 #include "Bullet.h"
 
 #include <SDL_render.h>
+#include "constantTextures.h"
 
-#define IMAGE_AMMO_1 DATA_PATH "/bullets/ammo.png"
-#define IMAGE_AMMO_2 DATA_PATH "/bullets/ammo2.png"
-#define IMAGE_AMMO_3 DATA_PATH "/bullets/ammo3.png"
-#define IMAGE_AMMO_4 DATA_PATH "/bullets/ammo4.png"
-#define IMAGE_AMMO_5 DATA_PATH "/bullets/ammo5.png"
-#define IMAGE_LASER_AMMO DATA_PATH "/bullets/laserAmmo.png"
-#define IMAGE_LASER_AMMO2 DATA_PATH "/bullets/laserAmmo2.png"
-#define IMAGE_GRANADA_BULLET DATA_PATH "/bullets/thrownGrenade.png"
-#define IMAGE_GRANADA_EXPLOTION DATA_PATH "/bullets/explode.png"
-#define IMAGE_BANANA_BULLET DATA_PATH "/bullets/banana.png"
-#define IMAGE_BANANA_THROWN DATA_PATH "/bullets/thrownBanana.png"
 #define SOUND_COWBOY DATA_PATH "/sound/pistol.wav"
 #define SOUND_AK47 DATA_PATH "/sound/netGunFire.wav"
 #define SOUND_PISTOLA DATA_PATH "/sound/pistolFire.wav"

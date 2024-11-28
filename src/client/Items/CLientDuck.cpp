@@ -1,8 +1,8 @@
 #include "ClientDuck.h"
 
 #include <SDL_image.h>
+#include "constantTextures.h"
 
-#define IMAGE_DUCK DATA_PATH "/objects/Duck.png"
 const int SPRITE_ANIMATION_RATE = 120;
 const int MAX_SPRITE_FRAMES = 6;
 const int MAX_SPRITE_FRAMES_JUMP = 5;
