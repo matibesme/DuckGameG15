@@ -35,7 +35,7 @@ public:
   void addQueueSender(uint8_t id_player,
                       std::shared_ptr<BlockingQueue<GameState>> queue);
   bool isHoster(uint8_t id_cliente);
-  void startGame(uint8_t id_client, std::string &game_name);
+  bool startGame(uint8_t id_client, std::string &game_name);
   void removeGame();
   std::map<std::string, uint8_t> &getIdPartidas();
   ~LobbyPartidas();

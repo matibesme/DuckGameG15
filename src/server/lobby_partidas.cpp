@@ -58,10 +58,16 @@ bool LobbyPartidas::isHoster(uint8_t id_cliente) {
   return id_hoster_partida.find(id_cliente) != id_hoster_partida.end();
 }
 
-void LobbyPartidas::startGame(uint8_t id_client, std::string &game_name) {
+bool LobbyPartidas::startGame(uint8_t id_client, std::string &game_name) {
   std::lock_guard<std::mutex> lock(m);
+  //chequeo si hay mas de un jugador
+  if (map_id_clientes[id_hoster_partida[id_client]].size() == 1) {
+    return false;
+  }
+
   partidas[id_hoster_partida[id_client]]->start();
   partidas_sin_arrancar.erase(game_name);
+  return true;
 }
 
 void LobbyPartidas::addQueueSender(

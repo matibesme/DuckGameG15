@@ -198,4 +198,15 @@ void ProtocoloServer::sendPlayersColor(
     std::cerr << e.what() << std::endl;
   }
 }
+
+
+void ProtocoloServer::sendStartGame(bool& start_game) {
+  try {
+    protocolo.sendByte(start_game, dead_connection);
+  } catch (const std::exception &e) {
+    dead_connection = true;
+    std::cerr << e.what() << std::endl;
+  }
+}
+
 ProtocoloServer::~ProtocoloServer() {}
