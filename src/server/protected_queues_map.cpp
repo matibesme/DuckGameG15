@@ -22,7 +22,7 @@ void ProtectedQueuesMap::sendMessagesToQueues(const GameState &command) {
       it = map_queues_sender.erase(it);
       throw ClientDisconnected();
     } else {
-      it->second->try_push(command);
+      it->second->push(command);
       ++it;
     }
   }

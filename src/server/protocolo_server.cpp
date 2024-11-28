@@ -129,7 +129,9 @@ void ProtocoloServer::sendVictory(const GameState &command) {
 }
 
 void ProtocoloServer::sendFinallyGame() {
+
   protocolo.sendByte(FINALLY_GAME, dead_connection);
+
 }
 
 CommandClient ProtocoloServer::receiveCommandFromClients(bool &two_players) {
