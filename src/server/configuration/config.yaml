@@ -2,8 +2,8 @@ necesary_victories: 10
 games_per_round: 5
 
 life: 100
-jump_velocity: 15
-gravity: 1
+jump_velocity: 10
+gravity: 0.5
 
 granade:
   damage: 50
