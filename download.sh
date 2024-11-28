@@ -13,4 +13,4 @@ sudo apt -y install libqt5charts5-dev libqt5datavisualization5-dev libqt5gamepad
 #YAML
 sudo apt-get -y install libyaml-cpp-dev
 #TESTS
-sudo apt-get -y install libgtest-dev
+#sudo apt-get -y install libgtest-dev
