@@ -20,13 +20,11 @@ private:
   bool &dead_connection;
   Protocolo protocolo;
   uint8_t id;
-  std::shared_ptr<BlockingQueue<GameState>> &queue_sender;
 
   void sendFinallyGame();
 
 public:
-  ProtocoloServer(Socket socket, bool &dead_connection, uint8_t id_,
-                  std::shared_ptr<BlockingQueue<GameState>> &queue_sender);
+  ProtocoloServer(Socket socket, bool &dead_connection, uint8_t id_);
 
   void sendToClient(const GameState &command);
   void sendFullGame(const GameState &command);

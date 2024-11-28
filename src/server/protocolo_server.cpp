@@ -2,10 +2,9 @@
 
 // cppcheck-suppress constParameter
 ProtocoloServer::ProtocoloServer(
-    Socket socket, bool &dead_connection, uint8_t id_,
-    std::shared_ptr<BlockingQueue<GameState>> &queue_sender)
+    Socket socket, bool &dead_connection, uint8_t id_)
     : socket_server(std::move(socket)), dead_connection(dead_connection),
-      protocolo(socket_server), id(id_), queue_sender(queue_sender) {}
+      protocolo(socket_server), id(id_) {}
 
 void ProtocoloServer::sendToClient(const GameState &command) {
   try {
@@ -23,8 +22,7 @@ void ProtocoloServer::sendToClient(const GameState &command) {
       sendDisconnectInGame();
   } catch (const SocketClose &e) {
     std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
-    dead_connection = true;
-    queue_sender->close();
+    throw ClientDisconnected();
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
