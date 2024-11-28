@@ -2,6 +2,9 @@
 #define GRAPHICS_H
 
 #include <SDL2pp/SDL2pp.hh>
+#include "Items/constantTextures.h"
+#include <map>
+#include <memory>
 
 using SDL2pp::Renderer;
 using SDL2pp::Surface;
@@ -12,7 +15,7 @@ class Graficos {
 public:
   Graficos(const char *title, int width, int height);
   Renderer &GetRenderer();
-  Texture LoadTexture(const char *path);
+  Texture &getTexture(std::string path);
   void Clear();
   void show_window();
 
@@ -23,7 +26,9 @@ public:
 
 private:
   Window window;
-  Renderer renderer;
+    Renderer renderer;
+    std::map<std::string, std::unique_ptr<SDL2pp::Texture>> textures;
+    void loadTexture();
 };
 
 #endif // GRAPHICS_H

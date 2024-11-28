@@ -361,11 +361,11 @@ void GameRenderer::drawBackground(const uint8_t background_id) {
 
   // Cargar y dibujar el fondo
   if (background_id == TYPE_BACKGROUND_CIELO_NUBES) {
-    background = graficos.LoadTexture(IMAGE_CLOUDY_NIGHT);
+    background = graficos.getTexture(IMAGE_CLOUDY_NIGHT);
   } else if (background_id == TYPE_BACKGROUND_CITY) {
-    background = graficos.LoadTexture(IMAGE_River);
+    background = graficos.getTexture(IMAGE_River);
   } else if (background_id == TYPE_BACKGROUND_FOREST) {
-    background = graficos.LoadTexture(IMAGE_FOREST);
+    background = graficos.getTexture(IMAGE_FOREST);
   }
 
   renderer.Copy(background, SDL2pp::NullOpt, SDL2pp::NullOpt);

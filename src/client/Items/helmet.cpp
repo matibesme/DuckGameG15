@@ -9,7 +9,7 @@ Helmet::Helmet(Graficos &graficos, float pos_x, float pos_y)
 
 void Helmet::draw(bool isFliped, SDL2pp::Renderer &renderer, bool isOnGround,
                   bool isOnDuck) {
-  Texture texture(graficos.LoadTexture(IMAGE_HELMET));
+  Texture texture(graficos.getTexture(IMAGE_HELMET));
 
   if (isOnDuck) {
     if (isOnGround) {

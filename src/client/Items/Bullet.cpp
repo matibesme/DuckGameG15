@@ -31,7 +31,7 @@ void Bullet::draw(SDL2pp::Renderer &renderer) {
 
   const char *texture_path;
   actualizarTipo(texture_path);
-  Texture texture(graficos.LoadTexture(texture_path));
+  Texture &texture = graficos.getTexture(texture_path);
 
   SDL2pp::Rect area;
   // tipo de area dependiendo de la orientacion y si es bala o granada o banana

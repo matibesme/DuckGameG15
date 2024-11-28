@@ -17,12 +17,9 @@ private:
   float posX;
   float posY;
   uint8_t typeGun;
-  std::unique_ptr<SDL2pp::Texture> texture_equipped;
-  std::unique_ptr<SDL2pp::Texture> texture_not_equipped;
   void actualizarTextura(const char *&texture_path_equipped,
                          const char *&texture_path_not_equipped, int &width,
                          int &height);
-  void cargarTextura();
 
 public:
   Gun(Graficos &graficos, float pos_x, float pos_y, uint8_t typeOfGun);

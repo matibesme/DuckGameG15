@@ -42,7 +42,7 @@ void Box::draw(SDL2pp::Renderer &renderer) {
   }
 
   // Cargar y copiar la textura
-  Texture texture(graficos.LoadTexture(texture_path));
+  Texture &texture = graficos.getTexture(texture_path);
   renderer.Copy(texture, area, destRect);
 }
 

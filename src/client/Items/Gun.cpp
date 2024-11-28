@@ -6,38 +6,24 @@
 
 Gun::Gun(Graficos &graficos, float pos_x, float pos_y, uint8_t typeOfGun)
     : graficos(graficos), posX(pos_x), posY(pos_y), typeGun(typeOfGun) {
-  cargarTextura();
 }
 
-void Gun::cargarTextura() {
-  const char *texture_path_equipped = nullptr;
-  const char *texture_path_not_equipped = nullptr;
-  int width = 0, height = 0;
-
-  actualizarTextura(texture_path_equipped, texture_path_not_equipped, width,
-                    height);
-  if (typeGun == NOGUN) {
-    return;
-  }
-  texture_equipped = std::make_unique<SDL2pp::Texture>(
-      graficos.LoadTexture(texture_path_equipped));
-
-  texture_not_equipped = std::make_unique<SDL2pp::Texture>(
-      graficos.LoadTexture(texture_path_not_equipped));
-}
 
 void Gun::drawOnDuck(float newX, float newY, bool isFliped, uint8_t gun,
                      bool lookingUp, SDL2pp::Renderer &renderer) {
+    char * texture_equipped = nullptr;
+    char * texture_not_equipped = nullptr;
   if (gun != typeGun) {
     typeGun = gun;
-    cargarTextura();
+    actualizarTextura(texture_equipped, texture_not_equipped, WIDTH_GUN,
+                      HEIGHT_GUN);
   }
-  if (!texture_equipped || typeGun == NOGUN) {
+  if ( typeGun == NOGUN) {
     return;
   }
   posX = newX;
   posY = newY;
-  auto &active_texture = *texture_equipped;
+  auto &active_texture = texture_equipped;
 
   // si esta flippeado dibujo a todas por igual
   if (isFliped) {
@@ -66,10 +52,10 @@ void Gun::drawOnDuck(float newX, float newY, bool isFliped, uint8_t gun,
 }
 
 void Gun::drawOnSpawn(SDL2pp::Renderer &renderer) {
-  if (!texture_not_equipped || typeGun == NOGUN) {
+  if (typeGun == NOGUN) {
     return;
   }
-  auto &active_texture = *texture_not_equipped;
+  auto &active_texture = texture_not_equipped;
 
   if (typeGun == BANANA_GUN) {
     // destRect es el rectángulo donde se dibujará el pato
