@@ -436,7 +436,7 @@ void GameLoop::sendVictory(std::string &winner) {
   command.action = VICTORY_BYTE;
   command.name_winner = winner;
 
-  for (int i = 0; i < 600; i++) {
+  for (int i = 0; i < 150; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 
