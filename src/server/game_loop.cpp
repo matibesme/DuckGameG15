@@ -243,8 +243,16 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
   uint8_t bullet_type = bullet->getTypeOfBullet();
   if (bullet_type != GRANADA_BULLET && bullet_type != GRENADE_EXPLOSION) {
     for (auto it = map_personajes.begin(); it != map_personajes.end();) {
-      bool colision = bullet->colisionWithDuck(
-          it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
+      bool colision;
+      if (it->second.getTypeOfMoveSprite() == DOWN) {
+        colision = bullet->colisionWithDuck(
+            it->second.getXPos() - (DUCK_HEIGHT / 2),
+            it->second.getYPos() + DUCK_HEIGHT - DUCK_DOWN_HEIGHT, DUCK_HEIGHT, DUCK_WIDTH);
+      } else {
+        colision =
+            bullet->colisionWithDuck(it->second.getXPos(), it->second.getYPos(),
+                                     DUCK_WIDTH, DUCK_HEIGHT);
+      }
       if (colision) {
         if (bullet_type == BANANA_BULLET) {
           it->second.setIsSliding(true);
