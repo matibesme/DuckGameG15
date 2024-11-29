@@ -19,7 +19,7 @@ extern int LIFE;
 
 // Armas en el editor
 
-extern uint8_t GRANADA_TIME_TO_EXPLODE;
+extern int GRANADA_TIME_TO_EXPLODE;
 extern uint8_t COUNTER_TO_SHOOT_GRANADA;
 extern float RANGO_X_MEDIO;
 extern float RANGO_X_CORTO;
