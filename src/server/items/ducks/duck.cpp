@@ -143,6 +143,7 @@ void DuckPlayer::applyDamage(int damage) {
   life -= damage;
   if (life <= 0) {
     is_alive = false;
+    typeOfMove=DOWN;
   }
 }
 

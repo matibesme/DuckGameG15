@@ -29,7 +29,9 @@ GameLoop::GameLoop(
                        id_weapons, id_boxes, map_free_weapons, list_boxes,
                        map_bullets, id_balas, map_personajes, map_id_clientes,
                        list_colors, scene_id),
-      map_victory_rounds() {}
+      map_victory_rounds(),
+      scene_id(0),
+      dead_players() {}
 
 void GameLoop::run() {
   try {
@@ -156,6 +158,25 @@ void GameLoop::sendCompleteScene() {
 
     command.lista_patos.push_back(dto_duck);
   }
+
+  for (auto &personaje : dead_players) {
+    uint8_t weapon_type = NOGUN;
+    if (personaje.isWeaponEquipped()) {
+      weapon_type = personaje.getWeapon().getType();
+    }
+    DTODuck dto_duck = {personaje.getId(),
+                        personaje.getColor(),
+                        personaje.getXPos(),
+                        personaje.getYPos(),
+                        personaje.getTypeOfMoveSprite(),
+                        weapon_type,
+                        personaje.getHelmet(),
+                        personaje.getArmor(),
+                        personaje.isAimingUp(),
+                        personaje.getDirection()};
+
+    command.lista_patos.push_back(dto_duck);
+  }
   for (auto &bullet : map_bullets) {
     DTOBullet dto_bullet = {bullet.first, bullet.second->getType(),
                             bullet.second->getXPos(), bullet.second->getYPos(),
@@ -191,6 +212,7 @@ void GameLoop::paraCadaPatoAction() {
     it->second.executeAction();
 
     if (!it->second.isAlive()) {
+      dead_players.push_back(it->second);
       it = map_personajes.erase(it);
       continue;
     }
@@ -232,6 +254,7 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
           it->second.applyDamage(bullet->getDamage());
         }
         if (!it->second.isAlive()) {
+          dead_players.push_back(it->second);
           it = map_personajes.erase(it);
         } else {
           ++it;
@@ -401,6 +424,7 @@ void GameLoop::cleanGame() {
   id_boxes = 0;
   id_defense = 0;
   list_plataformas.clear();
+  dead_players.clear();
 }
 
 bool GameLoop::checkWinner(std::string &winner) {
@@ -506,6 +530,7 @@ void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
         it->second.applyDamage(grenade_bullet.getDamage());
       }
       if (!it->second.isAlive()) {
+        dead_players.push_back(it->second);
         it = map_personajes.erase(it);
       } else {
         ++it;
