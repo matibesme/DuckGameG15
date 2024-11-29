@@ -14,7 +14,8 @@
 #define SPRITE_WIDTH_BULLET (384 / 6)
 #define SPRITE_HEIGHT_BULLET 64
 #define PRIMERA_ITERACION 0
-
+#define CENTER_EXPLODE_GRANADE_X 10
+#define CENTER_EXPLODE_GRANADE_Y 20
 Bullet::Bullet(uint8_t id, float initial_pos_x, float initial_pos_y,
                Graficos &graficos, uint8_t orientacion, uint8_t type)
     : graficos(graficos), idBullet(id), pos_x(initial_pos_x),
@@ -44,7 +45,7 @@ void Bullet::draw(SDL2pp::Renderer &renderer) {
       reproducirSonido();
     }
     // destRect es el rectángulo donde se dibujará la textura
-    SDL2pp::Rect destRect((int)pos_x, (int)pos_y, WIDTH_GRENADE_EXPLOTION,
+    SDL2pp::Rect destRect((int)pos_x-CENTER_EXPLODE_GRANADE_X, (int)pos_y-CENTER_EXPLODE_GRANADE_Y, WIDTH_GRENADE_EXPLOTION,
                           HEIGHT_GRENADE_EXPLOTION);
     // srcRect es el rectángulo que se tomará de la textura
     SDL2pp::Rect srcRect(explosionSpriteX * SPRITE_WIDTH_BULLET, 0,

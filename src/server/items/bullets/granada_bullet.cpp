@@ -126,6 +126,12 @@ uint8_t GranadaBullet::calculateCollisionSide(float plat_x_pos,
   return 0; // En caso de que ninguna coincidencia sea encontrada
 }
 
-void GranadaBullet::setIsExplode(bool is_explode_) { is_explode = is_explode_; }
+void GranadaBullet::setIsExplode(bool is_explode_)
+{
+  //esto es la punta izquierda de la granada pero quiero que la explosion sea en el centro
+ 
+  is_explode = is_explode_;
+
+}
 
 bool GranadaBullet::isExplode() { return is_explode; }

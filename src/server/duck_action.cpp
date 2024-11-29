@@ -153,9 +153,14 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
   }
 
   case LEAVE_GUN: {
-    if (!personaje.isWeaponEquipped())
-      return;
-    map_free_weapons.emplace(id_weapons++, personaje.removeWeapon());
+    if (!personaje.isWeaponEquipped())return;
+  //remove weapon from player and add it to map_free_weapons
+
+    std::shared_ptr<Weapon> weapon = personaje.removeWeapon();
+
+
+      if (!weapon->isEmptyAmmo()) map_free_weapons.emplace(id_weapons++, weapon);
+
     break;
   }
 
@@ -262,3 +267,6 @@ void DuckAction::equipDefenseCheat() {
     personaje.second.setHelmet(HELMET_EQUIPPED);
   }
 }
+
+
+

@@ -41,7 +41,7 @@ void GameLoop::run() {
       while (!end_game && rounds < GAMES_PER_ROUND) {
         load_game_config.loadGame();
 
-        while (!end_game && map_personajes.size() != 1) {
+        while (!end_game && map_personajes.size() > 1) {
           CommandClient comando;
           while (queue_comandos->try_pop(comando)) {
             checkCommand(comando, rounds);
@@ -55,6 +55,10 @@ void GameLoop::run() {
           respawnWeapon();
           sendCompleteScene();
           std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
+        }
+        if (map_personajes.size() < 1) {
+          cleanGame();
+          continue;
         }
         map_victory_rounds[map_personajes.begin()->first]++;
         rounds++;
@@ -186,7 +190,7 @@ void GameLoop::paraCadaPatoAction() {
     checkCoalitionDuckPlatform(it->second);
     it->second.executeAction();
 
-    if (!it->second.isAlive() && map_personajes.size() > 1) {
+    if (!it->second.isAlive()) {
       it = map_personajes.erase(it);
       continue;
     }
@@ -303,7 +307,7 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
       personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
     }
     is_on_platform = true;
-  } else if (personaje.getYPos() <= platform.y_pos + platform.height &&
+  } if (personaje.getYPos() <= platform.y_pos + platform.height &&
              personaje.getYPos() + DUCK_HEIGHT >
                  platform.y_pos + platform.height &&
              personaje.getVelocidadY() > 0) {
@@ -338,13 +342,13 @@ void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
       return;
     }
 
-    if (personaje.getXPos() + DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X >
+    if (personaje.getXPos() + DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X_WALL >
             platform.x_pos &&
         personaje.getXPos() < platform.x_pos &&
         personaje.getDirection() == RIGHT) {
       personaje.setXPos(platform.x_pos - DUCK_WIDTH +
-                        MARGEN_DESPLAZAMIENTO_PATO_X);
-    } else if (personaje.getXPos() < platform.x_pos + platform.width -
+                        MARGEN_DESPLAZAMIENTO_PATO_X_WALL);
+    } else if (personaje.getXPos() -4< platform.x_pos + platform.width -
                                          MARGEN_DESPLAZAMIENTO_PLATAFORMA_X &&
                personaje.getXPos() > platform.x_pos &&
                personaje.getDirection() == LEFT) {
@@ -497,7 +501,10 @@ void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
             it->second.getYPos() &&
         grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA * DUCK_HEIGHT) >
             it->second.getYPos()) {
-      it->second.applyDamage(grenade_bullet.getDamage());
+
+      if (it->second.receiveShoot()) {
+        it->second.applyDamage(grenade_bullet.getDamage());
+      }
       if (!it->second.isAlive()) {
         it = map_personajes.erase(it);
       } else {
