@@ -241,7 +241,7 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
                                  plataform.width, plataform.height + 5);
   }
   uint8_t bullet_type = bullet->getTypeOfBullet();
-  if (bullet_type != GRANADA_BULLET) {
+  if (bullet_type != GRANADA_BULLET && bullet_type != GRENADE_EXPLOSION) {
     for (auto it = map_personajes.begin(); it != map_personajes.end();) {
       bool colision = bullet->colisionWithDuck(
           it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
@@ -512,9 +512,6 @@ void GameLoop::sendColorPresentation() {
 }
 
 void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
-  if (grenade_bullet.isExplode()) {
-    return;
-  }
   grenade_bullet.setIsExplode(true);
   for (auto it = map_personajes.begin(); it != map_personajes.end();) {
     if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) <

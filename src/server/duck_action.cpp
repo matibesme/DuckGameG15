@@ -154,6 +154,14 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
 
   case LEAVE_GUN: {
     if (!personaje.isWeaponEquipped())return;
+
+    if (personaje.getWeapon().getType() == GRANADA_GUN ) {
+      Weapon &weapon = personaje.getWeapon();
+      Granada& granda = dynamic_cast<Granada&>(weapon);
+      if (granda.isSafetyOff()) {
+        return;
+      }
+    }
   //remove weapon from player and add it to map_free_weapons
 
     std::shared_ptr<Weapon> weapon = personaje.removeWeapon();

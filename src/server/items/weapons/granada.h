@@ -22,6 +22,7 @@ public:
   bool isActive() override;
   void setReloadTime(int reload_time) override;
   int getReloadTime() override;
+  bool isSafetyOff();
   void stopShooting() override;
   std::unique_ptr<Bullet> makeBoxExplosion(float box_x_pos, float box_y_pos,
                                            int time_to_explode_);
