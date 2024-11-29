@@ -3,7 +3,7 @@
 #include <iostream>
 
 #define FUENTE DATA_PATH "/fonts/8-bit-hud.ttf"
-#define IMAGEN_END_OF_ROUND DATA_PATH "/scenes/pantallaColores.jpeg"
+#define IMAGEN_END_OF_ROUND DATA_PATH "/scenes/stats.png"
 
 // Modificación: el constructor ahora acepta un renderer como referencia
 EndRoundScene::EndRoundScene(std::map<std::string, uint8_t> &players,
@@ -18,7 +18,7 @@ EndRoundScene::EndRoundScene(std::map<std::string, uint8_t> &players,
   }
 
   // Inicializar fuentes (reducido el tamaño de la fuente a 14)
-  font = TTF_OpenFont(FUENTE, 14); // Cambié el tamaño de la fuente a 14
+  font = TTF_OpenFont(FUENTE, 20); // Cambié el tamaño de la fuente a 14
   if (!font) {
     std::cerr << "Error al cargar la fuente: " << TTF_GetError() << std::endl;
   }
@@ -45,21 +45,16 @@ void EndRoundScene::RenderBackground() {
 
 void EndRoundScene::RenderTitle() {
   // Renderizar el título con fondo negro
-  SDL_Color textColor = {255, 255, 255, 255}; // Blanco
-  SDL_Color backgroundColor = {0, 0, 0, 255}; // Fondo negro
+  SDL_Color textColor = {0,0,0,255};
+
   SDL_Surface *textSurface =
       TTF_RenderText_Blended(font, "End of Round Results", textColor);
   SDL_Texture *textTexture =
       SDL_CreateTextureFromSurface(&renderer, textSurface);
 
-  // Fondo negro para el texto
-  SDL_Rect backgroundRect = {(windowWidth - textSurface->w) / 2 - 10, 20 - 10,
-                             textSurface->w + 20, textSurface->h + 20};
-  SDL_SetRenderDrawColor(&renderer, backgroundColor.r, backgroundColor.g,
-                         backgroundColor.b, backgroundColor.a);
-  SDL_RenderFillRect(&renderer, &backgroundRect);
 
-  SDL_Rect textRect = {(windowWidth - textSurface->w) / 2, 20, textSurface->w,
+
+  SDL_Rect textRect = {(windowWidth - textSurface->w) / 2, 60, textSurface->w,
                        textSurface->h};
   SDL_RenderCopy(&renderer, textTexture, NULL, &textRect);
 
@@ -69,9 +64,8 @@ void EndRoundScene::RenderTitle() {
 
 void EndRoundScene::RenderResultsTable() {
   // Renderizar los resultados con fondo negro
-  int yOffset = 80; // Inicializamos el desplazamiento de y para los resultados
-  SDL_Color textColor = {255, 255, 255, 255}; // Blanco
-  SDL_Color backgroundColor = {0, 0, 0, 255}; // Fondo negro
+  int yOffset = 120; // Inicializamos el desplazamiento de y para los resultados
+  SDL_Color textColor = {0,0, 0, 255};
 
   // Ajuste del espaciado para acomodar hasta 6 resultados
   int maxResults = 6;   // Máximo número de resultados a mostrar
@@ -89,13 +83,6 @@ void EndRoundScene::RenderResultsTable() {
     SDL_Texture *nameTexture =
         SDL_CreateTextureFromSurface(&renderer, nameSurface);
 
-    // Fondo negro para los resultados
-    SDL_Rect backgroundRect = {(windowWidth - nameSurface->w) / 2 - 10,
-                               yOffset - 10, nameSurface->w + 20,
-                               nameSurface->h + 20};
-    SDL_SetRenderDrawColor(&renderer, backgroundColor.r, backgroundColor.g,
-                           backgroundColor.b, backgroundColor.a);
-    SDL_RenderFillRect(&renderer, &backgroundRect);
 
     SDL_Rect nameRect = {(windowWidth - nameSurface->w) / 2, yOffset,
                          nameSurface->w, nameSurface->h};
