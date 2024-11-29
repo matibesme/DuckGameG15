@@ -93,6 +93,10 @@ void Menu::show_main_scene() {
                       "   background-color: #c7c7c7;"
                       "   color: black;"
                       "}");
+    connect(quit, &QPushButton::clicked,
+          []() {
+            QCoreApplication::quit();
+          });
   main_scene->setBackgroundBrush(initial_background);
   main_scene->addWidget(make_game);
   main_scene->addWidget(join_game);
