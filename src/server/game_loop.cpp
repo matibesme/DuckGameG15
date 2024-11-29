@@ -28,7 +28,7 @@ GameLoop::GameLoop(
                        map_defense, respawn_defense_points, id_defense,
                        id_weapons, id_boxes, map_free_weapons, list_boxes,
                        map_bullets, id_balas, map_personajes, map_id_clientes,
-                       list_colors),
+                       list_colors, scene_id),
       map_victory_rounds() {}
 
 void GameLoop::run() {
@@ -128,7 +128,7 @@ void GameLoop::checkBullets() {
 void GameLoop::sendCompleteScene() {
   GameState command;
   command.action = FULL_GAME_BYTE;
-  command.backGround_id = SCENE_ID;
+  command.backGround_id = scene_id;
 
   for (auto &platform : list_plataformas) {
     command.lista_plataformas.push_back(platform);

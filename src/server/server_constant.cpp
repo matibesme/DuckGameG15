@@ -2,7 +2,7 @@
 
 float MAP_LIMIT_X = 640;
 float MAP_LIMIT_Y = 480;
-uint8_t SCENE_ID = 0x02;
+
 
 // duck editor
 float POSICION_INICIAL_X = 0;
