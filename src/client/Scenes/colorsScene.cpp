@@ -81,7 +81,7 @@ void ColorScene::RenderColorTable() {
     SDL_DestroyTexture(nameTexture);
     SDL_FreeSurface(nameSurface);
 
-    yOffset += 60; // Incrementar el desplazamiento vertical
+    yOffset += 30; // Incrementar el desplazamiento vertical
   }
 }
 
