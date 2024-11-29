@@ -34,6 +34,7 @@ constexpr int MAP_HEIGHT = 64 * DUCK_HEIGHT;
 constexpr int MAP_WIDTH = 64 * DUCK_WIDTH;
 constexpr int WIDTH_BOX = 17;
 constexpr int HEIGHT_BOX = 20;
+constexpr float DUCK_DOWN_HEIGHT = 15;
 
 // Protocolo
 
