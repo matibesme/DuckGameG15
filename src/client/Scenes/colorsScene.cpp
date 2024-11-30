@@ -3,7 +3,7 @@
 #include <iostream>
 
 #define FUENTE DATA_PATH "/fonts/8-bit-hud.ttf"
-#define IMAGEN_END_OF_ROUND DATA_PATH "/scenes/pantallaColores.jpeg"
+#define IMAGEN_END_OF_ROUND DATA_PATH "/scenes/pantallaColores.png"
 
 ColorScene::ColorScene(const std::map<std::string, std::string> &playersColors,
                        SDL_Renderer &renderer)
@@ -16,7 +16,7 @@ ColorScene::ColorScene(const std::map<std::string, std::string> &playersColors,
   }
 
   // Cargar la fuente con un tamaño mayor
-  font = TTF_OpenFont(FUENTE, 28); // Tamaño de la fuente aumentado
+  font = TTF_OpenFont(FUENTE, 20); // Tamaño de la fuente aumentado
   if (!font) {
     std::cerr << "Error al cargar la fuente: " << TTF_GetError() << std::endl;
   }
@@ -44,20 +44,14 @@ void ColorScene::RenderBackground() {
 void ColorScene::RenderTitle() {
   // Renderizar el título con un fondo negro más estilizado
   SDL_Color textColor = {255, 255, 255, 255}; // Blanco
-  SDL_Color backgroundColor = {0, 0, 0, 200}; // Fondo negro con transparencia
+
   SDL_Surface *textSurface =
       TTF_RenderText_Blended(font, "Duck Colors", textColor);
   SDL_Texture *textTexture =
       SDL_CreateTextureFromSurface(&renderer, textSurface);
 
-  // Fondo negro con un margen mayor
-  SDL_Rect backgroundRect = {(windowWidth - textSurface->w) / 2 - 20, 20 - 10,
-                             textSurface->w + 40, textSurface->h + 20};
-  SDL_SetRenderDrawColor(&renderer, backgroundColor.r, backgroundColor.g,
-                         backgroundColor.b, backgroundColor.a);
-  SDL_RenderFillRect(&renderer, &backgroundRect);
 
-  SDL_Rect textRect = {(windowWidth - textSurface->w) / 2, 20, textSurface->w,
+  SDL_Rect textRect = {(windowWidth - textSurface->w) / 2-50, 120, textSurface->w,
                        textSurface->h};
   SDL_RenderCopy(&renderer, textTexture, NULL, &textRect);
 
@@ -67,9 +61,8 @@ void ColorScene::RenderTitle() {
 
 void ColorScene::RenderColorTable() {
   // Renderizar la tabla de colores con fuente más grande y fondo negro
-  int yOffset = 100;
+  int yOffset = 200;
   SDL_Color textColor = {255, 255, 255, 255}; // Blanco
-  SDL_Color backgroundColor = {0, 0, 0, 200}; // Fondo negro con transparencia
 
   for (const auto &[name, color] : playersColors) {
     std::string resultText = name + ": " + color;
@@ -80,22 +73,15 @@ void ColorScene::RenderColorTable() {
     SDL_Texture *nameTexture =
         SDL_CreateTextureFromSurface(&renderer, nameSurface);
 
-    // Fondo negro con margen mayor
-    SDL_Rect backgroundRect = {(windowWidth - nameSurface->w) / 2 - 20,
-                               yOffset - 10, nameSurface->w + 40,
-                               nameSurface->h + 20};
-    SDL_SetRenderDrawColor(&renderer, backgroundColor.r, backgroundColor.g,
-                           backgroundColor.b, backgroundColor.a);
-    SDL_RenderFillRect(&renderer, &backgroundRect);
 
-    SDL_Rect nameRect = {(windowWidth - nameSurface->w) / 2, yOffset,
+    SDL_Rect nameRect = {(windowWidth - nameSurface->w) / 2-50, yOffset,
                          nameSurface->w, nameSurface->h};
     SDL_RenderCopy(&renderer, nameTexture, NULL, &nameRect);
 
     SDL_DestroyTexture(nameTexture);
     SDL_FreeSurface(nameSurface);
 
-    yOffset += 60; // Incrementar el desplazamiento vertical
+    yOffset += 30; // Incrementar el desplazamiento vertical
   }
 }
 

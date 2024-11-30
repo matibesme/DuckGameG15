@@ -2,7 +2,7 @@
 
 float MAP_LIMIT_X = 640;
 float MAP_LIMIT_Y = 480;
-uint8_t SCENE_ID = 0x02;
+
 
 // duck editor
 float POSICION_INICIAL_X = 0;
@@ -16,7 +16,7 @@ float RANGO_X_CORTO = 4;
 float RANGO_X_LARGO = 12;
 // GRANADA
 float VELOCIDAD_GRANADA = 20;
-uint8_t GRANADA_TIME_TO_EXPLODE = 246;
+int GRANADA_TIME_TO_EXPLODE = 246;
 uint8_t COUNTER_TO_SHOOT_GRANADA = 1;
 
 // GRANADA

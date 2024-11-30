@@ -19,7 +19,7 @@ extern int LIFE;
 
 // Armas en el editor
 
-extern uint8_t GRANADA_TIME_TO_EXPLODE;
+extern int GRANADA_TIME_TO_EXPLODE;
 extern uint8_t COUNTER_TO_SHOOT_GRANADA;
 extern float RANGO_X_MEDIO;
 extern float RANGO_X_CORTO;
@@ -86,7 +86,8 @@ constexpr float BULLET_VEL = 8;
 constexpr float MOVEMENT_QUANTITY_X = 2;
 constexpr float MOVEMENT_QUANTITY_Y = 2;
 constexpr float DESPLAZAMIENTO_CON_ARMA_X = 5;
-constexpr float MARGEN_DESPLAZAMIENTO_PATO_X = 10;
+constexpr float MARGEN_DESPLAZAMIENTO_PATO_X = 14;
+constexpr float MARGEN_DESPLAZAMIENTO_PATO_X_WALL = 7;
 constexpr float MARGEN_DESPLAZAMIENTO_PLATAFORMA_X = 8;
 constexpr float MARGEN_DESPLAZAMIENTO_PLATAFORMA_X_IZQ = 12;
 constexpr float PLATAFORMA_LEVEMENTE_LEVANTADA = 5;

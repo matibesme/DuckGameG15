@@ -28,8 +28,10 @@ GameLoop::GameLoop(
                        map_defense, respawn_defense_points, id_defense,
                        id_weapons, id_boxes, map_free_weapons, list_boxes,
                        map_bullets, id_balas, map_personajes, map_id_clientes,
-                       list_colors),
-      map_victory_rounds() {}
+                       list_colors, scene_id),
+      map_victory_rounds(),
+      scene_id(0),
+      dead_players() {}
 
 void GameLoop::run() {
   try {
@@ -41,7 +43,7 @@ void GameLoop::run() {
       while (!end_game && rounds < GAMES_PER_ROUND) {
         load_game_config.loadGame();
 
-        while (!end_game && map_personajes.size() != 1) {
+        while (!end_game && map_personajes.size() > 1) {
           CommandClient comando;
           while (queue_comandos->try_pop(comando)) {
             checkCommand(comando, rounds);
@@ -55,6 +57,10 @@ void GameLoop::run() {
           respawnWeapon();
           sendCompleteScene();
           std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
+        }
+        if (map_personajes.size() < 1) {
+          cleanGame();
+          continue;
         }
         map_victory_rounds[map_personajes.begin()->first]++;
         rounds++;
@@ -128,7 +134,7 @@ void GameLoop::checkBullets() {
 void GameLoop::sendCompleteScene() {
   GameState command;
   command.action = FULL_GAME_BYTE;
-  command.backGround_id = SCENE_ID;
+  command.backGround_id = scene_id;
 
   for (auto &platform : list_plataformas) {
     command.lista_plataformas.push_back(platform);
@@ -149,6 +155,25 @@ void GameLoop::sendCompleteScene() {
                         personaje.second.getArmor(),
                         personaje.second.isAimingUp(),
                         personaje.second.getDirection()};
+
+    command.lista_patos.push_back(dto_duck);
+  }
+
+  for (auto &personaje : dead_players) {
+    uint8_t weapon_type = NOGUN;
+    if (personaje.isWeaponEquipped()) {
+      weapon_type = personaje.getWeapon().getType();
+    }
+    DTODuck dto_duck = {personaje.getId(),
+                        personaje.getColor(),
+                        personaje.getXPos(),
+                        personaje.getYPos(),
+                        personaje.getTypeOfMoveSprite(),
+                        weapon_type,
+                        personaje.getHelmet(),
+                        personaje.getArmor(),
+                        personaje.isAimingUp(),
+                        personaje.getDirection()};
 
     command.lista_patos.push_back(dto_duck);
   }
@@ -186,7 +211,8 @@ void GameLoop::paraCadaPatoAction() {
     checkCoalitionDuckPlatform(it->second);
     it->second.executeAction();
 
-    if (!it->second.isAlive() && map_personajes.size() > 1) {
+    if (!it->second.isAlive()) {
+      dead_players.push_back(it->second);
       it = map_personajes.erase(it);
       continue;
     }
@@ -215,10 +241,18 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
                                  plataform.width, plataform.height + 5);
   }
   uint8_t bullet_type = bullet->getTypeOfBullet();
-  if (bullet_type != GRANADA_BULLET) {
+  if (bullet_type != GRANADA_BULLET && bullet_type != GRENADE_EXPLOSION) {
     for (auto it = map_personajes.begin(); it != map_personajes.end();) {
-      bool colision = bullet->colisionWithDuck(
-          it->second.getXPos(), it->second.getYPos(), DUCK_WIDTH, DUCK_HEIGHT);
+      bool colision;
+      if (it->second.getTypeOfMoveSprite() == DOWN) {
+        colision = bullet->colisionWithDuck(
+            it->second.getXPos() - (DUCK_HEIGHT / 2),
+            it->second.getYPos() + DUCK_HEIGHT - DUCK_DOWN_HEIGHT, DUCK_HEIGHT, DUCK_WIDTH);
+      } else {
+        colision =
+            bullet->colisionWithDuck(it->second.getXPos(), it->second.getYPos(),
+                                     DUCK_WIDTH, DUCK_HEIGHT);
+      }
       if (colision) {
         if (bullet_type == BANANA_BULLET) {
           it->second.setIsSliding(true);
@@ -228,6 +262,7 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
           it->second.applyDamage(bullet->getDamage());
         }
         if (!it->second.isAlive()) {
+          dead_players.push_back(it->second);
           it = map_personajes.erase(it);
         } else {
           ++it;
@@ -303,7 +338,7 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
       personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
     }
     is_on_platform = true;
-  } else if (personaje.getYPos() <= platform.y_pos + platform.height &&
+  } if (personaje.getYPos() <= platform.y_pos + platform.height &&
              personaje.getYPos() + DUCK_HEIGHT >
                  platform.y_pos + platform.height &&
              personaje.getVelocidadY() > 0) {
@@ -338,13 +373,13 @@ void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
       return;
     }
 
-    if (personaje.getXPos() + DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X >
+    if (personaje.getXPos() + DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X_WALL >
             platform.x_pos &&
         personaje.getXPos() < platform.x_pos &&
         personaje.getDirection() == RIGHT) {
       personaje.setXPos(platform.x_pos - DUCK_WIDTH +
-                        MARGEN_DESPLAZAMIENTO_PATO_X);
-    } else if (personaje.getXPos() < platform.x_pos + platform.width -
+                        MARGEN_DESPLAZAMIENTO_PATO_X_WALL);
+    } else if (personaje.getXPos() -4< platform.x_pos + platform.width -
                                          MARGEN_DESPLAZAMIENTO_PLATAFORMA_X &&
                personaje.getXPos() > platform.x_pos &&
                personaje.getDirection() == LEFT) {
@@ -397,6 +432,7 @@ void GameLoop::cleanGame() {
   id_boxes = 0;
   id_defense = 0;
   list_plataformas.clear();
+  dead_players.clear();
 }
 
 bool GameLoop::checkWinner(std::string &winner) {
@@ -425,7 +461,7 @@ void GameLoop::sendEndRound() {
                                   victory_round.second);
   }
 
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 1500; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }
@@ -478,15 +514,12 @@ void GameLoop::sendColorPresentation() {
     command.players_color.emplace(player.second, list_colors[indice++]);
     map_victory_rounds.emplace(player.first, VICTORY_ROUNDS_INICIAL);
   }
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 1500; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }
 
 void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
-  if (grenade_bullet.isExplode()) {
-    return;
-  }
   grenade_bullet.setIsExplode(true);
   for (auto it = map_personajes.begin(); it != map_personajes.end();) {
     if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) <
@@ -497,8 +530,12 @@ void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
             it->second.getYPos() &&
         grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA * DUCK_HEIGHT) >
             it->second.getYPos()) {
-      it->second.applyDamage(grenade_bullet.getDamage());
+
+      if (it->second.receiveShoot()) {
+        it->second.applyDamage(grenade_bullet.getDamage());
+      }
       if (!it->second.isAlive()) {
+        dead_players.push_back(it->second);
         it = map_personajes.erase(it);
       } else {
         ++it;

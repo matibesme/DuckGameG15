@@ -57,6 +57,8 @@ private:
   LoadGameFile load_game_config;
 
   std::map<uint8_t, uint8_t> map_victory_rounds;
+    uint8_t scene_id;
+  std::list<DuckPlayer> dead_players;
   void paraCadaPatoAction();
 
 public:

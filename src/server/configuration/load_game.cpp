@@ -15,7 +15,7 @@ LoadGameFile::LoadGameFile(
     std::map<uint16_t, std::unique_ptr<Bullet>> &map_bullets,
     uint16_t &id_balas, std::map<uint8_t, DuckPlayer> &map_personajes,
     std::map<uint8_t, std::string> &map_id_clientes,
-    std::vector<std::string> &list_colors)
+    std::vector<std::string> &list_colors, uint8_t &scene_id)
     : factory_weapons(factory_weapons), platforms(platforms),
       respawn_weapon_points(respawn_weapon_points), map_defense(map_defense),
       respawn_defense_points(respawn_defense_points), id_defense(id_defense),
@@ -23,7 +23,8 @@ LoadGameFile::LoadGameFile(
       map_free_weapons(map_free_weapons), list_boxes(list_boxes),
       map_bullets(map_bullets), id_bullets(id_balas),
       map_personajes(map_personajes), map_id_clientes(map_id_clientes),
-      list_colors(list_colors) {}
+      list_colors(list_colors),
+      scene_id(scene_id) {}
 
 void LoadGameFile::loadGame() {
   const std::string directory_path = DATA_PATH "/maps";
@@ -46,7 +47,7 @@ void LoadGameFile::loadGame() {
 
   YAML::Node map = YAML::LoadFile(random_map);
 
-  SCENE_ID = map["background_type"].as<uint8_t>();
+  scene_id = map["background_type"].as<uint8_t>();
 
   POSICION_INICIAL_X = map["duck spawns"][0]["pos_x"].as<float>();
   POSICION_INICIAL_Y = map["duck spawns"][0]["pos_y"].as<float>();

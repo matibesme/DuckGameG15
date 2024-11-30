@@ -61,6 +61,8 @@ void Granada::setReloadTime(int reload_time_) { reload_time = reload_time_; }
 
 int Granada::getReloadTime() { return reload_time; }
 
+bool Granada::isSafetyOff() { return counter_to_shoot == 0; }
+
 void Granada::stopShooting() { bullet_count = 0; }
 
 std::unique_ptr<Bullet> Granada::makeBoxExplosion(float box_x_pos,

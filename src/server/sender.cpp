@@ -23,7 +23,6 @@ void Sender::run() {
     std::cerr << "Cliente desconectado" << std::endl;
   } catch (const ClosedQueue &e) {
     dead_connection = true;
-    queue_sender->close();
     std::cerr << "Cola cerrada en el sender" << std::endl;
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;

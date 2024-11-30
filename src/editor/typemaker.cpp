@@ -15,8 +15,8 @@ TypeMaker::TypeMaker() {
   platforms_id.insert(std::pair<uint8_t, std::string>(0x83, "Nature long"));
 
   walls_id.insert(std::pair<uint8_t, std::string>(0x85, "Donut"));
-  walls_id.insert(std::pair<uint8_t, std::string>(0x86, "Underground"));
-  walls_id.insert(std::pair<uint8_t, std::string>(0x87, "Nature"));
+  walls_id.insert(std::pair<uint8_t, std::string>(0x87, "Underground"));
+  walls_id.insert(std::pair<uint8_t, std::string>(0x86, "Nature"));
 
   weapons_id.insert(std::pair<uint8_t, std::string>(0x35, "ak47"));
   weapons_id.insert(std::pair<uint8_t, std::string>(0x41, "banana"));
