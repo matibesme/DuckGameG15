@@ -4,7 +4,8 @@ set(CMAKE_AUTORCC ON)
 
 add_executable(taller_client)
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+#find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5Widgets CONFIG REQUIRED)
 
 file(GLOB_RECURSE CLIENT_SOURCES
     "${CMAKE_SOURCE_DIR}/src/client/*.cpp"
