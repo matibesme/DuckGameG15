@@ -385,7 +385,7 @@ void Menu::show_wait_scene() {
   QPushButton *start_game = new QPushButton("Start game");
   layout_wait->addWidget(start_game);
   connect(start_game, &QPushButton::clicked, this, [this]() {
-    this->close();
+    //this->close();
     emit start();
   });
 

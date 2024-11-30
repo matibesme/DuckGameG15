@@ -28,17 +28,19 @@ void Client::createGame(bool is_double_player, std::string player_1,
   // si devuelve false se creo la partida
 }
 
-bool Client::startGame() {
+bool Client::checkStartGame() {
   GameAccess game_access;
   game_access.action_type = START_GAME;
   protocolo.sendRequestGameToServer(game_access);
   if (protocolo.reciveGameStarted()) {
-    execute();
+    //execute();
     return true;
   }
   return false;
 }
-
+void Client::startGame(){
+    execute();
+}
 void Client::joinGame(std::string game_name, bool is_double_player,
                       std::string player_1, std::string player_2) {
   GameAccess game_access;
