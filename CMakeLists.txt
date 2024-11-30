@@ -16,13 +16,13 @@ project(taller_tp
         LANGUAGES CXX
 )
 
-include(FetchContent)
-FetchContent_Declare(
-        libSDL2pp
-        URL https://github.com/libSDL2pp/libSDL2pp/archive/cc198c9a5657048bee67ece82de620b2d5661084.zip
-)
-
-FetchContent_MakeAvailable(libSDL2pp)
+#include(FetchContent)
+#FetchContent_Declare(
+#        libSDL2pp
+#        URL https://github.com/libSDL2pp/libSDL2pp/archive/cc198c9a5657048bee67ece82de620b2d5661084.zip
+#)
+#
+#FetchContent_MakeAvailable(libSDL2pp)
 option(TALLER_TESTS "Enable / disable tests." ON)
 option(TALLER_CLIENT "Enable / disable client program." ON)
 option(TALLER_SERVER "Enable / disable server program." ON)
