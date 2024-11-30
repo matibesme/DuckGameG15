@@ -47,7 +47,7 @@ endif()
 # Enlazar librerías
 target_link_libraries(taller_editor PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
-        SDL2pp::SDL2pp
+        #SDL2pp::SDL2pp
         yaml-cpp
 )
 
