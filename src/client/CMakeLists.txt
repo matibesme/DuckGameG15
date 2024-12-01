@@ -27,7 +27,8 @@ target_include_directories(taller_client PRIVATE
 add_dependencies(taller_client taller_common SDL2pp::SDL2pp)
 
 target_link_libraries(taller_client PRIVATE 
-    taller_common 
+    taller_common
+    SDL2::SDL2 
     SDL2pp::SDL2pp 
     SDL2_image::SDL2_image 
     SDL2_mixer::SDL2_mixer 

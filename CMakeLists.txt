@@ -63,7 +63,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SDL2 SDL2_image SDL2_mixer SDL2_ttf libSDL2pp)
 
-# Verificar dependencias
+#Verificar dependencias
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(SDL2_mixer CONFIG REQUIRED)

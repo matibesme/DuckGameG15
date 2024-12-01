@@ -7,7 +7,9 @@ sudo apt -y upgrade
 #C++
 sudo apt -y install build-essential
 sudo apt -y install cmake
-#SDL2 dependecies.
+sudo apt -y install git
+#SDL2
+sudo apt -y install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev 
 sudo apt -y install libopus-dev libopusfile-dev libxmp-dev libfluidsynth-dev fluidsynth libwavpack1 libwavpack-dev libfreetype-dev wavpack
 #QT
 sudo apt -y install qtcreator qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
