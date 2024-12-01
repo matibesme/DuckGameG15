@@ -37,6 +37,10 @@ void EventHandler::correrHandlers() {
           action.type_of_movement = PICKUP;
           queue_sender.push(action); // Recoger objeto
           break;
+        case SDLK_c:
+          action.type_of_movement = LEAVE_ARMOR;
+          queue_sender.push(action);
+          break;
         case SDLK_SPACE:
           action.type_of_movement = AIM_UP;
           queue_sender.push(action); // Apuntar hacia arriba
@@ -67,6 +71,11 @@ void EventHandler::correrHandlers() {
           action.type_of_movement = PICKUP;
           action.player = 2;
           queue_sender.push(action); // Recoger objeto
+          break;
+        case SDLK_n:
+          action.type_of_movement = LEAVE_ARMOR;
+          action.player = 2;
+          queue_sender.push(action);
           break;
         case SDLK_m:
           action.type_of_movement = AIM_UP;

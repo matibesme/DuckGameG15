@@ -172,6 +172,22 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
     break;
   }
 
+  case LEAVE_ARMOR:
+    if (personaje.getArmor() == ARMOR_EQUIPPED) {
+      Protection protection = {ARMOR_EQUIPPED, personaje.getXPos(),
+                               personaje.getYPos() + DUCK_HEIGHT - HEIGHT_ARMOR};
+      map_defense.emplace(id_defense++, protection);
+      personaje.setArmor(NO_ARMOR);
+      return;
+    }
+    if (personaje.getHelmet() == HELMET_EQUIPPED) {
+      Protection protection = {HELMET_EQUIPPED, personaje.getXPos(),
+                               personaje.getYPos() + DUCK_HEIGHT - HEIGHT_HELMET};
+      map_defense.emplace(id_defense++, protection);
+      personaje.setHelmet(NO_HELMET);
+    }
+    break;
+
   case SHOOT: {
     if (!personaje.isWeaponEquipped())
       return;
