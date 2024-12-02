@@ -187,4 +187,5 @@ Graficos::~Graficos() {
   for (auto &texture : textures) {
     texture.second.reset();
   }
+  textures.clear();
 }
