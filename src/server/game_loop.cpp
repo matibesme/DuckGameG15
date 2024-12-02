@@ -160,22 +160,8 @@ void GameLoop::sendCompleteScene() {
   }
 
   for (auto &personaje : dead_players) {
-    uint8_t weapon_type = NOGUN;
-    if (personaje.isWeaponEquipped()) {
-      weapon_type = personaje.getWeapon().getType();
-    }
-    DTODuck dto_duck = {personaje.getId(),
-                        personaje.getColor(),
-                        personaje.getXPos(),
-                        personaje.getYPos(),
-                        personaje.getTypeOfMoveSprite(),
-                        weapon_type,
-                        personaje.getHelmet(),
-                        personaje.getArmor(),
-                        personaje.isAimingUp(),
-                        personaje.getDirection()};
-
-    command.lista_patos.push_back(dto_duck);
+    DTODeadDuck dto_dead_duck = {personaje.getId(), personaje.getXPos(), personaje.getYPos(), personaje.getColor()};
+    command.lista_patos_muertos.push_back(dto_dead_duck);
   }
   for (auto &bullet : map_bullets) {
     DTOBullet dto_bullet = {bullet.first, bullet.second->getType(),
