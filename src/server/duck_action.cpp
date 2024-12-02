@@ -29,7 +29,8 @@ DuckAction::DuckAction(
 void DuckAction::movementComand(uint8_t comando, uint8_t id) {
   DuckPlayer &personaje = map_personajes[id];
 
-  if (personaje.isSliding() || personaje.getRespondAfterSliding() > 0) return;
+  if (personaje.isSliding() || personaje.getRespondAfterSliding() > 0)
+    return;
 
   switch (comando) {
   case RIGHT:
@@ -153,21 +154,22 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
   }
 
   case LEAVE_GUN: {
-    if (!personaje.isWeaponEquipped())return;
+    if (!personaje.isWeaponEquipped())
+      return;
 
-    if (personaje.getWeapon().getType() == GRANADA_GUN ) {
+    if (personaje.getWeapon().getType() == GRANADA_GUN) {
       Weapon &weapon = personaje.getWeapon();
-      Granada& granda = dynamic_cast<Granada&>(weapon);
+      Granada &granda = dynamic_cast<Granada &>(weapon);
       if (granda.isSafetyOff()) {
         return;
       }
     }
-  //remove weapon from player and add it to map_free_weapons
+    // remove weapon from player and add it to map_free_weapons
 
     std::shared_ptr<Weapon> weapon = personaje.removeWeapon();
 
-
-      if (!weapon->isEmptyAmmo()) map_free_weapons.emplace(id_weapons++, weapon);
+    if (!weapon->isEmptyAmmo())
+      map_free_weapons.emplace(id_weapons++, weapon);
 
     break;
   }
@@ -175,14 +177,16 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
   case LEAVE_ARMOR:
     if (personaje.getArmor() == ARMOR_EQUIPPED) {
       Protection protection = {ARMOR_EQUIPPED, personaje.getXPos(),
-                               personaje.getYPos() + DUCK_HEIGHT - HEIGHT_ARMOR};
+                               personaje.getYPos() + DUCK_HEIGHT -
+                                   HEIGHT_ARMOR};
       map_defense.emplace(id_defense++, protection);
       personaje.setArmor(NO_ARMOR);
       return;
     }
     if (personaje.getHelmet() == HELMET_EQUIPPED) {
       Protection protection = {HELMET_EQUIPPED, personaje.getXPos(),
-                               personaje.getYPos() + DUCK_HEIGHT - HEIGHT_HELMET};
+                               personaje.getYPos() + DUCK_HEIGHT -
+                                   HEIGHT_HELMET};
       map_defense.emplace(id_defense++, protection);
       personaje.setHelmet(NO_HELMET);
     }
@@ -222,7 +226,8 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
       return;
     }
     personaje.getWeapon().stopShooting();
-    personaje.setTypeOfMoveSprite((personaje.getDirection() == RIGHT ? STILL_RIGHT : STILL_LEFT));
+    personaje.setTypeOfMoveSprite(
+        (personaje.getDirection() == RIGHT ? STILL_RIGHT : STILL_LEFT));
     break;
   }
 
@@ -293,6 +298,3 @@ void DuckAction::equipDefenseCheat() {
     personaje.second.setHelmet(HELMET_EQUIPPED);
   }
 }
-
-
-

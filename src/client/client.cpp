@@ -33,14 +33,12 @@ bool Client::checkStartGame() {
   game_access.action_type = START_GAME;
   protocolo.sendRequestGameToServer(game_access);
   if (protocolo.reciveGameStarted()) {
-    //execute();
+    // execute();
     return true;
   }
   return false;
 }
-void Client::startGame(){
-    execute();
-}
+void Client::startGame() { execute(); }
 void Client::joinGame(std::string game_name, bool is_double_player,
                       std::string player_1, std::string player_2) {
   GameAccess game_access;
@@ -67,11 +65,10 @@ Client::~Client() {
   queue_receiver.close();
   receiver.stop();
   sender.stop();
-  if(sender.is_alive()){
+  if (sender.is_alive()) {
     sender.join();
   }
-  if(receiver.is_alive()){
+  if (receiver.is_alive()) {
     receiver.join();
   }
-  
 }

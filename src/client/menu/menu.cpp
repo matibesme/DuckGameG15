@@ -93,10 +93,7 @@ void Menu::show_main_scene() {
                       "   background-color: #c7c7c7;"
                       "   color: black;"
                       "}");
-    connect(quit, &QPushButton::clicked,
-          []() {
-            QCoreApplication::quit();
-          });
+  connect(quit, &QPushButton::clicked, []() { QCoreApplication::quit(); });
   main_scene->setBackgroundBrush(initial_background);
   main_scene->addWidget(make_game);
   main_scene->addWidget(join_game);
@@ -143,7 +140,8 @@ void Menu::show_make_game_scene() {
   label_player_2_error->setVisible(false);
   label_player_2_error->setStyleSheet("color: red");
 
-  QLabel *label_player_same_name_error = new QLabel("Error, names can't be the same");
+  QLabel *label_player_same_name_error =
+      new QLabel("Error, names can't be the same");
   label_player_same_name_error->setVisible(false);
   label_player_same_name_error->setStyleSheet("color: red");
   layout_name_players->addWidget(label_player_same_name_error);
@@ -194,7 +192,8 @@ void Menu::show_make_game_scene() {
   layout_game->addWidget(make_game_button);
   connect(make_game_button, &QPushButton::clicked, this,
           [this, name_player_1, name_player_2, game_name, label_player_1_error,
-           label_player_2_error, label_game_name_error, label_player_same_name_error]() {
+           label_player_2_error, label_game_name_error,
+           label_player_same_name_error]() {
             bool are_fields_empties = false;
             bool is_same_name = false;
 
@@ -219,13 +218,13 @@ void Menu::show_make_game_scene() {
               label_game_name_error->setVisible(false);
             }
 
-            if(name_player_1->text() == name_player_2->text() && name_player_2->isVisible()){
+            if (name_player_1->text() == name_player_2->text() &&
+                name_player_2->isVisible()) {
               label_player_same_name_error->setVisible(true);
               is_same_name = true;
-            }else{
+            } else {
               label_player_same_name_error->setVisible(false);
             }
-
 
             if (!are_fields_empties && !is_same_name) {
               std::string player_1 =
@@ -287,7 +286,8 @@ void Menu::show_join_game_scene() {
   label_player_2_error->setVisible(false);
   label_player_2_error->setStyleSheet("color: red");
 
-  QLabel *label_player_same_name_error = new QLabel("Error, names can't be the same");
+  QLabel *label_player_same_name_error =
+      new QLabel("Error, names can't be the same");
   label_player_same_name_error->setVisible(false);
   label_player_same_name_error->setStyleSheet("color: red");
   layout_name_players->addWidget(label_player_same_name_error);
@@ -345,7 +345,8 @@ void Menu::show_join_game_scene() {
   layout_games->addWidget(join_game_button);
   connect(join_game_button, &QPushButton::clicked, this,
           [this, name_player_1, name_player_2, label_player_1_error,
-           label_player_2_error, label_game_name_error, label_player_same_name_error]() {
+           label_player_2_error, label_game_name_error,
+           label_player_same_name_error]() {
             bool are_fields_empties = false;
             bool is_same_name = false;
             if (name_player_1->text().isEmpty()) {
@@ -369,13 +370,13 @@ void Menu::show_join_game_scene() {
               label_game_name_error->setVisible(false);
             }
 
-            if(name_player_1->text() == name_player_2->text() && name_player_2->isVisible()){
+            if (name_player_1->text() == name_player_2->text() &&
+                name_player_2->isVisible()) {
               label_player_same_name_error->setVisible(true);
               is_same_name = true;
-            }else{
+            } else {
               label_player_same_name_error->setVisible(false);
             }
-
 
             if (!are_fields_empties && !is_same_name) {
               std::string player_1 =
@@ -416,7 +417,7 @@ void Menu::show_wait_scene() {
   QPushButton *start_game = new QPushButton("Start game");
   layout_wait->addWidget(start_game);
   connect(start_game, &QPushButton::clicked, this, [this]() {
-    //this->close();
+    // this->close();
     emit start();
   });
 
@@ -448,20 +449,19 @@ void Menu::show_wait(bool is_available_game) {
 }
 
 Menu::~Menu() {
-    // Libera las escenas
-    delete main_scene;
-    delete make_game_scene;
-    delete join_game_scene;
-    delete wait_scene;
+  // Libera las escenas
+  delete main_scene;
+  delete make_game_scene;
+  delete join_game_scene;
+  delete wait_scene;
 
-    // Libera la vista
-    delete view;
+  // Libera la vista
+  delete view;
 
-    // Libera el combo box de opciones del juego
-    delete game_options;
+  // Libera el combo box de opciones del juego
+  delete game_options;
 
-    // Nota: Los widgets añadidos a las escenas y layouts no necesitan
-    // eliminarse explícitamente porque Qt se encarga de ellos al eliminar
-    // las escenas y los layouts correspondientes.
+  // Nota: Los widgets añadidos a las escenas y layouts no necesitan
+  // eliminarse explícitamente porque Qt se encarga de ellos al eliminar
+  // las escenas y los layouts correspondientes.
 }
-

@@ -40,11 +40,10 @@ void MenuController::create(const std::string &player_1,
 void MenuController::start() {
   is_new_game = true;
   this->was_game_initialized = true;
-  if(client.checkStartGame()){
+  if (client.checkStartGame()) {
     w.close();
     QCoreApplication::quit();
   }
-  
 }
 
 void MenuController::join(const std::string &id_game,

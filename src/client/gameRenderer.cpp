@@ -147,8 +147,8 @@ void GameRenderer::actualizarElementos(const GameState &command) {
       it->update(duckInCommand->y_pos, duckInCommand->x_pos,
                  duckInCommand->typeOfMove, duckInCommand->typeOfGun,
                  duckInCommand->armor, duckInCommand->helmet,
-                 duckInCommand->is_aiming_up, duckInCommand->direction
-                 , duckInCommand->color);
+                 duckInCommand->is_aiming_up, duckInCommand->direction,
+                 duckInCommand->color);
       ++it;
     } else {
       // Eliminar si solo está en la lista local
