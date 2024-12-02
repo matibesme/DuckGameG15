@@ -41,15 +41,15 @@ pew_pew_laser:
 
 escopeta:
     damage: 10
-    range: 5
-    ammo: 30
+    range: 9
+    ammo: 2
     recoil: 0
     max_spread: 1
 
 sniper:
     damage: 80
-    range: 5
-    ammo: 30
+    range: 64
+    ammo: 3
     recoil: 0
 
 cowboy:
