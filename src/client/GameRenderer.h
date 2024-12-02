@@ -22,6 +22,7 @@ class GameRenderer {
 private:
   Graficos &graficos;
   std::list<ClientDuck> ducks;
+  std::list<ClientDuck> deadDucks;
   std::list<Bullet> bullets;
   std::list<Gun> guns;
   std::list<Armor> armors;

@@ -156,7 +156,8 @@ void GameLoop::sendCompleteScene() {
   }
 
   for (auto &personaje : dead_players) {
-    DTODeadDuck dto_dead_duck = {personaje.getId(), personaje.getXPos(), personaje.getYPos(), personaje.getColor()};
+    DTODeadDuck dto_dead_duck = {personaje.getId(), personaje.getXPos(),
+                                 personaje.getYPos(), personaje.getColor()};
     command.lista_patos_muertos.push_back(dto_dead_duck);
   }
   for (auto &bullet : map_bullets) {

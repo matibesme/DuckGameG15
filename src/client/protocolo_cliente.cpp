@@ -116,11 +116,8 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
 
   command.lista_patos_muertos = lista_patos_muertos;
 
-
   // recibo balas
   uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);
-
-
 
   std::list<DTOBullet> bullets;
   for (int i = 0; i < bullets_quantity; i++) {
