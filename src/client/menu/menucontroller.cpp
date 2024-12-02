@@ -11,7 +11,7 @@ MenuController::MenuController(Client &client, Menu &menu, QApplication &a,
   this->is_new_game = false;
 }
 
-void MenuController::start_game() try{
+void MenuController::start_game() try {
   // QApplication a(argc, argv);
   connect(&w, &Menu::create, this, &MenuController::create);
   connect(&w, &Menu::start, this, &MenuController::start);
@@ -22,9 +22,9 @@ void MenuController::start_game() try{
   connect(this, &MenuController::show_wait, &w, &Menu::show_wait);
   w.show();
   a.exec();
-}catch(const SocketClose &e){
-    w.close();
-    QCoreApplication::quit();
+} catch (const SocketClose &e) {
+  w.close();
+  QCoreApplication::quit();
 }
 
 void MenuController::set_number_players(bool are_two_players) {
@@ -33,26 +33,26 @@ void MenuController::set_number_players(bool are_two_players) {
 
 void MenuController::create(const std::string &player_1,
                             const std::string &player_2,
-                            const std::string &game_name) try{
+                            const std::string &game_name) try {
   bool is_available_game;
   client.createGame(are_two_players, player_1, player_2, game_name,
                     is_available_game);
   emit show_wait(is_available_game);
-}catch(const SocketClose &e){
-    w.close();
-    QCoreApplication::quit();
+} catch (const SocketClose &e) {
+  w.close();
+  QCoreApplication::quit();
 }
 
-void MenuController::start() try{
+void MenuController::start() try {
   is_new_game = true;
   this->was_game_initialized = true;
   if (client.checkStartGame()) {
     w.close();
     QCoreApplication::quit();
   }
-}catch(const SocketClose &e){
-    w.close();
-    QCoreApplication::quit();
+} catch (const SocketClose &e) {
+  w.close();
+  QCoreApplication::quit();
 }
 
 void MenuController::join(const std::string &id_game,
@@ -66,11 +66,11 @@ void MenuController::join(const std::string &id_game,
   QCoreApplication::quit();
 }
 
-void MenuController::update_games(Menu &menu) try{
+void MenuController::update_games(Menu &menu) try {
   menu.show_update_games(client.updateGame());
-}catch(const SocketClose &e){
-    w.close();
-    QCoreApplication::quit();
+} catch (const SocketClose &e) {
+  w.close();
+  QCoreApplication::quit();
 }
 
 void MenuController::game() {

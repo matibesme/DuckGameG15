@@ -27,7 +27,7 @@ LobbyPartidas::addPartida(uint8_t id_client, std::string &name1,
   id_hoster_partida[id_client] = id_partida;
   protected_queues_sender[id_partida]->addClient(id_client,
                                                  *queues_sender[id_client]);
-  //elimino la referencia en queues_sender
+  // elimino la referencia en queues_sender
   queues_sender.erase(id_client);
 
   map_id_clientes[id_partida].emplace(id_client, name1);
@@ -101,12 +101,11 @@ std::map<std::string, uint8_t> &LobbyPartidas::getIdPartidas() {
   return partidas_sin_arrancar;
 }
 
-
-
 LobbyPartidas::~LobbyPartidas() {
-//recorro partidas sin arrancar
+  // recorro partidas sin arrancar
 
-  for (auto it = partidas_sin_arrancar.begin(); it != partidas_sin_arrancar.end();) {
+  for (auto it = partidas_sin_arrancar.begin();
+       it != partidas_sin_arrancar.end();) {
     end_game[it->second] = true;
     queues_game_loop[it->second]->close();
     queues_game_loop.erase(it->second);
@@ -114,7 +113,7 @@ LobbyPartidas::~LobbyPartidas() {
     partidas.erase(it->second);
     it = partidas_sin_arrancar.erase(it);
   }
-//recorro partidas arrancadas
+  // recorro partidas arrancadas
   auto it = partidas.begin();
   while (it != partidas.end()) {
     end_game[it->first] = true;

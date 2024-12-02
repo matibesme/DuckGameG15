@@ -3,10 +3,10 @@
 
 #include <list>
 
-#include "SDL2pp/SDL2pp.hh"
-
 #include "Graficos.h"
+#include "SDL2pp/SDL2pp.hh"
 #include "dto_definitions.h"
+#include <map>
 
 class Platform {
 private:

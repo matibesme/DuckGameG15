@@ -76,40 +76,35 @@ void Bullet::update(const float new_pos_x, const float new_pos_y,
 }
 
 void Bullet::actualizarTipo(const char *&texture) {
-    static const std::map<uint8_t, const char*> texture_map = {
-            {COWBOY_BULLET, IMAGE_AMMO_1},
-            {AK47_BULLET, IMAGE_AMMO_1},
-            {PISTOLA_DUELOS_BULLET, IMAGE_AMMO_2},
-            {MAGNUM_BULLET, IMAGE_AMMO_3},
-            {ESCOPETA_BULLET, IMAGE_AMMO_4},
-            {SNIPER_BULLET, IMAGE_AMMO_5},
-            {PEW_PEW_LASER_BULLET, IMAGE_LASER_AMMO},
-            {LASER_RIFLE_BULLET, IMAGE_LASER_AMMO2},
-            {GRANADA_BULLET, IMAGE_GRANADA_BULLET},
-            {GRENADE_EXPLOSION, IMAGE_GRANADA_EXPLOTION},
-            {BANANA_BULLET, IMAGE_BANANA_BULLET}
-    };
-    texture = texture_map.at(typeOfBullet);
+  static const std::map<uint8_t, const char *> texture_map = {
+      {COWBOY_BULLET, IMAGE_AMMO_1},
+      {AK47_BULLET, IMAGE_AMMO_1},
+      {PISTOLA_DUELOS_BULLET, IMAGE_AMMO_2},
+      {MAGNUM_BULLET, IMAGE_AMMO_3},
+      {ESCOPETA_BULLET, IMAGE_AMMO_4},
+      {SNIPER_BULLET, IMAGE_AMMO_5},
+      {PEW_PEW_LASER_BULLET, IMAGE_LASER_AMMO},
+      {LASER_RIFLE_BULLET, IMAGE_LASER_AMMO2},
+      {GRANADA_BULLET, IMAGE_GRANADA_BULLET},
+      {GRENADE_EXPLOSION, IMAGE_GRANADA_EXPLOTION},
+      {BANANA_BULLET, IMAGE_BANANA_BULLET}};
+  texture = texture_map.at(typeOfBullet);
 }
 
 void Bullet::reproducirSonido() {
-    if ( typeOfBullet == BANANA_BULLET || typeOfBullet == GRANADA_BULLET) return;
+  if (typeOfBullet == BANANA_BULLET || typeOfBullet == GRANADA_BULLET)
+    return;
 
-    iteracion++;
-    Sound::inicializar();
+  iteracion++;
+  Sound::inicializar();
 
-    static const std::map<uint8_t, const char*> sound_map = {
-            {COWBOY_BULLET, SOUND_COWBOY},
-            {AK47_BULLET, SOUND_AK47},
-            {PISTOLA_DUELOS_BULLET, SOUND_PISTOLA},
-            {MAGNUM_BULLET, SOUND_MAGNUM},
-            {ESCOPETA_BULLET, SOUND_ESCOPETA},
-            {SNIPER_BULLET, SOUND_SNIPER},
-            {PEW_PEW_LASER_BULLET, SOUND_LASER},
-            {LASER_RIFLE_BULLET, SOUND_LASER},
-            {GRENADE_EXPLOSION, SOUND_GRANADA}
-    };
-    sound.reproducirEfecto(sound_map.at(typeOfBullet));
+  static const std::map<uint8_t, const char *> sound_map = {
+      {COWBOY_BULLET, SOUND_COWBOY},          {AK47_BULLET, SOUND_AK47},
+      {PISTOLA_DUELOS_BULLET, SOUND_PISTOLA}, {MAGNUM_BULLET, SOUND_MAGNUM},
+      {ESCOPETA_BULLET, SOUND_ESCOPETA},      {SNIPER_BULLET, SOUND_SNIPER},
+      {PEW_PEW_LASER_BULLET, SOUND_LASER},    {LASER_RIFLE_BULLET, SOUND_LASER},
+      {GRENADE_EXPLOSION, SOUND_GRANADA}};
+  sound.reproducirEfecto(sound_map.at(typeOfBullet));
 }
 
 uint8_t Bullet::getId() const { return idBullet; }

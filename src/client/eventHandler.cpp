@@ -189,7 +189,6 @@ void EventHandler::correrHandlers() {
 
   // Disparo continuo mientras las teclas de disparo estén presionadas
   if (teclas_presionadas.find(SDLK_LSHIFT) != teclas_presionadas.end()) {
-
     action.player = 1;
     action.type_of_movement = SHOOT;
     queue_sender.push(action);

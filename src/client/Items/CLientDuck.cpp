@@ -191,6 +191,4 @@ int ClientDuck::getPosX() { return positionX; }
 
 int ClientDuck::getPosY() { return positionY; }
 
-ClientDuck::~ClientDuck() {
-  coloredTexture.reset();
-}
+ClientDuck::~ClientDuck() { coloredTexture.reset(); }

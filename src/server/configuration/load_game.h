@@ -29,7 +29,7 @@ private:
   std::map<uint8_t, std::string> &map_id_clientes;
   std::vector<std::string> &list_colors;
   uint8_t &scene_id;
-    std::map<uint8_t, uint8_t>& colors_assigned;
+  std::map<uint8_t, uint8_t> &colors_assigned;
 
 public:
   LoadGameFile(FactoryWeapons &factory_weapons,
@@ -44,7 +44,8 @@ public:
                uint16_t &id_bullets,
                std::map<uint8_t, DuckPlayer> &map_personajes,
                std::map<uint8_t, std::string> &map_id_clientes,
-               std::vector<std::string> &list_colors, uint8_t &scene_id,std::map<uint8_t, uint8_t>& colors_assigned);
+               std::vector<std::string> &list_colors, uint8_t &scene_id,
+               std::map<uint8_t, uint8_t> &colors_assigned);
   void loadGame();
   void loadConfigurations();
 };

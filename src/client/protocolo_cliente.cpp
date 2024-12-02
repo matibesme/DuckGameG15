@@ -168,7 +168,7 @@ void ProtocoloCliente::sendCreateJoinGameToServer(
       protocolo.sendString(game_access.player2_name, dead_connection);
     }
   } catch (const SocketClose &e) {
-    //std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
+    // std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
     throw SocketClose();
   } catch (const std::exception &e) {
     dead_connection = true;
@@ -180,7 +180,7 @@ void ProtocoloCliente::sendRequestGameToServer(const GameAccess &game_access) {
   try {
     protocolo.sendByte(game_access.action_type, dead_connection);
   } catch (const SocketClose &e) {
-    //std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
+    // std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
     throw SocketClose();
   } catch (const std::exception &e) {
     dead_connection = true;

@@ -51,7 +51,7 @@ private:
   std::map<uint16_t, Protection> map_defense;
   std::map<uint16_t, Protection> respawn_defense_points;
   std::map<uint16_t, int> time_defense_last_respawn;
-    std::map<uint8_t, uint8_t> colors_assigned;
+  std::map<uint8_t, uint8_t> colors_assigned;
   std::vector<std::string> list_colors;
 
   DuckAction duck_action;

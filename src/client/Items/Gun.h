@@ -4,7 +4,9 @@
 #include "../common/common_constant.h"
 #include "Graficos.h"
 #include "SDL2pp/SDL2pp.hh"
+#include <map>
 #include <memory>
+#include <utility>
 
 using SDL2pp::Rect;
 using SDL2pp::Renderer;

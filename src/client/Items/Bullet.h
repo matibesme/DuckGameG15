@@ -3,9 +3,9 @@
 
 #include "../common/common_constant.h"
 #include "../sound.h"
-#include "SDL2pp/SDL2pp.hh"
-
 #include "Graficos.h"
+#include "SDL2pp/SDL2pp.hh"
+#include <map>
 
 class Bullet {
 private:
