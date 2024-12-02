@@ -50,9 +50,8 @@ void ColorScene::RenderTitle() {
   SDL_Texture *textTexture =
       SDL_CreateTextureFromSurface(&renderer, textSurface);
 
-
-  SDL_Rect textRect = {(windowWidth - textSurface->w) / 2-50, 120, textSurface->w,
-                       textSurface->h};
+  SDL_Rect textRect = {(windowWidth - textSurface->w) / 2 - 50, 120,
+                       textSurface->w, textSurface->h};
   SDL_RenderCopy(&renderer, textTexture, NULL, &textRect);
 
   SDL_DestroyTexture(textTexture);
@@ -73,8 +72,7 @@ void ColorScene::RenderColorTable() {
     SDL_Texture *nameTexture =
         SDL_CreateTextureFromSurface(&renderer, nameSurface);
 
-
-    SDL_Rect nameRect = {(windowWidth - nameSurface->w) / 2-50, yOffset,
+    SDL_Rect nameRect = {(windowWidth - nameSurface->w) / 2 - 50, yOffset,
                          nameSurface->w, nameSurface->h};
     SDL_RenderCopy(&renderer, nameTexture, NULL, &nameRect);
 

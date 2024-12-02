@@ -14,8 +14,9 @@ void Receiver::run() {
 
     while (in_lobby && !dead_connection) {
       GameAccess command;
-      command=protocolo.receiveAccessFromClients();
-      if (dead_connection) return ;
+      command = protocolo.receiveAccessFromClients();
+      if (dead_connection)
+        return;
       if (command.action_type == JOIN_GAME) {
         queue_comandos =
             lobby.joinGame(command.game_name, id, command.player1_name,

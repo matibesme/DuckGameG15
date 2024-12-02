@@ -5,11 +5,11 @@
 #include <QMainWindow>
 #include <QMenu>
 
-QT_BEGIN_NAMESPACE
+/*QT_BEGIN_NAMESPACE
 namespace Ui {
 class LevelEditor;
 }
-QT_END_NAMESPACE
+QT_END_NAMESPACE*/
 
 class LevelEditor : public QMainWindow {
   Q_OBJECT

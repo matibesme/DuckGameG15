@@ -23,8 +23,7 @@ LoadGameFile::LoadGameFile(
       map_free_weapons(map_free_weapons), list_boxes(list_boxes),
       map_bullets(map_bullets), id_bullets(id_balas),
       map_personajes(map_personajes), map_id_clientes(map_id_clientes),
-      list_colors(list_colors),
-      scene_id(scene_id) {}
+      list_colors(list_colors), scene_id(scene_id) {}
 
 void LoadGameFile::loadGame() {
   const std::string directory_path = DATA_PATH "/maps";

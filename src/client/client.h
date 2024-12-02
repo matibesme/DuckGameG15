@@ -30,7 +30,8 @@ public:
   void createGame(bool is_double_player, std::string player_1,
                   std::string player_2, std::string game_name,
                   bool &is_available_game);
-  bool startGame();
+  bool checkStartGame();
+  void startGame();
   void joinGame(std::string idPartida, bool is_double_player,
                 std::string player_1, std::string player_2);
   std::list<std::string> updateGame();

@@ -138,16 +138,13 @@ void DuckPlayer::pickUpWeapon(std::shared_ptr<Weapon> weapon) {
 
 bool DuckPlayer::isWeaponEquipped() { return is_weapon_equiped; }
 
-bool DuckPlayer::isAlive() {
-  std::cout << life << std::endl;
-  return is_alive;
-}
+bool DuckPlayer::isAlive() { return is_alive; }
 
 void DuckPlayer::applyDamage(int damage) {
   life -= damage;
   if (life <= 0) {
     is_alive = false;
-    typeOfMove=DOWN;
+    typeOfMove = DOWN;
   }
 }
 
@@ -215,8 +212,6 @@ void DuckPlayer::setRespondAfterSliding(int respond_after_sliding_) {
 
 int DuckPlayer::getRespondAfterSliding() { return respond_after_sliding; }
 
-void DuckPlayer::setColor(std::string &color_) {
-  color = color_;
-}
+void DuckPlayer::setColor(std::string &color_) { color = color_; }
 
 DuckPlayer::~DuckPlayer() {}
