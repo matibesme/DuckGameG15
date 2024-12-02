@@ -19,7 +19,7 @@ public:
              Graficos &graficos);
   void update(float y_pos, float x_pos, uint8_t typeOfMove, uint8_t gunEquipped,
               uint8_t armor, uint8_t helmet, bool lookingUp,
-              uint8_t orientation);
+              uint8_t orientation, std::string color);
   void draw(Renderer &renderer);
   uint8_t getId() const;
   int getPosX();
@@ -44,7 +44,8 @@ private:
   bool helmetEquipped;
   bool isOnGround;
   bool isLookingUp;
-  void applyColor(Renderer &renderer, const std::string &color);
+  std::string colorDuck;
+  void applyColor();
   std::map<std::string, SDL_Color> colorMap = {
       {"red", {255, 0, 0, 255}},      {"blue", {0, 0, 255, 255}},
       {"green", {0, 255, 0, 255}},    {"yellow", {255, 255, 0, 255}},

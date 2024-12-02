@@ -23,15 +23,19 @@ ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos,
       pixelDuckSpriteY(SRC_Y_MOVING), coloredTexture(nullptr),
       armor(graficos, positionX, positionY),
       helmet(graficos, positionX, positionY), armorEquipped(false),
-      helmetEquipped(false), isOnGround(false), isLookingUp(false) {
-  applyColor(graficos.GetRenderer(), color);
+      helmetEquipped(false), isOnGround(false), isLookingUp(false), colorDuck(color) {
+  applyColor();
   update(y_pos, x_pos, typeOfMove, gunEquipped, armorEquipped, helmetEquipped,
-         false, RIGHT);
+         false, RIGHT, color);
 }
 
 void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove,
                         uint8_t gunEquipped, uint8_t armor_, uint8_t helmet_,
-                        bool lookingUp, uint8_t orientacion) {
+                        bool lookingUp, uint8_t orientacion, std::string color) {
+  if (color != colorDuck) {
+      colorDuck = color;
+      applyColor();
+  }
   isOnGround = false;
   isLookingUp = lookingUp;
   positionX = x_pos;
@@ -127,41 +131,55 @@ void ClientDuck::draw(Renderer &renderer) {
                  isFlipped, typeOfGun, isLookingUp, renderer);
 }
 
-void ClientDuck::applyColor(SDL2pp::Renderer &renderer,
-                            const std::string &color) {
-  SDL_Surface *loadedSurface = IMG_Load(IMAGE_DUCK);
-  if (!loadedSurface) {
-    throw std::runtime_error("Failed to load duck image");
-  }
-
-  SDL2pp::Surface surface(loadedSurface);
-
-  // Defino el color del pato a partir del mapa de colores
-  auto colorDuck = colorMap[color];
-
-  // Bloqueo la superficie para manipular los píxeles directamente
-  SDL_LockSurface(loadedSurface);
-
-  // Itero sobre cada píxel de la superficie
-  Uint32 *pixels = (Uint32 *)loadedSurface->pixels;
-  int totalPixels = loadedSurface->w * loadedSurface->h;
-
-  Uint32 whitePixel =
-      SDL_MapRGB(loadedSurface->format, 255, 255, 255); // Color blanco original
-  Uint32 newColor = SDL_MapRGBA(loadedSurface->format, colorDuck.r, colorDuck.g,
-                                colorDuck.b, colorDuck.a);
-
-  for (int i = 0; i < totalPixels; ++i) {
-    if (pixels[i] == whitePixel) {
-      pixels[i] = newColor; // Cambia solo el blanco al nuevo color
+void ClientDuck::applyColor() {
+    SDL_Surface *loadedSurface = IMG_Load(IMAGE_DUCK);
+    if (!loadedSurface) {
+        throw std::runtime_error("Failed to load duck image");
     }
-  }
 
-  // Desbloqueo la superficie tras modificar los píxeles
-  SDL_UnlockSurface(loadedSurface);
+    SDL2pp::Surface surface(loadedSurface);
 
-  // Aplico el color modificado a la textura
-  coloredTexture = std::make_unique<SDL2pp::Texture>(renderer, surface);
+    // Defino el color del pato a partir del mapa de colores
+    auto textureColor = colorMap[colorDuck];
+
+    // Bloqueo la superficie para manipular los píxeles directamente
+    SDL_LockSurface(loadedSurface);
+
+    // Itero sobre cada píxel de la superficie
+    Uint32 *pixels = (Uint32 *)loadedSurface->pixels;
+    int totalPixels = loadedSurface->w * loadedSurface->h;
+
+    Uint32 whitePixel =
+            SDL_MapRGB(loadedSurface->format, 255, 255, 255); // Color blanco original
+    Uint32 newColor = SDL_MapRGBA(loadedSurface->format, textureColor.r, textureColor.g,
+                                  textureColor.b, textureColor.a);
+
+    if (colorDuck == "red") {
+        // Si el color es rojo, cambio todo el pato (sin importar el color original)
+        for (int i = 0; i < totalPixels; ++i) {
+            Uint32 pixelColor = pixels[i];
+            Uint8 r, g, b, a;
+            SDL_GetRGBA(pixelColor, loadedSurface->format, &r, &g, &b, &a);
+
+            // No cambiamos el fondo transparente
+            if (a > 0) { // Verificamos si el píxel tiene algún valor alfa (transparencia)
+                pixels[i] = newColor; // Cambiar el color del píxel a rojo
+            }
+        }
+    } else {
+        // Si el color no es rojo, solo cambiamos los píxeles blancos
+        for (int i = 0; i < totalPixels; ++i) {
+            if (pixels[i] == whitePixel) {
+                pixels[i] = newColor; // Cambiar solo el blanco al nuevo color
+            }
+        }
+    }
+
+    // Desbloqueo la superficie tras modificar los píxeles
+    SDL_UnlockSurface(loadedSurface);
+
+    // Aplico el color modificado a la textura
+    coloredTexture = std::make_unique<SDL2pp::Texture>(graficos.GetRenderer(), surface);
 }
 
 uint8_t ClientDuck::getId() const { return idDuck; }
