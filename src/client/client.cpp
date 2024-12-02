@@ -69,6 +69,11 @@ Client::~Client() {
   }
   receiver.stop();
   sender.stop();
-  sender.join();
-  receiver.join();
+  if(sender.is_alive()){
+    sender.join();
+  }
+  if(receiver.is_alive()){
+    receiver.join();
+  }
+  
 }
