@@ -18,7 +18,7 @@ GameLoop::GameLoop(
       factory_weapons(), map_bullets(), id_balas(0), id_weapons(0), id_boxes(0),
       id_defense(0), list_plataformas(), map_defense(),
       respawn_defense_points(), time_defense_last_respawn(),
-      list_colors({ "blue", "green", "yellow", "pink", "purple", "orange",
+      list_colors({"blue", "green", "yellow", "pink", "purple", "orange",
                    "brown", "black", "white", "red"}),
       duck_action(map_personajes, map_free_weapons, respawn_weapon_points,
                   time_weapon_last_respawn, map_bullets, id_balas, id_weapons,
@@ -29,9 +29,7 @@ GameLoop::GameLoop(
                        id_weapons, id_boxes, map_free_weapons, list_boxes,
                        map_bullets, id_balas, map_personajes, map_id_clientes,
                        list_colors, scene_id),
-      map_victory_rounds(),
-      scene_id(0),
-      dead_players() {}
+      map_victory_rounds(), scene_id(0), dead_players() {}
 
 void GameLoop::run() {
   try {
@@ -84,8 +82,6 @@ void GameLoop::run() {
     // Queue closed
     std::cerr << "Cola cerrada en el game loop" << std::endl;
   } catch (const ClientDisconnected &e) {
-    std::cerr << "Cliente desconectado" << std::endl;
-
     GameState command;
     command.action = DISCONNECT_BYTE;
     queues_map->sendMessagesToQueues(command);
@@ -233,7 +229,8 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
       if (it->second.getTypeOfMoveSprite() == DOWN) {
         colision = bullet->colisionWithDuck(
             it->second.getXPos() - (DUCK_HEIGHT / 2),
-            it->second.getYPos() + DUCK_HEIGHT - DUCK_DOWN_HEIGHT, DUCK_HEIGHT, DUCK_WIDTH);
+            it->second.getYPos() + DUCK_HEIGHT - DUCK_DOWN_HEIGHT, DUCK_HEIGHT,
+            DUCK_WIDTH);
       } else {
         colision =
             bullet->colisionWithDuck(it->second.getXPos(), it->second.getYPos(),
@@ -325,10 +322,10 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
       personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
     }
     is_on_platform = true;
-  } if (personaje.getYPos() <= platform.y_pos + platform.height &&
-             personaje.getYPos() + DUCK_HEIGHT >
-                 platform.y_pos + platform.height &&
-             personaje.getVelocidadY() > 0) {
+  }
+  if (personaje.getYPos() <= platform.y_pos + platform.height &&
+      personaje.getYPos() + DUCK_HEIGHT > platform.y_pos + platform.height &&
+      personaje.getVelocidadY() > 0) {
     if (personaje.getXPos() >= platform.x_pos + platform.width -
                                    MARGEN_DESPLAZAMIENTO_PLATAFORMA_X_IZQ) {
       return;
@@ -366,8 +363,9 @@ void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
         personaje.getDirection() == RIGHT) {
       personaje.setXPos(platform.x_pos - DUCK_WIDTH +
                         MARGEN_DESPLAZAMIENTO_PATO_X_WALL);
-    } else if (personaje.getXPos() -4< platform.x_pos + platform.width -
-                                         MARGEN_DESPLAZAMIENTO_PLATAFORMA_X &&
+    } else if (personaje.getXPos() - 4 <
+                   platform.x_pos + platform.width -
+                       MARGEN_DESPLAZAMIENTO_PLATAFORMA_X &&
                personaje.getXPos() > platform.x_pos &&
                personaje.getDirection() == LEFT) {
       personaje.setXPos(platform.x_pos + platform.width -
@@ -517,7 +515,6 @@ void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
             it->second.getYPos() &&
         grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA * DUCK_HEIGHT) >
             it->second.getYPos()) {
-
       if (it->second.receiveShoot()) {
         it->second.applyDamage(grenade_bullet.getDamage());
       }

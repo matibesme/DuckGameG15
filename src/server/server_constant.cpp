@@ -3,7 +3,6 @@
 float MAP_LIMIT_X = 640;
 float MAP_LIMIT_Y = 480;
 
-
 // duck editor
 float POSICION_INICIAL_X = 0;
 float POSICION_INICIAL_Y = 0;

@@ -45,8 +45,9 @@ void Bullet::draw(SDL2pp::Renderer &renderer) {
       reproducirSonido();
     }
     // destRect es el rectángulo donde se dibujará la textura
-    SDL2pp::Rect destRect((int)pos_x-CENTER_EXPLODE_GRANADE_X, (int)pos_y-CENTER_EXPLODE_GRANADE_Y, WIDTH_GRENADE_EXPLOTION,
-                          HEIGHT_GRENADE_EXPLOTION);
+    SDL2pp::Rect destRect((int)pos_x - CENTER_EXPLODE_GRANADE_X,
+                          (int)pos_y - CENTER_EXPLODE_GRANADE_Y,
+                          WIDTH_GRENADE_EXPLOTION, HEIGHT_GRENADE_EXPLOTION);
     // srcRect es el rectángulo que se tomará de la textura
     SDL2pp::Rect srcRect(explosionSpriteX * SPRITE_WIDTH_BULLET, 0,
                          SPRITE_WIDTH_BULLET, SPRITE_HEIGHT_BULLET);

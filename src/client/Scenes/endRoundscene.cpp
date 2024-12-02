@@ -45,14 +45,12 @@ void EndRoundScene::RenderBackground() {
 
 void EndRoundScene::RenderTitle() {
   // Renderizar el título con fondo negro
-  SDL_Color textColor = {0,0,0,255};
+  SDL_Color textColor = {0, 0, 0, 255};
 
   SDL_Surface *textSurface =
       TTF_RenderText_Blended(font, "End of Round Results", textColor);
   SDL_Texture *textTexture =
       SDL_CreateTextureFromSurface(&renderer, textSurface);
-
-
 
   SDL_Rect textRect = {(windowWidth - textSurface->w) / 2, 60, textSurface->w,
                        textSurface->h};
@@ -65,7 +63,7 @@ void EndRoundScene::RenderTitle() {
 void EndRoundScene::RenderResultsTable() {
   // Renderizar los resultados con fondo negro
   int yOffset = 120; // Inicializamos el desplazamiento de y para los resultados
-  SDL_Color textColor = {0,0, 0, 255};
+  SDL_Color textColor = {0, 0, 0, 255};
 
   // Ajuste del espaciado para acomodar hasta 6 resultados
   int maxResults = 6;   // Máximo número de resultados a mostrar
@@ -82,7 +80,6 @@ void EndRoundScene::RenderResultsTable() {
         TTF_RenderText_Blended(font, resultText.c_str(), textColor);
     SDL_Texture *nameTexture =
         SDL_CreateTextureFromSurface(&renderer, nameSurface);
-
 
     SDL_Rect nameRect = {(windowWidth - nameSurface->w) / 2, yOffset,
                          nameSurface->w, nameSurface->h};
