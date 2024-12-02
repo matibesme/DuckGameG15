@@ -194,6 +194,7 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
     Weapon &weapon = personaje.getWeapon();
     if (weapon.isEmptyAmmo())
       return;
+    personaje.setTypeOfMoveSprite(SHOOTING_MOVE);
     weapon.setXPos(personaje.getXPos());
     weapon.setYPos(personaje.getYPos());
     weapon.setDirection(personaje.getDirection());
@@ -221,6 +222,7 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
       return;
     }
     personaje.getWeapon().stopShooting();
+    personaje.setTypeOfMoveSprite((personaje.getDirection() == RIGHT ? STILL_RIGHT : STILL_LEFT));
     break;
   }
 
