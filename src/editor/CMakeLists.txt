@@ -15,7 +15,6 @@ find_package(yaml-cpp REQUIRED)
 set(PROJECT_SOURCES
     leveleditor.cpp
     leveleditor.h
-    leveleditor.ui
     leveleditorcontroller.cpp
     leveleditorcontroller.h
     pathmaker.cpp
