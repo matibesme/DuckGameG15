@@ -72,50 +72,23 @@ float Gun::getPosY() { return posY; }
 
 void Gun::actualizarTextura(const char *&texture_path_equipped,
                             const char *&texture_path_not_equipped) {
-  switch (typeGun) {
-  case NOGUN:
-    break;
-  case COWBOY_GUN:
-    texture_path_equipped = IMAGE_COWBOY_GUN_EQUIPPED;
-    texture_path_not_equipped = IMAGE_COWBOY_GUN;
-    break;
-  case AK47_GUN:
-    texture_path_equipped = IMAGE_AK47_GUN_EQUIPPED;
-    texture_path_not_equipped = IMAGE_AK47_GUN;
-    break;
-  case PISTOLA_DUELOS_GUN:
-    texture_path_equipped = IMAGE_PISTOLA_DUELOS_GUN_EQUIPPED;
-    texture_path_not_equipped = IMAGE_PISTOLA_DUELOS_GUN;
-    break;
-  case MAGNUM_GUN:
-    texture_path_equipped = IMAGE_MAGNUM_GUN_EQUIPPED;
-    texture_path_not_equipped = IMAGE_MAGNUM_GUN;
-    break;
-  case ESCOPETA_GUN:
-    texture_path_equipped = IMAGE_ESCOPETA_GUN_EQUIPPED;
-    texture_path_not_equipped = IMAGE_ESCOPETA_GUN;
-    break;
-  case SNIPER_GUN:
-    texture_path_equipped = IMAGE_SNIPER_GUN_EQUIPPED;
-    texture_path_not_equipped = IMAGE_SNIPER_GUN;
-    break;
-  case GRANADA_GUN:
-    texture_path_equipped = IMAGE_GRANADA_GUN_EQUIPPED;
-    texture_path_not_equipped = IMAGE_GRANADA_GUN;
-    break;
-  case BANANA_GUN:
-    texture_path_equipped = IMAGE_BANANA_GUN_EQUIPPED;
-    texture_path_not_equipped = IMAGE_BANANA_GUN;
-    break;
-  case PEW_PEW_LASER_GUN:
-    texture_path_equipped = IMAGE_PEW_PEW_LASER_GUN_EQUIPPED;
-    texture_path_not_equipped = IMAGE_PEW_PEW_LASER_GUN;
-    break;
-  case LASER_RIFLE_GUN:
-    texture_path_equipped = IMAGE_LASER_RIFLE_GUN_EQUIPPED;
-    texture_path_not_equipped = IMAGE_LASER_RIFLE_GUN;
-    break;
-  default:
-    break;
-  }
+    // Mapa de tipos de arma a las rutas de texturas
+    static const std::map<uint8_t, std::pair<const char*, const char*>> gunTextures = {
+            {COWBOY_GUN, {IMAGE_COWBOY_GUN_EQUIPPED, IMAGE_COWBOY_GUN}},
+            {AK47_GUN, {IMAGE_AK47_GUN_EQUIPPED, IMAGE_AK47_GUN}},
+            {PISTOLA_DUELOS_GUN, {IMAGE_PISTOLA_DUELOS_GUN_EQUIPPED, IMAGE_PISTOLA_DUELOS_GUN}},
+            {MAGNUM_GUN, {IMAGE_MAGNUM_GUN_EQUIPPED, IMAGE_MAGNUM_GUN}},
+            {ESCOPETA_GUN, {IMAGE_ESCOPETA_GUN_EQUIPPED, IMAGE_ESCOPETA_GUN}},
+            {SNIPER_GUN, {IMAGE_SNIPER_GUN_EQUIPPED, IMAGE_SNIPER_GUN}},
+            {GRANADA_GUN, {IMAGE_GRANADA_GUN_EQUIPPED, IMAGE_GRANADA_GUN}},
+            {BANANA_GUN, {IMAGE_BANANA_GUN_EQUIPPED, IMAGE_BANANA_GUN}},
+            {PEW_PEW_LASER_GUN, {IMAGE_PEW_PEW_LASER_GUN_EQUIPPED, IMAGE_PEW_PEW_LASER_GUN}},
+            {LASER_RIFLE_GUN, {IMAGE_LASER_RIFLE_GUN_EQUIPPED, IMAGE_LASER_RIFLE_GUN}},
+    };
+    // Verificamos si el tipo de arma existe en el mapa y asignamos las texturas
+    auto it = gunTextures.find(typeGun);
+    if (it != gunTextures.end()) {
+        texture_path_equipped = it->second.first;
+        texture_path_not_equipped = it->second.second;
+    }
 }

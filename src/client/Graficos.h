@@ -17,7 +17,6 @@ public:
   Graficos(const char *title, int width, int height);
   Renderer &GetRenderer();
   Texture &getTexture(std::string path);
-  void Clear();
   void show_window();
 
   Graficos(const Graficos &other) = delete;

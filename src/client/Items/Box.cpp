@@ -13,7 +13,7 @@ Box::Box(uint8_t id, float initial_pos_x, float initial_pos_y,
          Graficos &graficos)
     : graficos(graficos), idBox(id), pos_x(initial_pos_x), pos_y(initial_pos_y),
       typeOfAction(0), explosionSpriteX(-1), sound() {
-  sound.inicializar();
+  Sound::inicializar();
 }
 
 void Box::draw(SDL2pp::Renderer &renderer) {
