@@ -20,7 +20,7 @@
 #include "shotgun.h"
 #include "sniper.h"
 
-constexpr int TILE_CONSTANT = 4;
+constexpr int TILE_CONSTANT = 6;
 
 FactoryWeapons::FactoryWeapons() {}
 
