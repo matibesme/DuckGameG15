@@ -81,7 +81,7 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
     lista_plataformas.push_back({typeOfPlataform, x_pos, y_pos, width, height});
   }
   command.lista_plataformas = lista_plataformas;
-  // recibo personajes
+  // recivo personajes
   uint8_t patos_quantity = protocolo.receiveByte(dead_connection);
   std::list<DTODuck> lista_patos;
   for (int i = 0; i < patos_quantity; i++) {
@@ -100,27 +100,8 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
   }
 
   command.lista_patos = lista_patos;
-
-  // recibo patos muertos
-
-  uint8_t dead_ducks_quantity = protocolo.receiveByte(dead_connection);
-  std::list<DTODeadDuck> lista_patos_muertos;
-
-  for (int i = 0; i < dead_ducks_quantity; i++) {
-    uint8_t id = protocolo.receiveByte(dead_connection);
-    float x_pos = protocolo.receiveFloat(dead_connection);
-    float y_pos = protocolo.receiveFloat(dead_connection);
-    std::string color = protocolo.receiveString(dead_connection);
-    lista_patos_muertos.push_back({id, x_pos, y_pos, color});
-  }
-
-  command.lista_patos_muertos = lista_patos_muertos;
-
-
-  // recibo balas
+  // recivo balas
   uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);
-
-
 
   std::list<DTOBullet> bullets;
   for (int i = 0; i < bullets_quantity; i++) {

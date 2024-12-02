@@ -17,13 +17,6 @@ struct DTODuck {
   uint8_t direction;
 };
 
-struct DTODeadDuck {
-  uint8_t id;
-  float x_pos;
-  float y_pos;
-  std::string color;
-};
-
 struct DTOBullet {
   uint16_t id;
   uint8_t typeOfBullet; // cowboy Bullet
@@ -70,8 +63,6 @@ struct GameState {
   std::list<DTOPlatform> lista_plataformas;
 
   std::list<DTODuck> lista_patos;
-
-  std::list<DTODeadDuck> lista_patos_muertos;
 
   std::list<DTOBullet> lista_balas;
 

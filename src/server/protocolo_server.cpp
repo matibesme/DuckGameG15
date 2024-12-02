@@ -58,16 +58,6 @@ void ProtocoloServer::sendFullGame(const GameState &command) {
     protocolo.sendByte(dto_duck.direction, dead_connection);
   }
 
-  // ENVIO DE PERSONAJES MUERTOS
-
-  protocolo.sendByte(command.lista_patos_muertos.size(), dead_connection);
-  for (const DTODeadDuck &dto_dead_duck : command.lista_patos_muertos) {
-    protocolo.sendByte(dto_dead_duck.id, dead_connection);
-    protocolo.sendFloat(dto_dead_duck.x_pos, dead_connection);
-    protocolo.sendFloat(dto_dead_duck.y_pos, dead_connection);
-    protocolo.sendString(dto_dead_duck.color, dead_connection);
-  }
-
   // ENVIO DE BALAS
 
   protocolo.sendByte(command.lista_balas.size(), dead_connection);
