@@ -87,6 +87,9 @@ void ClientDuck::update(float y_pos, float x_pos, uint8_t typeOfMove,
       pixelDuckSpriteY = SRC_Y_STANDING;
       pixelDuckSpriteX = 0;
       isOnGround = true;
+    } else if(typeOfMove == SHOOTING_MOVE){
+        pixelDuckSpriteY = SRC_Y_JUMPING;
+        pixelDuckSpriteX = 160;
     }
   } else {
     pixelDuckSpriteX = 0;
