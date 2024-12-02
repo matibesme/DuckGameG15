@@ -93,6 +93,10 @@ void Menu::show_main_scene() {
                       "   background-color: #c7c7c7;"
                       "   color: black;"
                       "}");
+    connect(quit, &QPushButton::clicked,
+          []() {
+            QCoreApplication::quit();
+          });
   main_scene->setBackgroundBrush(initial_background);
   main_scene->addWidget(make_game);
   main_scene->addWidget(join_game);
@@ -381,7 +385,7 @@ void Menu::show_wait_scene() {
   QPushButton *start_game = new QPushButton("Start game");
   layout_wait->addWidget(start_game);
   connect(start_game, &QPushButton::clicked, this, [this]() {
-    this->close();
+    //this->close();
     emit start();
   });
 
