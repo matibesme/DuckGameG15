@@ -167,10 +167,12 @@ void EventHandler::correrHandlers() {
 
   // Mover derecha e izquierda con teclas presionadas para Jugador 1
   if (teclas_presionadas.find(SDLK_d) != teclas_presionadas.end()) {
+    action.player=1;
     action.type_of_movement = RIGHT;
     queue_sender.push(action);
   } else if (teclas_presionadas.find(SDLK_a) != teclas_presionadas.end()) {
     action.type_of_movement = LEFT;
+    action.player=1;
     queue_sender.push(action);
   }
 
@@ -187,6 +189,8 @@ void EventHandler::correrHandlers() {
 
   // Disparo continuo mientras las teclas de disparo estén presionadas
   if (teclas_presionadas.find(SDLK_LSHIFT) != teclas_presionadas.end()) {
+
+    action.player=1;
     action.type_of_movement = SHOOT;
     queue_sender.push(action);
   }
