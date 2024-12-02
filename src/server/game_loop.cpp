@@ -210,7 +210,6 @@ void GameLoop::paraCadaPatoAction() {
     it->second.executeAction(list_colors[colors_assigned[ it->second.getId()]]);
 
     if (!it->second.isAlive()) {
-      dead_players.push_back(it->second);
       it = map_personajes.erase(it);
       continue;
     }
