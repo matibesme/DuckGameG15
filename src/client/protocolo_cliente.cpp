@@ -168,7 +168,8 @@ void ProtocoloCliente::sendCreateJoinGameToServer(
       protocolo.sendString(game_access.player2_name, dead_connection);
     }
   } catch (const SocketClose &e) {
-    std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
+    //std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
+    throw SocketClose();
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
@@ -179,7 +180,8 @@ void ProtocoloCliente::sendRequestGameToServer(const GameAccess &game_access) {
   try {
     protocolo.sendByte(game_access.action_type, dead_connection);
   } catch (const SocketClose &e) {
-    std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
+    //std::cerr << "Socket cerrado antes de terminar de enviar" << std::endl;
+    throw SocketClose();
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
@@ -199,6 +201,7 @@ std::list<std::string> ProtocoloCliente::reciveActiveGamesFromServer() {
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
+    throw SocketClose();
   }
   throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
@@ -244,6 +247,7 @@ bool ProtocoloCliente::reciveMatchWithSameName() {
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
+    throw SocketClose();
   }
   throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
@@ -274,6 +278,7 @@ bool ProtocoloCliente::reciveGameStarted() {
   } catch (const std::exception &e) {
     dead_connection = true;
     std::cerr << e.what() << std::endl;
+    throw SocketClose();
   }
   throw ProtocoloError("Error en el protocolo, al recivir mensaje de server");
 }
