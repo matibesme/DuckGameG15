@@ -143,26 +143,33 @@ void Menu::show_make_game_scene() {
   label_player_2_error->setVisible(false);
   label_player_2_error->setStyleSheet("color: red");
 
+  QLabel *label_player_same_name_error = new QLabel("Error, names can't be the same");
+  label_player_same_name_error->setVisible(false);
+  label_player_same_name_error->setStyleSheet("color: red");
+  layout_name_players->addWidget(label_player_same_name_error);
+
   QSpacerItem *spacer =
       new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
   layout_name_players->addItem(spacer);
 
   connect(single_player, &QPushButton::clicked,
           [this, name_player_2, label_player_2, label_player_1_error,
-           label_player_2_error]() {
+           label_player_2_error, label_player_same_name_error]() {
             name_player_2->setVisible(false);
             label_player_2->setVisible(false);
+            label_player_same_name_error->setVisible(false);
             label_player_1_error->setVisible(false);
             label_player_2_error->setVisible(false);
             emit number_players_changed(false);
           });
   connect(two_players, &QPushButton::clicked,
           [this, name_player_2, label_player_2, label_player_1_error,
-           label_player_2_error]() {
+           label_player_2_error, label_player_same_name_error]() {
             name_player_2->setVisible(true);
             label_player_2->setVisible(true);
             label_player_1_error->setVisible(false);
             label_player_2_error->setVisible(false);
+            label_player_same_name_error->setVisible(false);
             emit number_players_changed(true);
           });
 
@@ -187,8 +194,9 @@ void Menu::show_make_game_scene() {
   layout_game->addWidget(make_game_button);
   connect(make_game_button, &QPushButton::clicked, this,
           [this, name_player_1, name_player_2, game_name, label_player_1_error,
-           label_player_2_error, label_game_name_error]() {
+           label_player_2_error, label_game_name_error, label_player_same_name_error]() {
             bool are_fields_empties = false;
+            bool is_same_name = false;
 
             if (name_player_1->text().isEmpty()) {
               label_player_1_error->setVisible(true);
@@ -211,7 +219,15 @@ void Menu::show_make_game_scene() {
               label_game_name_error->setVisible(false);
             }
 
-            if (!are_fields_empties) {
+            if(name_player_1->text() == name_player_2->text() && name_player_2->isVisible()){
+              label_player_same_name_error->setVisible(true);
+              is_same_name = true;
+            }else{
+              label_player_same_name_error->setVisible(false);
+            }
+
+
+            if (!are_fields_empties && !is_same_name) {
               std::string player_1 =
                   std::string(name_player_1->text().toStdString());
               std::string player_2 =
@@ -271,26 +287,33 @@ void Menu::show_join_game_scene() {
   label_player_2_error->setVisible(false);
   label_player_2_error->setStyleSheet("color: red");
 
+  QLabel *label_player_same_name_error = new QLabel("Error, names can't be the same");
+  label_player_same_name_error->setVisible(false);
+  label_player_same_name_error->setStyleSheet("color: red");
+  layout_name_players->addWidget(label_player_same_name_error);
+
   QSpacerItem *spacer =
       new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
   layout_name_players->addItem(spacer);
 
   connect(single_player, &QPushButton::clicked,
           [this, name_player_2, label_player_2, label_player_1_error,
-           label_player_2_error]() {
+           label_player_2_error, label_player_same_name_error]() {
             name_player_2->setVisible(false);
             label_player_2->setVisible(false);
             label_player_1_error->setVisible(false);
             label_player_2_error->setVisible(false);
+            label_player_same_name_error->setVisible(false);
             emit number_players_changed(false);
           });
   connect(two_players, &QPushButton::clicked,
           [this, name_player_2, label_player_2, label_player_1_error,
-           label_player_2_error]() {
+           label_player_2_error, label_player_same_name_error]() {
             name_player_2->setVisible(true);
             label_player_2->setVisible(true);
             label_player_1_error->setVisible(false);
             label_player_2_error->setVisible(false);
+            label_player_same_name_error->setVisible(false);
             emit number_players_changed(true);
           });
 
@@ -322,9 +345,9 @@ void Menu::show_join_game_scene() {
   layout_games->addWidget(join_game_button);
   connect(join_game_button, &QPushButton::clicked, this,
           [this, name_player_1, name_player_2, label_player_1_error,
-           label_player_2_error, label_game_name_error]() {
+           label_player_2_error, label_game_name_error, label_player_same_name_error]() {
             bool are_fields_empties = false;
-
+            bool is_same_name = false;
             if (name_player_1->text().isEmpty()) {
               label_player_1_error->setVisible(true);
               are_fields_empties = true;
@@ -346,7 +369,15 @@ void Menu::show_join_game_scene() {
               label_game_name_error->setVisible(false);
             }
 
-            if (!are_fields_empties) {
+            if(name_player_1->text() == name_player_2->text() && name_player_2->isVisible()){
+              label_player_same_name_error->setVisible(true);
+              is_same_name = true;
+            }else{
+              label_player_same_name_error->setVisible(false);
+            }
+
+
+            if (!are_fields_empties && !is_same_name) {
               std::string player_1 =
                   std::string(name_player_1->text().toStdString());
               std::string player_2 =
