@@ -97,7 +97,7 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
     uint8_t direction = protocolo.receiveByte(dead_connection);
     bool isAlive = protocolo.receiveBool(dead_connection);
     lista_patos.push_back({id, personajes_type, x_pos, y_pos, typeOfMove,
-                           typeOfGun, helmet, armor, is_aiming_up, direction});
+                           typeOfGun, helmet, armor, is_aiming_up, direction,isAlive});
   }
 
   command.lista_patos = lista_patos;
