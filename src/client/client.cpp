@@ -11,7 +11,8 @@ void Client::execute() {
   sender.start();
   receiver.start();
   game.run();
-  queue_sender.close();
+  if (!queue_sender.isClosed())
+    queue_sender.close();
   if (!queue_receiver.isClosed())
     queue_receiver.close();
   receiver.stop();

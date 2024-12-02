@@ -154,6 +154,7 @@ TEST(ProtocoloTest, proccesSnapshot) {
     ASSERT_EQ(duck.armor, 1);
     ASSERT_EQ(duck.is_aiming_up, true);
     ASSERT_EQ(duck.direction, RIGHT);
+    ASSERT_EQ(duck.isAlive, true);
 
     // Verifico lista de balas
     ASSERT_EQ(command.lista_balas.size(), 1);
@@ -222,7 +223,7 @@ TEST(ProtocoloTest, proccesSnapshot) {
   DTOPlatform platform = {TYPE_PLATFORM_DONUT, 1, 1, 32, 32};
   gameState.lista_plataformas.push_back(platform);
 
-  DTODuck duck = {1, "color1", 1, 1, 1, 1, 1, 1, true, RIGHT};
+  DTODuck duck = {1, "color1", 1, 1, 1, 1, 1, 1, true, RIGHT, true};
   gameState.lista_patos.push_back(duck);
 
   DTOBullet bullet = {1, 1, 1, 1, RIGHT};
