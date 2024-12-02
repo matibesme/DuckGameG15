@@ -137,10 +137,7 @@ void DuckPlayer::pickUpWeapon(std::shared_ptr<Weapon> weapon) {
 
 bool DuckPlayer::isWeaponEquipped() { return is_weapon_equiped; }
 
-bool DuckPlayer::isAlive() {
-  std::cout << life << std::endl;
-  return is_alive;
-}
+bool DuckPlayer::isAlive() {return is_alive;}
 
 void DuckPlayer::applyDamage(int damage) {
   life -= damage;

@@ -84,7 +84,6 @@ void GameLoop::run() {
     // Queue closed
     std::cerr << "Cola cerrada en el game loop" << std::endl;
   } catch (const ClientDisconnected &e) {
-    std::cerr << "Cliente desconectado" << std::endl;
 
     GameState command;
     command.action = DISCONNECT_BYTE;
