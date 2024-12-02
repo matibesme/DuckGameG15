@@ -62,9 +62,7 @@ std::list<std::string> Client::updateGame() {
 
 Client::~Client() {
   queue_sender.close();
-  if (!queue_receiver.isClosed()) {
-    queue_receiver.close();
-  }
+  queue_receiver.close();
   receiver.stop();
   sender.stop();
   sender.join();
