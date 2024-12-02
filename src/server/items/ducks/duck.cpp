@@ -64,7 +64,8 @@ void DuckPlayer::stopJump(float y_pos_) {
   typeOfMove = (direction == RIGHT) ? STILL_RIGHT : STILL_LEFT;
 }
 
-void DuckPlayer::executeAction() {
+void DuckPlayer::executeAction(std::string &color_) {
+  color = color_;
   if (is_sliding) {
     if (direction == RIGHT) {
       typeOfMove = DOWN;
@@ -210,5 +211,9 @@ void DuckPlayer::setRespondAfterSliding(int respond_after_sliding_) {
 }
 
 int DuckPlayer::getRespondAfterSliding() { return respond_after_sliding; }
+
+void DuckPlayer::setColor(std::string &color_) {
+  color = color_;
+}
 
 DuckPlayer::~DuckPlayer() {}

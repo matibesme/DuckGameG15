@@ -52,6 +52,7 @@ public:
   void setTypeOfMoveSprite(uint8_t orientation);
   void setEnSalto(bool enSalto);
   void setFlapping(bool flapping);
+  void setColor(std::string &color_);
   void setGravity(float gravity_);
   void setHelmet(uint8_t type);
   void setArmor(uint8_t type);
@@ -62,7 +63,7 @@ public:
   void incrementXPos(float pos_x);
   void pickUpWeapon(std::shared_ptr<Weapon> weapon);
   void stopJump(float y_pos_);
-  void executeAction();
+  void executeAction(std::string &color_);
   void applyDamage(int damage);
   void increaseFlappingCounter();
   std::shared_ptr<Weapon> removeWeapon();

@@ -15,10 +15,8 @@ void Receiver::run() {
     }
   } catch (const std::exception &e) {
     std::cerr << "Receiver: " << e.what() << '\n';
-    queue_receiver.close();
   } catch (...) {
     std::cerr << "Error desconocido.\n";
-    queue_receiver.close();
   }
 }
 
