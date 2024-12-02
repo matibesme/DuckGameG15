@@ -11,7 +11,6 @@ const int SRC_Y_JUMPING = 40;
 const int SRC_Y_MOVING = 6;
 const int SPRITE_WIDTH = 32;
 const int SPRITE_HEIGHT = 24;
-const float VERTICAL_CENTER_DIVISOR = 1.1f;
 
 ClientDuck::ClientDuck(uint8_t id, float x_pos, float y_pos,
                        uint8_t gunEquipped, uint8_t typeOfMove,
@@ -193,6 +192,5 @@ int ClientDuck::getPosX() { return positionX; }
 int ClientDuck::getPosY() { return positionY; }
 
 ClientDuck::~ClientDuck() {
-  // La textura se libera automáticamente porque es un std::unique_ptr
   coloredTexture.reset();
 }

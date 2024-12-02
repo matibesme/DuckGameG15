@@ -13,11 +13,6 @@ Renderer &Graficos::GetRenderer() { return renderer; }
 
 Texture &Graficos::getTexture(std::string path) { return *textures[path]; }
 
-void Graficos::Clear() {
-  renderer.SetDrawColor(0, 0, 0, 255);
-  renderer.Clear();
-}
-
 void Graficos::show_window() { SDL_ShowWindow(window.Get()); }
 
 void Graficos::loadAllTextures() {

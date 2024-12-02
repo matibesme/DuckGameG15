@@ -448,4 +448,11 @@ void Menu::show_wait(bool is_available_game) {
   }
 }
 
-Menu::~Menu() {}
+Menu::~Menu() {
+  delete main_scene;
+  delete make_game_scene;
+  delete join_game_scene;
+  delete wait_scene;
+  delete view;
+  delete game_options;
+}

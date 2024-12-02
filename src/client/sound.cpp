@@ -40,9 +40,6 @@ void Sound::reproducirMusica(int repeticion) {
   }
 }
 
-// Detener música
-void Sound::detenerMusica() { Mix_HaltMusic(); }
-
 void Sound::ajustarVolumenEfectos() {
   int canalesActivos = Mix_Playing(-1); // -1 para verificar todos los canales.
   if (canalesActivos > MAXIMO_SONIDOS) {
