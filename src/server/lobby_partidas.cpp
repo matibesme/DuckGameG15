@@ -99,7 +99,20 @@ std::map<std::string, uint8_t> &LobbyPartidas::getIdPartidas() {
   return partidas_sin_arrancar;
 }
 
+
+
 LobbyPartidas::~LobbyPartidas() {
+//recorro partidas sin arrancar
+
+  for (auto it = partidas_sin_arrancar.begin(); it != partidas_sin_arrancar.end();) {
+    end_game[it->second] = true;
+    queues_game_loop[it->second]->close();
+    queues_game_loop.erase(it->second);
+    protected_queues_sender.erase(it->second);
+    partidas.erase(it->second);
+    it = partidas_sin_arrancar.erase(it);
+  }
+//recorro partidas arrancadas
   auto it = partidas.begin();
   while (it != partidas.end()) {
     end_game[it->first] = true;
