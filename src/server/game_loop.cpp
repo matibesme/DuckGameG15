@@ -18,8 +18,8 @@ GameLoop::GameLoop(
       factory_weapons(), map_bullets(), id_balas(0), id_weapons(0), id_boxes(0),
       id_defense(0), list_plataformas(), map_defense(),
       respawn_defense_points(), time_defense_last_respawn(),
-      list_colors({"red", "blue", "green", "yellow", "pink", "purple", "orange",
-                   "brown", "black", "white"}),
+      list_colors({ "blue", "green", "yellow", "pink", "purple", "orange",
+                   "brown", "black", "white", "red"}),
       duck_action(map_personajes, map_free_weapons, respawn_weapon_points,
                   time_weapon_last_respawn, map_bullets, id_balas, id_weapons,
                   map_defense, respawn_defense_points, id_defense,
@@ -209,7 +209,7 @@ void GameLoop::sendCompleteScene() {
 void GameLoop::paraCadaPatoAction() {
   for (auto it = map_personajes.begin(); it != map_personajes.end();) {
     checkCoalitionDuckPlatform(it->second);
-    it->second.executeAction();
+    it->second.executeAction(list_colors[it->first]);
 
     if (!it->second.isAlive()) {
       dead_players.push_back(it->second);
@@ -260,7 +260,7 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
         }
         if (it->second.receiveShoot()) {
           it->second.applyDamage(bullet->getDamage());
-          it->second.setTypeOfMoveSprite(GET_DAMAGE);
+          it->second.setColor(list_colors.back());
         }
         if (!it->second.isAlive()) {
           dead_players.push_back(it->second);
