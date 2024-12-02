@@ -17,7 +17,7 @@ GameLoop::GameLoop(
       respawn_weapon_points(), time_weapon_last_respawn(), map_free_weapons(),
       factory_weapons(), map_bullets(), id_balas(0), id_weapons(0), id_boxes(0),
       id_defense(0), list_plataformas(), map_defense(),
-      respawn_defense_points(), time_defense_last_respawn(),
+      respawn_defense_points(), time_defense_last_respawn(),colors_assigned(),
       list_colors({"blue", "green", "yellow", "pink", "purple", "orange",
                    "brown", "black", "white", "red"}),
       duck_action(map_personajes, map_free_weapons, respawn_weapon_points,
@@ -28,8 +28,8 @@ GameLoop::GameLoop(
                        map_defense, respawn_defense_points, id_defense,
                        id_weapons, id_boxes, map_free_weapons, list_boxes,
                        map_bullets, id_balas, map_personajes, map_id_clientes,
-                       list_colors, scene_id),
-      map_victory_rounds(), scene_id(0), dead_players() {}
+                       list_colors, scene_id,colors_assigned),
+      map_victory_rounds(), scene_id(0), dead_players(){}
 
 void GameLoop::run() {
   try {
@@ -162,7 +162,7 @@ void GameLoop::sendCompleteScene() {
       weapon_type = personaje.getWeapon().getType();
     }
     DTODuck dto_duck = {personaje.getId(),
-                        list_colors[personaje.getId()],
+                        list_colors[colors_assigned[personaje.getId()]],
                         personaje.getXPos(),
                         personaje.getYPos(),
                         personaje.getTypeOfMoveSprite(),
@@ -207,7 +207,7 @@ void GameLoop::sendCompleteScene() {
 void GameLoop::paraCadaPatoAction() {
   for (auto it = map_personajes.begin(); it != map_personajes.end();) {
     checkCoalitionDuckPlatform(it->second);
-    it->second.executeAction(list_colors[it->first]);
+    it->second.executeAction(list_colors[colors_assigned[ it->second.getId()]]);
 
     if (!it->second.isAlive()) {
       dead_players.push_back(it->second);

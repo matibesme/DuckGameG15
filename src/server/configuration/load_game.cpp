@@ -15,7 +15,7 @@ LoadGameFile::LoadGameFile(
     std::map<uint16_t, std::unique_ptr<Bullet>> &map_bullets,
     uint16_t &id_balas, std::map<uint8_t, DuckPlayer> &map_personajes,
     std::map<uint8_t, std::string> &map_id_clientes,
-    std::vector<std::string> &list_colors, uint8_t &scene_id)
+    std::vector<std::string> &list_colors, uint8_t &scene_id,std::map<uint8_t, uint8_t>& colors_assigned)
     : factory_weapons(factory_weapons), platforms(platforms),
       respawn_weapon_points(respawn_weapon_points), map_defense(map_defense),
       respawn_defense_points(respawn_defense_points), id_defense(id_defense),
@@ -23,7 +23,7 @@ LoadGameFile::LoadGameFile(
       map_free_weapons(map_free_weapons), list_boxes(list_boxes),
       map_bullets(map_bullets), id_bullets(id_balas),
       map_personajes(map_personajes), map_id_clientes(map_id_clientes),
-      list_colors(list_colors), scene_id(scene_id) {}
+      list_colors(list_colors), scene_id(scene_id),colors_assigned(colors_assigned){}
 
 void LoadGameFile::loadGame() {
   const std::string directory_path = DATA_PATH "/maps";
@@ -61,6 +61,7 @@ void LoadGameFile::loadGame() {
 
   int i = 0;
   for (auto &id : map_id_clientes) {
+    colors_assigned.emplace(id.first, i);
     map_personajes.emplace(id.first,
                            DuckPlayer(0, id.first, POSICION_INICIAL_X,
                                       POSICION_INICIAL_Y, list_colors[i++]));

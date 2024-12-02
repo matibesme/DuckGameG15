@@ -27,6 +27,8 @@ LobbyPartidas::addPartida(uint8_t id_client, std::string &name1,
   id_hoster_partida[id_client] = id_partida;
   protected_queues_sender[id_partida]->addClient(id_client,
                                                  *queues_sender[id_client]);
+  //elimino la referencia en queues_sender
+  queues_sender.erase(id_client);
 
   map_id_clientes[id_partida].emplace(id_client, name1);
   if (double_player) {
