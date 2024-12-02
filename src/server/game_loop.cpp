@@ -151,8 +151,7 @@ void GameLoop::sendCompleteScene() {
                         personaje.second.getArmor(),
                         personaje.second.isAimingUp(),
                         personaje.second.getDirection(),
-                        personaje.second.isAlive()
-    };
+                        personaje.second.isAlive()};
 
     command.lista_patos.push_back(dto_duck);
   }
@@ -172,8 +171,7 @@ void GameLoop::sendCompleteScene() {
                         personaje.getArmor(),
                         personaje.isAimingUp(),
                         personaje.getDirection(),
-                        personaje.isAlive()
-    };
+                        personaje.isAlive()};
 
     command.lista_patos.push_back(dto_duck);
   }

@@ -35,6 +35,8 @@ void GameRenderer::dibujar(Renderer &renderer, GameState &command) {
     platform.draw();
   for (auto &duck : ducks)
     duck.draw(renderer);
+  for (auto &deadDuck : deadDucks)
+    deadDuck.draw(renderer);
   for (auto &bullet : bullets)
     bullet.draw(renderer);
   for (auto &gun : guns)
@@ -134,35 +136,74 @@ GameRenderer::calcularRectanguloDeZoom(std::list<ClientDuck> &ducks) {
 }
 
 void GameRenderer::actualizarElementos(const GameState &command) {
-  // PRIMERO ACTUALIZO PATOS
-  //  Actualizar y eliminar patos
+  // Primero actualizamos los patos
   for (auto it = ducks.begin(); it != ducks.end();) {
+    // Buscar el pato correspondiente en la lista de comandos
     auto duckInCommand =
         std::find_if(command.lista_patos.begin(), command.lista_patos.end(),
                      [it](const DTODuck &duckStruct) {
                        return duckStruct.id == it->getId();
                      });
+
     if (duckInCommand != command.lista_patos.end()) {
-      // Actualizar si el pato está en ambas listas
-      it->update(duckInCommand->y_pos, duckInCommand->x_pos,
-                 duckInCommand->typeOfMove, duckInCommand->typeOfGun,
-                 duckInCommand->armor, duckInCommand->helmet,
-                 duckInCommand->is_aiming_up, duckInCommand->direction,
-                 duckInCommand->color);
-      ++it;
+      if (duckInCommand->isAlive) {
+        // Actualizamos el pato si está presente en ambas listas y está vivo
+        it->update(duckInCommand->y_pos, duckInCommand->x_pos,
+                   duckInCommand->typeOfMove, duckInCommand->typeOfGun,
+                   duckInCommand->armor, duckInCommand->helmet,
+                   duckInCommand->is_aiming_up, duckInCommand->direction,
+                   duckInCommand->color);
+        ++it;
+      } else {
+        // Si el pato está muerto, lo agregamos a la lista de patos muertos
+        // Solo lo agregamos a deadDucks si no está ya allí
+        auto deadDuckIt =
+            std::find_if(deadDucks.begin(), deadDucks.end(),
+                         [&duckInCommand](const ClientDuck &duck) {
+                           return duck.getId() == duckInCommand->id;
+                         });
+        if (deadDuckIt == deadDucks.end()) { // Si no está ya en deadDucks
+          deadDucks.emplace_back(duckInCommand->id, duckInCommand->x_pos,
+                                 duckInCommand->y_pos, duckInCommand->typeOfGun,
+                                 duckInCommand->typeOfMove,
+                                 duckInCommand->color, graficos);
+        }
+        // Eliminar el pato de la lista de patos vivos
+        it = ducks.erase(it);
+      }
     } else {
-      // Eliminar si solo está en la lista local
+      // Si el pato no está en el comando, lo eliminamos de la lista local
       it = ducks.erase(it);
+    }
+  }
+
+  // Ahora, verificamos si algún pato muerto ha resucitado
+  for (auto it = deadDucks.begin(); it != deadDucks.end();) {
+    auto duckInCommand =
+        std::find_if(command.lista_patos.begin(), command.lista_patos.end(),
+                     [&it](const DTODuck &duckStruct) {
+                       return duckStruct.id == it->getId();
+                     });
+
+    if (duckInCommand != command.lista_patos.end() && duckInCommand->isAlive) {
+      // Si el pato ha resucitado, lo movemos de deadDucks a ducks
+      ducks.emplace_back(duckInCommand->id, duckInCommand->x_pos,
+                         duckInCommand->y_pos, duckInCommand->typeOfGun,
+                         duckInCommand->typeOfMove, duckInCommand->color,
+                         graficos); // Agregarlo a ducks
+      it = deadDucks.erase(it);     // Eliminarlo de deadDucks
+    } else {
+      ++it;
     }
   }
 
   // Agregar patos que están en el comando pero no en la lista local
   for (const auto &duckStruct : command.lista_patos) {
-    auto it = std::find_if(ducks.begin(), ducks.end(),
-                           [&duckStruct](const ClientDuck &duck) {
-                             return duck.getId() == duckStruct.id;
-                           });
-    if (it == ducks.end()) {
+    auto it = std::find_if(
+        ducks.begin(), ducks.end(), [&duckStruct](const ClientDuck &duck) {
+          return duck.getId() == duckStruct.id;
+        }); // Si el pato no está en la lista de patos vivos, lo agregamos
+    if (it == ducks.end() && duckStruct.isAlive) {
       ducks.emplace_back(duckStruct.id, duckStruct.x_pos, duckStruct.y_pos,
                          duckStruct.typeOfGun, duckStruct.typeOfMove,
                          duckStruct.color, graficos);
@@ -410,4 +451,5 @@ GameRenderer::~GameRenderer() {
   helmets.clear();
   platforms.clear();
   boxes.clear();
+  deadDucks.clear();
 }
