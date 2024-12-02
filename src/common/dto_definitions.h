@@ -15,13 +15,7 @@ struct DTODuck {
   uint8_t armor;
   bool is_aiming_up;
   uint8_t direction;
-};
-
-struct DTODeadDuck {
-  uint8_t id;
-  float x_pos;
-  float y_pos;
-  std::string color;
+  bool isAlive;
 };
 
 struct DTOBullet {
@@ -70,8 +64,6 @@ struct GameState {
   std::list<DTOPlatform> lista_plataformas;
 
   std::list<DTODuck> lista_patos;
-
-  std::list<DTODeadDuck> lista_patos_muertos;
 
   std::list<DTOBullet> lista_balas;
 

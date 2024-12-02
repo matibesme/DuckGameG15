@@ -150,15 +150,32 @@ void GameLoop::sendCompleteScene() {
                         personaje.second.getHelmet(),
                         personaje.second.getArmor(),
                         personaje.second.isAimingUp(),
-                        personaje.second.getDirection()};
+                        personaje.second.getDirection(),
+                        personaje.second.isAlive()
+    };
 
     command.lista_patos.push_back(dto_duck);
   }
 
   for (auto &personaje : dead_players) {
-    DTODeadDuck dto_dead_duck = {personaje.getId(), personaje.getXPos(),
-                                 personaje.getYPos(), personaje.getColor()};
-    command.lista_patos_muertos.push_back(dto_dead_duck);
+    uint8_t weapon_type = NOGUN;
+    if (personaje.isWeaponEquipped()) {
+      weapon_type = personaje.getWeapon().getType();
+    }
+    DTODuck dto_duck = {personaje.getId(),
+                        personaje.getColor(),
+                        personaje.getXPos(),
+                        personaje.getYPos(),
+                        personaje.getTypeOfMoveSprite(),
+                        weapon_type,
+                        personaje.getHelmet(),
+                        personaje.getArmor(),
+                        personaje.isAimingUp(),
+                        personaje.getDirection(),
+                        personaje.isAlive()
+    };
+
+    command.lista_patos.push_back(dto_duck);
   }
   for (auto &bullet : map_bullets) {
     DTOBullet dto_bullet = {bullet.first, bullet.second->getType(),
@@ -518,6 +535,7 @@ void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
             it->second.getYPos()) {
       if (it->second.receiveShoot()) {
         it->second.applyDamage(grenade_bullet.getDamage());
+        it->second.setColor(list_colors.back());
       }
       if (!it->second.isAlive()) {
         dead_players.push_back(it->second);
