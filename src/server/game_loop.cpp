@@ -260,6 +260,7 @@ void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
         }
         if (it->second.receiveShoot()) {
           it->second.applyDamage(bullet->getDamage());
+          it->second.setTypeOfMoveSprite(GET_DAMAGE);
         }
         if (!it->second.isAlive()) {
           dead_players.push_back(it->second);
