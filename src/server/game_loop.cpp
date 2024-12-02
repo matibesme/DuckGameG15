@@ -150,7 +150,9 @@ void GameLoop::sendCompleteScene() {
                         personaje.second.getHelmet(),
                         personaje.second.getArmor(),
                         personaje.second.isAimingUp(),
-                        personaje.second.getDirection()};
+                        personaje.second.getDirection(),
+                        personaje.second.isAlive()
+    };
 
     command.lista_patos.push_back(dto_duck);
   }
@@ -169,7 +171,9 @@ void GameLoop::sendCompleteScene() {
                         personaje.getHelmet(),
                         personaje.getArmor(),
                         personaje.isAimingUp(),
-                        personaje.getDirection()};
+                        personaje.getDirection(),
+                        personaje.isAlive()
+    };
 
     command.lista_patos.push_back(dto_duck);
   }
@@ -531,6 +535,7 @@ void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
             it->second.getYPos()) {
       if (it->second.receiveShoot()) {
         it->second.applyDamage(grenade_bullet.getDamage());
+        it->second.setColor(list_colors.back());
       }
       if (!it->second.isAlive()) {
         dead_players.push_back(it->second);

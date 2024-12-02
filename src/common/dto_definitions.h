@@ -15,6 +15,7 @@ struct DTODuck {
   uint8_t armor;
   bool is_aiming_up;
   uint8_t direction;
+  bool isAlive;
 };
 
 struct DTOBullet {

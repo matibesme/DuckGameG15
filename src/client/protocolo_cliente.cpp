@@ -81,7 +81,7 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
     lista_plataformas.push_back({typeOfPlataform, x_pos, y_pos, width, height});
   }
   command.lista_plataformas = lista_plataformas;
-  // recivo personajes
+  // recibo personajes
   uint8_t patos_quantity = protocolo.receiveByte(dead_connection);
   std::list<DTODuck> lista_patos;
   for (int i = 0; i < patos_quantity; i++) {
@@ -95,12 +95,13 @@ GameState ProtocoloCliente::reciveFullGameFromServer() {
     uint8_t armor = protocolo.receiveByte(dead_connection);
     bool is_aiming_up = protocolo.receiveBool(dead_connection);
     uint8_t direction = protocolo.receiveByte(dead_connection);
+    bool isAlive = protocolo.receiveBool(dead_connection);
     lista_patos.push_back({id, personajes_type, x_pos, y_pos, typeOfMove,
                            typeOfGun, helmet, armor, is_aiming_up, direction});
   }
 
   command.lista_patos = lista_patos;
-  // recivo balas
+  // recibo balas
   uint8_t bullets_quantity = protocolo.receiveByte(dead_connection);
 
   std::list<DTOBullet> bullets;
