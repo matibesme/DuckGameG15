@@ -11,6 +11,13 @@ void Client::execute() {
   sender.start();
   receiver.start();
   game.run();
+  queue_sender.close();
+  if (!queue_receiver.isClosed())
+    queue_receiver.close();
+  receiver.stop();
+  sender.stop();
+  sender.join();
+  receiver.join();
 }
 
 void Client::createGame(bool is_double_player, std::string player_1,
@@ -61,14 +68,8 @@ std::list<std::string> Client::updateGame() {
 }
 
 Client::~Client() {
-  queue_sender.close();
-  queue_receiver.close();
-  receiver.stop();
-  sender.stop();
-  if (sender.is_alive()) {
-    sender.join();
-  }
-  if (receiver.is_alive()) {
-    receiver.join();
-  }
+  if (!queue_receiver.isClosed())
+    queue_receiver.close();
+  if (!queue_sender.isClosed())
+    queue_sender.close();
 }
