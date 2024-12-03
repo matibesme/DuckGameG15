@@ -41,6 +41,11 @@ std::unique_ptr<Bullet> Ak47::shoot(bool is_aiming_up) {
     actual_bullet.release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
                           direction, true);
   }
+  if (direction == RIGHT) {
+    setXPos(x_pos - recoil);
+  } else if (direction == LEFT) {
+    setXPos(x_pos + recoil);
+  }
   if (spread_counter > MAX_SPREAD_COUNTER) {
     spread_counter -= SPREAD_VAR;
   }
