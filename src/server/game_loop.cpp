@@ -15,8 +15,8 @@ GameLoop::GameLoop(
     : map_id_clientes(list_id_clientes), queue_comandos(queue_comandos),
       end_game(end_game), queues_map(queues_map), map_personajes(),
       respawn_weapon_points(), time_weapon_last_respawn(), map_free_weapons(),
-      factory_weapons(), map_bullets(), id_balas(0), id_weapons(0), id_boxes(0),
-      id_defense(0), list_plataformas(), map_defense(),
+      factory_weapons(), map_bullets(), id_balas(CERO), id_weapons(CERO), id_boxes(CERO),
+      id_defense(CERO), list_plataformas(), map_defense(),
       respawn_defense_points(), time_defense_last_respawn(), colors_assigned(),
       list_colors({"blue", "green", "yellow", "pink", "purple", "orange",
                    "brown", "black", "white", "red"}),
@@ -29,7 +29,7 @@ GameLoop::GameLoop(
                        id_weapons, id_boxes, map_free_weapons, list_boxes,
                        map_bullets, id_balas, map_personajes, map_id_clientes,
                        list_colors, scene_id, colors_assigned),
-      map_victory_rounds(), scene_id(0), dead_players() {}
+      map_victory_rounds(), scene_id(CERO), dead_players() {}
 
 void GameLoop::run() {
   try {
@@ -37,7 +37,7 @@ void GameLoop::run() {
     sendColorPresentation();
 
     while (!end_game) {
-      uint8_t rounds = 0;
+      uint8_t rounds = CERO;
       while (!end_game && rounds < GAMES_PER_ROUND) {
         load_game_config.loadGame();
 
@@ -307,7 +307,7 @@ void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
     personaje.setRespondAfterSliding(15);
     personaje.setIsSliding(false);
     personaje.setEnSalto(true);
-    personaje.setVelocidadY(0);
+    personaje.setVelocidadY(CERO);
   }
 }
 
@@ -331,7 +331,7 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
   if (personaje.getYPos() + DUCK_HEIGHT >=
           platform.y_pos - PLATAFORMA_LEVEMENTE_LEVANTADA &&
       personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos) {
-    if (personaje.getVelocidadY() < 0) {
+    if (personaje.getVelocidadY() < CERO) {
       personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
     } else {
       personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
@@ -340,13 +340,13 @@ void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
   }
   if (personaje.getYPos() <= platform.y_pos + platform.height &&
       personaje.getYPos() + DUCK_HEIGHT > platform.y_pos + platform.height &&
-      personaje.getVelocidadY() > 0) {
+      personaje.getVelocidadY() > CERO) {
     if (personaje.getXPos() >= platform.x_pos + platform.width -
                                    MARGEN_DESPLAZAMIENTO_PLATAFORMA_X_IZQ) {
       return;
     }
     personaje.setYPos(platform.y_pos + platform.height);
-    personaje.setVelocidadY(0);
+    personaje.setVelocidadY(CERO);
     is_on_platform_down = true;
   }
 }
@@ -391,7 +391,7 @@ void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
 void GameLoop::respawnWeapon() {
   for (auto it = time_weapon_last_respawn.begin();
        it != time_weapon_last_respawn.end();) {
-    if (it->second == 0) {
+    if (it->second == CERO) {
       RespawnPoint &weapon = respawn_weapon_points[it->first];
       map_free_weapons.emplace(
           it->first, factory_weapons.createWeapon(weapon.type, weapon.x_pos,
@@ -406,7 +406,7 @@ void GameLoop::respawnWeapon() {
 
   for (auto it = time_defense_last_respawn.begin();
        it != time_defense_last_respawn.end();) {
-    if (it->second == 0) {
+    if (it->second == CERO) {
       Protection &defense = respawn_defense_points[it->first];
       map_defense.emplace(it->first, defense);
       it = time_defense_last_respawn.erase(it);
@@ -427,17 +427,17 @@ void GameLoop::cleanGame() {
   time_defense_last_respawn.clear();
   time_weapon_last_respawn.clear();
   respawn_weapon_points.clear();
-  id_balas = 0;
-  id_weapons = 0;
-  id_boxes = 0;
-  id_defense = 0;
+  id_balas = CERO;
+  id_weapons = CERO;
+  id_boxes = CERO;
+  id_defense = CERO;
   list_plataformas.clear();
   dead_players.clear();
 }
 
 bool GameLoop::checkWinner(std::string &winner) {
-  uint8_t cant_winners = 0;
-  uint8_t max_victories = 0;
+  uint8_t cant_winners = CERO;
+  uint8_t max_victories = CERO;
   for (auto &victory_round : map_victory_rounds) {
     if (victory_round.second >= NECESARY_VICTORY_ROUNDS) {
       if (victory_round.second > max_victories) {
@@ -461,7 +461,7 @@ void GameLoop::sendEndRound() {
                                   victory_round.second);
   }
 
-  for (int i = 0; i < 1500; i++) {
+  for (int i = CERO; i < 1500; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }
@@ -471,7 +471,7 @@ void GameLoop::sendVictory(std::string &winner) {
   command.action = VICTORY_BYTE;
   command.name_winner = winner;
 
-  for (int i = 0; i < 150; i++) {
+  for (int i = CERO; i < 150; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 
@@ -509,12 +509,12 @@ void GameLoop::winGameCheat(uint8_t &rounds) {
 void GameLoop::sendColorPresentation() {
   GameState command;
   command.action = COLOR_PRESENTATION_BYTE;
-  uint8_t indice = 0;
+  uint8_t indice = CERO;
   for (auto &player : map_id_clientes) {
     command.players_color.emplace(player.second, list_colors[indice++]);
     map_victory_rounds.emplace(player.first, VICTORY_ROUNDS_INICIAL);
   }
-  for (int i = 0; i < 1500; i++) {
+  for (int i = CERO; i < 1500; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }

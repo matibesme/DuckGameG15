@@ -93,6 +93,7 @@ constexpr float MARGEN_DESPLAZAMIENTO_PLATAFORMA_X_IZQ = 12;
 constexpr float PLATAFORMA_LEVEMENTE_LEVANTADA = 5;
 // TIMES
 constexpr int TIME_TO_RESPAWN = 10;
+constexpr int START_EXPLOTION = 15;
 
 // Spreads
 extern float COWBOY_SPREAD;
@@ -105,3 +106,29 @@ extern float GRANADA_SPREAD;
 extern float BANANA_SPREAD;
 extern float PEW_PEW_LASER_MAX_SPREAD;
 extern float LASER_RIFLE_SPREAD;
+
+
+// COnstantes varias
+constexpr int CERO = 0;
+constexpr int UNO = 1;
+constexpr int DOS = 2;
+constexpr int TRES = 3;
+constexpr int CUATRO = 4;
+constexpr int CINCO = 5;
+constexpr int SEIS = 6;
+constexpr int SIETE = 7;
+constexpr int OCHO = 8;
+constexpr int NUEVE = 9;
+constexpr int DIEZ = 10;
+constexpr int VEL_MAX = 15;
+constexpr int Y_SPACE = 15;
+constexpr int X_SPACE = 1;
+constexpr int NULL_VEL = 0;
+constexpr float SPREAD_VAR = 0.1;
+constexpr float PROBA = 0.5;
+constexpr float NO_SPREAD = 0.0;
+constexpr int RELOAD_TIME = 70;
+constexpr int RESPAWN_TIME = 800;
+
+
+

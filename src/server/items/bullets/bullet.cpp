@@ -4,6 +4,10 @@
 
 #include "granada_bullet.h"
 
+
+
+
+
 Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
                int range, float spread)
     : Objeto(type, id, x_pos, y_pos), damage(damage), range(range),
@@ -34,13 +38,13 @@ bool Bullet::randomSpread() {
       rd()); // motor generador de números aleatorios basado en Mersenne Twister
 
   // Distribución uniforme entre 0 y 1 para representar "falso" y "verdadero"
-  std::bernoulli_distribution dist(0.5); // probabilidad de 50% para cada valor
+  std::bernoulli_distribution dist(PROBA); // probabilidad de 50% para cada valor
 
   return dist(gen); // genera un valor verdadero o falso
 }
 
 void Bullet::executeAction() {
-  if (is_alive && range > 0) {
+  if (is_alive && range > CERO) {
     if (direction == RIGHT) {
       x_pos += BULLET_VEL;
       spread_direction ? y_pos += spread : y_pos -= spread;
@@ -55,7 +59,7 @@ void Bullet::executeAction() {
       spread_direction ? x_pos += spread : x_pos -= spread;
     }
     range -= BULLET_VEL;
-    if (range <= 0) {
+    if (range <= CERO) {
       is_alive = false;
     }
   }
@@ -112,7 +116,7 @@ uint8_t Bullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
     return RIGHT;
   }
 
-  return 0; // En caso de que ninguna coincidencia sea encontrada
+  return CERO; // En caso de que ninguna coincidencia sea encontrada
 }
 
 void Bullet::kill() { is_alive = false; }

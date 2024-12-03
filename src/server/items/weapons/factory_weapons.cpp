@@ -28,46 +28,46 @@ std::shared_ptr<Weapon> FactoryWeapons::createWeapon(uint8_t type, float x,
                                                      float y) {
   switch (type) {
   case GRANADA_GUN:
-    return std::make_shared<Granada>(GRANADA_GUN, 1, x, y, DAMAGE_GRANADA,
+    return std::make_shared<Granada>(GRANADA_GUN, UNO, x, y, DAMAGE_GRANADA,
                                      RANGE_GRANADA * TILE_CONSTANT,
                                      AMMO_GRANADA, RECOIL_GRANADA);
   case BANANA_GUN:
-    return std::make_shared<Banana>(BANANA_GUN, 1, x, y, DAMAGE_BANANA,
+    return std::make_shared<Banana>(BANANA_GUN, UNO, x, y, DAMAGE_BANANA,
                                     RANGE_BANANA * TILE_CONSTANT, AMMO_BANANA,
                                     RECOIL_BANANA);
   case AK47_GUN:
-    return std::make_shared<Ak47>(AK47_GUN, 1, x, y, DAMAGE_AK47,
+    return std::make_shared<Ak47>(AK47_GUN, UNO, x, y, DAMAGE_AK47,
                                   RANGE_AK47 * TILE_CONSTANT, AMMO_AK47,
                                   RECOIL_AK47);
   case LASER_RIFLE_GUN:
-    return std::make_shared<LaserRifle>(LASER_RIFLE_GUN, 1, x, y,
+    return std::make_shared<LaserRifle>(LASER_RIFLE_GUN, UNO, x, y,
                                         DAMAGE_LASER_RIFLE,
                                         RANGE_LASER_RIFLE * TILE_CONSTANT,
                                         AMMO_LASER_RIFLE, RECOIL_LASER_RIFLE);
   case PEW_PEW_LASER_GUN:
     return std::make_shared<PewPewLaser>(
-        PEW_PEW_LASER_GUN, 1, x, y, DAMAGE_PEW_PEW_LASER,
+        PEW_PEW_LASER_GUN, UNO, x, y, DAMAGE_PEW_PEW_LASER,
         RANGE_PEW_PEW_LASER * TILE_CONSTANT, AMMO_PEW_PEW_LASER,
         RECOIL_PEW_PEW_LASER);
   case ESCOPETA_GUN:
-    return std::make_shared<Shotgun>(ESCOPETA_GUN, 1, x, y, DAMAGE_ESCOPETA,
+    return std::make_shared<Shotgun>(ESCOPETA_GUN, UNO, x, y, DAMAGE_ESCOPETA,
                                      RANGE_ESCOPETA * TILE_CONSTANT,
                                      AMMO_ESCOPETA, RECOIL_ESCOPETA);
   case SNIPER_GUN:
-    return std::make_shared<Sniper>(SNIPER_GUN, 1, x, y, DAMAGE_SNIPER,
+    return std::make_shared<Sniper>(SNIPER_GUN, UNO, x, y, DAMAGE_SNIPER,
                                     RANGE_SNIPER * TILE_CONSTANT, AMMO_SNIPER,
                                     RECOIL_SNIPER);
   case COWBOY_GUN:
-    return std::make_shared<CowboyPistol>(COWBOY_GUN, 1, x, y, DAMAGE_COWBOY,
+    return std::make_shared<CowboyPistol>(COWBOY_GUN, UNO, x, y, DAMAGE_COWBOY,
                                           RANGE_COWBOY * TILE_CONSTANT,
                                           AMMO_COWBOY, RECOIL_COWBOY);
   case PISTOLA_DUELOS_GUN:
     return std::make_shared<DuelPistol>(
-        PISTOLA_DUELOS_GUN, 1, x, y, DAMAGE_PISTOLA_DUELOS,
+        PISTOLA_DUELOS_GUN, UNO, x, y, DAMAGE_PISTOLA_DUELOS,
         RANGE_PISTOLA_DUELOS * TILE_CONSTANT, AMMO_PISTOLA_DUELOS,
         RECOIL_PISTOLA_DUELOS);
   case MAGNUM_GUN:
-    return std::make_shared<Magnum>(MAGNUM_GUN, 1, x, y, DAMAGE_MAGNUM,
+    return std::make_shared<Magnum>(MAGNUM_GUN, UNO, x, y, DAMAGE_MAGNUM,
                                     RANGE_MAGNUM * TILE_CONSTANT, AMMO_MAGNUM,
                                     RECOIL_MAGNUM);
 
@@ -81,37 +81,37 @@ std::shared_ptr<Weapon> FactoryWeapons::generateRandomWeapon(float pos_x,
   std::srand(std::time(nullptr));
 
   // Generar un número aleatorio correspondiente a los tipos de armas
-  int random_number = std::rand() % 10; // Hay 10 tipos de armas (0 a 9)
+  int random_number = std::rand() % DIEZ; // Hay 10 tipos de armas (0 a 9)
 
   switch (random_number) {
-  case 0:
+  case CERO:
     return createWeapon(GRANADA_GUN, pos_x, pos_y);
     break;
-  case 1:
+  case UNO:
     return createWeapon(BANANA_GUN, pos_x, pos_y);
     break;
-  case 2:
+  case DOS:
     return createWeapon(AK47_GUN, pos_x, pos_y);
     break;
-  case 3:
+  case TRES:
     return createWeapon(LASER_RIFLE_GUN, pos_x, pos_y);
     break;
-  case 4:
+  case CUATRO:
     return createWeapon(PEW_PEW_LASER_GUN, pos_x, pos_y);
     break;
-  case 5:
+  case CINCO:
     return createWeapon(ESCOPETA_GUN, pos_x, pos_y);
     break;
-  case 6:
+  case SEIS:
     return createWeapon(SNIPER_GUN, pos_x, pos_y);
     break;
-  case 7:
+  case SIETE:
     return createWeapon(COWBOY_GUN, pos_x, pos_y);
     break;
-  case 8:
+  case OCHO:
     return createWeapon(PISTOLA_DUELOS_GUN, pos_x, pos_y);
     break;
-  case 9:
+  case NUEVE:
     return createWeapon(MAGNUM_GUN, pos_x, pos_y);
     break;
   default:

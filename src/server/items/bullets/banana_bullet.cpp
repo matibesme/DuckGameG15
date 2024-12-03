@@ -8,6 +8,8 @@
 //
 #include <iostream>
 
+
+
 BananaBullet::BananaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
                            int damage, int range, float spread)
     : Bullet(type, id, x_pos, y_pos, damage, range, spread),
@@ -18,13 +20,13 @@ void BananaBullet::executeAction() {
     // Actualización de la posición vertical (y_pos)
     if (is_falling) {
       y_pos += std::abs(velocidad);
-      if (velocidad < 15) {
+      if (velocidad < VEL_MAX) {
         velocidad += GRAVEDAD;
       }
     } else {
       y_pos -= velocidad;
       velocidad -= GRAVEDAD;
-      if (velocidad == 0) {
+      if (velocidad == NULL_VEL) {
         is_falling = true;
       }
     }
@@ -51,11 +53,11 @@ void BananaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
         } else {
           setIsFalling(true);
           if (min_distance == DOWN) {
-            y_pos = plat_y_pos + plat_height + 15;
+            y_pos = plat_y_pos + plat_height + Y_SPACE;
           } else if (min_distance == LEFT) {
             x_pos = plat_x_pos - WIDTH_BIG_BULLET;
           } else if (min_distance == RIGHT) {
-            x_pos = plat_x_pos + plat_width + 1;
+            x_pos = plat_x_pos + plat_width + X_SPACE;
           }
         }
       }
@@ -118,5 +120,5 @@ uint8_t BananaBullet::calculateCollisionSide(float plat_x_pos, float plat_y_pos,
     return RIGHT;
   }
 
-  return 0; // En caso de que ninguna coincidencia sea encontrada
+  return CERO; // En caso de que ninguna coincidencia sea encontrada
 }

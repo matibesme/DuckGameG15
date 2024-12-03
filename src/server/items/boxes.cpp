@@ -28,32 +28,32 @@ bool Boxes::isDestroyed() const { return health <= 0; }
 
 void Boxes::generateRandomContent() {
   srand(time(NULL));
-  int random_number = rand() % 5 + 1;
+  int random_number = rand() % CINCO + UNO;
   FactoryWeapons factory_weapons;
   switch (random_number) {
-  case 1:
+  case UNO:
     break;
-  case 2:
+  case DOS:
     map_free_weapons.emplace(id_weapons++,
                              factory_weapons.generateRandomWeapon(
                                  x_pos, y_pos + HEIGHT_BOX - HEIGHT_GUN));
     break;
-  case 3:
+  case TRES:
     map_defense.emplace(
         id_defense++,
         Protection{ARMOR_EQUIPPED, x_pos, y_pos + HEIGHT_BOX - HEIGHT_ARMOR});
     break;
-  case 4:
+  case CUATRO:
     map_defense.emplace(
         id_defense++,
         Protection{HELMET_EQUIPPED, x_pos, y_pos + HEIGHT_BOX - HEIGHT_HELMET});
     break;
-  case 5:
+  case CINCO:
 
     map_bullets.emplace(
         id_balas++, std::dynamic_pointer_cast<Granada>(
                         factory_weapons.createWeapon(GRANADA_GUN, x_pos, y_pos))
-                        ->makeBoxExplosion(x_pos, y_pos, 15));
+                        ->makeBoxExplosion(x_pos, y_pos, START_EXPLOTION));
   default:
     break;
   }

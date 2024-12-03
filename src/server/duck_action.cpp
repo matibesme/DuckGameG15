@@ -29,7 +29,7 @@ DuckAction::DuckAction(
 void DuckAction::movementComand(uint8_t comando, uint8_t id) {
   DuckPlayer &personaje = map_personajes[id];
 
-  if (personaje.isSliding() || personaje.getRespondAfterSliding() > 0)
+  if (personaje.isSliding() || personaje.getRespondAfterSliding() > CERO)
     return;
 
   switch (comando) {
@@ -46,7 +46,7 @@ void DuckAction::movementComand(uint8_t comando, uint8_t id) {
   case JUMP:
     if (!personaje.estaSaltando()) {
       personaje.setEnSalto(true);
-    } else if (personaje.getVelocidadY() < 0) {
+    } else if (personaje.getVelocidadY() < CERO) {
       personaje.setFlapping(true);
       personaje.increaseFlappingCounter();
     }
@@ -95,8 +95,8 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
 
           std::random_device rd;
           std::mt19937 gen(rd());
-          std::uniform_int_distribution<> distrib(1, 10);
-          int random_addition = distrib(gen) * 800;
+          std::uniform_int_distribution<> distrib(UNO, DIEZ);
+          int random_addition = distrib(gen) * RESPAWN_TIME;
 
           time_weapon_last_respawn.emplace(id_weapons, random_addition);
           id_weapons++;
@@ -139,8 +139,8 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
         respawn_defense_points.erase(defense.first);
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> distrib(1, 10);
-        int random_addition = distrib(gen) * 800;
+        std::uniform_int_distribution<> distrib(UNO, DIEZ);
+        int random_addition = distrib(gen) * RESPAWN_TIME;
 
         time_defense_last_respawn.emplace(id_defense, random_addition);
         id_defense++;
@@ -203,9 +203,9 @@ void DuckAction::weaponComand(uint8_t comando, uint8_t id) {
     weapon.setYPos(personaje.getYPos());
     weapon.setDirection(personaje.getDirection());
 
-    int bullet_count = (weapon.getType() == ESCOPETA_GUN)        ? 6
-                       : (weapon.getType() == PEW_PEW_LASER_GUN) ? 3
-                                                                 : 1;
+    int bullet_count = (weapon.getType() == ESCOPETA_GUN)        ? SEIS
+                       : (weapon.getType() == PEW_PEW_LASER_GUN) ? TRES
+                                                                 : UNO;
 
     for (int i = 0; i < bullet_count; ++i) {
       std::unique_ptr<Bullet> bullet = weapon.shoot(personaje.isAimingUp());

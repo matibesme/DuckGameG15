@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+
 GranadaBullet::GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
                              int damage, int range, float spread,
                              uint8_t time_to_explode_)
@@ -14,17 +15,17 @@ GranadaBullet::GranadaBullet(uint8_t type, uint8_t id, float x_pos, float y_pos,
       continue_moving(true) {}
 
 void GranadaBullet::executeAction() {
-  if (time_to_explode > 15 && is_alive && continue_moving) {
+  if (time_to_explode > START_EXPLOTION && is_alive && continue_moving) {
     // Actualización de la posición vertical (y_pos)
     if (is_falling) {
       y_pos += std::abs(velocidad);
-      if (velocidad < 15) {
+      if (velocidad < VEL_MAX) {
         velocidad += GRAVEDAD;
       }
     } else {
       y_pos -= velocidad;
       velocidad -= GRAVEDAD;
-      if (velocidad == 0) {
+      if (velocidad == NULL_VEL) {
         is_falling = true;
       }
     }
@@ -34,9 +35,9 @@ void GranadaBullet::executeAction() {
   }
 
   // Lógica para la explosión y finalización de la vida
-  if (time_to_explode == 15) {
+  if (time_to_explode == START_EXPLOTION) {
     explode();
-  } else if (time_to_explode == 0) {
+  } else if (time_to_explode == CERO) {
     is_alive = false;
     return;
   }
@@ -69,11 +70,11 @@ void GranadaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
         } else {
           setIsFalling(true);
           if (min_distance == DOWN) {
-            y_pos = plat_y_pos + plat_height + 15;
+            y_pos = plat_y_pos + plat_height + Y_SPACE;
           } else if (min_distance == LEFT) {
             x_pos = plat_x_pos - WIDTH_BIG_BULLET;
           } else if (min_distance == RIGHT) {
-            x_pos = plat_x_pos + plat_width + 1;
+            x_pos = plat_x_pos + plat_width + X_SPACE;
           }
         }
       }
@@ -83,7 +84,7 @@ void GranadaBullet::colisionWithPlatform(float plat_x_pos, float plat_y_pos,
 
 void GranadaBullet::boxExplosion(float x_pos, float y_pos,
                                  uint8_t time_to_explode_) {
-  release(x_pos, y_pos, 0, 0);
+  release(x_pos, y_pos, CERO, CERO);
   time_to_explode = time_to_explode_;
 }
 
@@ -123,7 +124,7 @@ uint8_t GranadaBullet::calculateCollisionSide(float plat_x_pos,
     return RIGHT;
   }
 
-  return 0; // En caso de que ninguna coincidencia sea encontrada
+  return CERO; // En caso de que ninguna coincidencia sea encontrada
 }
 
 void GranadaBullet::setIsExplode(bool is_explode_) {

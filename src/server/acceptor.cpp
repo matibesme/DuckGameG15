@@ -4,7 +4,7 @@
 
 Acceptor::Acceptor(const char *port, bool &close)
     : socket_servidor(port), lista_clientes(), close(close),
-      cantidad_clientes(1), lobby() {}
+      cantidad_clientes(UNO), lobby() {}
 
 void Acceptor::run() {
   while (!close) {
@@ -29,7 +29,7 @@ void Acceptor::accept_new_client() {
   reapDead();
   lobby.removeGame();
 
-  cantidad_clientes += 2;
+  cantidad_clientes += DOS;
 }
 
 void Acceptor::deleteAClient(ThreadCliente &cliente) {
@@ -50,7 +50,7 @@ void Acceptor::reapDead() {
 }
 
 void Acceptor::closeSocket() {
-  socket_servidor.shutdown(2);
+  socket_servidor.shutdown(DOS);
   socket_servidor.close();
 }
 

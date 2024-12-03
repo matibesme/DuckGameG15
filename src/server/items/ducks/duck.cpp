@@ -39,7 +39,7 @@ uint8_t DuckPlayer::getTypeOfMoveSprite() { return typeOfMove; }
 
 void DuckPlayer::incrementXPos(float pos_x) {
   x_pos += pos_x;
-  if (x_pos < 0 || x_pos > MAP_LIMIT_X) {
+  if (x_pos < CERO || x_pos > MAP_LIMIT_X) {
     is_alive = false;
   }
 }
@@ -55,7 +55,7 @@ void DuckPlayer::setVelocidadY(float velocidad_) { velocidad = velocidad_; }
 float &DuckPlayer::getVelocidadY() { return velocidad; }
 
 void DuckPlayer::stopJump(float y_pos_) {
-  counter_flapping = 0;
+  counter_flapping = CERO;
   y_pos = y_pos_;
   saltando = false;
   is_flapping = false;
@@ -75,13 +75,13 @@ void DuckPlayer::executeAction(std::string &color_) {
       x_pos -= SLIDE_VELOCITY;
     }
     slide_counter--;
-    if (slide_counter == 0) {
+    if (slide_counter == CERO) {
       is_sliding = false;
       slide_counter = SLIDE_COUNTER;
     }
     return;
   }
-  if (respond_after_sliding > 0) {
+  if (respond_after_sliding > CERO) {
     respond_after_sliding--;
   }
   if (saltando) {
@@ -89,7 +89,7 @@ void DuckPlayer::executeAction(std::string &color_) {
       gravity = GRAVITY_FLAP;
       counter_flapping--;
 
-      if (counter_flapping == 0) {
+      if (counter_flapping == CERO) {
         is_flapping = false;
         gravity = GRAVEDAD;
         typeOfMove = JUMP;
@@ -107,7 +107,7 @@ void DuckPlayer::executeAction(std::string &color_) {
     }
   }
   if (is_weapon_equiped) {
-    if (getWeapon().getReloadTime() != 0) {
+    if (getWeapon().getReloadTime() != CERO) {
       getWeapon().setReloadTime(getWeapon().getReloadTime() - 1);
     }
   }
@@ -142,7 +142,7 @@ bool DuckPlayer::isAlive() { return is_alive; }
 
 void DuckPlayer::applyDamage(int damage) {
   life -= damage;
-  if (life <= 0) {
+  if (life <= CERO) {
     is_alive = false;
     typeOfMove = DOWN;
   }
@@ -153,9 +153,9 @@ void DuckPlayer::setFlapping(bool flapping) { is_flapping = flapping; }
 bool DuckPlayer::isFlapping() { return is_flapping; }
 
 void DuckPlayer::increaseFlappingCounter() {
-  if (counter_flapping == 0) {
+  if (counter_flapping == CERO) {
     counter_flapping += CANT_FLAP;
-    velocidad = -1;
+    velocidad = -UNO;
   }
 }
 
