@@ -200,7 +200,7 @@ void GameLoop::paraCadaPatoAction() {
     }
 
     if (!it->second.isWeaponEquipped()) {
-      ++it; 
+      ++it;
       continue;
     }
 
