@@ -41,7 +41,7 @@ void GameLoop::run() {
       while (!end_game && rounds < GAMES_PER_ROUND) {
         load_game_config.loadGame();
 
-        while (!end_game && map_personajes.size() > 1) {
+        while (!end_game && map_personajes.size() > UNO) {
           CommandClient comando;
           while (queue_comandos->try_pop(comando)) {
             checkCommand(comando, rounds);
@@ -200,7 +200,7 @@ void GameLoop::paraCadaPatoAction() {
     }
 
     if (!it->second.isWeaponEquipped()) {
-      ++it; // Solo avanza el iterador si no hay eliminación
+      ++it; 
       continue;
     }
 
@@ -290,7 +290,7 @@ void GameLoop::sendEndRound() {
                                   victory_round.second);
   }
 
-  for (int i = CERO; i < 1500; i++) {
+  for (int i = CERO; i < SEND_PRESENTATION_TIME; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }
@@ -300,7 +300,7 @@ void GameLoop::sendVictory(const std::string &winner) {
   command.action = VICTORY_BYTE;
   command.name_winner = winner;
 
-  for (int i = CERO; i < 150; i++) {
+  for (int i = CERO; i < VICT_TIME; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 
@@ -313,9 +313,9 @@ void GameLoop::spawnBoxesCheat() {
                  std::back_inserter(list_boxes), [this](const auto &pair) {
                    const auto &personaje = pair.second;
                    return Boxes(TYPE_BOX, id_boxes++, personaje.getXPos(),
-                                personaje.getYPos(), 100, map_free_weapons,
-                                map_defense, map_bullets, id_balas, id_weapons,
-                                id_defense);
+                                personaje.getYPos(), BOX_HEALTH,
+                                map_free_weapons, map_defense, map_bullets,
+                                id_balas, id_weapons, id_defense);
                  });
 }
 
@@ -345,7 +345,7 @@ void GameLoop::sendColorPresentation() {
     command.players_color.emplace(player.second, list_colors[indice++]);
     map_victory_rounds.emplace(player.first, VICTORY_ROUNDS_INICIAL);
   }
-  for (int i = CERO; i < 1500; i++) {
+  for (int i = CERO; i < SEND_PRESENTATION_TIME; i++) {
     queues_map->sendMessagesToQueues(command);
   }
 }

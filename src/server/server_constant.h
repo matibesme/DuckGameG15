@@ -129,3 +129,6 @@ constexpr float NO_SPREAD = 0.0;
 constexpr int RELOAD_TIME = 70;
 constexpr int RESPAWN_TIME = 700;
 constexpr int MAX_QUEUE_SIZE = 50;
+constexpr int SEND_PRESENTATION_TIME = 1500;
+constexpr int VICT_TIME = 150;
+constexpr int BOX_HEALTH = 100;
