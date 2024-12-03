@@ -4,7 +4,7 @@
 
 #include "laser_rifle.h"
 
-constexpr float MAX_SPREAD_COUNTER = 0.5;
+constexpr float MAX_SPREAD_COUNTER = -1;
 
 constexpr int BURST_INTERVAL = 5;
 
@@ -12,8 +12,8 @@ LaserRifle::LaserRifle(uint8_t type, uint8_t id, float x_pos, float y_pos,
                        int damage, int range, int ammo_quantity, float recoil)
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       spread_counter(TRES), bullets_vector() {
-  bullets_vector.emplace_back(LASER_RIFLE_BULLET, UNO, CERO, CERO, damage, range,
-                              LASER_RIFLE_SPREAD);
+  bullets_vector.emplace_back(LASER_RIFLE_BULLET, UNO, CERO, CERO, damage,
+                              range, LASER_RIFLE_SPREAD);
 }
 
 bool LaserRifle::isEmptyAmmo() { return ammo_quantity == CERO; }
@@ -47,8 +47,8 @@ std::unique_ptr<Bullet> LaserRifle::shoot(bool is_aiming_up) {
     spread_counter -= SPREAD_VAR;
   }
   bullets_vector.pop_back();
-  bullets_vector.emplace_back(LASER_RIFLE_BULLET, UNO, CERO, CERO, damage, range,
-                              spread_counter);
+  bullets_vector.emplace_back(LASER_RIFLE_BULLET, UNO, CERO, CERO, damage,
+                              range, spread_counter);
   return std::make_unique<Bullet>(actual_bullet);
 }
 
@@ -62,6 +62,6 @@ void LaserRifle::stopShooting() {
   spread_counter = TRES;
   bullet_count = CERO;
   bullets_vector.pop_back();
-  bullets_vector.emplace_back(LASER_RIFLE_BULLET, UNO, CERO, CERO, damage, range,
-                              spread_counter);
+  bullets_vector.emplace_back(LASER_RIFLE_BULLET, UNO, CERO, CERO, damage,
+                              range, spread_counter);
 }

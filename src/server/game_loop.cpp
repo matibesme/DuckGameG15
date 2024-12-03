@@ -2,8 +2,6 @@
 #include "items/weapons/cowboy_pistol.h"
 #include <bits/fs_fwd.h>
 #include <bits/fs_path.h>
-#include <items/weapons/duel_pistol.h>
-#include <items/weapons/magnum.h>
 
 // despues sacar
 #include "items/weapons/banana.h"
@@ -15,11 +13,12 @@ GameLoop::GameLoop(
     : map_id_clientes(list_id_clientes), queue_comandos(queue_comandos),
       end_game(end_game), queues_map(queues_map), map_personajes(),
       respawn_weapon_points(), time_weapon_last_respawn(), map_free_weapons(),
-      factory_weapons(), map_bullets(), id_balas(CERO), id_weapons(CERO), id_boxes(CERO),
-      id_defense(CERO), list_plataformas(), map_defense(),
+      factory_weapons(), map_bullets(), id_balas(CERO), id_weapons(CERO),
+      id_boxes(CERO), id_defense(CERO), list_plataformas(), map_defense(),
       respawn_defense_points(), time_defense_last_respawn(), colors_assigned(),
       list_colors({"blue", "green", "yellow", "pink", "purple", "orange",
                    "brown", "black", "white", "red"}),
+      map_victory_rounds(), scene_id(CERO), dead_players(),
       duck_action(map_personajes, map_free_weapons, respawn_weapon_points,
                   time_weapon_last_respawn, map_bullets, id_balas, id_weapons,
                   map_defense, respawn_defense_points, id_defense,
@@ -29,7 +28,8 @@ GameLoop::GameLoop(
                        id_weapons, id_boxes, map_free_weapons, list_boxes,
                        map_bullets, id_balas, map_personajes, map_id_clientes,
                        list_colors, scene_id, colors_assigned),
-      map_victory_rounds(), scene_id(CERO), dead_players() {}
+      colisions(list_plataformas, map_personajes, list_colors, dead_players,
+                list_boxes, map_bullets) {}
 
 void GameLoop::run() {
   try {
@@ -51,7 +51,7 @@ void GameLoop::run() {
             break;
           }
           paraCadaPatoAction();
-          checkBullets();
+          colisions.checkBullets();
           respawnWeapon();
           sendCompleteScene();
           std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
@@ -108,21 +108,6 @@ void GameLoop::checkCommand(CommandClient comando, uint8_t &rounds) {
       winGameCheat(rounds);
     } else {
       duck_action.cheatComand(comando.type_of_movement, comando.id);
-    }
-  }
-}
-
-void GameLoop::checkBullets() {
-  for (auto it = map_bullets.begin(); it != map_bullets.end();) {
-    if (!it->second->isAlive()) {
-      if (it->second->getTypeOfBullet() == GRENADE_EXPLOSION) {
-        checkGrenadeExplosion(*(GranadaBullet *)it->second.get());
-      }
-      it = map_bullets.erase(it);
-    } else {
-      checkCoalition(it->second);
-      it->second->executeAction();
-      ++it;
     }
   }
 }
@@ -206,7 +191,7 @@ void GameLoop::sendCompleteScene() {
 
 void GameLoop::paraCadaPatoAction() {
   for (auto it = map_personajes.begin(); it != map_personajes.end();) {
-    checkCoalitionDuckPlatform(it->second);
+    colisions.checkCoalitionDuckPlatform(it->second);
     it->second.executeAction(list_colors[colors_assigned[it->second.getId()]]);
 
     if (!it->second.isAlive()) {
@@ -232,162 +217,6 @@ void GameLoop::paraCadaPatoAction() {
   }
 }
 
-void GameLoop::checkCoalition(std::unique_ptr<Bullet> &bullet) {
-  for (auto &plataform : list_plataformas) {
-    bullet->colisionWithPlatform(plataform.x_pos, plataform.y_pos,
-                                 plataform.width, plataform.height + 5);
-  }
-  uint8_t bullet_type = bullet->getTypeOfBullet();
-  if (bullet_type != GRANADA_BULLET && bullet_type != GRENADE_EXPLOSION) {
-    for (auto it = map_personajes.begin(); it != map_personajes.end();) {
-      bool colision;
-      if (it->second.getTypeOfMoveSprite() == DOWN) {
-        colision = bullet->colisionWithDuck(
-            it->second.getXPos() - (DUCK_HEIGHT / 2),
-            it->second.getYPos() + DUCK_HEIGHT - DUCK_DOWN_HEIGHT, DUCK_HEIGHT,
-            DUCK_WIDTH);
-      } else {
-        colision =
-            bullet->colisionWithDuck(it->second.getXPos(), it->second.getYPos(),
-                                     DUCK_WIDTH, DUCK_HEIGHT);
-      }
-      if (colision) {
-        if (bullet_type == BANANA_BULLET) {
-          it->second.setIsSliding(true);
-          return;
-        }
-        if (it->second.receiveShoot()) {
-          it->second.applyDamage(bullet->getDamage());
-          it->second.setColor(list_colors.back());
-        }
-        if (!it->second.isAlive()) {
-          dead_players.push_back(it->second);
-          it = map_personajes.erase(it);
-        } else {
-          ++it;
-        }
-        return;
-      } else {
-        ++it;
-      }
-    }
-  }
-
-  for (auto it = list_boxes.begin(); it != list_boxes.end();) {
-    bool colision = bullet->colisionWithBox(it->getXPos(), it->getYPos(),
-                                            WIDTH_BOX, HEIGHT_BOX);
-    if (colision) {
-      it->takeDamage(bullet->getDamage());
-      if (it->isDestroyed()) {
-        it = list_boxes.erase(it);
-        break;
-      } else {
-        ++it;
-      }
-    } else {
-      ++it;
-    }
-  }
-}
-
-void GameLoop::checkCoalitionDuckPlatform(DuckPlayer &personaje) {
-  bool is_on_platform = false;
-  for (auto &platform : list_plataformas) {
-    if (sobrePlataformaX(personaje, platform)) {
-      bool is_on_platform_down = false;
-      coalisionSuperiorEinferior(personaje, platform, is_on_platform,
-                                 is_on_platform_down);
-      if (is_on_platform_down)
-        return;
-    }
-    coalisonWalls(personaje, platform);
-  }
-
-  if (!is_on_platform && (!personaje.estaSaltando() || personaje.isSliding())) {
-    personaje.setRespondAfterSliding(15);
-    personaje.setIsSliding(false);
-    personaje.setEnSalto(true);
-    personaje.setVelocidadY(CERO);
-  }
-}
-
-bool GameLoop::sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &platform) {
-  return (personaje.getXPos() >= platform.x_pos &&
-          personaje.getXPos() <=
-              platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X) ||
-         (personaje.getXPos() <= platform.x_pos &&
-          personaje.getXPos() + (DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X) >=
-              platform.x_pos) ||
-         (personaje.getXPos() <=
-              platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X &&
-          personaje.getXPos() + DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X >=
-              platform.x_pos + platform.width - MARGEN_DESPLAZAMIENTO_PATO_X);
-}
-
-void GameLoop::coalisionSuperiorEinferior(DuckPlayer &personaje,
-                                          DTOPlatform &platform,
-                                          bool &is_on_platform,
-                                          bool &is_on_platform_down) {
-  if (personaje.getYPos() + DUCK_HEIGHT >=
-          platform.y_pos - PLATAFORMA_LEVEMENTE_LEVANTADA &&
-      personaje.getYPos() + personaje.getVelocidadY() <= platform.y_pos) {
-    if (personaje.getVelocidadY() < CERO) {
-      personaje.stopJump(platform.y_pos - DUCK_HEIGHT);
-    } else {
-      personaje.setYPos(platform.y_pos - DUCK_HEIGHT);
-    }
-    is_on_platform = true;
-  }
-  if (personaje.getYPos() <= platform.y_pos + platform.height &&
-      personaje.getYPos() + DUCK_HEIGHT > platform.y_pos + platform.height &&
-      personaje.getVelocidadY() > CERO) {
-    if (personaje.getXPos() >= platform.x_pos + platform.width -
-                                   MARGEN_DESPLAZAMIENTO_PLATAFORMA_X_IZQ) {
-      return;
-    }
-    personaje.setYPos(platform.y_pos + platform.height);
-    personaje.setVelocidadY(CERO);
-    is_on_platform_down = true;
-  }
-}
-
-void GameLoop::coalisonWalls(DuckPlayer &personaje, DTOPlatform &platform) {
-  if (personaje.getYPos() + DUCK_HEIGHT - DUCK_HEIGHT / 3 > platform.y_pos &&
-      personaje.getYPos() < platform.y_pos + platform.height) {
-    if (personaje.isWeaponEquipped()) {
-      if (personaje.getXPos() + DUCK_WIDTH - DESPLAZAMIENTO_CON_ARMA_X >
-              platform.x_pos &&
-          personaje.getXPos() < platform.x_pos &&
-          personaje.getDirection() == RIGHT) {
-        personaje.setXPos(platform.x_pos - DUCK_WIDTH +
-                          DESPLAZAMIENTO_CON_ARMA_X);
-      } else if (personaje.getXPos() - MARGEN_DESPLAZAMIENTO_PLATAFORMA_X <
-                     platform.x_pos + platform.width -
-                         MARGEN_DESPLAZAMIENTO_PLATAFORMA_X &&
-                 personaje.getXPos() - MARGEN_DESPLAZAMIENTO_PLATAFORMA_X >
-                     platform.x_pos &&
-                 personaje.getDirection() == LEFT) {
-        personaje.setXPos(platform.x_pos + platform.width);
-      }
-      return;
-    }
-
-    if (personaje.getXPos() + DUCK_WIDTH - MARGEN_DESPLAZAMIENTO_PATO_X_WALL >
-            platform.x_pos &&
-        personaje.getXPos() < platform.x_pos &&
-        personaje.getDirection() == RIGHT) {
-      personaje.setXPos(platform.x_pos - DUCK_WIDTH +
-                        MARGEN_DESPLAZAMIENTO_PATO_X_WALL);
-    } else if (personaje.getXPos() - 4 <
-                   platform.x_pos + platform.width -
-                       MARGEN_DESPLAZAMIENTO_PLATAFORMA_X &&
-               personaje.getXPos() > platform.x_pos &&
-               personaje.getDirection() == LEFT) {
-      personaje.setXPos(platform.x_pos + platform.width -
-                        MARGEN_DESPLAZAMIENTO_PLATAFORMA_X);
-    }
-  }
-}
 void GameLoop::respawnWeapon() {
   for (auto it = time_weapon_last_respawn.begin();
        it != time_weapon_last_respawn.end();) {
@@ -466,7 +295,7 @@ void GameLoop::sendEndRound() {
   }
 }
 
-void GameLoop::sendVictory(std::string &winner) {
+void GameLoop::sendVictory(const std::string &winner) {
   GameState command;
   command.action = VICTORY_BYTE;
   command.name_winner = winner;
@@ -480,12 +309,14 @@ void GameLoop::sendVictory(std::string &winner) {
 }
 
 void GameLoop::spawnBoxesCheat() {
-  for (auto &personaje : map_personajes) {
-    list_boxes.emplace_back(
-        Boxes(TYPE_BOX, id_boxes++, personaje.second.getXPos(),
-              personaje.second.getYPos(), 100, map_free_weapons, map_defense,
-              map_bullets, id_balas, id_weapons, id_defense));
-  }
+  std::transform(map_personajes.begin(), map_personajes.end(),
+                 std::back_inserter(list_boxes), [this](const auto &pair) {
+                   const auto &personaje = pair.second;
+                   return Boxes(TYPE_BOX, id_boxes++, personaje.getXPos(),
+                                personaje.getYPos(), 100, map_free_weapons,
+                                map_defense, map_bullets, id_balas, id_weapons,
+                                id_defense);
+                 });
 }
 
 void GameLoop::winRoundCheat() {
@@ -516,52 +347,6 @@ void GameLoop::sendColorPresentation() {
   }
   for (int i = CERO; i < 1500; i++) {
     queues_map->sendMessagesToQueues(command);
-  }
-}
-
-void GameLoop::checkGrenadeExplosion(GranadaBullet &grenade_bullet) {
-  grenade_bullet.setIsExplode(true);
-  for (auto it = map_personajes.begin(); it != map_personajes.end();) {
-    if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) <
-            it->second.getXPos() &&
-        grenade_bullet.getXPos() + (RADIO_EXPLOTION_GRANADA * DUCK_WIDTH) >
-            it->second.getXPos() &&
-        grenade_bullet.getYPos() - (RADIO_EXPLOTION_GRANADA * DUCK_HEIGHT) <
-            it->second.getYPos() &&
-        grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA * DUCK_HEIGHT) >
-            it->second.getYPos()) {
-      if (it->second.receiveShoot()) {
-        it->second.applyDamage(grenade_bullet.getDamage());
-        it->second.setColor(list_colors.back());
-      }
-      if (!it->second.isAlive()) {
-        dead_players.push_back(it->second);
-        it = map_personajes.erase(it);
-      } else {
-        ++it;
-      }
-    } else {
-      ++it;
-    }
-  }
-  for (auto it = list_boxes.begin(); it != list_boxes.end();) {
-    if (grenade_bullet.getXPos() - (RADIO_EXPLOTION_GRANADA * WIDTH_BOX) <
-            it->getXPos() &&
-        grenade_bullet.getXPos() + (RADIO_EXPLOTION_GRANADA * WIDTH_BOX) >
-            it->getXPos() &&
-        grenade_bullet.getYPos() - (RADIO_EXPLOTION_GRANADA * HEIGHT_BOX) <
-            it->getYPos() &&
-        grenade_bullet.getYPos() + (RADIO_EXPLOTION_GRANADA * HEIGHT_BOX) >
-            it->getYPos()) {
-      it->takeDamage(grenade_bullet.getDamage());
-      if (it->isDestroyed()) {
-        it = list_boxes.erase(it);
-      } else {
-        ++it;
-      }
-    } else {
-      ++it;
-    }
   }
 }
 

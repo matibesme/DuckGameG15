@@ -19,8 +19,8 @@ PewPewLaser::PewPewLaser(uint8_t type, uint8_t id, float x_pos, float y_pos,
       spread = -maxSpread; // Bala de abajo
     }
 
-    beams_vector.emplace_back(PEW_PEW_LASER_BULLET, i, CERO, CERO, damage, range,
-                              spread);
+    beams_vector.emplace_back(PEW_PEW_LASER_BULLET, i, CERO, CERO, damage,
+                              range, spread);
   }
 }
 
@@ -39,16 +39,16 @@ std::unique_ptr<Bullet> PewPewLaser::shoot(bool is_aiming_up) {
     bullet_count += UNO;
     if (is_aiming_up and direction == RIGHT) {
       beams_vector[CERO].release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS,
-                              y_pos - WIDTH_BULLET, BULLET_UP, true);
+                                 y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (is_aiming_up and direction == LEFT) {
       beams_vector[CERO].release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET,
-                              BULLET_UP, true);
+                                 BULLET_UP, true);
     } else if (direction == RIGHT) {
       beams_vector[CERO].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
-                              y_pos + (DUCK_HEIGHT / DOS), direction, true);
+                                 y_pos + (DUCK_HEIGHT / DOS), direction, true);
     } else if (direction == LEFT) {
-      beams_vector[CERO].release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
-                              direction, true);
+      beams_vector[CERO].release(x_pos - WIDTH_BULLET,
+                                 y_pos + (DUCK_HEIGHT / DOS), direction, true);
     }
     return std::make_unique<Bullet>(beams_vector[CERO]);
   case DOS:
@@ -56,16 +56,16 @@ std::unique_ptr<Bullet> PewPewLaser::shoot(bool is_aiming_up) {
     bullet_count += UNO;
     if (is_aiming_up and direction == RIGHT) {
       beams_vector[UNO].release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS,
-                              y_pos - WIDTH_BULLET, BULLET_UP, true);
+                                y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (is_aiming_up and direction == LEFT) {
       beams_vector[UNO].release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET,
-                              BULLET_UP, true);
+                                BULLET_UP, true);
     } else if (direction == RIGHT) {
       beams_vector[UNO].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
-                              y_pos + (DUCK_HEIGHT / DOS), direction, true);
+                                y_pos + (DUCK_HEIGHT / DOS), direction, true);
     } else if (direction == LEFT) {
-      beams_vector[UNO].release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
-                              direction, true);
+      beams_vector[UNO].release(x_pos - WIDTH_BULLET,
+                                y_pos + (DUCK_HEIGHT / DOS), direction, true);
     }
     return std::make_unique<Bullet>(beams_vector[UNO]);
   case UNO:
@@ -74,16 +74,16 @@ std::unique_ptr<Bullet> PewPewLaser::shoot(bool is_aiming_up) {
     ammo_quantity--;
     if (is_aiming_up and direction == RIGHT) {
       beams_vector[DOS].release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS,
-                              y_pos - WIDTH_BULLET, BULLET_UP, true);
+                                y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (is_aiming_up and direction == LEFT) {
       beams_vector[DOS].release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET,
-                              BULLET_UP, true);
+                                BULLET_UP, true);
     } else if (direction == RIGHT) {
       beams_vector[DOS].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
-                              y_pos + (DUCK_HEIGHT / DOS), direction, true);
+                                y_pos + (DUCK_HEIGHT / DOS), direction, true);
     } else if (direction == LEFT) {
-      beams_vector[DOS].release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
-                              direction, true);
+      beams_vector[DOS].release(x_pos - WIDTH_BULLET,
+                                y_pos + (DUCK_HEIGHT / DOS), direction, true);
     }
     beam_count = BEAM_COUNT;
     return std::make_unique<Bullet>(beams_vector[DOS]);

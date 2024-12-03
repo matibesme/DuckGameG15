@@ -107,7 +107,6 @@ extern float BANANA_SPREAD;
 extern float PEW_PEW_LASER_MAX_SPREAD;
 extern float LASER_RIFLE_SPREAD;
 
-
 // COnstantes varias
 constexpr int CERO = 0;
 constexpr int UNO = 1;
@@ -128,7 +127,5 @@ constexpr float SPREAD_VAR = 0.1;
 constexpr float PROBA = 0.5;
 constexpr float NO_SPREAD = 0.0;
 constexpr int RELOAD_TIME = 70;
-constexpr int RESPAWN_TIME = 800;
-
-
-
+constexpr int RESPAWN_TIME = 700;
+constexpr int MAX_QUEUE_SIZE = 50;

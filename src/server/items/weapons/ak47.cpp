@@ -26,7 +26,7 @@ std::unique_ptr<Bullet> Ak47::shoot(bool is_aiming_up) {
     return nullptr;
   }
   ammo_quantity--;
-  bullet_count += CERO;
+  bullet_count += UNO;
   Bullet actual_bullet = bullets_vector[CERO];
   if (is_aiming_up and direction == RIGHT) {
     actual_bullet.release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS,
@@ -60,5 +60,6 @@ void Ak47::stopShooting() {
   spread_counter = CERO;
   bullet_count = CERO;
   bullets_vector.pop_back();
-  bullets_vector.emplace_back(AK47_BULLET, UNO, CERO, CERO, damage, range, CERO);
+  bullets_vector.emplace_back(AK47_BULLET, UNO, CERO, CERO, damage, range,
+                              CERO);
 }

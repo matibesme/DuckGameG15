@@ -164,8 +164,8 @@ GameAccess ProtocoloServer::receiveAccessFromClients() {
   } catch (const std::exception &e) {
     dead_connection = true;
   }
-  GameAccess null_access;
-  return null_access;
+
+  return {0, "", "", false, ""};
 }
 
 void ProtocoloServer::closeSocket() {
@@ -204,7 +204,7 @@ void ProtocoloServer::sendPlayersColor(
   }
 }
 
-void ProtocoloServer::sendStartGame(bool &start_game) {
+void ProtocoloServer::sendStartGame(const bool &start_game) {
   try {
     protocolo.sendByte(start_game, dead_connection);
   } catch (const std::exception &e) {

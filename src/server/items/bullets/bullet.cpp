@@ -4,10 +4,6 @@
 
 #include "granada_bullet.h"
 
-
-
-
-
 Bullet::Bullet(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
                int range, float spread)
     : Objeto(type, id, x_pos, y_pos), damage(damage), range(range),
@@ -38,7 +34,8 @@ bool Bullet::randomSpread() {
       rd()); // motor generador de números aleatorios basado en Mersenne Twister
 
   // Distribución uniforme entre 0 y 1 para representar "falso" y "verdadero"
-  std::bernoulli_distribution dist(PROBA); // probabilidad de 50% para cada valor
+  std::bernoulli_distribution dist(
+      PROBA); // probabilidad de 50% para cada valor
 
   return dist(gen); // genera un valor verdadero o falso
 }

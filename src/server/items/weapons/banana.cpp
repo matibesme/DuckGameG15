@@ -30,7 +30,8 @@ std::unique_ptr<Bullet> Banana::shoot(bool is_aiming_up) {
     bala.release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS, y_pos - WIDTH_BULLET,
                  BULLET_UP, true);
   } else if (is_aiming_up and direction == LEFT) {
-    bala.release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET, BULLET_UP, true);
+    bala.release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET, BULLET_UP,
+                 true);
   } else if (direction == RIGHT) {
     bala.release(x_pos + DUCK_WIDTH + WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
                  direction, true);

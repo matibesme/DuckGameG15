@@ -1,5 +1,6 @@
 #pragma once
 #include "../common/blocking_queue.h"
+#include <algorithm>
 #include <chrono>
 #include <iostream>
 #include <list>
@@ -21,6 +22,7 @@
 
 #include "items/bullets/bullet.h"
 
+#include "colisions.h"
 #include "configuration/load_game.h"
 #include "duck_action.h"
 #include "items/boxes.h"
@@ -54,12 +56,13 @@ private:
   std::map<uint8_t, uint8_t> colors_assigned;
   std::vector<std::string> list_colors;
 
-  DuckAction duck_action;
-  LoadGameFile load_game_config;
-
   std::map<uint8_t, uint8_t> map_victory_rounds;
   uint8_t scene_id;
   std::list<DuckPlayer> dead_players;
+
+  DuckAction duck_action;
+  LoadGameFile load_game_config;
+  Colisions colisions;
 
   void paraCadaPatoAction();
 
@@ -69,27 +72,16 @@ public:
            std::map<uint8_t, std::string> &map_id_clientes);
   virtual void run() override;
   void checkCommand(CommandClient comando, uint8_t &rounds);
-  void movementComand(uint8_t comando);
-  void weaponComand(uint8_t comando);
-  void checkBullets();
-  void saltar();
   void sendCompleteScene();
-  void checkCoalition(std::unique_ptr<Bullet> &bullet);
-  void checkCoalitionDuckPlatform(DuckPlayer &personaje);
   void respawnWeapon();
   void cleanGame();
   bool checkWinner(std::string &winner);
   void sendEndRound();
-  void sendVictory(std::string &winner);
+  void sendVictory(const std::string &winner);
   void sendColorPresentation();
-  void checkGrenadeExplosion(GranadaBullet &grenade_bullet);
   void spawnBoxesCheat();
   void winRoundCheat();
   void winGameCheat(uint8_t &rounds);
-  bool sobrePlataformaX(DuckPlayer &personaje, DTOPlatform &plataforma);
-  void coalisionSuperiorEinferior(DuckPlayer &personaje,
-                                  DTOPlatform &plataforma, bool &is_on_platform,
-                                  bool &is_on_platform_down);
-  void coalisonWalls(DuckPlayer &personaje, DTOPlatform &plataforma);
+
   virtual ~GameLoop();
 };

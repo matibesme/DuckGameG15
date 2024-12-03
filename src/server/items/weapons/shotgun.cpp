@@ -11,13 +11,14 @@ Shotgun::Shotgun(uint8_t type, uint8_t id, float x_pos, float y_pos, int damage,
     : Weapon(type, id, x_pos, y_pos, damage, range, ammo_quantity, recoil),
       pellets_vector(), pellet_count(PELLET_COUNT) {
   float maxSpread = ESCOPETA_MAX_SPREAD;
-  int halfCount =
-      PELLET_COUNT / DOS; // Para dividir el número de balas a cada lado del cero
+  int halfCount = PELLET_COUNT /
+                  DOS; // Para dividir el número de balas a cada lado del cero
 
   for (int i = CERO; i < PELLET_COUNT; i++) {
     // Calculamos el spread en función de la posición i
     float spread = maxSpread * (halfCount - i) / halfCount;
-    pellets_vector.emplace_back(COWBOY_BULLET, i, CERO, CERO, damage, range, spread);
+    pellets_vector.emplace_back(COWBOY_BULLET, i, CERO, CERO, damage, range,
+                                spread);
   }
 }
 
@@ -43,16 +44,17 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
     bullet_count += UNO;
     if (is_aiming_up and direction == RIGHT) {
       pellets_vector[CERO].release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS,
-                                y_pos - WIDTH_BULLET, BULLET_UP, true);
+                                   y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (is_aiming_up and direction == LEFT) {
-      pellets_vector[CERO].release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET,
-                                BULLET_UP, true);
+      pellets_vector[CERO].release(x_pos + HEIGHT_GUN / DOS,
+                                   y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (direction == RIGHT) {
       pellets_vector[CERO].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
-                                y_pos + (DUCK_HEIGHT / DOS), direction, true);
+                                   y_pos + (DUCK_HEIGHT / DOS), direction,
+                                   true);
     } else if (direction == LEFT) {
-      pellets_vector[CERO].release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
-                                direction, true);
+      pellets_vector[CERO].release(
+          x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS), direction, true);
     }
 
     return std::make_unique<Bullet>(pellets_vector[CERO]);
@@ -61,16 +63,16 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
     bullet_count += UNO;
     if (is_aiming_up and direction == RIGHT) {
       pellets_vector[UNO].release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS,
-                                y_pos - WIDTH_BULLET, BULLET_UP, true);
+                                  y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (is_aiming_up and direction == LEFT) {
-      pellets_vector[UNO].release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET,
-                                BULLET_UP, true);
+      pellets_vector[UNO].release(x_pos + HEIGHT_GUN / DOS,
+                                  y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (direction == RIGHT) {
       pellets_vector[UNO].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
-                                y_pos + (DUCK_HEIGHT / DOS), direction, true);
+                                  y_pos + (DUCK_HEIGHT / DOS), direction, true);
     } else if (direction == LEFT) {
-      pellets_vector[UNO].release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
-                                direction, true);
+      pellets_vector[UNO].release(x_pos - WIDTH_BULLET,
+                                  y_pos + (DUCK_HEIGHT / DOS), direction, true);
     }
     return std::make_unique<Bullet>(pellets_vector[UNO]);
   case CUATRO:
@@ -78,16 +80,16 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
     bullet_count += UNO;
     if (is_aiming_up and direction == RIGHT) {
       pellets_vector[DOS].release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS,
-                                y_pos - WIDTH_BULLET, BULLET_UP, true);
+                                  y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (is_aiming_up and direction == LEFT) {
-      pellets_vector[DOS].release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET,
-                                BULLET_UP, true);
+      pellets_vector[DOS].release(x_pos + HEIGHT_GUN / DOS,
+                                  y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (direction == RIGHT) {
       pellets_vector[DOS].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
-                                y_pos + (DUCK_HEIGHT / DOS), direction, true);
+                                  y_pos + (DUCK_HEIGHT / DOS), direction, true);
     } else if (direction == LEFT) {
-      pellets_vector[DOS].release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
-                                direction, true);
+      pellets_vector[DOS].release(x_pos - WIDTH_BULLET,
+                                  y_pos + (DUCK_HEIGHT / DOS), direction, true);
     }
     return std::make_unique<Bullet>(pellets_vector[DOS]);
   case TRES:
@@ -95,16 +97,17 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
     bullet_count += UNO;
     if (is_aiming_up and direction == RIGHT) {
       pellets_vector[TRES].release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS,
-                                y_pos - WIDTH_BULLET, BULLET_UP, true);
+                                   y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (is_aiming_up and direction == LEFT) {
-      pellets_vector[TRES].release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET,
-                                BULLET_UP, true);
+      pellets_vector[TRES].release(x_pos + HEIGHT_GUN / DOS,
+                                   y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (direction == RIGHT) {
       pellets_vector[TRES].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
-                                y_pos + (DUCK_HEIGHT / DOS), direction, true);
+                                   y_pos + (DUCK_HEIGHT / DOS), direction,
+                                   true);
     } else if (direction == LEFT) {
-      pellets_vector[TRES].release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
-                                direction, true);
+      pellets_vector[TRES].release(
+          x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS), direction, true);
     }
     return std::make_unique<Bullet>(pellets_vector[TRES]);
   case DOS:
@@ -112,16 +115,17 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
     bullet_count += UNO;
     if (is_aiming_up and direction == RIGHT) {
       pellets_vector[CUATRO].release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS,
-                                y_pos - WIDTH_BULLET, BULLET_UP, true);
+                                     y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (is_aiming_up and direction == LEFT) {
-      pellets_vector[CUATRO].release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET,
-                                BULLET_UP, true);
+      pellets_vector[CUATRO].release(x_pos + HEIGHT_GUN / DOS,
+                                     y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (direction == RIGHT) {
       pellets_vector[CUATRO].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
-                                y_pos + (DUCK_HEIGHT / DOS), direction, true);
+                                     y_pos + (DUCK_HEIGHT / DOS), direction,
+                                     true);
     } else if (direction == LEFT) {
-      pellets_vector[CUATRO].release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
-                                direction, true);
+      pellets_vector[CUATRO].release(
+          x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS), direction, true);
     }
     return std::make_unique<Bullet>(pellets_vector[CUATRO]);
   case UNO:
@@ -131,16 +135,17 @@ std::unique_ptr<Bullet> Shotgun::shoot(bool is_aiming_up) {
     ammo_quantity--;
     if (is_aiming_up and direction == RIGHT) {
       pellets_vector[CINCO].release(x_pos + DUCK_WIDTH - WIDTH_GUN / DOS,
-                                y_pos - WIDTH_BULLET, BULLET_UP, true);
+                                    y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (is_aiming_up and direction == LEFT) {
-      pellets_vector[CINCO].release(x_pos + HEIGHT_GUN / DOS, y_pos - WIDTH_BULLET,
-                                BULLET_UP, true);
+      pellets_vector[CINCO].release(x_pos + HEIGHT_GUN / DOS,
+                                    y_pos - WIDTH_BULLET, BULLET_UP, true);
     } else if (direction == RIGHT) {
       pellets_vector[CINCO].release(x_pos + DUCK_WIDTH + WIDTH_BULLET,
-                                y_pos + (DUCK_HEIGHT / DOS), direction, true);
+                                    y_pos + (DUCK_HEIGHT / DOS), direction,
+                                    true);
     } else if (direction == LEFT) {
-      pellets_vector[CINCO].release(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS),
-                                direction, true);
+      pellets_vector[CINCO].release(
+          x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / DOS), direction, true);
     }
     return std::make_unique<Bullet>(pellets_vector[CINCO]);
   default:

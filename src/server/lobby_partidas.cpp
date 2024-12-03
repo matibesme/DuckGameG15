@@ -15,8 +15,9 @@ LobbyPartidas::addPartida(uint8_t id_client, std::string &name1,
     return nullptr;
   }
   end_game[id_partida] = false;
-  queues_game_loop.emplace(id_partida,
-                           std::make_shared<BlockingQueue<CommandClient>>(50));
+  queues_game_loop.emplace(
+      id_partida,
+      std::make_shared<BlockingQueue<CommandClient>>(MAX_QUEUE_SIZE));
   protected_queues_sender.emplace(id_partida,
                                   std::make_unique<ProtectedQueuesMap>());
   partidas.emplace(id_partida,
