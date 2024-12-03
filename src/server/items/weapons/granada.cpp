@@ -41,10 +41,10 @@ std::unique_ptr<Bullet> Granada::shoot(bool is_aiming_up) {
     bala.release_granada(x_pos + HEIGHT_GUN / 2, y_pos - WIDTH_BULLET,
                          BULLET_UP, time_to_explode);
   } else if (direction == RIGHT) {
-    bala.release_granada(x_pos + DUCK_WIDTH + WIDTH_BULLET,
+    bala.release_granada(x_pos + DUCK_WIDTH/2 + WIDTH_BULLET,
                          y_pos + (DUCK_HEIGHT / 2), direction, time_to_explode);
   } else if (direction == LEFT) {
-    bala.release_granada(x_pos - WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2),
+    bala.release_granada(x_pos + WIDTH_BULLET, y_pos + (DUCK_HEIGHT / 2),
                          direction, time_to_explode);
   }
   if (direction == RIGHT) {
